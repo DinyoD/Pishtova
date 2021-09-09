@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{BD19AF6F-0F8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pishtova.Data", "..\Pishtova.Data\Pishtova.Data.csproj", "{AD23A48C-2C75-49E6-A47B-E336A9F39C04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pishtova.Data.Common", "..\Pishtova.Data.Common\Pishtova.Data.Common.csproj", "{4C47FE09-EDEF-45FA-84F2-90C7458BBDAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{AD23A48C-2C75-49E6-A47B-E336A9F39C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD23A48C-2C75-49E6-A47B-E336A9F39C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD23A48C-2C75-49E6-A47B-E336A9F39C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C47FE09-EDEF-45FA-84F2-90C7458BBDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C47FE09-EDEF-45FA-84F2-90C7458BBDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C47FE09-EDEF-45FA-84F2-90C7458BBDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C47FE09-EDEF-45FA-84F2-90C7458BBDAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8C231549-ACA8-4F46-A866-CEB58C0E32DF} = {BD19AF6F-0F8A-4DE7-ABC4-D9EAE6DE927E}
 		{AD23A48C-2C75-49E6-A47B-E336A9F39C04} = {4B70FB13-840D-49B7-A569-C0664C384E63}
+		{4C47FE09-EDEF-45FA-84F2-90C7458BBDAE} = {4B70FB13-840D-49B7-A569-C0664C384E63}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B0BC324-96DB-40F5-9B84-C63DDC0AD376}
