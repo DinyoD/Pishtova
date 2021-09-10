@@ -1,21 +1,17 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using Pishtova.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pishtova_ASP.NET_web_api
 {
+    using Microsoft.OpenApi.Models;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
+    using Pishtova.Data;
+    using Pishtova.Data.Model;
+
     public class Startup
     {
         private readonly IConfiguration configuration;
@@ -29,6 +25,8 @@ namespace Pishtova_ASP.NET_web_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PishtovaDbContext>(options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<User, Role>(IdentityOptionsProvider.GetIdentityOptions).AddEntityFrameworkStores<PishtovaDbContext>();
 
             services.AddControllers();
 
