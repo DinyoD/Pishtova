@@ -24,7 +24,6 @@ namespace Pishtova.Data
         public PishtovaDbContext(DbContextOptions<PishtovaDbContext> options)
             : base(options)
         {
-
         }
 
         public override int SaveChanges()
