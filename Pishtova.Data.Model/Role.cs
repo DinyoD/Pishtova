@@ -13,7 +13,6 @@
         public Role()
             :this(null)
         {
-
         }
 
         public Role(string name = GlobalConstants.StudentRoleName)

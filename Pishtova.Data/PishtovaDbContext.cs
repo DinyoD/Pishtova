@@ -26,6 +26,26 @@ namespace Pishtova.Data
         {
         }
 
+        public DbSet<Answer> Answers { get; set; }
+
+        public DbSet<Badge> Badges { get; set; }
+
+        public DbSet<UserBadge> UsersBadges { get; set; }
+
+        public DbSet<Group> Groups { get; set; }
+
+        public DbSet<UserGroup> UsersGroups { get; set; }
+
+        public DbSet<Problem> Problems { get; set; }
+
+        public DbSet<Score> Scores { get; set; }
+
+        public DbSet<Subject> Subjects { get; set; }
+
+        public DbSet<SubjectCategory> SubjectCategories { get; set; }
+
+        public DbSet<Town> Towns { get; set; }
+
         public override int SaveChanges()
         {
             return this.SaveChanges(true);
