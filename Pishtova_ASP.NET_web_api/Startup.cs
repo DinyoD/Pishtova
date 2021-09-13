@@ -4,6 +4,9 @@ namespace Pishtova_ASP.NET_web_api
     using Microsoft.OpenApi.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.IdentityModel.Tokens;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -11,6 +14,7 @@ namespace Pishtova_ASP.NET_web_api
 
     using Pishtova.Data;
     using Pishtova.Data.Model;
+    using System.Text;
 
     public class Startup
     {
@@ -26,7 +30,25 @@ namespace Pishtova_ASP.NET_web_api
         {
             services.AddDbContext<PishtovaDbContext>(options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, Role>(IdentityOptionsProvider.GetIdentityOptions).AddEntityFrameworkStores<PishtovaDbContext>();
+            services
+                .AddIdentity<User, Role>(IdentityOptionsProvider.GetIdentityOptions)
+                .AddEntityFrameworkStores<PishtovaDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }
+            ).AddJwtBearer(options =>
+            {
+                var sc = this.configuration.GetSection("JwtToken")["securityKeyWords"];
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sc)),
+                };
+            });
 
             services.AddControllers();
 
