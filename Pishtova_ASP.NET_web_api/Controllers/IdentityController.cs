@@ -19,10 +19,10 @@
 
         public IdentityController(
             UserManager<User> userManager,
-            ApplicationSettings applicationSettings)
+            IOptions<ApplicationSettings> applicationSettings)
         {
             this.userManager = userManager;
-            this.applicationSettings = applicationSettings;
+            this.applicationSettings = applicationSettings.Value;
         }
 
         [Route(nameof(Register))]
@@ -33,6 +33,7 @@
                 UserName = model.UserName,
                 Email = model.Email,
                 PictureUrl = model.PictureUrl,
+                Grade = model.Grade
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);

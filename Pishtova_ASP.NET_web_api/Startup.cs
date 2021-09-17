@@ -15,6 +15,7 @@ namespace Pishtova_ASP.NET_web_api
 
     using Pishtova.Data;
     using Pishtova.Data.Model;
+    using Pishtova.Services.Data;
 
     public class Startup
     {
@@ -62,6 +63,8 @@ namespace Pishtova_ASP.NET_web_api
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
             //});
+
+            services.AddTransient<ITownService, TownService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,10 +81,10 @@ namespace Pishtova_ASP.NET_web_api
 
             app.UseRouting();
 
-            //app.UseCors(options => options
-            //    .AllowAnyOrigin()
-            //    .AllowAnyHeader()
-            //    .AllowAnyMethod()); 
+            app.UseCors(options => options
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseAuthorization();
 

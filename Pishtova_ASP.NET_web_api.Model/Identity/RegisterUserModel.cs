@@ -18,6 +18,8 @@
         [Range(4, 12)]
         public int Grade { get; set; }
 
+        public int TownId { get; set; }
+
         [Required]
         [StringLength(10, MinimumLength = 6)]
         public string Password { get; set; }

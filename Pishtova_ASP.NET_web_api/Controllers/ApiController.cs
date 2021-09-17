@@ -2,8 +2,8 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public abstract class ApiController : ControllerBase
     {
     }

@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Common", "..\Pisht
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pishtova_ASP.NET_web_api.Model", "..\Pishtova_ASP.NET_web_api.Model\Pishtova_ASP.NET_web_api.Model.csproj", "{82A037C3-55B6-4434-BC50-AFECA614EFFB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5F1183CA-C846-454A-89D2-6752B422617F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pishtova.Services.Data", "..\Pishtova.Services.Data\Pishtova.Services.Data.csproj", "{2B59E6AA-5BD5-4253-B5C0-4CC3EBC22F7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{82A037C3-55B6-4434-BC50-AFECA614EFFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82A037C3-55B6-4434-BC50-AFECA614EFFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82A037C3-55B6-4434-BC50-AFECA614EFFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B59E6AA-5BD5-4253-B5C0-4CC3EBC22F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B59E6AA-5BD5-4253-B5C0-4CC3EBC22F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B59E6AA-5BD5-4253-B5C0-4CC3EBC22F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B59E6AA-5BD5-4253-B5C0-4CC3EBC22F7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 		{4C47FE09-EDEF-45FA-84F2-90C7458BBDAE} = {4B70FB13-840D-49B7-A569-C0664C384E63}
 		{AE052803-E1B9-47F2-99EA-2709DA276134} = {4B70FB13-840D-49B7-A569-C0664C384E63}
 		{82A037C3-55B6-4434-BC50-AFECA614EFFB} = {BD19AF6F-0F8A-4DE7-ABC4-D9EAE6DE927E}
+		{2B59E6AA-5BD5-4253-B5C0-4CC3EBC22F7A} = {5F1183CA-C846-454A-89D2-6752B422617F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B0BC324-96DB-40F5-9B84-C63DDC0AD376}

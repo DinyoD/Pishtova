@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pishtova.Data\Pishtova.Data.csproj" />
+    <ProjectReference Include="..\Pishtova.Services.Data\Pishtova.Services.Data.csproj" />
     <ProjectReference Include="..\Pishtova_ASP.NET_web_api.Model\Pishtova_ASP.NET_web_api.Model.csproj" />
   </ItemGroup>
 
