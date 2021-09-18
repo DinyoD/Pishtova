@@ -34,13 +34,13 @@ namespace Pishtova_ASP.NET_web_api
             services
                 .AddIdentity<User, Role>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddEntityFrameworkStores<PishtovaDbContext>();
-            //.AddDefaultTokenProviders();
+                //.AddDefaultTokenProviders();
 
             var applicationSettingsConfiguration = this.configuration.GetSection("ApplicationSettings");
             services.Configure<ApplicationSettings>(applicationSettingsConfiguration);
 
             var appSettings = applicationSettingsConfiguration.Get<ApplicationSettings>();
-            var key = Encoding.UTF8.GetBytes(appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
             services
                 .AddAuthentication(auth =>
@@ -50,10 +50,14 @@ namespace Pishtova_ASP.NET_web_api
                     }
                 ).AddJwtBearer(options =>
                     {
+                        options.RequireHttpsMetadata = false;
+                        options.SaveToken = true;
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                    
+                            ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(key),
+                            ValidateIssuer = false,
+                            ValidateAudience = false
                         };
                     });
 
@@ -86,6 +90,7 @@ namespace Pishtova_ASP.NET_web_api
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

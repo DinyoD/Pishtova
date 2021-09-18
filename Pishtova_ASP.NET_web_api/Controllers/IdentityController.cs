@@ -33,7 +33,8 @@
                 UserName = model.UserName,
                 Email = model.Email,
                 PictureUrl = model.PictureUrl,
-                Grade = model.Grade
+                Grade = model.Grade,
+                TownId = model.TownId
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);
@@ -64,13 +65,13 @@
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(this.applicationSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(this.applicationSettings.Secret);
 
-            var tokenDescriptor = new SecurityTokenDescriptor()
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, null)
+                    new Claim(ClaimTypes.Name, user.Id)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(
