@@ -27,9 +27,9 @@
         [Range(4, 12)]
         public int Grade { get; set; }
 
-        public int TownId { get; set; }
+        public int SchoolId { get; set; }
 
-        public Town Town { get; set; }
+        public School School { get; set; }
 
         public virtual ICollection<Score> UserScores { get; set; }
 

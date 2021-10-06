@@ -8,11 +8,11 @@
     {
         public Town()
         {
-            this.Users = new HashSet<User>();
+            this.Schools = new HashSet<School>();
         }
 
         public string Name { get; set; }
 
-        public  virtual ICollection<User> Users { get; set; }
+        public  virtual ICollection<School> Schools { get; set; }
     }
 }

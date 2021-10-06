@@ -11,11 +11,11 @@
 
         public User User { get; set; }
 
-        public int SubjectId { get; set; }
+        public string ProblemId { get; set; }
 
-        public Subject Subject { get; set; }
+        public Problem Problem { get; set; }
 
-        [Range(0, 20)]
+        [Range(0, 1)]
         public int Points { get; set; }
     }
 }

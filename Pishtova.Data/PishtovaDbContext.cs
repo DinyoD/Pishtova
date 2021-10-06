@@ -46,6 +46,8 @@ namespace Pishtova.Data
 
         public DbSet<Town> Towns { get; set; }
 
+        public DbSet<School> Schools { get; set; }
+
         public override int SaveChanges()
         {
             return this.SaveChanges(true);

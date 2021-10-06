@@ -10,7 +10,7 @@ using Pishtova.Data;
 namespace Pishtova.Data.Migrations
 {
     [DbContext(typeof(PishtovaDbContext))]
-    [Migration("20210911134356_InitialCreate")]
+    [Migration("20211006072847_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -299,6 +299,40 @@ namespace Pishtova.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
+            modelBuilder.Entity("Pishtova.Data.Model.School", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TownId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("TownId");
+
+                    b.ToTable("Schools");
+                });
+
             modelBuilder.Entity("Pishtova.Data.Model.Score", b =>
                 {
                     b.Property<int>("Id")
@@ -321,6 +355,9 @@ namespace Pishtova.Data.Migrations
                     b.Property<int>("Points")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProblemId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
@@ -330,6 +367,8 @@ namespace Pishtova.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ProblemId");
 
                     b.HasIndex("SubjectId");
 
@@ -490,6 +529,9 @@ namespace Pishtova.Data.Migrations
                     b.Property<string>("PictureUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -514,6 +556,8 @@ namespace Pishtova.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("SchoolId");
 
                     b.HasIndex("TownId");
 
@@ -643,8 +687,23 @@ namespace Pishtova.Data.Migrations
                     b.Navigation("SubjectCategory");
                 });
 
+            modelBuilder.Entity("Pishtova.Data.Model.School", b =>
+                {
+                    b.HasOne("Pishtova.Data.Model.Town", "Town")
+                        .WithMany()
+                        .HasForeignKey("TownId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Town");
+                });
+
             modelBuilder.Entity("Pishtova.Data.Model.Score", b =>
                 {
+                    b.HasOne("Pishtova.Data.Model.Problem", "Problem")
+                        .WithMany()
+                        .HasForeignKey("ProblemId");
+
                     b.HasOne("Pishtova.Data.Model.Subject", "Subject")
                         .WithMany("SubjectScores")
                         .HasForeignKey("SubjectId")
@@ -654,6 +713,8 @@ namespace Pishtova.Data.Migrations
                     b.HasOne("Pishtova.Data.Model.User", "User")
                         .WithMany("UserScores")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Problem");
 
                     b.Navigation("Subject");
 
@@ -673,11 +734,19 @@ namespace Pishtova.Data.Migrations
 
             modelBuilder.Entity("Pishtova.Data.Model.User", b =>
                 {
+                    b.HasOne("Pishtova.Data.Model.School", "School")
+                        .WithMany("Users")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Pishtova.Data.Model.Town", "Town")
                         .WithMany("Users")
                         .HasForeignKey("TownId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("School");
 
                     b.Navigation("Town");
                 });
@@ -725,6 +794,11 @@ namespace Pishtova.Data.Migrations
             modelBuilder.Entity("Pishtova.Data.Model.Problem", b =>
                 {
                     b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("Pishtova.Data.Model.School", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.Subject", b =>

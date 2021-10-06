@@ -15,10 +15,6 @@
 
         public string PictureId { get; set; }
 
-        public int SubjectId { get; set; }
-
-        public Subject Subject { get; set; }
-
         public int SubjectCategoryId { get; set; }
 
         public SubjectCategory SubjectCategory { get; set; }

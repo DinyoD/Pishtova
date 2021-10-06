@@ -8,13 +8,10 @@
     {
         public Subject()
         {
-            this.SubjectScores = new HashSet<Score>();
             this.Categories = new HashSet<SubjectCategory>();
         }
 
         public string Name { get; set; }
-
-        public virtual ICollection<Score> SubjectScores { get; set; }
 
         public virtual ICollection<SubjectCategory> Categories { get; set; }
     }
