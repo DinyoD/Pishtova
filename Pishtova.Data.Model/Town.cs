@@ -13,6 +13,10 @@
 
         public string Name { get; set; }
 
+        public int MunicipalityId { get; set; }
+
+        public Municipality Municipality { get; set; }
+
         public  virtual ICollection<School> Schools { get; set; }
     }
 }

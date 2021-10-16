@@ -44,6 +44,8 @@ namespace Pishtova.Data
 
         public DbSet<SubjectCategory> SubjectCategories { get; set; }
 
+        public DbSet<Municipality> Municipalities { get; set; }
+
         public DbSet<Town> Towns { get; set; }
 
         public DbSet<School> Schools { get; set; }
