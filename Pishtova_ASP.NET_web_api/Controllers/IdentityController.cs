@@ -34,7 +34,7 @@
                 Email = model.Email,
                 PictureUrl = model.PictureUrl,
                 Grade = model.Grade,
-                TownId = model.TownId
+                SchoolId = model.SchoolId
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);
