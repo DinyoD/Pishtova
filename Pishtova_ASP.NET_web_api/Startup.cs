@@ -15,6 +15,7 @@ namespace Pishtova_ASP.NET_web_api
 
     using Pishtova.Data;
     using Pishtova.Data.Model;
+    using Pishtova.Data.Seeding;
     using Pishtova.Services.Data;
 
     public class Startup
@@ -74,6 +75,14 @@ namespace Pishtova_ASP.NET_web_api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Seed data on application startup
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<PishtovaDbContext>();
+                new PishtovaDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

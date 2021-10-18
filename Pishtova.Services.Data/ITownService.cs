@@ -4,6 +4,6 @@
 
     public interface ITownService
     {
-        Task CreateAsync(string name);
+        Task<int> CreateAsync(string name, int municipalityId);
     }
 }
