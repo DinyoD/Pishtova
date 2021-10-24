@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pishtova.Data\Pishtova.Data.csproj" />
     <ProjectReference Include="..\Pishtova.Services.Models\Pishtova.Services.Models.csproj" />
   </ItemGroup>
 

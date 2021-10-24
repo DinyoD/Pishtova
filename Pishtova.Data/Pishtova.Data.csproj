@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -14,7 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pishtova.Data.Model\Pishtova.Data.Model.csproj" />
+    <ProjectReference Include="..\Pishtova.Data.Common\Pishtova.Data.Common.csproj" />
+    <ProjectReference Include="..\Pishtova.Data.Models\Pishtova.Data.Models.csproj" />
+    <ProjectReference Include="..\Pishtova.Services.Models\Pishtova.Services.Models.csproj" />
+    <ProjectReference Include="..\Pishtova.Services\Pishtova.Services.csproj" />
   </ItemGroup>
 
 </Project>

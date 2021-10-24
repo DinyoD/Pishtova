@@ -16,6 +16,7 @@ namespace Pishtova_ASP.NET_web_api
     using Pishtova.Data;
     using Pishtova.Data.Model;
     using Pishtova.Data.Seeding;
+    using Pishtova.Services;
     using Pishtova.Services.Data;
 
     public class Startup
@@ -70,6 +71,7 @@ namespace Pishtova_ASP.NET_web_api
             //});
 
             services.AddTransient<ITownService, TownService>();
+            services.AddTransient<IHellpers, Helpers>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
