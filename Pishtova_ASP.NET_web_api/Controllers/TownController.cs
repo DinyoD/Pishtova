@@ -16,21 +16,5 @@
         {
             this.townService = townService;
         }
-
-        [Route(nameof(Add))]
-        [HttpPost]
-        public async Task<ActionResult<string>> Add(TownAddModel model)
-        {
-            try
-            {
-                await this.townService.CreateAsync(model.Name);
-                return Ok();
-            }
-            catch (Exception er)
-            {
-                return BadRequest(er.Message);
-            }
-
-        }
     }
 }

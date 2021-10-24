@@ -14,7 +14,7 @@
 
             foreach (var item in collection)
             {
-                if (!item.ToLower().Contains("детск"))
+                if (!item.ToLower().Contains("детск") && !item.Contains("ДГ"))
                 {
                     var schoolProps = item.Split(",");
 
@@ -24,11 +24,11 @@
                         {
                             MunicipalityDTO = new MunicipalityDTO
                             {
-                                Name = schoolProps[2],
+                                Name = FixName(schoolProps[2]),
                             },
-                            Name = schoolProps[3],
+                            Name = FixName(schoolProps[3]),
                         },
-                        Name = schoolProps[5],
+                        Name = FixName(schoolProps[5]),
                     };
 
                     schoolsCollection.Add(school);
@@ -36,6 +36,12 @@
             }
 
             return schoolsCollection;
+        }
+
+        public string FixName(string name)
+        {
+            var result = name.Trim('"');
+            return result;
         }
     }
 }
