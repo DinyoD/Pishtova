@@ -1,10 +1,13 @@
 ﻿namespace Pishtova.Services.Data
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.EntityFrameworkCore;
     using Pishtova.Data;
     using Pishtova.Data.Model;
+    using Pishtova_ASP.NET_web_api.Model.Municipality;
 
     public class MunicipalityService : IMunicipalityService
     {
@@ -31,6 +34,21 @@
             await this.db.SaveChangesAsync();
 
             return municipality.Id;
+        }
+
+        public async Task<ICollection<MunicipalityModel>> GetAllAsync()
+        {
+            return await  this.db.Municipalities
+                .Where<Municipality>(x => x.IsDeleted == false)
+                .Select(x => new MunicipalityModel { Id = x.Id, Name = x.Name })
+                .ToListAsync();
+        }
+
+        public async Task<MunicipalityModel> GetOneByIdAsync(int id)
+        {
+            var m =  await this.db.Municipalities
+                .FindAsync(id);
+            return new MunicipalityModel { Id = m.Id, Name = m.Name };
         }
     }
 }
