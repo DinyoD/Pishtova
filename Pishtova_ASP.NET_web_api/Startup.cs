@@ -73,6 +73,7 @@ namespace Pishtova_ASP.NET_web_api
             services.AddTransient<IHellpers, Helpers>();
             services.AddTransient<ITownService, TownService>();
             services.AddTransient<IMunicipalityService, MunicipalityService>();
+            services.AddTransient<ISchoolService, SchoolService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

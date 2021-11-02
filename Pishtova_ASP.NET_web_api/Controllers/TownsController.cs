@@ -19,8 +19,8 @@
         }
 
         [HttpGet]
-        [Route(nameof(byMunicipality))]
-        public async Task<ICollection<TownModel>> byMunicipality(int municipalityId)
+        [Route("bymunicipality/{municipalityId}")]
+        public async Task<ICollection<TownModel>> ByMunicipality(int municipalityId)
         {
             return await this.townService.GetAllByMunicipalityId(municipalityId);
         }

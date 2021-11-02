@@ -37,7 +37,11 @@
 
             return await this.db.Towns
                 .Where(x => x.MunicipalityId == municipalityId)
-                .Select(x => new TownModel { Id = x.Id, Name = x.Name })
+                .Select(x => new TownModel{ 
+                    Id = x.Id,
+                    Name = x.Name,
+                    MunicipalityId = x.MunicipalityId
+                })
                 .ToListAsync();
         }
     }
