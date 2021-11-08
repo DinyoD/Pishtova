@@ -1,4 +1,4 @@
-export interface Municipality{
+export interface School{
     id: number;
     name: string;
 }
