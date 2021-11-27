@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-
-import { Municipality } from '../../../models/municipality';
-import { Town } from '../../../models/town';
-import { School } from '../../../models/school';
+import { IMunicipality } from 'src/app/interfaces/municipality';
+import { ITown } from 'src/app/interfaces/town';
+import { ISchool } from 'src/app/interfaces/school';
+import { MunicipalityService, TownService, SchoolService } from 'src/app/services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -12,37 +12,42 @@ import { School } from '../../../models/school';
   styleUrls: ['./register.component.css']
 })
 
-export class RegisterComponent implements OnInit {
-  municipalities?: Array<Municipality>;
-  towns?: Array<Town>;
-  schools?: Array<School>;
+export class RegisterComponent implements OnInit, OnChanges {
+  municipalities?: Array<IMunicipality>;
+  towns?: Array<ITown>;
+  schools?: Array<ISchool>;
+  registerForm: FormGroup;
 
   municipalityId: number = 301;
   townId: number = 1274;
   
-  constructor(private http : HttpClient) { }
-  
-  // registartionForm = this.fb.group({
-  //   schoolId: [0, [Validators.required]],
-  // });
+  constructor(
+    private http : HttpClient,
+    private municipalityService: MunicipalityService,
+    private townService: TownService,
+    private schoolService: SchoolService,
+    fb: FormBuilder
+    ) { 
+      this.registerForm = fb.group({
+        fullName: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+      })
+    }
 
   ngOnInit(): void {  
-    this.fetchMunicipalities();
-    this.fetchTowns(this.municipalityId);
-    this.fetchSchools(this.townId);
+    this.municipalityService.getAllMunicipalities().subscribe(m => this.municipalities = m);
+    this.townService.getTownsByMunicipalityId(this.municipalityId).subscribe(t => this.towns = t);
+    this.schoolService.getSchoolsByTownId(this.townId).subscribe(s => this.schools = s); 
   }
 
-  fetchMunicipalities(){
-    return this.http.get<Array<Municipality>>('https://localhost:44329/api/municipalities/all')
-    .subscribe(municipalities => {this.municipalities = municipalities});
+  ngOnChanges(): void{
+    console.log();
+    
   }
-  fetchTowns(municipalityId: number){
-    return this.http.get<Array<Town>>(`https://localhost:44329/api/towns/bymunicipality/${municipalityId}`)
-    .subscribe(town => {this.towns = town});
-  }
-  fetchSchools(townId: number){
-    return this.http.get<Array<School>>(`https://localhost:44329/api/schools/bytown/${townId}`)
-    .subscribe(schol => {this.schools = schol});
+
+  submitHandler(): void {
+    console.log();
+    
   }
 
 }
