@@ -1,63 +1,46 @@
-<div class="col-12">
-  <h3>Registration form</h3>
-  <hr>
-  <form class="col-md-6 needs-validation" [formGroup]="registerForm" (ngSubmit)="submitHandler()">
-    <div class="form-group input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-      </div>
-      <input class="form-control" placeholder="Full Name" formControlName="fullName">
-    </div>
-    <div class="form-group input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-      </div>
-      <input class="form-control" placeholder="Email Address" type="email" formControlName="email">
-      <!-- <input class="form-control" placeholder="Email Address" type="email" [formControl]="registerForm.get('email')"> -->
-    </div>
-    <div class="col-md-6">
-      <label for="validationCustom03" class="form-label">Municipality: </label>
-      <select class="form-select" id="validationCustom04" required>
-        <option selected disabled value="">Choose...</option>
-        <option *ngFor="let m of municipalities" value="m.id">{{m.name}}</option>
-      </select>
-      <!-- <div class="invalid-feedback">
-        Please select a valid municipality.
-      </div> -->
-    </div>
-    <div class="col-md-6">
-      <label for="validationCustom04" class="form-label">Town: </label>
-      <select class="form-select" id="validationCustom04" required>
-        <option selected disabled value="">Choose...</option>
-        <option *ngFor="let t of towns">{{t.name}}</option>
-      </select>
-      <!-- <div class="invalid-feedback">
-        Please select a valid town.
-      </div> -->
-    </div>
-    <div class="col-md-6">
-      <label for="validationCustom05" class="form-label">School: </label>
-      <select class="form-select" id="validationCustom04" required>
-        <option selected disabled value="">Choose...</option>
-        <option *ngFor="let sch of schools">{{sch.name}}</option>
-      </select>
-      <!-- <div class="invalid-feedback">
-        Please select a valid school.
-      </div> -->
-    </div>
-    <div class="col-md-6">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-        <label class="form-check-label" for="invalidCheck">
-          Agree to terms and conditions
-        </label>
-        <div class="invalid-feedback">
-          You must agree before submitting.
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <button class="btn btn-primary" type="submit">Registration</button>
-    </div>
-  </form>
+<div class="container">
+  <div>
+    <mat-card>
+      <mat-card-title>Register</mat-card-title>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="register()">
+
+          <mat-form-field>
+            <input type="email" placeholder="Email" formControlName="email">
+            <!-- <mat-error *ngIf="email.touched && email.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="email.touched && email.hasError('email')">Email must be valid</mat-error> -->
+          </mat-form-field>
+
+          <mat-form-field>
+            <input type="text" placeholder="Username" formControlName="username">
+            <!-- <mat-error *ngIf="username.touched && username.hasError('required')">Username is required</mat-error> -->
+          </mat-form-field>
+
+          <mat-form-field>
+            <input type="password" placeholder="Password" formControlName="password">
+            <!-- <mat-error *ngIf="password.touched && password.hasError('required')">Password is required</mat-error> -->
+          </mat-form-field>
+
+          <mat-form-field>
+            <input type="password" placeholder="Password Confirmation" formControlName="passwordConfirm">
+          </mat-form-field>
+
+          <mat-hint *ngIf="!form.valid"><small>Please fill out all needed information</small></mat-hint>
+          <!-- <mat-error *ngIf="passwordConfirm.touched && form.hasError('passwordsNotMatching')">
+            <small>Passwords are not matching</small>
+          </mat-error> -->
+
+          <div class="button">
+            <button mat-button type="submit" [disabled]="!form.valid">Register</button>
+          </div>
+
+        </form>
+      </mat-card-content>
+
+    </mat-card>
+
+  </div>
+
+
 </div>
