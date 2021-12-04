@@ -1,0 +1,70 @@
+<div class="container">
+  <div>
+    <mat-card>
+      <mat-card-title>Register</mat-card-title>
+
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="register()">
+
+          <mat-form-field>
+            <mat-select placeholder="Select municipality..." formControlName="municipality"
+              (selectionChange)="getTowns($event.value)">
+              <mat-option *ngFor="let m of municipalities" [value]="m.id">{{m.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="municipality.touched && municipality.hasError('required')">Municipality is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Select town..." formControlName="town"
+              (selectionChange)="getSchools($event.value)">
+              <mat-option *ngFor="let t of towns" [value]="t.id">{{t.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="town.touched && town.hasError('required')">Town is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Select school..." formControlName="school">
+              <mat-option *ngFor="let sch of schools" [value]="sch.id">{{sch.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="school.touched && school.hasError('required')">School is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="email" placeholder="Email" formControlName="email">
+            <mat-error *ngIf="email.touched && email.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="email.touched && email.hasError('email')">Email must be valid</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" placeholder="Username" formControlName="username">
+            <mat-error *ngIf="username.touched && username.hasError('required')">Username is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="password" placeholder="Password" formControlName="password">
+            <mat-error *ngIf="password.touched && password.hasError('required')">Password is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="password" placeholder="Password Confirmation" formControlName="passwordConfirm">
+            <mat-error *ngIf="passwordConfirm.touched && passwordConfirm.hasError('required')">Password Confirmation is
+              required</mat-error>
+          </mat-form-field>
+
+          <mat-error *ngIf="passwordConfirm.touched && form.hasError('passwordsNotMatching')">
+            <small>Passwords are not matching</small></mat-error>
+          <mat-hint *ngIf="!form.valid"><small>Please fill out all needed information</small></mat-hint>
+
+          <div class="button">
+            <button mat-button type="submit" [disabled]="!form.valid">Register</button>
+          </div>
+
+        </form>
+
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+</div>
