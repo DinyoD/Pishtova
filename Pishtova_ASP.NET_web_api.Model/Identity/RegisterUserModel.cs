@@ -13,8 +13,6 @@
         [EmailAddress]
         public string Email { get; set; }
 
-        public string PictureUrl { get; set; }
-
         [Range(4, 12)]
         public int Grade { get; set; }
 

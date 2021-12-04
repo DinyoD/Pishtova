@@ -1,18 +1,22 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
 
     using Pishtova.Data.Model;
     using Pishtova_ASP.NET_web_api.Model.Identity;
+    using Pishtova_ASP.NET_web_api.Model.Result;
 
     public class IdentityController : ApiController
     {
@@ -28,42 +32,62 @@
         }
 
         [Route(nameof(Register))]
-        public async Task<ActionResult> Register(RegisterUserModel model)
+        public async Task<IActionResult> Register(RegisterUserModel model)
         {
+            var registerResult = new RegisterResult();
             var user = new User
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                PictureUrl = model.PictureUrl,
                 Grade = model.Grade,
                 SchoolId = model.SchoolId
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return Ok();
+                registerResult.ErrorsMessages = result.Errors.Select(x => x.Description).ToList();
+                return BadRequest(registerResult);
             }
-            return BadRequest(result.Errors);
+
+            //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            //var param = new Dictionary<string, string>
+            //                {
+            //                    {"token", token },
+            //                    {"email", user.Email }
+            //                };
+            //var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
+            //var message = new Message(new string[] { user.Email }, "Email Confirmation token", callback, null);
+            //await _emailSender.SendEmailAsync(message);
+
+            return StatusCode(201, registerResult);
         }
 
         [Route(nameof(Login))]
-        public async Task<ActionResult<string>> Login(LoginUserModel model)
+        public async Task<IActionResult> Login(LoginUserModel model)
         {
-
-            var user = await this.userManager.FindByNameAsync(model.UserName);
+            var loginResult = new LoginResult();
+            var user = await this.userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
             {
-                return Unauthorized();
+                loginResult.ErrorsMessages.Add("Sorry, your username and/or password do not match");
+                return Unauthorized(loginResult);
+            }
+
+            if (!await userManager.IsEmailConfirmedAsync(user))
+            {
+                loginResult.ErrorsMessages.Add("Sorry, your email is not confirmedh");
+                return Unauthorized(loginResult);
             }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
             if (!passwordValid)
             {
-                return Unauthorized();
+                loginResult.ErrorsMessages.Add("Sorry, your username and/or password do not match");
+                return Unauthorized(loginResult);
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -73,7 +97,7 @@
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id)
+                    new Claim(ClaimTypes.Email, user.Id)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(
@@ -82,9 +106,9 @@
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encryptedToken = tokenHandler.WriteToken(token);
+            loginResult.Token= tokenHandler.WriteToken(token);
 
-            return encryptedToken;
+            return Ok(loginResult);
         }
     }
 }
