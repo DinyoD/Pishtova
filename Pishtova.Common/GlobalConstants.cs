@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Pishtova.Common
+﻿namespace Pishtova.Common
 {
     public class GlobalConstants
     {
@@ -10,6 +8,6 @@ namespace Pishtova.Common
 
         public const string StudentRoleName = "Student";
 
-        public  ICollection<string> TownsName = new List<string> { "Plovdiv", "Varna", "Sofia"};
+        public const string SEND_GRIG_API_KEY = "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";
     }
 }

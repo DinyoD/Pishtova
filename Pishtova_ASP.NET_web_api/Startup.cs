@@ -18,8 +18,9 @@ namespace Pishtova_ASP.NET_web_api
     using Pishtova.Data.Seeding;
     using Pishtova.Services;
     using Pishtova.Services.Data;
+	using Pishtova.Services.Messaging;
 
-    public class Startup
+	public class Startup
     {
         private readonly IConfiguration configuration;
 
@@ -65,12 +66,14 @@ namespace Pishtova_ASP.NET_web_api
 
             services.AddControllers();
 
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
-            //});
+			//services.AddSwaggerGen(c =>
+			//{
+			//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
+			//});
 
-            services.AddTransient<IHellpers, Helpers>();
+			services.AddTransient<IEmailSender, SendGridEmailSender> ();
+
+			services.AddTransient<IHellpers, Helpers>();
             services.AddTransient<ITownService, TownService>();
             services.AddTransient<IMunicipalityService, MunicipalityService>();
             services.AddTransient<ISchoolService, SchoolService>();
