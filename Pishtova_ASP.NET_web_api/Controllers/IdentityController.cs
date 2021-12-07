@@ -22,15 +22,18 @@
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
+        private readonly IOptions<ApplicationSettings> applicationSettings1;
+        private readonly EmailSender emailSender;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettings,
-            EmailSender emailSender)
-            
+            EmailSender emailSender)          
         {
             this.userManager = userManager;
+            applicationSettings1 = applicationSettings;
+            this.emailSender = emailSender;
             this.applicationSettings = applicationSettings.Value;
         }
 
@@ -62,7 +65,7 @@
                             };
             var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
             var message = new Message(new string[] { user.Email }, "Email Confirmation token", callback, null);
-            await _emailSender.SendEmailAsync(message);
+            await this.emailSender.SendEmailAsync(message);
 
             return StatusCode(201, registerResult);
         }
