@@ -71,7 +71,7 @@ namespace Pishtova_ASP.NET_web_api
 			//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
 			//});
 
-			services.AddTransient<IEmailSender, SendGridEmailSender> ();
+			services.AddTransient<IEmailSender, EmailSender> ();
 
 			services.AddTransient<IHellpers, Helpers>();
             services.AddTransient<ITownService, TownService>();

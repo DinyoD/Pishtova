@@ -23,13 +23,14 @@ export class RegisterComponent implements OnInit  {
   selectedTownId: number = 0;
 
   form: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    username: new FormControl(null, [Validators.required]),
-    password: new FormControl(null, [Validators.required]),
-    passwordConfirm: new FormControl(null, [Validators.required]),
     municipality: new FormControl(null, [Validators.required]),
     town: new FormControl(null, [Validators.required]),
     school: new FormControl(null, [Validators.required]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    grade: new FormControl(null, [Validators.required]),
+    username: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
+    passwordConfirm: new FormControl(null, [Validators.required]),
   },
     { validators: CustomValidators.passwordsMatching }
   );
@@ -87,6 +88,10 @@ export class RegisterComponent implements OnInit  {
   }
   get school(): FormControl {
     return this.form.get('school') as FormControl;
+  }
+
+  get grade(): FormControl {
+    return this.form.get('grade') as FormControl;
   }
 
   sortName(x: string, y: string): number{

@@ -15,6 +15,7 @@
     using Microsoft.IdentityModel.Tokens;
 
     using Pishtova.Data.Model;
+    using Pishtova.Services.Messaging;
     using Pishtova_ASP.NET_web_api.Model.Identity;
     using Pishtova_ASP.NET_web_api.Model.Result;
 
@@ -25,7 +26,9 @@
 
         public IdentityController(
             UserManager<User> userManager,
-            IOptions<ApplicationSettings> applicationSettings)
+            IOptions<ApplicationSettings> applicationSettings,
+            EmailSender emailSender)
+            
         {
             this.userManager = userManager;
             this.applicationSettings = applicationSettings.Value;
@@ -51,15 +54,15 @@
                 return BadRequest(registerResult);
             }
 
-            //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            //var param = new Dictionary<string, string>
-            //                {
-            //                    {"token", token },
-            //                    {"email", user.Email }
-            //                };
-            //var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
-            //var message = new Message(new string[] { user.Email }, "Email Confirmation token", callback, null);
-            //await _emailSender.SendEmailAsync(message);
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            var param = new Dictionary<string, string>
+                            {
+                                {"token", token },
+                                {"email", user.Email }
+                            };
+            var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
+            var message = new Message(new string[] { user.Email }, "Email Confirmation token", callback, null);
+            await _emailSender.SendEmailAsync(message);
 
             return StatusCode(201, registerResult);
         }

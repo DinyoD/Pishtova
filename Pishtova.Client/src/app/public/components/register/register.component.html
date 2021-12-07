@@ -38,6 +38,11 @@
           </mat-form-field>
 
           <mat-form-field>
+            <input matInput type="number" min="4" max="12" placeholder="Select grade..." formControlName="grade">
+            <mat-error *ngIf="grade.touched && grade.hasError('required')">Grade is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
             <input matInput type="text" placeholder="Username" formControlName="username">
             <mat-error *ngIf="username.touched && username.hasError('required')">Username is required</mat-error>
           </mat-form-field>
