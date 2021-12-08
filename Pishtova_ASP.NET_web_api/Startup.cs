@@ -64,14 +64,17 @@ namespace Pishtova_ASP.NET_web_api
                         };
                     });
 
+			services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
+            });
+            var emailConfig = this.configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender, EmailSender>();
+
             services.AddControllers();
-
-			//services.AddSwaggerGen(c =>
-			//{
-			//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
-			//});
-
-			services.AddTransient<IEmailSender, EmailSender> ();
 
 			services.AddTransient<IHellpers, Helpers>();
             services.AddTransient<ITownService, TownService>();
@@ -93,8 +96,8 @@ namespace Pishtova_ASP.NET_web_api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pishtova_ASP.NET_web_api v1"));
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pishtova_ASP.NET_web_api v1"));
             }
 
             app.UseHttpsRedirection();

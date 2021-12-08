@@ -22,7 +22,6 @@
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
-        private readonly IOptions<ApplicationSettings> applicationSettings1;
         private readonly EmailSender emailSender;
         private readonly ApplicationSettings applicationSettings;
 
@@ -32,7 +31,6 @@
             EmailSender emailSender)          
         {
             this.userManager = userManager;
-            applicationSettings1 = applicationSettings;
             this.emailSender = emailSender;
             this.applicationSettings = applicationSettings.Value;
         }

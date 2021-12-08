@@ -8,11 +8,11 @@
 
     public class EmailSender : IEmailSender
     {
-        private readonly EmailConfiguration _emailConfig;
+        private readonly EmailConfiguration emailConfig;
 
         public EmailSender(EmailConfiguration emailConfig)
         {
-            _emailConfig = emailConfig;
+            this.emailConfig = emailConfig;
         }
 
         public void SendEmail(Message message)
@@ -32,7 +32,7 @@
         private MimeMessage CreateEmailMessage(Message message)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.From.Add(new MailboxAddress(this.emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
 
@@ -63,9 +63,9 @@
             {
                 try
                 {
-                    client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
+                    client.Connect(this.emailConfig.SmtpServer, this.emailConfig.Port, true);
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
+                    client.Authenticate(this.emailConfig.UserName, this.emailConfig.Password);
 
                     client.Send(mailMessage);
                 }
@@ -88,9 +88,9 @@
             {
                 try
                 {
-                    await client.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
+                    await client.ConnectAsync(this.emailConfig.SmtpServer, this.emailConfig.Port, true);
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);
+                    await client.AuthenticateAsync(this.emailConfig.UserName, this.emailConfig.Password);
 
                     await client.SendAsync(mailMessage);
                 }
