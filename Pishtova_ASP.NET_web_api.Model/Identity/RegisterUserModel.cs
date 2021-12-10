@@ -7,7 +7,7 @@
         [Required]
         [RegularExpression("^[A-Za-z_0-9]+$")]
         [StringLength(10, MinimumLength = 3)]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [EmailAddress]

@@ -5,6 +5,7 @@ namespace Pishtova_ASP.NET_web_api
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -35,13 +36,13 @@ namespace Pishtova_ASP.NET_web_api
 
             services
                 .AddIdentity<User, Role>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddEntityFrameworkStores<PishtovaDbContext>();
-                //.AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<PishtovaDbContext>()
+                .AddDefaultTokenProviders();
 
             var applicationSettingsConfiguration = this.configuration.GetSection("ApplicationSettings");
             services.Configure<ApplicationSettings>(applicationSettingsConfiguration);
 
-            var emailConfiguration = this.configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            var emailConfiguration = this.configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>(); 
 
             var appSettings = applicationSettingsConfiguration.Get<ApplicationSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
@@ -71,9 +72,9 @@ namespace Pishtova_ASP.NET_web_api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
             });
 
-
             services.AddSingleton(emailConfiguration);
             services.AddScoped<IEmailSender, EmailSender>();
+
 			services.AddTransient<IHellpers, Helpers>();
             services.AddTransient<ITownService, TownService>();
             services.AddTransient<IMunicipalityService, MunicipalityService>();

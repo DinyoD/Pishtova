@@ -14,10 +14,10 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   createUser(user: UserForRegistration): Observable<Object>{
-    return this.httpClient.post(env.API_URL + 'register', user);
+    return this.httpClient.post(env.API_URL + '/identity/register', user);
   }
   confirmEmail(token: string, email: string): Observable<Object>{
-    return this.httpClient.post(env.API_URL + `emailconfirmation`,{
+    return this.httpClient.post(env.API_URL + `/identity/emailconfirmation`,{
       token: token,
       email: email
     })

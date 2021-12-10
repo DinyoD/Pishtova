@@ -13,6 +13,6 @@ export class MunicipalityService {
   constructor(private httpClient : HttpClient) { }
 
   getAllMunicipalities(): Observable<IMunicipality[]>{
-    return this.httpClient.get<IMunicipality[]>(evn.API_URL + 'municipalities/all');
+    return this.httpClient.get<IMunicipality[]>(evn.API_URL + '/municipalities/all');
   }
 }

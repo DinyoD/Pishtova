@@ -22,13 +22,13 @@
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
-        private readonly EmailSender emailSender;
+        private readonly IEmailSender emailSender;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettings,
-            EmailSender emailSender)          
+            IEmailSender emailSender)          
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
@@ -41,14 +41,14 @@
             var registerResult = new RegisterResult();
             var user = new User
             {
-                UserName = model.UserName,
+                Name = model.Name,
                 Email = model.Email,
+                UserName = model.Email,
                 Grade = model.Grade,
                 SchoolId = model.SchoolId
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);
-
             if (!result.Succeeded)
             {
                 registerResult.ErrorsMessages = result.Errors.Select(x => x.Description).ToList();

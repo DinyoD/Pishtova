@@ -30,9 +30,9 @@ export class RegisterComponent implements OnInit  {
     school: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
     grade: new FormControl(null, [Validators.required]),
-    username: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
     password: new FormControl(null, [Validators.required]),
-    passwordConfirm: new FormControl(null, [Validators.required]),
+    confirmPassword: new FormControl(null, [Validators.required]),
   },
     { validators: CustomValidators.passwordsMatching }
   );
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit  {
     private townService: TownService, 
     private schoolService: SchoolService,
     private userService: UserService,
-    private route: Router
+    //private route: Router
     ) {}
     
   ngOnInit(): void {   
@@ -59,20 +59,27 @@ export class RegisterComponent implements OnInit  {
 
   register = () => {
     if (this.form.valid) {
+      console.log(this.form.value);
+      
       const forValues = {...this.form.value}
       const user: UserForRegistration = {
-        username: forValues.username,
+        name: forValues.name,
         email: forValues.email,
         password: forValues.password,
         confirmPassword: forValues.confirmPassword,
         grade: forValues.grade,
-        schoolId: forValues.schoolId,
+        schoolId: forValues.school,
         clientURI: `http://localhost:4200/emailconfirmation`,
       }
-      this.userService.createUser(user).subscribe(()=>{
-        this.route.navigate(['/login']);
+      console.log(user);
+      
+      this.userService.createUser(user).subscribe((r)=>{
+        console.log('---result:---');        
+        console.log(r);       
       },
       error => {
+        console.log('---error:---');  
+        console.log(error);
         
       })
     }
@@ -81,14 +88,14 @@ export class RegisterComponent implements OnInit  {
   get email(): FormControl {
     return this.form.get('email') as FormControl;
   }
-  get username(): FormControl {
-    return this.form.get('username') as FormControl;
+  get name(): FormControl {
+    return this.form.get('name') as FormControl;
   }
   get password(): FormControl {
     return this.form.get('password') as FormControl;
   }
-  get passwordConfirm(): FormControl {
-    return this.form.get('passwordConfirm') as FormControl;
+  get confirmPassword(): FormControl {
+    return this.form.get('confirmPassword') as FormControl;
   }
   get municipality(): FormControl {
     return this.form.get('municipality') as FormControl;

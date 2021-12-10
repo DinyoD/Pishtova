@@ -4,9 +4,9 @@ export class CustomValidators {
 
   static passwordsMatching(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
-    const passwordConfirm = control.get('passwordConfirm')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
 
-    if ((password === passwordConfirm) && (password !== null && passwordConfirm !== null)) {
+    if ((password === confirmPassword) && (password !== null && confirmPassword !== null)) {
       return null;
     } else {
       return { passwordsNotMatching: true };
