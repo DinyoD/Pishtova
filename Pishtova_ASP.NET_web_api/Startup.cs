@@ -1,4 +1,3 @@
-
 namespace Pishtova_ASP.NET_web_api
 {
     using System.Text;
@@ -42,8 +41,11 @@ namespace Pishtova_ASP.NET_web_api
             var applicationSettingsConfiguration = this.configuration.GetSection("ApplicationSettings");
             services.Configure<ApplicationSettings>(applicationSettingsConfiguration);
 
+            var emailConfiguration = this.configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+
             var appSettings = applicationSettingsConfiguration.Get<ApplicationSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
 
             services
                 .AddAuthentication(auth =>
@@ -68,18 +70,16 @@ namespace Pishtova_ASP.NET_web_api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pishtova_ASP.NET_web_api", Version = "v1" });
             });
-            var emailConfig = this.configuration
-                .GetSection("EmailConfiguration")
-                .Get<EmailConfiguration>();
-            services.AddSingleton(emailConfig);
+
+
+            services.AddSingleton(emailConfiguration);
             services.AddScoped<IEmailSender, EmailSender>();
-
-            services.AddControllers();
-
 			services.AddTransient<IHellpers, Helpers>();
             services.AddTransient<ITownService, TownService>();
             services.AddTransient<IMunicipalityService, MunicipalityService>();
             services.AddTransient<ISchoolService, SchoolService>();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

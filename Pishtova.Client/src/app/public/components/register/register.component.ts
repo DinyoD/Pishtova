@@ -5,7 +5,9 @@ import { CustomValidators } from '../../_helpers/custom-validators';
 import { IMunicipality } from 'src/app/interfaces/municipality';
 import { ITown } from 'src/app/interfaces/town';
 import { ISchool } from 'src/app/interfaces/school';
-import { MunicipalityService, TownService, SchoolService } from 'src/app/services';
+import { MunicipalityService, TownService, SchoolService, UserService } from 'src/app/services';
+import { UserForRegistration } from 'src/app/interfaces/userForRegistration';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,15 +16,15 @@ import { MunicipalityService, TownService, SchoolService } from 'src/app/service
 })
 
 export class RegisterComponent implements OnInit  {
+
+  public errorMessage: string = '';
+  public showError: boolean = false;
   
-  municipalities?: Array<IMunicipality>;
-  towns?: Array<ITown>;
-  schools?: Array<ISchool> | null;
+  public municipalities?: Array<IMunicipality>;
+  public towns?: Array<ITown>;
+  public schools?: Array<ISchool> | null;
 
-  selectedMunicipalityId: number = 0;
-  selectedTownId: number = 0;
-
-  form: FormGroup = new FormGroup({
+  public form: FormGroup = new FormGroup({
     municipality: new FormControl(null, [Validators.required]),
     town: new FormControl(null, [Validators.required]),
     school: new FormControl(null, [Validators.required]),
@@ -34,15 +36,15 @@ export class RegisterComponent implements OnInit  {
   },
     { validators: CustomValidators.passwordsMatching }
   );
-
-  
   constructor(
     private municipalityService: MunicipalityService, 
     private townService: TownService, 
-    private schoolService: SchoolService
+    private schoolService: SchoolService,
+    private userService: UserService,
+    private route: Router
     ) {}
     
-  ngOnInit(): void {       
+  ngOnInit(): void {   
       this.municipalityService.getAllMunicipalities().subscribe(m => {this.municipalities = m.sort((a,b) => this.sortName(a.name, b.name))});
     }
     
@@ -55,16 +57,24 @@ export class RegisterComponent implements OnInit  {
     this.schoolService.getSchoolsByTownId(id).subscribe(sch => {this.schools = sch.sort((a,b) => this.sortName(a.name, b.name))});
   }
 
-  register() {
+  register = () => {
     if (this.form.valid) {
-      // this.userService.create({
-      //   email: this.email.value,
-      //   password: this.password.value,
-      //   username: this.username.value
-      // }).pipe(
-      //   tap(() => this.router.navigate(['../login']))
-      // ).subscribe();
-      console.log(this.form); 
+      const forValues = {...this.form.value}
+      const user: UserForRegistration = {
+        username: forValues.username,
+        email: forValues.email,
+        password: forValues.password,
+        confirmPassword: forValues.confirmPassword,
+        grade: forValues.grade,
+        schoolId: forValues.schoolId,
+        clientURI: `http://localhost:4200/emailconfirmation`,
+      }
+      this.userService.createUser(user).subscribe(()=>{
+        this.route.navigate(['/login']);
+      },
+      error => {
+        
+      })
     }
   }
 
