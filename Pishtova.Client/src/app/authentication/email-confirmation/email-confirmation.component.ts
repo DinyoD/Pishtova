@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services';
 })
 export class EmailConfirmationComponent implements OnInit {
 
-  public showSuccess: boolean = false;
+  public showSuccess: boolean = true;
   public showError: boolean = false;
   public errorMessage: string = '';
 
@@ -18,7 +18,9 @@ export class EmailConfirmationComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.confirmEmail();
+    console.log();
+    
+    //this.confirmEmail();
   }
 
   private confirmEmail = () => {

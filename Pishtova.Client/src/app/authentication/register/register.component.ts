@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CustomValidators } from '../../_helpers/custom-validators';
+import { CustomValidators } from '../../helpers/custom-validators';
 import { IMunicipality } from 'src/app/interfaces/municipality';
 import { ITown } from 'src/app/interfaces/town';
 import { ISchool } from 'src/app/interfaces/school';
