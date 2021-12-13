@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit  {
     private townService: TownService, 
     private schoolService: SchoolService,
     private userService: UserService,
-    //private route: Router
+    private route: Router
     ) {}
     
   ngOnInit(): void {   
@@ -59,29 +59,21 @@ export class RegisterComponent implements OnInit  {
 
   register = () => {
     if (this.form.valid) {
-      console.log(this.form.value);
-      
-      const forValues = {...this.form.value}
+      const formValues = {...this.form.value}
       const user: UserForRegistration = {
-        name: forValues.name,
-        email: forValues.email,
-        password: forValues.password,
-        confirmPassword: forValues.confirmPassword,
-        grade: forValues.grade,
-        schoolId: forValues.school,
+        name: formValues.name,
+        email: formValues.email,
+        password: formValues.password,
+        confirmPassword: formValues.confirmPassword,
+        grade: formValues.grade,
+        schoolId: formValues.school,
         clientURI: `http://localhost:4200/emailconfirmation`,
       }
       console.log(user);
       
-      this.userService.createUser(user).subscribe((r)=>{
-        console.log('---result:---');        
-        console.log(r);       
-      },
-      error => {
-        console.log('---error:---');  
-        console.log(error);
-        
-      })
+      this.userService.createUser(user).subscribe(()=>{
+        this.route.navigate(["/authentication/login"])
+      });
     }
   }
 

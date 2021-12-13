@@ -17,7 +17,8 @@
     using Pishtova.Data.Model;
     using Pishtova.Services.Messaging;
     using Pishtova_ASP.NET_web_api.Model.Identity;
-    using Pishtova_ASP.NET_web_api.Model.Result;
+    using Pishtova_ASP.NET_web_api.Model.OperationResult;
+    using Pishtova_ASP.NET_web_api.Model.Results;
 
     public class IdentityController : ApiController
     {
@@ -38,7 +39,7 @@
         [Route(nameof(Register))]
         public async Task<IActionResult> Register(RegisterUserModel model)
         {
-            var registerResult = new RegisterResult();
+            var registerResult = new VoidOperationResult();
             var user = new User
             {
                 Name = model.Name,
@@ -51,7 +52,7 @@
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                registerResult.ErrorsMessages = result.Errors.Select(x => x.Description).ToList();
+                registerResult.AddErrorMessages(result.Errors.Select(x => x.Description).ToList());
                 return BadRequest(registerResult);
             }
 
@@ -71,18 +72,18 @@
         [Route(nameof(Login))]
         public async Task<IActionResult> Login(LoginUserModel model)
         {
-            var loginResult = new LoginResult();
+            var loginResult = new OperationResult<LoginResult>();
             var user = await this.userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
             {
-                loginResult.ErrorsMessages.Add("Sorry, your username and/or password do not match");
+                loginResult.AddErrorMessage("Sorry, your username and/or password do not match");
                 return Unauthorized(loginResult);
             }
 
             if (!await userManager.IsEmailConfirmedAsync(user))
             {
-                loginResult.ErrorsMessages.Add("Sorry, your email is not confirmedh");
+                loginResult.AddErrorMessage("Sorry, your email is not confirmed");
                 return Unauthorized(loginResult);
             }
 
@@ -90,7 +91,7 @@
 
             if (!passwordValid)
             {
-                loginResult.ErrorsMessages.Add("Sorry, your username and/or password do not match");
+                loginResult.AddErrorMessage("Sorry, your username and/or password do not match");
                 return Unauthorized(loginResult);
             }
 
@@ -110,7 +111,7 @@
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            loginResult.Token= tokenHandler.WriteToken(token);
+            loginResult.SetData(new LoginResult{Token = tokenHandler.WriteToken(token)});
 
             return Ok(loginResult);
         }
@@ -118,13 +119,20 @@
         [HttpGet(nameof(EmailConfirmation))]
         public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
         {
+            var emailConfirmationResult = new VoidOperationResult();
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
-                return BadRequest("Invalid Email Confirmation Request");
+            {
+                emailConfirmationResult.AddErrorMessage("Invalid Email Confirmation Request");
+                return BadRequest(emailConfirmationResult);
+            }
 
             var confirmResult = await userManager.ConfirmEmailAsync(user, token);
             if (!confirmResult.Succeeded)
-                return BadRequest("Invalid Email Confirmation Request");
+            {
+                emailConfirmationResult.AddErrorMessage("Invalid Email Confirmation Request");
+                return BadRequest(emailConfirmationResult);
+            }
 
             return Ok();
         }

@@ -18,9 +18,7 @@ export class EmailConfirmationComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    console.log();
-    
-    //this.confirmEmail();
+    this.confirmEmail();
   }
 
   private confirmEmail = () => {
@@ -28,8 +26,6 @@ export class EmailConfirmationComponent implements OnInit {
 
     const token = this.route.snapshot.queryParams['token'];
     const email = this.route.snapshot.queryParams['email'];
-
-    console.log(token);
 
     this.userService.confirmEmail(token, email)
     .subscribe(() => {

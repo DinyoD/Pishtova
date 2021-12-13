@@ -1,11 +1,10 @@
-import GlobalConstants from '../common/GlobalConstants.en';
 import { IVoidOperationResult } from '../operationResult/IOperationResult';
 
-const generalErrorMessage = GlobalConstants.errorMessages.loginForm.generalLoginError;
+const generalErrorMessage = '123456';
 
 export function setErrors(operationResult: IVoidOperationResult, errorResponse: any): void {
-    const userFriendlyErrorMessage =
-        errorResponse?.response?.data[GlobalConstants.userFriendlyMessageKey];
+    const userFriendlyErrorMessage = ''
+        //errorResponse?.response?.data[GlobalConstants.userFriendlyMessageKey];
     if (userFriendlyErrorMessage) {
         operationResult.addErrorMessage(userFriendlyErrorMessage);
     } else {
