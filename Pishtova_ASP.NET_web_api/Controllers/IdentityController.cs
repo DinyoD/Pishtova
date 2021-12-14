@@ -72,27 +72,27 @@
         [Route(nameof(Login))]
         public async Task<IActionResult> Login(LoginUserModel model)
         {
-            var loginResult = new OperationResult<LoginResult>();
+            //var loginOperationResult = new OperationResult<ILoginResult>();
             var user = await this.userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
             {
-                loginResult.AddErrorMessage("Sorry, your username and/or password do not match");
-                return Unauthorized(loginResult);
+                ///loginOperationResult.AddErrorMessage("Sorry, your username and/or password do not match");
+                return StatusCode(401, new ErrorResult { Error = "Sorry, your username and/or password do not match" });
             }
 
             if (!await userManager.IsEmailConfirmedAsync(user))
             {
-                loginResult.AddErrorMessage("Sorry, your email is not confirmed");
-                return Unauthorized(loginResult);
+                //loginOperationResult.AddErrorMessage("Sorry, your email is not confirmed");
+                return StatusCode(401, new ErrorResult { Error = "Sorry, your email is not confirmed" });
             }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
             if (!passwordValid)
             {
-                loginResult.AddErrorMessage("Sorry, your username and/or password do not match");
-                return Unauthorized(loginResult);
+                ///loginOperationResult.AddErrorMessage("Sorry, your username and/or password do not match");
+                return StatusCode(401, new ErrorResult { Error = "Sorry, your username and / or password do not match" });
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -111,13 +111,13 @@
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            loginResult.SetData(new LoginResult{Token = tokenHandler.WriteToken(token)});
+            //loginOperationResult.SetData(new LoginResult{Token = tokenHandler.WriteToken(token)});
 
-            return Ok(loginResult);
+            return StatusCode(200, new LoginResult { Token = tokenHandler.WriteToken(token) });
         }
 
         [HttpGet(nameof(EmailConfirmation))]
-        public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
+        public async Task<ActionResult<IVoidOperationResult>> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
         {
             var emailConfirmationResult = new VoidOperationResult();
             var user = await userManager.FindByEmailAsync(email);
@@ -134,7 +134,7 @@
                 return BadRequest(emailConfirmationResult);
             }
 
-            return Ok();
+            return StatusCode(200, emailConfirmationResult);
         }
     }
 }

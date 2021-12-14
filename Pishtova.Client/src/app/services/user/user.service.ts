@@ -5,7 +5,8 @@ import { CustomEncoder } from 'src/app/helpers/custom-encoder';
 import { UserForLogin } from 'src/app/interfaces/userForLogin';
 
 import { UserForRegistration } from 'src/app/interfaces/userForRegistration';
-import { IOperationResult} from '../../operationResult/IOperationResult';
+//import { IOperationResult } from 'src/app/operationResult/IOperationResult';
+//import { OperationResult } from 'src/app/operationResult/OperationResult';
 import { environment as env } from 'src/environments/environment';
 
 @Injectable({
@@ -15,13 +16,12 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public createUser = (user: UserForRegistration): Observable<Object> => {
+  public createUser = (user: UserForRegistration) => {
     return this.httpClient.post<UserForRegistration>(env.API_URL + '/identity/register', user);
   }
 
-  public login = (user: UserForLogin): Observable<Object> => {
-      return this.httpClient.post(env.API_URL + `/identity/login`, user);
-    
+  public login = (user: UserForLogin) => {
+    return this.httpClient.post<ILoginResult>(env.API_URL + `/identity/login`, user)
   }
 
   public confirmEmail = (token: string, email: string): Observable<Object> => {
@@ -31,4 +31,6 @@ export class UserService {
       return this.httpClient.get(env.API_URL + `/identity/emailconfirmation`,{ params: params})
   }
 }
-
+interface ILoginResult {
+  token: string;
+}

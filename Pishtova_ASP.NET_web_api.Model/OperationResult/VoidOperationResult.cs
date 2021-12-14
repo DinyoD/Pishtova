@@ -2,7 +2,18 @@
 {
     using System.Collections.Generic;
 
-    public class VoidOperationResult
+    public interface IVoidOperationResult
+    {
+        public ICollection<string> GetErrorMessages { get; }
+
+        public bool AddErrorMessage(string errorMessage);
+
+        public bool AddErrorMessages(ICollection<string> errorMessages);
+
+        public bool IsSuccessful { get; }
+    }
+
+    public class VoidOperationResult : IVoidOperationResult
     {
         private readonly ICollection<string> ErrorMessages;
         public VoidOperationResult()
@@ -26,8 +37,6 @@
             }
             return true;
         }
-        public bool IsSuccessful(){
-            return this.ErrorMessages.Count == 0;
-        } 
+        public bool IsSuccessful => this.ErrorMessages.Count == 0;
     }
 }

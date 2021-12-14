@@ -1,6 +1,13 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.OperationResult
 {
-    public class OperationResult<T> : VoidOperationResult
+    public interface IOperationResult<T>
+    {
+        public void SetData(T value);
+
+        public T GetData { get; }
+    }
+
+    public class OperationResult<T> : VoidOperationResult, IOperationResult<T>
     {
         private T Data;
 
@@ -8,9 +15,7 @@
         {
             this.Data = value;
         }
-        public T GetData()
-        {
-            return this.Data;
-        }
+
+        public T GetData => this.Data;
     }
 }

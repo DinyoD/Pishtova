@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit  {
       console.log(user);
       
       this.userService.createUser(user).subscribe(()=>{
-        this.route.navigate(["/authentication/login"])
+        this.route.navigate(['/auth/login'])
       });
     }
   }

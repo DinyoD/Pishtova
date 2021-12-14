@@ -31,9 +31,9 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatSelectModule,
     RouterModule.forChild([
-      { path: 'register', component: RegisterComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'emailconfirmation', component: EmailConfirmationComponent },
+      { path: 'auth/register', component: RegisterComponent },
+      { path: 'auth/login', component: LoginComponent },
+      { path: 'auth/emailconfirmation', component: EmailConfirmationComponent },
       //{ path: 'forgotpassword', component: ForgotPasswordComponent },
       //{ path: 'resetpassword', component: ResetPasswordComponent },
     ])

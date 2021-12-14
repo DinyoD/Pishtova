@@ -11,6 +11,9 @@ import { UserService } from 'src/app/services';
 })
 export class LoginComponent {
 
+  public errorMessage: string = '';
+  public showError: boolean = false;
+
   public form: FormGroup = new FormGroup({
 
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -21,6 +24,7 @@ export class LoginComponent {
     private userService: UserService,
     private route: Router
   ) { }
+  
 
   login(){
     const formValues = {...this.form.value}
@@ -28,14 +32,15 @@ export class LoginComponent {
       email: formValues.email,
       password: formValues.password
     }
-    this.userService.login(user)
-    .subscribe((a) => {
-      console.log(a);
-      
-    }, err =>{
-      console.log(err);
-      
+   this.userService.login(user)
+    .subscribe(res => {
+      localStorage.setItem('token', res.token)
+      this.route.navigate(['/'])
+    }, err => {
+      this.showError = true;
+      this.errorMessage = err.error.error;
     });
+
   }
 
   get email(): FormControl {
