@@ -17,7 +17,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   public createUser = (user: UserForRegistration) => {
-    return this.httpClient.post<UserForRegistration>(env.API_URL + '/identity/register', user);
+    return this.httpClient.post(env.API_URL + '/identity/register', user);
   }
 
   public login = (user: UserForLogin) => {

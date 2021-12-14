@@ -34,7 +34,11 @@ export class RegisterComponent implements OnInit  {
     password: new FormControl(null, [Validators.required]),
     confirmPassword: new FormControl(null, [Validators.required]),
   },
-    { validators: CustomValidators.passwordsMatching }
+    { validators: [
+      CustomValidators.passwordsMatching, 
+      CustomValidators.passwordMatchingRegEx, 
+      CustomValidators.nameMatchingRegEx
+    ] }
   );
   constructor(
     private municipalityService: MunicipalityService, 
@@ -67,12 +71,16 @@ export class RegisterComponent implements OnInit  {
         confirmPassword: formValues.confirmPassword,
         grade: formValues.grade,
         schoolId: formValues.school,
-        clientURI: `http://localhost:4200/emailconfirmation`,
+        clientURI: `http://localhost:4200/auth/emailconfirmation`,
       }
       console.log(user);
       
-      this.userService.createUser(user).subscribe(()=>{
+      this.userService.createUser(user)
+      .subscribe(()=>{
         this.route.navigate(['/auth/login'])
+      }, err => {
+        this.showError = true;
+        this.errorMessage = err.error.message ?  err.error.message : 'The form is not fullfiled correctly!';
       });
     }
   }

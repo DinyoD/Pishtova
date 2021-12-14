@@ -2,10 +2,10 @@
 {
     public interface IErrorResult
     {
-        public string Error { get; set; }
+        public string Message { get; set; }
     }
     public class ErrorResult : IErrorResult
     {
-        public string Error { get; set; }
+        public string Message { get; set; }
     }
 }

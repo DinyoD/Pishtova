@@ -37,9 +37,12 @@
         }
 
         [Route(nameof(Register))]
-        public async Task<IActionResult> Register(RegisterUserModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterUserModel model)
         {
-            var registerResult = new VoidOperationResult();
+            if (model == null)
+            {
+                return StatusCode(400, new ErrorResult { Message = "The form is not fulfilled correctly!" });
+            }
             var user = new User
             {
                 Name = model.Name,
@@ -52,8 +55,8 @@
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                registerResult.AddErrorMessages(result.Errors.Select(x => x.Description).ToList());
-                return BadRequest(registerResult);
+                var errors = result.Errors.Select(x => x.Description).ToList();
+                return StatusCode(400, new ErrorResult { Message = errors[0] });
             }
 
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -66,11 +69,11 @@
             var message = new Message(new string[] { user.Email }, "Email Confirmation token", callback, null);
             await this.emailSender.SendEmailAsync(message);
 
-            return StatusCode(201, registerResult);
+            return StatusCode(201);
         }
 
         [Route(nameof(Login))]
-        public async Task<IActionResult> Login(LoginUserModel model)
+        public async Task<IActionResult> Login([FromBody] LoginUserModel model)
         {
             //var loginOperationResult = new OperationResult<ILoginResult>();
             var user = await this.userManager.FindByEmailAsync(model.Email);
@@ -78,13 +81,13 @@
             if (user == null)
             {
                 ///loginOperationResult.AddErrorMessage("Sorry, your username and/or password do not match");
-                return StatusCode(401, new ErrorResult { Error = "Sorry, your username and/or password do not match" });
+                return StatusCode(401, new ErrorResult { Message = "Sorry, your username and/or password do not match" });
             }
 
             if (!await userManager.IsEmailConfirmedAsync(user))
             {
                 //loginOperationResult.AddErrorMessage("Sorry, your email is not confirmed");
-                return StatusCode(401, new ErrorResult { Error = "Sorry, your email is not confirmed" });
+                return StatusCode(401, new ErrorResult { Message = "Sorry, your email is not confirmed" });
             }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
@@ -92,7 +95,7 @@
             if (!passwordValid)
             {
                 ///loginOperationResult.AddErrorMessage("Sorry, your username and/or password do not match");
-                return StatusCode(401, new ErrorResult { Error = "Sorry, your username and / or password do not match" });
+                return StatusCode(401, new ErrorResult { Message = "Sorry, your username and / or password do not match" });
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();

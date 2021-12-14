@@ -38,7 +38,7 @@ export class LoginComponent {
       this.route.navigate(['/'])
     }, err => {
       this.showError = true;
-      this.errorMessage = err.error.error;
+      this.errorMessage = err.error.message;
     });
 
   }

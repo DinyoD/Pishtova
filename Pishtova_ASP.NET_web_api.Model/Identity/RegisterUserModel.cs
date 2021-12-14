@@ -5,8 +5,8 @@
     public class RegisterUserModel
     {
         [Required]
-        [RegularExpression("^[A-Za-z_0-9]+$")]
-        [StringLength(10, MinimumLength = 3)]
+        [RegularExpression("^[\\S]+$")]
+        [StringLength(25, MinimumLength = 3)]
         public string Name { get; set; }
 
         [Required]
@@ -21,7 +21,8 @@
         public string ClientURI { get; set; }
 
         [Required]
-        [StringLength(10, MinimumLength = 6)]
+        [RegularExpression("^[\\S]+$")]
+        [StringLength(30, MinimumLength = 8)]
         public string Password { get; set; }
     }
 }
