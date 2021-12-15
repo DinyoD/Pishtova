@@ -1,0 +1,12 @@
+mat-toolbar-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  img {
+    width: 44px;
+    height: 44px;
+  }
+  mat-icon {
+    align-items: center;
+  }
+}

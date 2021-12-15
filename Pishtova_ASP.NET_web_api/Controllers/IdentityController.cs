@@ -75,18 +75,15 @@
         [Route(nameof(Login))]
         public async Task<IActionResult> Login([FromBody] LoginUserModel model)
         {
-            //var loginOperationResult = new OperationResult<ILoginResult>();
             var user = await this.userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
             {
-                ///loginOperationResult.AddErrorMessage("Sorry, your username and/or password do not match");
                 return StatusCode(401, new ErrorResult { Message = "Sorry, your username and/or password do not match" });
             }
 
             if (!await userManager.IsEmailConfirmedAsync(user))
             {
-                //loginOperationResult.AddErrorMessage("Sorry, your email is not confirmed");
                 return StatusCode(401, new ErrorResult { Message = "Sorry, your email is not confirmed" });
             }
 
@@ -94,7 +91,6 @@
 
             if (!passwordValid)
             {
-                ///loginOperationResult.AddErrorMessage("Sorry, your username and/or password do not match");
                 return StatusCode(401, new ErrorResult { Message = "Sorry, your username and / or password do not match" });
             }
 
@@ -114,30 +110,26 @@
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            //loginOperationResult.SetData(new LoginResult{Token = tokenHandler.WriteToken(token)});
 
             return StatusCode(200, new LoginResult { Token = tokenHandler.WriteToken(token) });
         }
 
         [HttpGet(nameof(EmailConfirmation))]
-        public async Task<ActionResult<IVoidOperationResult>> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
+        public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
         {
-            var emailConfirmationResult = new VoidOperationResult();
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                emailConfirmationResult.AddErrorMessage("Invalid Email Confirmation Request");
-                return BadRequest(emailConfirmationResult);
+                return StatusCode(400, new ErrorResult { Message = "Invalid Email Confirmation Request" });
             }
 
             var confirmResult = await userManager.ConfirmEmailAsync(user, token);
             if (!confirmResult.Succeeded)
             {
-                emailConfirmationResult.AddErrorMessage("Invalid Email Confirmation Request");
-                return BadRequest(emailConfirmationResult);
+                return StatusCode(400, new ErrorResult { Message = "The form is not fulfilled correctly!" });
             }
 
-            return StatusCode(200, emailConfirmationResult);
+            return StatusCode(200);
         }
     }
 }

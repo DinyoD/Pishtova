@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(226, 222, 222);
+  padding: 25.05vh 0;
+
+  mat-card {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 34vh;
+    display: flex;
+
+    mat-card-content {
+      display: flex;
+      height: inherit;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
