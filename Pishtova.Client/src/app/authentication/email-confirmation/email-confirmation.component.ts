@@ -33,7 +33,9 @@ export class EmailConfirmationComponent implements OnInit {
     },
     error => {
       this.showError = true;
-      this.errorMessage = error;
+ 
+      this.errorMessage = error.error?.massage ? error.error.mrssage : 'Invalid Email Confirmation Request';
+      ;
     })
   }
 

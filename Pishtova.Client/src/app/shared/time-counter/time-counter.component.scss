@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 200px;
+  .box {
+    max-height: 80%;
+    width: 45px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
+  .value,
+  .label {
+    margin: 0;
+    text-align: center;
+    height: 26px;
+  }
+  .value {
+    font-size: 26px;
+    padding-bottom: 0;
+  }
+  .label {
+    font-size: 10px;
+  }
+}
