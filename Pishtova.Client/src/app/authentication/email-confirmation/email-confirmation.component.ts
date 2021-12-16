@@ -21,6 +21,7 @@ export class EmailConfirmationComponent implements OnInit {
     this.confirmEmail();
   }
 
+  // TODO display error message on BG depends on responce status code!!!!
   private confirmEmail = () => {
     this.showError = this.showSuccess = false;
 

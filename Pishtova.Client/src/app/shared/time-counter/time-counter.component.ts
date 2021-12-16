@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-time-counter',
@@ -14,7 +14,7 @@ export class TimeCounterComponent {
   hours: string = '';
   min: string = '';
   sec: string = '';
-  timeIsOverResult : string  = 'The time is over!';
+  timeIsOverResult : string  = 'Времето е изтекло!';
   timeIsOver: boolean = false;
 
   counter = setInterval(() => {

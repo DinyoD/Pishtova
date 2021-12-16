@@ -60,7 +60,9 @@ export class RegisterComponent implements OnInit  {
   getSchools(id: number){
     this.schoolService.getSchoolsByTownId(id).subscribe(sch => {this.schools = sch.sort((a,b) => this.sortName(a.name, b.name))});
   }
+  
 
+  // TODO display error message on BG depends on responce status code!!!!
   register = () => {
     if (this.form.valid) {
       const formValues = {...this.form.value}
@@ -77,7 +79,7 @@ export class RegisterComponent implements OnInit  {
       
       this.userService.createUser(user)
       .subscribe(()=>{
-        this.route.navigate(['/auth/login'])
+        this.route.navigate(['/'])
       }, err => {
         this.showError = true;
         this.errorMessage = err.error.message ?  err.error.message : 'The form is not fullfiled correctly!';

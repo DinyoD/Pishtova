@@ -1,5 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 body {
+  background-color: rgb(228, 218, 207);
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  box-sizing: border-box;
+  font-size: 16px;
+  app-root {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .header,
+  .footer {
+    background-color: rgb(201, 183, 162);
+  }
 }

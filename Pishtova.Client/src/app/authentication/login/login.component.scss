@@ -1,27 +1,23 @@
 .container {
   display: flex;
   justify-content: center;
-  background-color: rgb(226, 222, 222);
-  padding: 25vh 0;
-
   mat-card {
     mat-card-content {
       form {
         display: flex;
         flex-direction: column;
         width: 600px;
-        height: 30vh;
+        height: 20vh;
         display: flex;
         justify-content: space-around;
         mat-form-field {
           width: 100%;
-          height: 45px;
+          height: 30px;
           input {
             width: 100%;
-            height: 30px;
+            height: 20px;
           }
         }
-
         .button {
           display: flex;
           justify-content: flex-end;

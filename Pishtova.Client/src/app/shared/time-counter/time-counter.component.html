@@ -1,22 +1,22 @@
 <div *ngIf="timeIsOver == false" class="container">
   <div class="box">
     <p class="value">{{days}}</p>
-    <p class="label">days</p>
+    <p class="label">дни</p>
   </div>
   <div class="box">
     <p class="value">{{hours}}</p>
-    <p class="label">hours</p>
+    <p class="label">часове</p>
   </div>
   <div class="box">
     <p class="value">{{min}}</p>
-    <p class="label">minutes</p>
+    <p class="label">минути</p>
   </div>
   <div class="box">
     <p class="value">{{sec}}</p>
-    <p class="label">seconds</p>
+    <p class="label">секунди</p>
   </div>
 </div>
 
-<div *ngIf="timeIsOver" class="message">
-  <p>{{timeIsOverResult}}</p>
+<div *ngIf="timeIsOver" class="container">
+  <p class="label">{{timeIsOverResult}}</p>
 </div>
