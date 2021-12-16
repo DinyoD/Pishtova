@@ -25,7 +25,7 @@ export class LoginComponent {
     private route: Router
   ) { }
   
-  
+
   // TODO display error message on BG depends on responce status code!!!!
   login(){
     const formValues = {...this.form.value}
@@ -36,7 +36,7 @@ export class LoginComponent {
    this.userService.login(user)
     .subscribe(res => {
       localStorage.setItem('token', res.token)
-      this.route.navigate(['/'])
+      this.route.navigate(['/main'])
     }, err => {
       this.showError = true;
       this.errorMessage = err.error.message;

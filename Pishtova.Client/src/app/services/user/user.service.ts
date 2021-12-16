@@ -5,9 +5,9 @@ import { CustomEncoder } from 'src/app/helpers/custom-encoder';
 import { UserForLogin } from 'src/app/interfaces/userForLogin';
 
 import { UserForRegistration } from 'src/app/interfaces/userForRegistration';
-//import { IOperationResult } from 'src/app/operationResult/IOperationResult';
-//import { OperationResult } from 'src/app/operationResult/OperationResult';
+import  ILoginResult  from '../../interfaces/results/LoginResult';
 import { environment as env } from 'src/environments/environment';
+import { IForgotPassword } from 'src/app/interfaces/forgotPassword';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,8 @@ export class UserService {
     params = params.append('email', email);
       return this.httpClient.get(env.API_URL + `/identity/emailconfirmation`,{ params: params})
   }
-}
-interface ILoginResult {
-  token: string;
+
+  public forgotPassword(body: IForgotPassword) {
+    return this.httpClient.post(env.API_URL + '/identity/forgotpassword', body);
+  }
 }

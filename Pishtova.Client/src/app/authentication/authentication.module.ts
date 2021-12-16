@@ -12,13 +12,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmailConfirmationComponent } from '../authentication/email-confirmation/email-confirmation.component';
 import { RouterModule } from '@angular/router';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
   declarations: [    
     RegisterComponent,
     LoginComponent,
-    EmailConfirmationComponent
+    EmailConfirmationComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
@@ -34,14 +38,16 @@ import { RouterModule } from '@angular/router';
       { path: 'auth/register', component: RegisterComponent },
       { path: 'auth/login', component: LoginComponent },
       { path: 'auth/emailconfirmation', component: EmailConfirmationComponent },
-      //{ path: 'forgotpassword', component: ForgotPasswordComponent },
-      //{ path: 'resetpassword', component: ResetPasswordComponent },
+      { path: 'auth/forgotpassword', component: ForgotPasswordComponent },
+      { path: 'auth/resetpassword', component: ResetPasswordComponent },
     ])
   ],
   exports: [ 
     RegisterComponent,
     LoginComponent,
-    EmailConfirmationComponent
+    EmailConfirmationComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ]
 
 })

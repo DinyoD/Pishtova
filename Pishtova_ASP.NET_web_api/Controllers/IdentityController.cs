@@ -131,5 +131,32 @@
 
             return StatusCode(200);
         }
+
+        [HttpPost(nameof(ForgotPassword))]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return StatusCode(400, new ErrorResult { Message = "Your email is not correct!" });
+            }
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var param = new Dictionary<string, string>
+            {
+                {"token", token },
+                {"email", model.Email }
+            };
+
+            var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
+
+            var message = new Message(new string[] { model.Email }, "Reset password token", callback, null);
+            await emailSender.SendEmailAsync(message);
+
+            return StatusCode(200);
+        }
     }
 }
