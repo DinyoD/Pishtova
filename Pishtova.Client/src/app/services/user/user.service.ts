@@ -8,6 +8,7 @@ import { UserForRegistration } from 'src/app/interfaces/userForRegistration';
 import  ILoginResult  from '../../interfaces/results/LoginResult';
 import { environment as env } from 'src/environments/environment';
 import { IForgotPassword } from 'src/app/interfaces/forgotPassword';
+import { IResetPassword } from 'src/app/interfaces/resetPassword';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,9 @@ export class UserService {
 
   public forgotPassword(body: IForgotPassword) {
     return this.httpClient.post(env.API_URL + '/identity/forgotpassword', body);
+  }
+
+  public resetPassword (body: IResetPassword){
+    return this.httpClient.post(env.API_URL + '/identity/resetpassword', body)
   }
 }

@@ -1,13 +1,12 @@
 .container {
   display: flex;
   justify-content: center;
-  padding: 25vh 0;
 
   mat-card {
+    padding: 30px;
     display: flex;
     flex-direction: column;
-    width: 600px;
-    height: 34vh;
+    width: 540px;
     display: flex;
 
     mat-card-content {
@@ -15,6 +14,7 @@
       height: inherit;
       justify-content: center;
       align-items: center;
+      height: 20vh;
     }
   }
 }

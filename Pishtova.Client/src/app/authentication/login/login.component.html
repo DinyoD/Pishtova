@@ -15,6 +15,9 @@
             <input matInput type="password" placeholder="Парола" formControlName="password">
             <mat-error *ngIf="password.touched && password.hasError('required')">Паролата е зъдължителна</mat-error>
           </mat-form-field>
+
+          <mat-hint *ngIf="!form.valid"><small>Please fill out all needed information</small></mat-hint>
+
           <div class="button">
             <button mat-button type="submit" [disabled]="!form.valid">Вход</button>
           </div>

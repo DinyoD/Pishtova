@@ -135,9 +135,6 @@
         [HttpPost(nameof(ForgotPassword))]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
@@ -157,6 +154,27 @@
             await emailSender.SendEmailAsync(message);
 
             return StatusCode(200);
+        }
+
+        [HttpPost(nameof(ResetPassword))]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            var user = await userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                return StatusCode(400, new ErrorResult { Message = "Your email is not correct!" });
+            }
+
+            var resetPassResult = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                var errors = resetPassResult.Errors.Select(e => e.Description).ToList();
+
+                return StatusCode(400, new ErrorResult { Message = errors[0] });
+            }
+
+            return Ok();
         }
     }
 }

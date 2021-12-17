@@ -1,6 +1,6 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors } from "@angular/forms";
 
-export class RegexConstants {
+class RegexConstants {
   public static password = /^[\S]{8,30}$/;
   public static username = /^[\S]{3,30}$/;
 }
@@ -36,5 +36,4 @@ export class CustomValidators {
       return { nameNotMatchingRegEx: true };
     }
   }
-
 }

@@ -36,7 +36,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatSelectModule,
     RouterModule.forChild([
       { path: 'auth/register', component: RegisterComponent },
-      { path: 'auth/login', component: LoginComponent },
+      //{ path: 'auth/login', component: LoginComponent },
       { path: 'auth/emailconfirmation', component: EmailConfirmationComponent },
       { path: 'auth/forgotpassword', component: ForgotPasswordComponent },
       { path: 'auth/resetpassword', component: ResetPasswordComponent },
