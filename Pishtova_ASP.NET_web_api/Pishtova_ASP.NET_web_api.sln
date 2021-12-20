@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Data.Models", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "..\Sandbox\Sandbox.csproj", "{101B8538-FE0F-44DE-A65D-D1271906428F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pishtova.Services.Messaging", "..\Pishtova.Services.Messaging\Pishtova.Services.Messaging.csproj", "{1D6FA798-33ED-4D43-ADA1-85027859DE47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Services.Messaging", "..\Pishtova.Services.Messaging\Pishtova.Services.Messaging.csproj", "{1D6FA798-33ED-4D43-ADA1-85027859DE47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectHelper", "..\ProjectHelper\ProjectHelper.csproj", "{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{1D6FA798-33ED-4D43-ADA1-85027859DE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D6FA798-33ED-4D43-ADA1-85027859DE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D6FA798-33ED-4D43-ADA1-85027859DE47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{907650FC-EA24-4B97-A020-84B7A0ECB16F} = {4B70FB13-840D-49B7-A569-C0664C384E63}
 		{101B8538-FE0F-44DE-A65D-D1271906428F} = {E204E0C8-42F3-45D9-B2EE-4B5EDBEB6BE5}
 		{1D6FA798-33ED-4D43-ADA1-85027859DE47} = {5F1183CA-C846-454A-89D2-6752B422617F}
+		{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A} = {E204E0C8-42F3-45D9-B2EE-4B5EDBEB6BE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B0BC324-96DB-40F5-9B84-C63DDC0AD376}
