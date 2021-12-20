@@ -1,6 +1,6 @@
 ﻿namespace Pishtova.Services.Models
 {
-    public class SchoolsDTO
+    public class SchoolDTO
     {
         public string Name { get; set; }
 

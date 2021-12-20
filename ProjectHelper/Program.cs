@@ -8,7 +8,7 @@
         {
             var fbHelper = new FirebaseHelper(SandBoxConstants.AuthSecret, SandBoxConstants.BasePath);
 
-            var result = fbHelper.GetSubjectInfo(@"test_bulgarian");
+            var result = fbHelper.Get_BG_SubjectInfo(@"test_bulgarian");
 
             Console.WriteLine();
         }

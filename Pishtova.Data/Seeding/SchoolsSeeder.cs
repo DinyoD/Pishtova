@@ -10,7 +10,6 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using Pishtova.Data.Model;
-    using Pishtova.Data.Common;
     using Pishtova.Services;
     using Pishtova.Services.Models;
 
@@ -24,13 +23,13 @@
             }
             var helpers = serviceProvider.GetRequiredService<IHellpers>();
             var schoolString = File.ReadAllText(@"C:\Users\Dinyo\Desktop\Pishtova-docs\schools.txt");
-            var allSchoolsByTownAndMunicipality = helpers.ExtrackAllSchoolsbyTownsAndMunicipality(schoolString);
+            var allSchoolsByTownAndMunicipality = helpers.ExtractAllSchoolsbyTownsAndMunicipality(schoolString);
             await SeedSchoolAsync(dbContext, allSchoolsByTownAndMunicipality);
         }
 
         private async Task SeedSchoolAsync(
             PishtovaDbContext dbContext, 
-            ICollection<SchoolsDTO> allSchoolsByTownAndMunicipality
+            ICollection<SchoolDTO> allSchoolsByTownAndMunicipality
             )
         {
             foreach (var school in allSchoolsByTownAndMunicipality)

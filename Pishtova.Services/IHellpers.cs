@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     public interface IHellpers
     {
-        ICollection<SchoolsDTO> ExtrackAllSchoolsbyTownsAndMunicipality(string schoolsText);
+        ICollection<SchoolDTO> ExtractAllSchoolsbyTownsAndMunicipality(string schoolsText);
+
+        SubjectDTO Extract_BG_SubjectProblems(string firebaseCollectionName);
     }
 }

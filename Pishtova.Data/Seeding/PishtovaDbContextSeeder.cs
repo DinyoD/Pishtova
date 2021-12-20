@@ -21,6 +21,7 @@
             var seeders = new List<ISeeder>
                           {
                               new SchoolsSeeder(),
+                              //new ProblemsSeeder()
                           };
 
             foreach (var seeder in seeders)
