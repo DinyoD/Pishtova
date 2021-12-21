@@ -6,6 +6,8 @@
     {
         ICollection<SchoolDTO> ExtractAllSchoolsbyTownsAndMunicipality(string schoolsText);
 
-        SubjectDTO Extract_BG_SubjectProblems(string firebaseCollectionName);
+        SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName);
+
+        SubjectDTO Create_Bg_SubjectDTO(string firebaseCollectionName);
     }
 }

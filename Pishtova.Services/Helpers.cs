@@ -1,7 +1,8 @@
 ﻿namespace Pishtova.Services
 {
     using System.Collections.Generic;
-
+    using System.Linq;
+    using Pishtova.Common;
     using Pishtova.Services.Models;
     using ProjectHelper;
     using Sandbox;
@@ -40,33 +41,141 @@
             return schoolsCollection;
         }
 
-        public SubjectDTO ExtractSubjectProblems(string firebaseCollectionName)
+        public SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName)
+        {
+            var subjectInfo = ExtractSubjectProblems(firebaseCollectionName);
+            var subjectName = GlobalConstants.BiologyBgName;
+
+            ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
+            for (int i = 0; i < subjectInfo.Count; i++)
+            {
+                var categoryInfo = subjectInfo[i];
+                if (categoryInfo == null)
+                {
+                    continue;
+                }
+                ICollection<ProblemDTO> problems = new List<ProblemDTO>();
+                for (int j = 0; j < categoryInfo.Count; j++)
+                {
+                    var problemInfo = categoryInfo[j];
+                    if (problemInfo == null)
+                    {
+                        continue;
+                    }
+                    var problem = new ProblemDTO
+                    {
+                        QuestionText = problemInfo[0],
+                        Answers = new List<AnswerDTO>{
+                            new AnswerDTO { Text = problemInfo[1], IsCorrect = problemInfo[1] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[2], IsCorrect = problemInfo[2] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[3], IsCorrect = problemInfo[3] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[4], IsCorrect = problemInfo[4] == problemInfo[5] }
+                        },
+                        Hint = problemInfo.Count > 6 && !string.IsNullOrWhiteSpace(problemInfo[6]) ? problemInfo[6] : null,
+                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) ? problemInfo[7] : null,
+                    };
+                    problems.Add(problem);
+                }
+                var categoryName = GlobalConstants.BiologyCategoriesName[i];
+
+                var category = new SubjectCategoryDTO
+                {
+                    Name = categoryName,
+                    Problems = problems
+                };
+                categories.Add(category);
+            }
+
+            return new SubjectDTO
+            {
+                Name = subjectName,
+                Categories = categories
+            };
+        }
+
+        public SubjectDTO Create_Bg_SubjectDTO(string firebaseCollectionName)
+        {
+            var subjectInfo = Extract_Bg_SubjectProblems(firebaseCollectionName);
+            var subjectName = GlobalConstants.BulgarianBgName;
+
+            ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
+            foreach (var kvp in subjectInfo)
+            {
+                var categoryInfo = kvp.Value;
+                if (categoryInfo == null)
+                {
+                    continue;
+                }
+                ICollection<ProblemDTO> problems = new List<ProblemDTO>();
+                for (int j = 0; j < categoryInfo.Count; j++)
+                {
+                    var problemInfo = categoryInfo[j];
+                    if (problemInfo == null)
+                    {
+                        continue;
+                    }
+                    var problem = new ProblemDTO
+                    {
+                        QuestionText = problemInfo[0],
+                        Answers = new List<AnswerDTO>{
+                            new AnswerDTO { Text = problemInfo[1], IsCorrect = problemInfo[1] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[2], IsCorrect = problemInfo[2] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[3], IsCorrect = problemInfo[3] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[4], IsCorrect = problemInfo[4] == problemInfo[5] }
+                        },
+                        Hint = problemInfo.Count > 6 && !string.IsNullOrWhiteSpace(problemInfo[6]) ? problemInfo[6] : null,
+                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) ? problemInfo[7] : null,
+                    };
+                    problems.Add(problem);
+                }
+
+                var categoryName = GlobalConstants.BulgarianCategoriesName[int.Parse(kvp.Key)];
+                var currentCategory = categories.FirstOrDefault(x => x.Name == categoryName);
+                if (currentCategory != null)
+                {
+                    foreach (var problem in problems)
+                    {
+                        currentCategory.Problems.Add(problem);
+                    }
+                }
+                else
+                {
+                    currentCategory = new SubjectCategoryDTO
+                    {
+                        Name = categoryName,
+                        Problems = problems
+                    };
+                    categories.Add(currentCategory);
+
+                }
+            }
+
+            return new SubjectDTO
+            {
+                Name = subjectName,
+                Categories = categories
+            };
+        }
+
+
+        private static List<List<List<string>>> ExtractSubjectProblems(string firebaseCollectionName)
         {
             var fbHelper = new FirebaseHelper(SandBoxConstants.AuthSecret, SandBoxConstants.BasePath);
 
             var subjectInfo = fbHelper.GetSubjectInfoFromFirebase(firebaseCollectionName);
 
-            return createSubjectDTO(subjectInfo);
+            return subjectInfo;
         }
 
-        public SubjectDTO Extract_BG_SubjectProblems(string firebaseCollectionName)
+        private static Dictionary<string, List<List<string>>> Extract_Bg_SubjectProblems(string firebaseCollectionName)
         {
             var fbHelper = new FirebaseHelper(SandBoxConstants.AuthSecret, SandBoxConstants.BasePath);
 
             var subjectInfo = fbHelper.Get_BG_SubjectInfoFromFirebase(firebaseCollectionName);
 
-            return create_BG_SubjectDTO(subjectInfo);
+            return subjectInfo;
         }
 
-        private SubjectDTO createSubjectDTO(List<List<List<string>>> subjectInfo)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private SubjectDTO create_BG_SubjectDTO(Dictionary<string, List<List<string>>> subjectInfo)
-        {
-            throw new System.NotImplementedException();
-        }
 
         private static string FixName(string name)
         {

@@ -13,7 +13,7 @@
             this.Answers = new HashSet<Answer>();
         }
 
-        public string PictureId { get; set; }
+        public string PictureUrl { get; set; }
 
         public int SubjectCategoryId { get; set; }
 

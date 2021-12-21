@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pishtova.Common\Pishtova.Common.csproj" />
     <ProjectReference Include="..\Pishtova.Services.Models\Pishtova.Services.Models.csproj" />
+    <ProjectReference Include="..\ProjectHelper\ProjectHelper.csproj" />
+    <ProjectReference Include="..\Sandbox\Sandbox.csproj" />
   </ItemGroup>
 
 </Project>
