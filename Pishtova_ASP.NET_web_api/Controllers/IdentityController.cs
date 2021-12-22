@@ -17,7 +17,6 @@
     using Pishtova.Data.Model;
     using Pishtova.Services.Messaging;
     using Pishtova_ASP.NET_web_api.Model.Identity;
-    using Pishtova_ASP.NET_web_api.Model.OperationResult;
     using Pishtova_ASP.NET_web_api.Model.Results;
 
     public class IdentityController : ApiController
@@ -36,6 +35,7 @@
             this.applicationSettings = applicationSettings.Value;
         }
 
+        // TODO Implement Pishtova status-code
         [Route(nameof(Register))]
         public async Task<IActionResult> Register([FromBody] RegisterUserModel model)
         {

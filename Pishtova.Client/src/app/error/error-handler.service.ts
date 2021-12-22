@@ -23,6 +23,7 @@ export class ErrorHandlerService implements HttpInterceptor {
     )
   }
 
+  // TODO Add BG error message after check Pishtova status-code
   private handleError = (error: HttpErrorResponse) : string => {
     if(error.status === 404) {
       return this.handleNotFound(error);
@@ -31,7 +32,7 @@ export class ErrorHandlerService implements HttpInterceptor {
       return this.handleBadRequest(error);
     }
     else if(error.status === 401) {
-      return this.handleUnauthorized(error);
+      return this.handleUnauthorized();
     }
     else if(error.status === 403) {
       return this.handleForbidden(error);
@@ -44,14 +45,12 @@ export class ErrorHandlerService implements HttpInterceptor {
     return "Forbidden";
   }
 
-  private handleUnauthorized = (error: HttpErrorResponse) => {
-    if(this._router.url === '/') {
-      return error.error.errorMessage;
-    }
-    else {
+  private handleUnauthorized = () => {
+    if(this._router.url !== '/') {
+      
       this._router.navigate(['/'], { queryParams: { returnUrl: this._router.url }});
-      return error.message;
     }
+    return 'Вашата парола и/или имейл не са правилни!';
   }
 
   private handleNotFound = (error: HttpErrorResponse): string => {

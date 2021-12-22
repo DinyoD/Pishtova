@@ -38,9 +38,9 @@ export class LoginComponent {
       localStorage.setItem('token', res.token)
       this.userService.sendAuthStateChangeNotification(res.token != null)
       this.route.navigate(['/main'])
-    }, (err: { error: { message: string; }; }) => {
+    }, (err) => {
       this.showError = true;
-      this.errorMessage = err.error.message;
+      this.errorMessage = err;
     });
 
   }

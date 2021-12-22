@@ -8,28 +8,34 @@ import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { MainScreenComponent } from './main-screen/main-screen.component';
 import { RouterModule } from '@angular/router';
+import { AuthGuard } from '../guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    MainScreenComponent
+    MainScreenComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
     MatToolbarModule,
     MatIconModule,
+    MatCardModule,
     SharedModule,
     AppRoutingModule,
     RouterModule.forChild([
-      { path: 'main', component: MainScreenComponent },
-
+      { path: 'main', component: MainScreenComponent, canActivate: [AuthGuard] },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     ])
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
-    MainScreenComponent
+    MainScreenComponent,
+    ProfileComponent
   ]
 })
 export class CoreModule { }

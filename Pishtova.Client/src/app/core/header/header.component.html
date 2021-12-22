@@ -1,11 +1,15 @@
 <mat-toolbar class="header">
   <mat-toolbar-row>
-    <a routerLink="/">
+    <a routerLink="/main">
       <mat-icon>home</mat-icon>
     </a>
     <!-- <img src="../../../assets/icons/favicon.ico"> -->
-    <a *ngIf="isUserAuthenticated">
+    <a (click)="changesChowModal()">
       <mat-icon>account_circle</mat-icon>
+      <mat-card *ngIf="showModale">
+        <a routerLink="/auth/register" class="btn"><span>Профил</span></a>
+        <a routerLink="/auth/register" class="btn"><span>Отписване</span></a>
+      </mat-card>
     </a>
   </mat-toolbar-row>
 </mat-toolbar>

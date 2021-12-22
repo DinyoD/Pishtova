@@ -9,7 +9,7 @@ import  ILoginResult  from '../../interfaces/results/LoginResult';
 import { environment as env } from 'src/environments/environment';
 import { IForgotPassword } from 'src/app/interfaces/auth/forgotPassword';
 import { IResetPassword } from 'src/app/interfaces/auth/resetPassword';
-//import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient, 
-    //private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService
     ) { }
 
   public createUser = (user: UserForRegistration): Observable<Object> => {
@@ -59,7 +59,6 @@ export class UserService {
 
   public isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem("token");
-    return token != null;
-    // return token != null && !this.jwtHelper.isTokenExpired(token);
+    return token != null && !this.jwtHelper.isTokenExpired(token);
   }
 }
