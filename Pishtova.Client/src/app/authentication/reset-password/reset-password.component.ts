@@ -1,4 +1,4 @@
-import { IResetPassword } from '../../interfaces/resetPassword';
+import { IResetPassword } from '../../interfaces/auth/resetPassword';
 import { ActivatedRoute } from '@angular/router';
 import { CustomValidators } from '../../helpers/custom-validators';
 import { UserService } from '../../services/user/user.service';

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Pishtova.Common;
     using Pishtova.Services.Models;
     using ProjectHelper;
@@ -17,7 +18,7 @@
 
             foreach (var item in collection)
             {
-                if (!item.ToLower().Contains("детск") && !item.Contains("ДГ"))
+                if (!item.ToLower().Contains("детск") && !item.Contains("ДГ") && !item.ToLower().Contains("център") && !item.ToLower().Contains("градина") && !item.ToLower().Contains("общежитие"))
                 {
                     var schoolProps = item.Split(",");
 
@@ -31,7 +32,7 @@
                             },
                             Name = FixName(schoolProps[3]),
                         },
-                        Name = FixName(schoolProps[5]),
+                        Name = FixSchoolName(schoolProps[5]),
                     };
 
                     schoolsCollection.Add(school);
@@ -181,6 +182,60 @@
         {
             var result = name.Trim('"');
             return result;
+        }
+
+        private static string FixSchoolName(string name)
+        {
+            var result = name.Trim('"');
+            if (!result.Contains(" \""))
+            {
+                result = result.Replace("\"", " \"");
+            }
+            if (result.Contains("\" "))
+            {
+                result = result.Replace("\" ", "\"");
+            }
+            if (result.Contains("св."))
+            {
+                result = result.Replace("св.", "Св.");
+            }
+            if (result.Contains("\""))
+            {
+                result += "\"";
+            }
+            if (result.Contains("ноучили"))
+            {
+                result = result.Replace("ноучили", "но учили");
+            }
+            if (result.Contains("назияпо"))
+            {
+                result = result.Replace("назияпо", "назия по");
+            }
+            if (!result.Contains(" по "))
+            {
+                result = result.Replace(" по", " по ");
+            }
+            result = AddSpacesToSentence(result);
+            if (result.Contains("\" "))
+            {
+                result = result.Replace("\" ", "\"");
+            }
+            return result;
+        }
+
+        private static string AddSpacesToSentence(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return "";
+            StringBuilder newText = new StringBuilder(text.Length * 2);
+            newText.Append(text[0]);
+            for (int i = 1; i < text.Length; i++)
+            {
+                if (char.IsUpper(text[i]) && text[i - 1] != ' ' && !char.IsUpper(text[i - 1]) )
+                    newText.Append(' ');
+                newText.Append(text[i]);
+            }
+            return newText.ToString();
         }
     }
 }

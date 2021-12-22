@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserForLogin } from 'src/app/interfaces/userForLogin';
+import { UserForLogin } from 'src/app/interfaces/auth/userForLogin';
 import { UserService } from 'src/app/services';
 
 @Component({
@@ -34,10 +34,11 @@ export class LoginComponent {
       password: formValues.password
     }
    this.userService.login(user)
-    .subscribe(res => {
+    .subscribe((res: { token: string; }) => {
       localStorage.setItem('token', res.token)
+      this.userService.sendAuthStateChangeNotification(res.token != null)
       this.route.navigate(['/main'])
-    }, err => {
+    }, (err: { error: { message: string; }; }) => {
       this.showError = true;
       this.errorMessage = err.error.message;
     });

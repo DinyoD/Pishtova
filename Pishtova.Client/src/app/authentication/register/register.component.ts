@@ -6,7 +6,7 @@ import { IMunicipality } from 'src/app/interfaces/municipality';
 import { ITown } from 'src/app/interfaces/town';
 import { ISchool } from 'src/app/interfaces/school';
 import { MunicipalityService, TownService, SchoolService, UserService } from 'src/app/services';
-import { UserForRegistration } from 'src/app/interfaces/userForRegistration';
+import { UserForRegistration } from 'src/app/interfaces/auth/userForRegistration';
 import { Router } from '@angular/router';
 
 @Component({

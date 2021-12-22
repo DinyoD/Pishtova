@@ -4,7 +4,7 @@
       <mat-icon>home</mat-icon>
     </a>
     <!-- <img src="../../../assets/icons/favicon.ico"> -->
-    <a>
+    <a *ngIf="isUserAuthenticated">
       <mat-icon>account_circle</mat-icon>
     </a>
   </mat-toolbar-row>

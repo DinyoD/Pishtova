@@ -1,4 +1,4 @@
-import { IForgotPassword } from '../../interfaces/forgotPassword';
+import { IForgotPassword } from '../../interfaces/auth/forgotPassword';
 import { UserService } from '../../services/user/user.service';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
