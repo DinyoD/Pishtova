@@ -1,21 +1,58 @@
-mat-toolbar-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  img {
-    width: 60px;
-    height: 60px;
+.header {
+  position: relative;
+  mat-toolbar-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 2;
+    // img {
+    //   width: 60px;
+    //   height: 60px;
+    // }
+    mat-icon,
+    .icon {
+      align-content: center;
+      font-size: 44px;
+      height: 44px;
+      width: 44px;
+      color: rgb(226, 222, 222);
+      text-decoration: none;
+    }
+    mat-icon:hover {
+      color: white;
+      cursor: pointer;
+    }
   }
-  mat-icon,
-  a {
-    align-content: center;
-    font-size: 44px;
-    height: 44px;
-    width: 44px;
-    color: rgb(226, 222, 222);
-  }
-  mat-icon:hover {
-    color: white;
-    cursor: pointer;
+  .modal {
+    position: absolute;
+    top: 70px;
+    right: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 10px;
+    height: 72px;
+    width: 120px;
+    .modal-field {
+      width: 120px;
+      height: 32px;
+      text-decoration: none;
+      border: rgb(201, 183, 162) solid 0.3px;
+      border-radius: 5px;
+      .modal-field-text {
+        text-align: center;
+        margin: 0;
+        font-size: 18px;
+        color: rgb(201, 183, 162);
+      }
+    }
+    .modal-field:hover {
+      .modal-field-text {
+        color: white;
+        font-size: 20px;
+      }
+      cursor: pointer;
+      background-color: rgb(201, 183, 162);
+    }
   }
 }

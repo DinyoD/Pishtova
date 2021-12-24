@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { UserService } from 'src/app/services';
 
 @Component({
@@ -6,11 +6,15 @@ import { UserService } from 'src/app/services';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit, OnChanges{
   showModale: boolean = false;
   isAuth: boolean = false;
 
   constructor(private cd: ChangeDetectorRef, private userService : UserService ) {}
+
+  ngOnChanges(): void {
+    this.cd.detectChanges();
+  }
 
   ngOnInit(): void {
     this.isAuth = this.userService.isUserAuthenticated();
@@ -18,8 +22,10 @@ export class HeaderComponent implements OnInit{
 
   changesChowModal(){
     this.showModale = !this.showModale;
-    this.cd.detectChanges();
-    console.log(this.showModale);
-    
+    console.log(this.showModale);   
+  }
+
+  hideModal(){
+    this.showModale = false;
   }
 }
