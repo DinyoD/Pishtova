@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./app/utilities/colors/colors.scss";
+
 body {
-  background-color: rgb(228, 218, 207);
+  background-color: $primary;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   box-sizing: border-box;
@@ -14,6 +16,6 @@ body {
   }
   .header,
   .footer {
-    background-color: rgb(201, 183, 162);
+    background-color: $secondary;
   }
 }

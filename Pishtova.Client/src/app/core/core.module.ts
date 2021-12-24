@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatCardModule,
     SharedModule,
+    MatMenuModule,
     AppRoutingModule,
     RouterModule.forChild([
       { path: 'main', component: MainScreenComponent, canActivate: [AuthGuard] },
