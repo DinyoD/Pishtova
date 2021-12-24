@@ -3,16 +3,16 @@
     <a class="icon" routerLink="/main" (click)="hideModal()">
       <mat-icon>home</mat-icon>
     </a>
-    <!-- <img src="../../../assets/icons/favicon.ico"> -->
-    <a class="icon" (click)="changesChowModal()">
+    <img *ngIf="isAuth" src="../../../assets/icons/favicon.ico">
+    <a *ngIf="isAuth" class="icon" (click)="changesChowModal()">
       <mat-icon>account_circle</mat-icon>
     </a>
   </mat-toolbar-row>
-  <div class="modal" *ngIf="showModale && isAuth">
+  <div class="modal" *ngIf="showModale">
     <a class="modal-field" routerLink="/profile" (click)="hideModal()">
       <p class="modal-field-text">Профил</p>
     </a>
-    <a class="modal-field" routerLink="/auth/register" (click)="hideModal()">
+    <a class="modal-field" (click)="handleSignOut()">
       <p class="modal-field-text">Отписване</p>
     </a>
   </div>

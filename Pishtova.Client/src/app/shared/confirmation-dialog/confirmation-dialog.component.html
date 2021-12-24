@@ -1,1 +1,10 @@
-<p>confirmation-dialog works!</p>
+<mat-card class="dialog-container">
+  <mat-card-title>
+    {{text}}
+  </mat-card-title>
+
+  <div class="dialog-btn-container">
+    <button class="btn green" (click)="onDismiss()">Отказ</button>
+    <button class="btn red" (click)="onConfirm()">Отписване</button>
+  </div>
+</mat-card>

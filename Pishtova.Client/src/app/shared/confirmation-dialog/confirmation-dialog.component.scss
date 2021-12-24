@@ -1,0 +1,42 @@
+@import "../../utilities/colors/colors.scss";
+
+.dialog-container {
+  background-color: $primary;
+  width: 400px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  mat-card-title {
+    text-align: center;
+    color: $secondary;
+  }
+  .dialog-btn-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    button {
+      width: 120px;
+      height: 40px;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: $secondary;
+      background-color: $white;
+      border-radius: 4px;
+    }
+    .btn:hover {
+      width: 124px;
+      height: 44px;
+      font-size: 19px;
+      font-weight: bold;
+    }
+    .red:hover {
+      color: $red;
+    }
+    .green:hover {
+      color: $green;
+    }
+  }
+}

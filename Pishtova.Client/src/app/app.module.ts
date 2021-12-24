@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CoreModule } from './core/core.module';
 import { ErrorHandlerService } from './error/error-handler.service';
+import { MatDialogModule } from '@angular/material/dialog';
 //import { NotFoundComponent } from './error/error-screens/not-found/not-found.component';
 
 export function tokenGetter() {
@@ -25,6 +26,7 @@ export function tokenGetter() {
     AppRoutingModule,
     HttpClientModule,
     AuthenticationModule,
+    MatDialogModule,
     CoreModule,
     JwtModule.forRoot({
       config: {

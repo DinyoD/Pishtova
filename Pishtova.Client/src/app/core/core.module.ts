@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { MainScreenComponent } from './main-screen/main-screen.component';
 import { RouterModule } from '@angular/router';
-import { AuthGuard } from '../guards/auth.guard';
+import { ForAuthenticatedUserGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -29,8 +29,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatMenuModule,
     AppRoutingModule,
     RouterModule.forChild([
-      { path: 'main', component: MainScreenComponent, canActivate: [AuthGuard] },
-      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+      { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard] },
     ])
   ],
   exports: [
