@@ -1,4 +1,4 @@
-export interface ISchool{
+export interface TownModel{
     id: number;
     name: string;
 }

@@ -1,7 +1,7 @@
-import { IResetPassword } from '../../interfaces/auth/resetPassword';
+import { ResetPasswordModel } from '../../models/resetPassword';
 import { ActivatedRoute } from '@angular/router';
 import { CustomValidators } from '../../helpers/custom-validators';
-import { UserService } from '../../services/user/user.service';
+import { UserService } from '../../../services/user/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -38,7 +38,7 @@ export class ResetPasswordComponent implements OnInit {
 
   public resetPassword = () => {
     const formValue = { ... this.form.value };
-    const resetPassDto: IResetPassword = {
+    const resetPassDto: ResetPasswordModel = {
       password: formValue.password,
       confirmPassword: formValue.confirm,
       token: this.token,

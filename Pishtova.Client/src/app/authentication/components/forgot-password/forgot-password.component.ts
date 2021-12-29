@@ -1,5 +1,5 @@
-import { IForgotPassword } from '../../interfaces/auth/forgotPassword';
-import { UserService } from '../../services/user/user.service';
+import { ForgotPasswordModel } from '../../models/forgotPassword';
+import { UserService } from '../../../services/user/user.service';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -30,7 +30,7 @@ export class ForgotPasswordComponent {
 
   public forgotPassword = () => {
     const formValues = { ...this.form.value };
-    const forgotPassDto: IForgotPassword = {
+    const forgotPassDto: ForgotPasswordModel = {
       email: formValues.email,
       clientURI: 'http://localhost:4200/auth/resetpassword'
     }

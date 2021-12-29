@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CustomValidators } from '../../helpers/custom-validators';
-import { IMunicipality } from 'src/app/interfaces/municipality';
-import { ITown } from 'src/app/interfaces/town';
-import { ISchool } from 'src/app/interfaces/school';
+import { MunicipalityModel } from 'src/app/models/municipality';
+import { TownModel } from 'src/app/models/town';
+import { SchoolModel } from 'src/app/models/school';
 import { MunicipalityService, TownService, SchoolService, UserService } from 'src/app/services';
-import { UserForRegistration } from 'src/app/interfaces/auth/userForRegistration';
+import { UserForRegistrationModel } from '../../models/userForRegistration';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,9 +20,9 @@ export class RegisterComponent implements OnInit  {
   public errorMessage: string = '';
   public showError: boolean = false;
   
-  public municipalities?: Array<IMunicipality>;
-  public towns?: Array<ITown>;
-  public schools?: Array<ISchool> | null;
+  public municipalities?: Array<MunicipalityModel>;
+  public towns?: Array<TownModel>;
+  public schools?: Array<SchoolModel> | null;
 
   public form: FormGroup = new FormGroup({
     municipality: new FormControl(null, [Validators.required]),
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit  {
   register = () => {
     if (this.form.valid) {
       const formValues = {...this.form.value}
-      const user: UserForRegistration = {
+      const user: UserForRegistrationModel = {
         name: formValues.name,
         email: formValues.email,
         password: formValues.password,
@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit  {
       }
       console.log(user);
       
-      this.userService.createUser(user)
+      this.userService.register(user)
       .subscribe(()=>{
         this.route.navigate(['/'])
       }, err => {

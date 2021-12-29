@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserForLogin } from 'src/app/interfaces/auth/userForLogin';
+import { UserForLoginModel } from '../../models/userForLogin';
 import { UserService } from 'src/app/services';
 
 @Component({
@@ -29,7 +29,7 @@ export class LoginComponent {
   // TODO display error message on BG depends on responce status code!!!!
   login(){
     const formValues = {...this.form.value}
-    const user: UserForLogin = {
+    const user: UserForLoginModel = {
       email: formValues.email,
       password: formValues.password
     }

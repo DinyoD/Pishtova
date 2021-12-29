@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IMunicipality } from 'src/app/interfaces/municipality';
+import { MunicipalityModel } from 'src/app/models/municipality';
 import { environment as evn } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class MunicipalityService {
 
   constructor(private httpClient : HttpClient) { }
 
-  getAllMunicipalities(): Observable<IMunicipality[]>{
-    return this.httpClient.get<IMunicipality[]>(evn.API_URL + '/municipalities/all');
+  getAllMunicipalities(): Observable<MunicipalityModel[]>{
+    return this.httpClient.get<MunicipalityModel[]>(evn.API_URL + '/municipalities/all');
   }
 }

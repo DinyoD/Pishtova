@@ -6,7 +6,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthenticationModule } from './authentication/components/authentication.module';
 import { CoreModule } from './core/core.module';
 import { ErrorHandlerService } from './error/error-handler.service';
 import { MatDialogModule } from '@angular/material/dialog';

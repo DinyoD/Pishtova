@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import { UserService } from '../services';
+import { UserService } from '../../services';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ForAuthenticatedUserGuard implements CanActivate {
+
+export class ForUnauthenticatedUserGuard implements CanActivate {
 
   constructor(
     private userService: UserService,
@@ -17,10 +18,10 @@ export class ForAuthenticatedUserGuard implements CanActivate {
     state: RouterStateSnapshot
     ) {
       
-    if (this.userService.isUserAuthenticated()) {
+    if (!this.userService.isUserAuthenticated()) {
       return true;
     }
-    this.router.navigate(['/'], { queryParams: { returnUrl: state.url } })
+    this.router.navigate(['/main'])
     return false;
   }
   

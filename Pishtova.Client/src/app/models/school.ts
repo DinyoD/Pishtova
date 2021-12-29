@@ -1,4 +1,4 @@
-export interface IMunicipality{
+export interface SchoolModel{
     id: number;
     name: string;
 }

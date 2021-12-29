@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
-import { ForUnauthenticatedUserGuard } from './guards/unauth.guard';
+import { ForUnauthenticatedUserGuard } from './authentication/guards/unauth.guard';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
