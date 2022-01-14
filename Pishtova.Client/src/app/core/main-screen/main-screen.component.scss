@@ -1,6 +1,55 @@
+@import "../../utilities/colors/colors.scss";
+$box_size: calc((100vh - 200px) * 0.4);
+$icon_size: calc(((100vh - 200px) * 0.4) * 0.7);
+
 .container {
   width: 100vw;
-  height: calc(100vh - 2 * 64px -50px);
+  height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
+  .boxes-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .box {
+      width: $box_size;
+      height: $box_size;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 0.1px solid $secondary;
+      border-radius: 5px;
+      cursor: pointer;
+      mat-icon {
+        color: $secondary;
+        font-size: $icon_size;
+        width: $icon_size;
+        height: $icon_size;
+      }
+      p {
+        color: $secondary;
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+
+    .box:hover {
+      background-color: $secondary;
+      mat-icon {
+        color: $icon;
+      }
+      p {
+        color: $icon;
+        font-size: 32px;
+        margin: 18px 0;
+        font-weight: normal;
+      }
+    }
+  }
 }

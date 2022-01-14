@@ -23,9 +23,10 @@
     }
   }
   .link:hover {
+    cursor: pointer;
     background-color: $secondary;
     span {
-      color: $white;
+      color: $icon;
       font-size: 28px;
     }
   }

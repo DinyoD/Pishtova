@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SubjectModel } from 'src/app/models/subject';
+import { SubjectService} from '../../services';
 
 @Component({
   selector: 'app-main-screen',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainScreenComponent implements OnInit {
 
-  constructor() { }
+
+  public subjects: SubjectModel[] = []
+
+  constructor(private subjectService: SubjectService, private router : Router) { }
 
   ngOnInit(): void {
+    this.subjectService.getAllSubjects().subscribe(
+      s => this.subjects = s
+    );
   }
 
+  goToSubject(subjectId: number){
+      this.router.navigate([`/subject/${subjectId}`]);
+  }
 }

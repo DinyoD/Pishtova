@@ -35,21 +35,28 @@
     flex-direction: column;
     justify-content: space-between;
     font-size: 10px;
-    height: 106px;
+    height: 96px;
     width: 200px;
 
     .modal-field {
-      height: 50px;
+      height: 45px;
       background-color: $primary;
       width: 100%;
       text-decoration: none;
       border: $secondary solid 0.5px;
       border-radius: 5px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      .modal-field-text {
+      mat-icon {
         font-size: 24px;
+        width: 24px;
+        height: 24px;
+        color: $secondary;
+        margin: 0 15px;
+      }
+      .modal-field-text {
+        margin: 0;
+        font-size: 18px;
         color: $secondary;
       }
     }
@@ -57,9 +64,15 @@
       cursor: pointer;
       background-color: $secondary;
       border-color: $primary;
+      mat-icon {
+        font-size: 26px;
+        width: 26px;
+        height: 26px;
+        color: $icon;
+      }
       .modal-field-text {
-        color: $white;
-        font-size: 28px;
+        color: $icon;
+        font-size: 20px;
       }
     }
   }

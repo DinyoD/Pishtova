@@ -59,6 +59,7 @@ export class UserService {
 
   public isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem("token");
-    return token != null && !this.jwtHelper.isTokenExpired(token);
+    return token != null;
+      // && !this.jwtHelper.isTokenExpired(token);
   }
 }

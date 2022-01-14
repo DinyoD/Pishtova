@@ -1,3 +1,8 @@
 <div class="container">
-  <p> Main Screen</p>
+  <div class="boxes-container">
+    <a *ngFor="let s of subjects" class="box" (click)="goToSubject(s.id)">
+      <mat-icon>grade</mat-icon>
+      <p>{{s.name}}</p>
+    </a>
+  </div>
 </div>
