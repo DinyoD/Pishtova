@@ -1,6 +1,6 @@
 <div class="container">
   <div class="boxes-container">
-    <a *ngFor="let s of subjects" class="box" (click)="goToSubject(s.id)">
+    <a [routerLink]="['/subject/', s.id]" *ngFor="let s of subjects" class="box">
       <mat-icon>grade</mat-icon>
       <p>{{s.name}}</p>
     </a>

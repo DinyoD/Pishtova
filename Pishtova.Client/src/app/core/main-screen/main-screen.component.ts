@@ -21,7 +21,4 @@ export class MainScreenComponent implements OnInit {
     );
   }
 
-  goToSubject(subjectId: number){
-      this.router.navigate([`/subject/${subjectId}`]);
-  }
 }

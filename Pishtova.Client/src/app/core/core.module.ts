@@ -12,13 +12,15 @@ import { ForAuthenticatedUserGuard } from '../authentication/guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { SubjectScreenComponent } from './subject-screen/subject-screen.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
     MainScreenComponent,
-    ProfileComponent
+    ProfileComponent,
+    SubjectScreenComponent
   ],
   imports: [
     CommonModule,
@@ -31,13 +33,15 @@ import { MatMenuModule } from '@angular/material/menu';
     RouterModule.forChild([
       { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
     ])
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     MainScreenComponent,
-    ProfileComponent
+    ProfileComponent,
+    SubjectScreenComponent
   ]
 })
 export class CoreModule { }

@@ -26,8 +26,9 @@ $icon_size: calc(((100vh - 200px) * 0.4) * 0.7);
       border: 0.1px solid $secondary;
       border-radius: 5px;
       cursor: pointer;
+      text-decoration: none;
       mat-icon {
-        color: $secondary;
+        color: rgba($secondary, 0.5);
         font-size: $icon_size;
         width: $icon_size;
         height: $icon_size;
@@ -42,7 +43,7 @@ $icon_size: calc(((100vh - 200px) * 0.4) * 0.7);
     .box:hover {
       background-color: $secondary;
       mat-icon {
-        color: $icon;
+        color: rgba($icon, 0.85);
       }
       p {
         color: $icon;
