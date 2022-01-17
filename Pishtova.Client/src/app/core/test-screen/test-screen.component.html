@@ -1,0 +1,10 @@
+<div class="progress-bar-container">
+  <div class="info">
+    <div><span>Задача: <span>1</span></span></div>
+    <div><span>Резултат: <span>0</span></span></div>
+    <div class="stepper-wrapper" *ngFor="let p of problems, let i = index">
+      <div class="stepper-item completed">
+        <div class="step-counter">{{i}}</div>
+      </div>
+    </div>
+  </div>

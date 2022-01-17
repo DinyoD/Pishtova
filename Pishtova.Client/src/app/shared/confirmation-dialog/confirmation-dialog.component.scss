@@ -2,7 +2,7 @@
 
 .dialog-container {
   background-color: $primary;
-  width: 400px;
+  width: 450px;
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -17,20 +17,24 @@
     flex-direction: row;
     justify-content: space-around;
     button {
-      width: 120px;
+      text-decoration: none;
+      width: 160px;
       height: 40px;
       border: none;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 22px;
       color: $secondary;
       background-color: $white;
       border-radius: 4px;
     }
     .btn:hover {
-      width: 124px;
+      width: 166px;
       height: 44px;
-      font-size: 19px;
+      font-size: 24px;
       font-weight: bold;
+    }
+    .btn:focus {
+      outline: none;
     }
     .red:hover {
       color: $red;
