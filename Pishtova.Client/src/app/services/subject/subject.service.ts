@@ -15,4 +15,8 @@ export class SubjectService {
   getAllSubjects() : Observable<SubjectModel[]>{
     return this.httpClient.get<SubjectModel[]>(env.API_URL + `/subject/all`)
   }
+  getSubjectById(id: number): Observable<SubjectModel>{
+    return this.httpClient.get<SubjectModel>(env.API_URL + `/subject/${id}`);
+  }
+
 }

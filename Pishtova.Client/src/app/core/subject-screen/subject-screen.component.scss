@@ -1,0 +1,13 @@
+@import "../../utilities/colors/colors.scss";
+
+.title-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 40%;
+  .title-text {
+    font-size: 60px;
+    color: rgba($secondary, 0.25);
+  }
+}
