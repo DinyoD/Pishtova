@@ -22,5 +22,10 @@
         {
             return await this.db.Subjects.Select(x=> new SubjectModel { Id = x.Id, Name = x.Name }).ToListAsync();
         }
+
+        public async Task<SubjectModel> GetOneById(int id)
+        {
+            return await this.db.Subjects.Where(x => x.Id == id).Select(x => new SubjectModel { Id = x.Id, Name = x.Name }).FirstOrDefaultAsync();
+        }
     }
 }

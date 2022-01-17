@@ -7,5 +7,7 @@
     public interface ISubjectService
     {
         Task<ICollection<SubjectModel>> GetAll();
+
+        Task<SubjectModel> GetOneById(int id);
     }
 }
