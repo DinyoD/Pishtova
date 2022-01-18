@@ -13,7 +13,9 @@
       <p>Метериали</p>
     </a>
   </div>
-  <app-test-screen *ngIf="showTest" [subject]="subject"></app-test-screen>
+
+  <app-test-screen *ngIf="showTest"></app-test-screen>
+
   <div class="title-box">
     <p class="title-text">{{subject?.name?.toUpperCase()}}</p>
   </div>

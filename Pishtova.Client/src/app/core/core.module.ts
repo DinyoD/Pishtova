@@ -6,7 +6,9 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { StoreModule } from '@ngrx/store';
 
+import { reducers } from './+store';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SubjectScreenComponent } from './subject-screen/subject-screen.component';
@@ -16,6 +18,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { MainScreenComponent } from './main-screen/main-screen.component';
+import { InTestGuard } from './guards/inTest.guard';
 
 @NgModule({
   declarations: [
@@ -36,11 +39,12 @@ import { MainScreenComponent } from './main-screen/main-screen.component';
     MatProgressBarModule,
     AppRoutingModule,
     RouterModule.forChild([
-      { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      //{ path: 'test/:subjectId/:testPage', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-    ])
+      { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'subject/:id/test/:page', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+    ]),
+    StoreModule.forRoot(reducers)
   ],
   exports: [
     HeaderComponent,

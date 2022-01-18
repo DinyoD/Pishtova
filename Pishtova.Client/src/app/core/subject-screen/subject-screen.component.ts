@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubjectModel } from 'src/app/models/subject';
+
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SubjectService} from '../../services';
@@ -12,19 +13,21 @@ import { SubjectService} from '../../services';
   styleUrls: ['./subject-screen.component.css', '../main-screen/main-screen.component.css']
 })
 export class SubjectScreenComponent implements OnInit {
-  public subject!: SubjectModel|undefined ;
-  public showNavigations: boolean = true;
-  public showTest: boolean = false;
+
+  public subject: SubjectModel|null = null;
+  public showTest: boolean = this.actRoute.snapshot.url.length == 4 ? this.actRoute.snapshot.url[2].path == ('test') : false;;
+  public showNavigations: boolean = !this.showTest;
 
   constructor(
     private actRoute: ActivatedRoute,
     private subjectService: SubjectService,
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.subjectService.getSubjectById(this.actRoute.snapshot.params.id)
     .subscribe(s => this.subject = s, () => this.router.navigate(['main']));
+    
   }
 
   handelStartTest(){
@@ -35,8 +38,8 @@ export class SubjectScreenComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
-        this.showNavigations= false;
-        this.showTest= true;
+        localStorage.setItem('test','in')
+        this.router.navigate([`subject/${this.subject?.id}/test/1`]);
       }
   });
   }
