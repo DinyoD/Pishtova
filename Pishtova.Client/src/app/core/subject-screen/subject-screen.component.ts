@@ -14,8 +14,9 @@ import { SubjectService} from '../../services';
 })
 export class SubjectScreenComponent implements OnInit {
 
-  public subject: SubjectModel|null = null;
-  public showTest: boolean = this.actRoute.snapshot.url.length == 4 ? this.actRoute.snapshot.url[2].path == ('test') : false;;
+  public subjectId: number|null = null;
+  public subjectName = localStorage.getItem('subjectName');
+  public showTest: boolean = localStorage.getItem('test') != null;
   public showNavigations: boolean = !this.showTest;
 
   constructor(
@@ -25,13 +26,14 @@ export class SubjectScreenComponent implements OnInit {
     private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.subjectService.getSubjectById(this.actRoute.snapshot.params.id)
-    .subscribe(s => this.subject = s, () => this.router.navigate(['main']));
+    if (localStorage.getItem('subjectId') != this.actRoute.snapshot.params.id) {
+      this.router.navigate(['main'])
+    }
     
   }
 
   handelStartTest(){
-    const dialogData = new ConfirmationDialogModel(`Стартирате тест по ${this.subject?.name}.`);
+    const dialogData = new ConfirmationDialogModel(`Стартирате тест по ${this.subjectName}.`);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { 
         closeOnNavigation: true,
         data: dialogData
@@ -39,7 +41,7 @@ export class SubjectScreenComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         localStorage.setItem('test','in')
-        this.router.navigate([`subject/${this.subject?.id}/test/1`]);
+        this.router.navigate([`subject/${this.subjectId}/test/1`]);
       }
   });
   }

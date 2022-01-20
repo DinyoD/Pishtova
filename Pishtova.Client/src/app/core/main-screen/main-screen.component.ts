@@ -20,5 +20,10 @@ export class MainScreenComponent implements OnInit {
       s => this.subjects = s
     );
   }
+  chooseSubject(subject: SubjectModel){
+    localStorage.setItem('subjectName', subject.name);
+    localStorage.setItem('subjectId', subject.id.toString());
+    this.router.navigate([`subject/${subject.id}`]);
+  }
 
 }
