@@ -4,11 +4,11 @@
       <mat-icon>home</mat-icon>
     </a>
     <img *ngIf="isAuth" src="../../../assets/icons/favicon.ico">
-    <a *ngIf="isAuth" class="icon" (click)="changesChowModal()">
+    <a *ngIf="isAuth" class="icon" (click)="changeShowModal()">
       <mat-icon>menu</mat-icon>
     </a>
   </mat-toolbar-row>
-  <div class="modal" *ngIf="showModale">
+  <div class="modal" *ngIf="showModal">
     <a class="modal-field" routerLink="/profile" (click)="hideModal()">
       <mat-icon>account_circle</mat-icon>
       <p class="modal-field-text">Профил</p>

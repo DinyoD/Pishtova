@@ -5,7 +5,7 @@ import { CustomValidators } from '../../helpers/custom-validators';
 import { MunicipalityModel } from 'src/app/models/municipality';
 import { TownModel } from 'src/app/models/town';
 import { SchoolModel } from 'src/app/models/school';
-import { MunicipalityService, TownService, SchoolService, UserService } from 'src/app/services';
+import { MunicipalityService, TownService, SchoolService, AuthService } from 'src/app/services';
 import { UserForRegistrationModel } from '../../models/userForRegistration';
 import { Router } from '@angular/router';
 
@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit  {
     private municipalityService: MunicipalityService, 
     private townService: TownService, 
     private schoolService: SchoolService,
-    private userService: UserService,
+    private userService: AuthService,
     private route: Router
     ) {}
     

@@ -42,7 +42,7 @@ import { InTestGuard } from './guards/inTest.guard';
       { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'subject/:id/test/:page', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'subject/:id/test/:page', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
     ]),
     StoreModule.forRoot(reducers)
   ],

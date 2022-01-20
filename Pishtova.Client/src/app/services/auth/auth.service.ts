@@ -14,7 +14,7 @@ import { environment as env } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AuthService {
 
   private _authChangeSub = new Subject<boolean>()
   public authChanged = this._authChangeSub.asObservable();

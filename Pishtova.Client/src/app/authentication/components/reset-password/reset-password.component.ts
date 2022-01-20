@@ -1,7 +1,7 @@
 import { ResetPasswordModel } from '../../models/resetPassword';
 import { ActivatedRoute } from '@angular/router';
 import { CustomValidators } from '../../helpers/custom-validators';
-import { UserService } from '../../../services/user/user.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -28,7 +28,7 @@ export class ResetPasswordComponent implements OnInit {
   private email: string = '';
 
   constructor(
-    private userService: UserService, 
+    private userService: AuthService, 
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {    

@@ -1,5 +1,5 @@
 import { ForgotPasswordModel } from '../../models/forgotPassword';
-import { UserService } from '../../../services/user/user.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -18,7 +18,7 @@ export class ForgotPasswordComponent {
     email: new FormControl(null, [Validators.required, Validators.email])
   })
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: AuthService) { }
 
   public validateControl = (controlName: string) => {
     return this.form.controls[controlName].invalid && this.form.controls[controlName].touched

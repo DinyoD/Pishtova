@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/services';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -14,7 +14,7 @@ export class EmailConfirmationComponent implements OnInit {
   public errorMessage: string = '';
 
   constructor(
-    private userService: UserService,
+    private userService: AuthService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {

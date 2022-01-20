@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserForLoginModel } from '../../models/userForLogin';
-import { UserService } from 'src/app/services';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent {
   })
 
   constructor(
-    private userService: UserService,
+    private userService: AuthService,
     private route: Router
   ) { }
   

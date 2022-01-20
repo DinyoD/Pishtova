@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services';
+import { fromEvent, Observable, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -11,12 +12,12 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
-  showModale: boolean = false;
-  isAuth: boolean = localStorage.getItem('token') != null;
+  public showModal: boolean = false;
+  public isAuth: boolean = localStorage.getItem('token') != null;
 
   constructor(
     private cd: ChangeDetectorRef, 
-    private userService : UserService,
+    private userService : AuthService,
     private dialog: MatDialog,
     private router: Router ) {}
 
@@ -25,14 +26,32 @@ export class HeaderComponent implements OnInit{
     this.userService.authChanged.subscribe(isAuth => this.isAuth = isAuth);
   }
 
-  changesChowModal(){
-    this.showModale = !this.showModale;  
+  changeShowModal(): void{
+    this.showModal = !this.showModal;
     this.cd.detectChanges();
+    //this.clickDocumentSubstiption(true)
   }
 
-  hideModal(){
-    this.showModale = false;
-  }
+  hideModal(): void{
+    this.showModal = false;
+    this.cd.detectChanges();   
+    //this.clickDocumentSubstiption(false)
+  };
+
+  // clickDocumentSubstiption(subscripe: boolean): void{
+  //   let subscription = new Subscription();
+  //   if (subscripe) {
+  //     subscription = fromEvent(document, 'click',).subscribe(() => {
+  //       console.log(this.shouldShowModale);
+  //       this.hideModal();
+  //       console.log(this.shouldShowModale);
+  //     })
+  //   }
+  //   else{
+  //     subscription.unsubscribe();
+  //     console.log(subscription);     
+  //   }
+  // }
 
   handleSignOut() {
     const dialogData = new ConfirmationDialogModel('Моля, потвърдете отписване!');
