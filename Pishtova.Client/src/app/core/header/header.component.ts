@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit{
 
   handleSignOut() {
     this.hideModal();
-    const dialogData = new ConfirmationDialogModel('Моля, потвърдете отписване!');
+    const dialogData = new ConfirmationDialogModel('Моля, потвърдете отписване!', '*Ако сте в тест, той ще се прекрати и изтрие!');
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { 
         closeOnNavigation: true,
         data: dialogData

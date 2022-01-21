@@ -1,3 +1,3 @@
 export class ConfirmationDialogModel {
-    constructor(public text: string) { }
+    constructor(public title: string, public content: string|null = null) { }
 }

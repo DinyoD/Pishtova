@@ -18,7 +18,7 @@ export class InTestGuard implements CanActivate {
     ){};
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    _next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
     ) {
  
@@ -31,7 +31,7 @@ export class InTestGuard implements CanActivate {
   }
   
   openDialog(url: string): void {
-    const dialogData = new ConfirmationDialogModel(`Прекратявате ли теста?`);
+    const dialogData = new ConfirmationDialogModel(`Прекратявате ли теста?`, '*Незавършеният тест ще се изтрие!');
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, { 
             closeOnNavigation: true,
             data: dialogData

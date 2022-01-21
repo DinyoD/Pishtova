@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SubjectModel } from 'src/app/models/subject';
 
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { SubjectService} from '../../services';
 
 @Component({
   selector: 'app-subject-screen',
@@ -14,14 +12,12 @@ import { SubjectService} from '../../services';
 })
 export class SubjectScreenComponent implements OnInit {
 
-  public subjectId: number|null = null;
-  public subjectName = localStorage.getItem('subjectName');
+  public subjectName: string | null = localStorage.getItem('subjectName');
   public showTest: boolean = localStorage.getItem('test') != null;
   public showNavigations: boolean = !this.showTest;
 
   constructor(
     private actRoute: ActivatedRoute,
-    private subjectService: SubjectService,
     private router: Router,
     private dialog: MatDialog) {}
 
@@ -41,7 +37,7 @@ export class SubjectScreenComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         localStorage.setItem('test','in')
-        this.router.navigate([`subject/${this.subjectId}/test/1`]);
+        this.router.navigate([`subject/${this.actRoute.snapshot.params.id}/test/1`]);
       }
   });
   }

@@ -9,11 +9,13 @@ import { ConfirmationDialogModel } from './confirmation-dialog';
 })
 export class ConfirmationDialogComponent {
 
-  text: string;
+  title: string;
+  content: string| null
 
   constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogModel) {
-      this.text = data.text;
+      this.title = data.title;
+      this.content = data.content
   }
 
   onConfirm(): void {

@@ -11,12 +11,19 @@
     text-align: center;
     color: $secondary;
   }
+  .content {
+    text-align: center;
+    color: $secondary;
+    font-size: 14px;
+    margin: 0;
+    color: $red;
+  }
   .dialog-btn-container {
-    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     button {
+      margin-top: 10px;
       text-decoration: none;
       width: 160px;
       height: 40px;
