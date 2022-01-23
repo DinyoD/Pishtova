@@ -1,6 +1,6 @@
 <div class="progress-bar-container">
   <div class="info">
-    <div><span>Резултат: <span>{{0}} точки</span></span></div>
+    <div><span>Резултат: <span>{{problemNumber}} точки</span></span></div>
   </div>
   <div class="bar-container">
     <div class="stepper-wrapper" *ngFor="let p of problems, let i = index">
@@ -9,4 +9,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="button">
+  <a (click)="nextProblem()">Напред</a>
 </div>

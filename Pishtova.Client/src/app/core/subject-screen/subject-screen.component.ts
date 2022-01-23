@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { SubjectState } from '../+store/core.state';
+import * as StateActions from '../+store/actions';
 
 @Component({
   selector: 'app-subject-screen',
@@ -19,7 +22,8 @@ export class SubjectScreenComponent implements OnInit {
   constructor(
     private actRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog) {}
+    private dialog: MatDialog,
+    private store: Store<SubjectState>) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('subjectId') != this.actRoute.snapshot.params.id) {
@@ -36,8 +40,9 @@ export class SubjectScreenComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
-        localStorage.setItem('test','in')
-        this.router.navigate([`subject/${this.actRoute.snapshot.params.id}/test/1`]);
+        localStorage.setItem('test','in');
+        this.store.dispatch(new StateActions.SetProblemNumber(1))
+        this.router.navigate([`subject/${this.actRoute.snapshot.params.id}/test`]);
       }
   });
   }
