@@ -11,7 +11,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
   styleUrls: ['./subject-screen.component.css', '../main-screen/main-screen.component.css']
 })
 export class SubjectScreenComponent implements OnInit {
-
+  public subjectId: number|undefined;
   public subjectName: string | null = localStorage.getItem('subjectName');
   public showTest: boolean = localStorage.getItem('test') != null;
   public showNavigations: boolean = !this.showTest;
@@ -25,7 +25,7 @@ export class SubjectScreenComponent implements OnInit {
     if (localStorage.getItem('subjectId') != this.actRoute.snapshot.params.id) {
       this.router.navigate(['main'])
     }
-    
+    this.subjectId = this.actRoute.snapshot.params.id;
   }
 
   handelStartTest(){

@@ -1,9 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { environment as env } from 'src/environments/environment';
+import { ProblemModel } from 'src/app/models/problem';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProblemService {
 
-  constructor() { }
+  constructor(private httpClient : HttpClient) { }
+
+  generateTestBySubjectId(subjectId: number| undefined): Observable<ProblemModel[]>{
+    
+    return this.httpClient.get<ProblemModel[]>(env.API_URL + `/problems/generateTest/${subjectId}`)
+  }
 }

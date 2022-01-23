@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ProblemModel } from 'src/app/models/problem';
-import { SubjectModel } from 'src/app/models/subject';
+import { ProblemService } from 'src/app/services'
 
 @Component({
   selector: 'app-test-screen',
@@ -8,13 +8,17 @@ import { SubjectModel } from 'src/app/models/subject';
   styleUrls: ['./test-screen.component.css']
 })
 export class TestScreenComponent implements OnInit {
-  @Input() subject!: SubjectModel | undefined;
+
+  @Input() subjectId: number | undefined;
 
   public problems: ProblemModel[] = [];
-  constructor() { }
+
+  constructor(private problemService: ProblemService) { }
 
   ngOnInit(): void {
-    
+    this.problemService.generateTestBySubjectId(this.subjectId).subscribe( (problems) => {
+      this.problems = problems;
+    })
   }
 
 }
