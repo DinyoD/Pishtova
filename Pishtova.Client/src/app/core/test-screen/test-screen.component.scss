@@ -1,5 +1,8 @@
 @import "../../utilities/colors/colors.scss";
 
+$stepperSize: calc(100vw / 36);
+$halfStepperSize: calc(100vw / 36 / 2);
+
 .progress-bar-container {
   display: flex;
   flex-direction: column;
@@ -7,80 +10,101 @@
   .info {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    justify-content: end;
+    margin-bottom: 10px;
   }
   .bar-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-bottom: 10px;
   }
 }
 .stepper-wrapper {
   font-family: Arial;
-  margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
 }
 .stepper-item {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 5;
 }
 .stepper-item::before {
   position: absolute;
   content: "";
   border-bottom: 2px solid $red;
-  width: 100%;
-  top: 20px;
+  width: 50%;
+  top: $halfStepperSize;
   left: -50%;
   z-index: 2;
 }
 
-.stepper-item::after {
+.stepper-item:after {
   position: absolute;
   content: "";
   border-bottom: 2px solid $red;
-  width: 100%;
-  top: 20px;
-  left: 50%;
+  width: 50%;
+  top: $halfStepperSize;
+  left: 100%;
   z-index: 2;
+}
+.stepper-wrapper:last-child .stepper-item::after {
+  content: none;
+}
+.stepper-wrapper:first-child .stepper-item::before {
+  content: none;
 }
 
 .stepper-item .step-counter {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: $stepperSize;
+  height: $stepperSize;
   border-radius: 50%;
   background: $red;
   color: $icon;
   margin-bottom: 6px;
+  z-index: 10;
+  font-size: $halfStepperSize;
 }
 
-.stepper-item.active {
+.stepper-item.active .step-counter {
+  color: $green;
   font-weight: bold;
 }
 
 .stepper-item.completed .step-counter {
-  background-color: #4bb543;
+  background-color: $green;
 }
 
 .stepper-item.completed::after {
   position: absolute;
   content: "";
-  border-bottom: 2px solid #4bb543;
-  width: 100%;
-  top: 20px;
-  left: 50%;
-  z-index: 3;
+  border-bottom: 2px solid $green;
+  width: 50%;
+  top: $halfStepperSize;
+  left: 100%;
+  z-index: 2;
+}
+.stepper-item.completed::before {
+  position: absolute;
+  content: "";
+  border-bottom: 2px solid $green;
+  width: 50%;
+  top: $halfStepperSize;
+  left: -50%;
+  z-index: 2;
 }
 
-.stepper-item:first-child::before {
-  content: none;
-}
-.stepper-item:last-child::after {
-  content: none;
+.stepper-item.active::before {
+  position: absolute;
+  content: "";
+  border-bottom: 2px solid $green;
+  width: 50%;
+  top: $halfStepperSize;
+  left: -50%;
+  z-index: 2;
 }
