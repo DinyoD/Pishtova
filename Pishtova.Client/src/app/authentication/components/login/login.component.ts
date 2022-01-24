@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserForLoginModel } from '../../models/userForLogin';
-import { AuthService } from 'src/app/services';
+import { AuthService, StorageService } from 'src/app/services';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,8 @@ export class LoginComponent {
 
   constructor(
     private userService: AuthService,
-    private route: Router
+    private route: Router,
+    private storage: StorageService
   ) { }
   
 
@@ -35,7 +36,7 @@ export class LoginComponent {
     }
    this.userService.login(user)
     .subscribe((res: { token: string; }) => {
-      localStorage.setItem('token', res.token)
+      this.storage.setItem('token', res.token)
       this.userService.sendAuthStateChangeNotification(res.token != null)
       this.route.navigate(['/main'])
     }, (err) => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import { SubjectService } from 'src/app/services';
+import { StorageService, SubjectService } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -14,7 +14,8 @@ export class InTestGuard implements CanActivate {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private subjectService: SubjectService
+    private subjectService: SubjectService,
+    private storage: StorageService
     ){};
 
   canActivate(
@@ -39,7 +40,7 @@ export class InTestGuard implements CanActivate {
     
         dialogRef.afterClosed().subscribe(dialogResult => {
           if (dialogResult) {
-            localStorage.removeItem('test');
+            this.storage.removeItem('test');
             this.router.navigate([url]);
           }
         })

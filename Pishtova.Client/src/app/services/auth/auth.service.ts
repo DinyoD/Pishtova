@@ -10,6 +10,7 @@ import { ForgotPasswordModel } from '../../authentication/models/forgotPassword'
 import { ResetPasswordModel } from '../../authentication/models/resetPassword';
 import  ILoginResult  from '../../authentication/models/results/LoginResult';
 import { environment as env } from 'src/environments/environment';
+import { StorageService } from '..';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient, 
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private storage: StorageService
     ) { }
 
   public register = (user: UserForRegistrationModel): Observable<Object> => {
@@ -34,8 +36,7 @@ export class AuthService {
   }
 
   public logout = () => {
-    //localStorage.removeItem("token");
-    localStorage.clear();
+    this.storage.clear();
     this.sendAuthStateChangeNotification(false);
   }
 
@@ -59,7 +60,7 @@ export class AuthService {
   }
 
   public isUserAuthenticated = (): boolean => {
-    const token = localStorage.getItem("token");
+    const token = this.storage.getItem("token");
     return token != null;
       // && !this.jwtHelper.isTokenExpired(token);
   }

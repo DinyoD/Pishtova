@@ -7,6 +7,7 @@ import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/conf
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SubjectState } from '../+store/core.state';
 import * as StateActions from '../+store/actions';
+import { StorageService } from 'src/app/services';
 
 @Component({
   selector: 'app-subject-screen',
@@ -15,18 +16,21 @@ import * as StateActions from '../+store/actions';
 })
 export class SubjectScreenComponent implements OnInit {
   public subjectId: number|undefined;
-  public subjectName: string | null = localStorage.getItem('subjectName');
-  public showTest: boolean = localStorage.getItem('test') != null;
-  public showNavigations: boolean = !this.showTest;
+  public subjectName: string | null = null;
+  public showTest: boolean = false;
 
   constructor(
     private actRoute: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private store: Store<SubjectState>) {}
+    private store: Store<SubjectState>,
+    private storage: StorageService) {
+      this.subjectName = this.storage.getItem('subjectName');
+      this.showTest = this.storage.getItem('test') != null;
+    }
 
   ngOnInit(): void {
-    if (localStorage.getItem('subjectId') != this.actRoute.snapshot.params.id) {
+    if (this.storage.getItem('subjectId') != this.actRoute.snapshot.params.id) {
       this.router.navigate(['main'])
     }
     this.subjectId = this.actRoute.snapshot.params.id;
@@ -40,7 +44,7 @@ export class SubjectScreenComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
-        localStorage.setItem('test','in');
+        this.storage.setItem('test','in');
         this.store.dispatch(new StateActions.SetProblemNumber(1))
         this.router.navigate([`subject/${this.actRoute.snapshot.params.id}/test`]);
       }

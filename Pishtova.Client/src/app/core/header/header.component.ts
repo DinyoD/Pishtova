@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { fromEvent, Observable, Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services';
+import { AuthService, StorageService } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -13,13 +13,16 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 })
 export class HeaderComponent implements OnInit{
   public showModal: boolean = false;
-  public isAuth: boolean = localStorage.getItem('token') != null;
+  public isAuth: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef, 
     private userService : AuthService,
     private dialog: MatDialog,
-    private router: Router ) {}
+    private router: Router,
+    private storage: StorageService ) {
+      this.isAuth = this.storage.getItem('token') != null;
+    }
 
 
   ngOnInit(): void {

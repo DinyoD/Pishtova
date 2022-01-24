@@ -10,8 +10,11 @@ import { AuthenticationModule } from './authentication/components/authentication
 import { CoreModule } from './core/core.module';
 import { ErrorHandlerService } from './error/error-handler.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { storageServiceProvider } from './services';
 //import { NotFoundComponent } from './error/error-screens/not-found/not-found.component';
 
+
+// TODO This work only in Browser!!!!
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -32,7 +35,8 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         allowedDomains: ["localhost:44329"],
-        disallowedRoutes: []
+        disallowedRoutes: [],
+        
       }
     })
   ],
@@ -41,7 +45,8 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerService,
       multi: true
-    }
+    },
+    storageServiceProvider
   ],
   bootstrap: [AppComponent]
 })
