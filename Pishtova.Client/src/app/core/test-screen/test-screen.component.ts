@@ -14,17 +14,16 @@ import * as StateActions from '../+store/actions';
 export class TestScreenComponent implements OnInit {
 
   @Input() subjectId: number | undefined;
-  public problemNumber: number = 0;
+  public problemNumber: number = 1;
   public problemNumber$ = this.store.pipe(select(x => x.subjectStateModel.problemNumber));
 
   public problems: ProblemModel[] = [];
 
   constructor(
     private problemService: ProblemService,
-    private actRoute: ActivatedRoute,
-    private router: Router,
     private store: Store<SubjectState>) { 
       this.problemNumber$.subscribe( n => this.problemNumber = n);
+      this.store.dispatch(new StateActions.SetProblemNumber(1));
     }
     
     ngOnInit(): void {

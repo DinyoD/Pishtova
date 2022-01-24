@@ -11,6 +11,20 @@
   </div>
 </div>
 
+<div>
+  <div *ngFor="let p of problems, let i = index">
+    <div *ngIf="problemNumber == i+1">
+      <div>{{p.questionText}}</div>
+      <div *ngFor="let a of p.answers">
+        <p>{{a.text}} - {{a.isCorrect}}</p>
+      </div>
+      <div>{{p.hint}}</div>
+      <div><img src="{{p.pictureUrl}}" alt="" onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="button">
   <a (click)="nextProblem()">Напред</a>
 </div>
