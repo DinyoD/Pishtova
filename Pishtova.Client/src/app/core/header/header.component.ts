@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { fromEvent, Observable, Subscription } from 'rxjs';
-import { AuthService, StorageService } from 'src/app/services';
+
+import { AuthService, SubjectService } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -14,19 +14,22 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 export class HeaderComponent implements OnInit{
   public showModal: boolean = false;
   public isAuth: boolean = false;
+  public inTest: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef, 
     private userService : AuthService,
     private dialog: MatDialog,
     private router: Router,
-    private storage: StorageService ) {
-      this.isAuth = this.storage.getItem('token') != null;
+    private subjectService: SubjectService) {
+      this.isAuth = userService.isUserAuthenticated();
+      this.inTest = subjectService.isInTest();
     }
 
 
   ngOnInit(): void {
-    this.userService.authChanged.subscribe(isAuth => this.isAuth = isAuth);
+    this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
+    this.subjectService.inTestChanged.subscribe(inTest => this.inTest = inTest);
   }
 
   changeShowModal(): void{

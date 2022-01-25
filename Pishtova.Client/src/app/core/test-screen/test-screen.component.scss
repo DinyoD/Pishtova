@@ -6,105 +6,95 @@ $halfStepperSize: calc(100vw / 36 / 2);
 .progress-bar-container {
   display: flex;
   flex-direction: column;
-  padding: 5px 20px;
-  .info {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    margin-bottom: 10px;
-  }
   .bar-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+    .stepper-wrapper {
+      font-family: Arial;
+      display: flex;
+      justify-content: space-between;
+    }
+    .stepper-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 5;
+    }
+    .stepper-item::before {
+      position: absolute;
+      content: "";
+      border-bottom: 2px solid $red;
+      width: 50%;
+      top: $halfStepperSize;
+      left: -50%;
+      z-index: 2;
+    }
+    .stepper-item:after {
+      position: absolute;
+      content: "";
+      border-bottom: 2px solid $red;
+      width: 50%;
+      top: $halfStepperSize;
+      left: 100%;
+      z-index: 2;
+    }
+    .stepper-wrapper:last-child .stepper-item::after {
+      content: none;
+    }
+    .stepper-wrapper:first-child .stepper-item::before {
+      content: none;
+    }
+    .stepper-item .step-counter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: $stepperSize;
+      height: $stepperSize;
+      border-radius: 50%;
+      background: $red;
+      color: $icon;
+      margin-bottom: 6px;
+      z-index: 10;
+      font-size: $halfStepperSize;
+    }
+    .stepper-item.active .step-counter {
+      color: $green;
+      font-weight: bold;
+    }
+    .stepper-item.completed .step-counter {
+      background-color: $green;
+    }
+    .stepper-item.completed::after {
+      position: absolute;
+      content: "";
+      border-bottom: 2px solid $green;
+      width: 50%;
+      top: $halfStepperSize;
+      left: 100%;
+      z-index: 2;
+    }
+    .stepper-item.completed::before {
+      position: absolute;
+      content: "";
+      border-bottom: 2px solid $green;
+      width: 50%;
+      top: $halfStepperSize;
+      left: -50%;
+      z-index: 2;
+    }
+    .stepper-item.active::before {
+      position: absolute;
+      content: "";
+      border-bottom: 2px solid $green;
+      width: 50%;
+      top: $halfStepperSize;
+      left: -50%;
+      z-index: 2;
+    }
   }
 }
-.stepper-wrapper {
-  font-family: Arial;
-  display: flex;
-  justify-content: space-between;
-}
-.stepper-item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 5;
-}
-.stepper-item::before {
-  position: absolute;
-  content: "";
-  border-bottom: 2px solid $red;
-  width: 50%;
-  top: $halfStepperSize;
-  left: -50%;
-  z-index: 2;
-}
 
-.stepper-item:after {
-  position: absolute;
-  content: "";
-  border-bottom: 2px solid $red;
-  width: 50%;
-  top: $halfStepperSize;
-  left: 100%;
-  z-index: 2;
-}
-.stepper-wrapper:last-child .stepper-item::after {
-  content: none;
-}
-.stepper-wrapper:first-child .stepper-item::before {
-  content: none;
-}
-
-.stepper-item .step-counter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: $stepperSize;
-  height: $stepperSize;
-  border-radius: 50%;
-  background: $red;
-  color: $icon;
-  margin-bottom: 6px;
-  z-index: 10;
-  font-size: $halfStepperSize;
-}
-
-.stepper-item.active .step-counter {
-  color: $green;
-  font-weight: bold;
-}
-
-.stepper-item.completed .step-counter {
-  background-color: $green;
-}
-
-.stepper-item.completed::after {
-  position: absolute;
-  content: "";
-  border-bottom: 2px solid $green;
-  width: 50%;
-  top: $halfStepperSize;
-  left: 100%;
-  z-index: 2;
-}
-.stepper-item.completed::before {
-  position: absolute;
-  content: "";
-  border-bottom: 2px solid $green;
-  width: 50%;
-  top: $halfStepperSize;
-  left: -50%;
-  z-index: 2;
-}
-
-.stepper-item.active::before {
-  position: absolute;
-  content: "";
-  border-bottom: 2px solid $green;
-  width: 50%;
-  top: $halfStepperSize;
-  left: -50%;
-  z-index: 2;
+.test-container {
 }

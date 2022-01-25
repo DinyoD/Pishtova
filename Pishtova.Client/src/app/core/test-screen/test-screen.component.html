@@ -1,30 +1,33 @@
-<div class="progress-bar-container">
-  <div class="info">
-    <div><span>Резултат: <span>{{problemNumber}} точки</span></span></div>
-  </div>
-  <div class="bar-container">
-    <div class="stepper-wrapper" *ngFor="let p of problems, let i = index">
-      <div class="stepper-item" [ngClass]="{'active' : problemNumber == (i+1), 'completed' : problemNumber > i + 1}">
-        <div class="step-counter">{{i + 1}}</div>
+<div class="test-screen-conatiner">
+  <div class="progress-bar-container">
+    <div class="bar-container">
+      <div class="stepper-wrapper" *ngFor="let p of problems, let i = index">
+        <div class="stepper-item" [ngClass]="{'active' : problemNumber == (i+1), 'completed' : problemNumber > i + 1}">
+          <div class="step-counter">{{i + 1}}</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div>
-  <div *ngFor="let p of problems, let i = index">
-    <div *ngIf="problemNumber == i+1">
-      <div>{{p.questionText}}</div>
-      <div *ngFor="let a of p.answers">
-        <p>{{a.text}} - {{a.isCorrect}}</p>
-      </div>
-      <div>{{p.hint}}</div>
-      <div><img src="{{p.pictureUrl}}" alt="" onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+  <div class="test-container">
+    <div *ngFor="let p of problems, let i = index">
+      <div *ngIf="problemNumber == i+1" class="test">
+        <div class="test-q">{{p.questionText}}</div>
+        <div *ngFor="let a of p.answers" class="test-a-container">
+          <a class="test-a" (click)="chooseAnswer(a.isCorrect)">
+            <div>{{a.text}}</div>
+          </a>
+        </div>
+        <div class="test-h">{{p.hint}}</div>
+        <div class="test-p-container">
+          <img class="test-img" src="{{p.pictureUrl}}" alt=""
+            onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="button">
-  <a (click)="nextProblem()">Напред</a>
+  <div class="button">
+    <a (click)="nextProblem()">Напред</a>
+  </div>
 </div>

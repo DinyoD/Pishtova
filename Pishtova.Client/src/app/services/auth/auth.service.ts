@@ -18,7 +18,7 @@ import { StorageService } from '..';
 export class AuthService {
 
   private _authChangeSub = new Subject<boolean>()
-  public authChanged = this._authChangeSub.asObservable();
+  public isAuthChange = this._authChangeSub.asObservable();
 
   constructor(
     private httpClient: HttpClient, 
@@ -32,6 +32,7 @@ export class AuthService {
 
   
   public login = (user: UserForLoginModel): Observable<ILoginResult> => {
+    this.sendAuthStateChangeNotification(true);
     return this.httpClient.post<ILoginResult>(env.API_URL + `/identity/login`, user)
   }
 

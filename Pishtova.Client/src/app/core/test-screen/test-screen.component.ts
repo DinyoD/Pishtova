@@ -35,6 +35,11 @@ export class TestScreenComponent implements OnInit {
       console.log('next');     
       console.log(this.problemNumber);     
     }
+
+    chooseAnswer(isCorrect: boolean){
+      console.log(isCorrect);
+      
+    }
   }
 
 

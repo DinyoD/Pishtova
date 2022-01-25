@@ -27,6 +27,15 @@ export class SubjectService {
     return this.httpClient.get<SubjectModel>(env.API_URL + `/subject/${id}`);
   }
 
+  public sendInTestStateChangeNotification = (inTest: boolean): void => {
+    this._inTestChangeSub.next(inTest);
+    if (inTest) {
+      this.storage.setItem('test', 'in');
+    }else{
+      this.storage.removeItem('test');
+    }
+  }
+
   public isInTest = (): boolean => {
     const storageItem = this.storage.getItem("test");
     return storageItem != null;
