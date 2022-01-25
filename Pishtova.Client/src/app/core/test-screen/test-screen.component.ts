@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { ProblemModel } from 'src/app/models/problem';
 import { ProblemService } from 'src/app/services'
 import { SubjectState } from '../+store/core.state';
 import * as StateActions from '../+store/actions';
+import { AnswerModel } from 'src/app/models/answer';
 
 @Component({
   selector: 'app-test-screen',
@@ -19,9 +20,14 @@ export class TestScreenComponent implements OnInit {
 
   public problems: ProblemModel[] = [];
 
+  public someAnswerIsClicked: boolean = false;
+  public selectedAnswerId: string|null = null
+
   constructor(
     private problemService: ProblemService,
-    private store: Store<SubjectState>) { 
+    private store: Store<SubjectState>,
+    private cd: ChangeDetectorRef) { 
+
       this.problemNumber$.subscribe( n => this.problemNumber = n);
       this.store.dispatch(new StateActions.SetProblemNumber(1));
     }
@@ -31,13 +37,21 @@ export class TestScreenComponent implements OnInit {
     }
     
     nextProblem(){
+      if (!this.someAnswerIsClicked) {
+        return;
+      }
       this.store.dispatch(new StateActions.SetProblemNumber(this.problemNumber + 1));
-      console.log('next');     
-      console.log(this.problemNumber);     
+      this.someAnswerIsClicked = false;
+       
     }
 
-    chooseAnswer(isCorrect: boolean){
-      console.log(isCorrect);
+    chooseAnswer(selectedAnswer: AnswerModel){
+      if (this.someAnswerIsClicked) {
+        return;
+      }
+      this.someAnswerIsClicked = true;
+      this.selectedAnswerId = selectedAnswer.id;
+      this.cd.detectChanges();
       
     }
   }

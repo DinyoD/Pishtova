@@ -2,10 +2,13 @@
 
 $stepperSize: calc(100vw / 36);
 $halfStepperSize: calc(100vw / 36 / 2);
+$testBoxWidth: calc(100vw - 60px);
+$imag-c-size: calc((100vw - 60px) * 0.2);
 
 .progress-bar-container {
   display: flex;
   flex-direction: column;
+  margin: -20px 15px 20px 15px;
   .bar-container {
     display: flex;
     justify-content: space-between;
@@ -97,4 +100,143 @@ $halfStepperSize: calc(100vw / 36 / 2);
 }
 
 .test-container {
+  box-sizing: border-box;
+  .test {
+    height: 72vh;
+    width: $testBoxWidth;
+    margin: 0 15px;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    .test-content {
+      width: 75%;
+      height: 100%;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-content: space-between;
+      .test-q {
+        width: 100%;
+        height: 30%;
+        background-color: rgba($green, 0.3);
+        border-radius: 15px;
+        padding: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+          font-size: 24px;
+          line-height: 36px;
+          text-align: center;
+        }
+      }
+      .test-a {
+        width: 49%;
+        height: 25%;
+        background-color: rgba($secondary, 0.3);
+        border-radius: 45px;
+        padding: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+          font-size: 24px;
+          line-height: 36px;
+          text-align: center;
+        }
+      }
+      .test-a-correct {
+        background-color: $green;
+        color: $white;
+      }
+      .test-a-selected {
+        border: 2px solid $black;
+        background-color: $red;
+        span {
+          color: $white;
+        }
+      }
+      .test-a-correct.test-a-selected {
+        background-color: $green;
+
+        span {
+          color: $white;
+        }
+      }
+      .test-a-active:hover {
+        //background-color: rgba($green, 0.7);
+        border: 2px solid $black;
+        cursor: pointer;
+        span {
+          font-size: 26px;
+          line-height: 39px;
+          //color: $icon;
+        }
+      }
+      .btn {
+        width: 100%;
+        height: 10%;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba($secondary, 0.3);
+        span {
+          font-size: 36px;
+          color: $black;
+        }
+      }
+      .btn-active:hover {
+        background-color: rgba($green, 0.7);
+        cursor: pointer;
+        span {
+          font-size: 40px;
+          color: $icon;
+        }
+      }
+    }
+    .test-info {
+      width: 20%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      .test-img-container {
+        width: $imag-c-size;
+        height: $imag-c-size;
+        border: 0.5px solid $green;
+
+        border-radius: 5px;
+        .test-img {
+          width: 100%;
+          height: 100%;
+          border-radius: 5px;
+          overflow: hidden;
+        }
+      }
+      .test-h {
+        display: flex;
+        width: 100%;
+        height: 50%;
+        // justify-content: center;
+        // align-items: center;
+        margin-top: 10px;
+        padding: 20px;
+        border: 0.5px solid $green;
+        border-radius: 5px;
+        overflow-y: auto;
+        span {
+          font-size: 18px;
+          line-height: 27px;
+          text-align: center;
+        }
+      }
+    }
+  }
 }

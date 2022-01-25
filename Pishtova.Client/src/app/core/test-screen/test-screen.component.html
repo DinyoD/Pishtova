@@ -1,4 +1,5 @@
 <div class="test-screen-conatiner">
+
   <div class="progress-bar-container">
     <div class="bar-container">
       <div class="stepper-wrapper" *ngFor="let p of problems, let i = index">
@@ -12,22 +13,36 @@
   <div class="test-container">
     <div *ngFor="let p of problems, let i = index">
       <div *ngIf="problemNumber == i+1" class="test">
-        <div class="test-q">{{p.questionText}}</div>
-        <div *ngFor="let a of p.answers" class="test-a-container">
-          <a class="test-a" (click)="chooseAnswer(a.isCorrect)">
-            <div>{{a.text}}</div>
+
+        <div class="test-content">
+          <div class="test-q">
+            <span>{{p.questionText}}</span>
+          </div>
+          <div *ngFor="let a of p.answers" class="test-a" [ngClass]="{
+              'test-a-active': !someAnswerIsClicked, 
+              'test-a-correct': someAnswerIsClicked && a.isCorrect,
+              'test-a-selected': a.id == selectedAnswerId
+            }" (click)="chooseAnswer(a)">
+            <span>{{a.text}}</span>
+          </div>
+          <a class="btn" [ngClass]="{'btn-active': someAnswerIsClicked}" (click)="nextProblem()">
+            <span *ngIf="someAnswerIsClicked" class="btn-text">Напред</span>
           </a>
         </div>
-        <div class="test-h">{{p.hint}}</div>
-        <div class="test-p-container">
-          <img class="test-img" src="{{p.pictureUrl}}" alt=""
-            onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+
+        <div *ngIf="someAnswerIsClicked" class="test-info">
+          <div class="test-img-container">
+            <img class="test-img" src="{{p.pictureUrl}}" alt=""
+              onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+          </div>
+          <div class="test-h">
+            <span> * {{p.hint}}</span>
+          </div>
         </div>
+
+
       </div>
     </div>
   </div>
 
-  <div class="button">
-    <a (click)="nextProblem()">Напред</a>
-  </div>
 </div>
