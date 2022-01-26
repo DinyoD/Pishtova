@@ -3,7 +3,9 @@
     <a class="icon" routerLink="/main" (click)="hideModal()">
       <mat-icon>home</mat-icon>
     </a>
-    <span *ngIf="subjectName && isAuth" class="sbj-name">{{subjectName.toUpperCase()}}</span>
+    <span *ngIf="subjectName && isAuth" class="sbj-name">
+      {{subjectName.toUpperCase()}}
+    </span>
     <a *ngIf="isAuth" class="icon" [ngClass]="{'open': showModal == true}" (click)="changeShowModal()">
       <mat-icon>menu</mat-icon>
     </a>

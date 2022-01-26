@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { AuthService, SubjectService, TestService  } from 'src/app/services';
+import { AuthService, PointsService, SubjectService, TestService  } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -20,22 +20,23 @@ export class HeaderComponent implements OnInit{
 
   constructor(
     private cd: ChangeDetectorRef, 
-    private userService : AuthService,
     private dialog: MatDialog,
     private router: Router,
+    private userService : AuthService,
     private subjectService: SubjectService,
     private testService: TestService) {
 
       this.isAuth = userService.isUserAuthenticated();
       this.inTest = testService.isInTest();
       this.subjectName = this.subjectService.getCurrentSubject()?.name;
+
     }
 
 
   ngOnInit(): void {
     this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
     this.testService.inTestChanged.subscribe(inTest => this.inTest = inTest);
-    this.subjectService.subjectChanged.subscribe(sbj => this.subjectName = sbj?.name)
+    this.subjectService.subjectChanged.subscribe(sbj => this.subjectName = sbj?.name);
   }
 
   changeShowModal(): void{

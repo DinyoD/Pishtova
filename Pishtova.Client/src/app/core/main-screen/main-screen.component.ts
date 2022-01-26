@@ -16,7 +16,9 @@ export class MainScreenComponent implements OnInit {
   constructor(
     private subjectService: SubjectService, 
     private router : Router
-    ) {}
+    ) {
+      this.subjectService.settingSubjectModel(null);
+    }
 
   ngOnInit(): void {
     this.subjectService.getAllSubjects().subscribe(

@@ -1,11 +1,13 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
+
 import { ProblemModel } from 'src/app/models/problem';
-import { ProblemService } from 'src/app/services'
+import { AnswerModel } from 'src/app/models/answer';
+import { ProblemPointModel } from 'src/app/models/problemPoint';
+import { ProblemService, PointsService } from 'src/app/services'
 import { SubjectState } from '../+store/core.state';
 import * as StateActions from '../+store/actions';
-import { AnswerModel } from 'src/app/models/answer';
 
 @Component({
   selector: 'app-test-screen',
@@ -23,17 +25,22 @@ export class TestScreenComponent implements OnInit {
   public someAnswerIsClicked: boolean = false;
   public selectedAnswerId: string|null = null
 
+  public points: number|null = null;
+
   constructor(
     private problemService: ProblemService,
+    private pointsService: PointsService,
     private store: Store<SubjectState>,
     private cd: ChangeDetectorRef) { 
 
       this.problemNumber$.subscribe( n => this.problemNumber = n);
       this.store.dispatch(new StateActions.SetProblemNumber(1));
+      this.points = this.pointsService.gettingPoints();
     }
     
     ngOnInit(): void {
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe( (problems) => this.problems = problems);
+      this.pointsService.pointsChanged.subscribe(p => this.points = p);
     }
     
     nextProblem(){
@@ -45,14 +52,18 @@ export class TestScreenComponent implements OnInit {
        
     }
 
-    chooseAnswer(selectedAnswer: AnswerModel){
+    chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number){
       if (this.someAnswerIsClicked) {
         return;
       }
       this.someAnswerIsClicked = true;
       this.selectedAnswerId = selectedAnswer.id;
-      this.cd.detectChanges();
-      
+      const problemPointModel: ProblemPointModel = {
+        subjectCategoryId: subjectCategoryId,
+        points: selectedAnswer.isCorrect ? 1 : 0
+      }
+      this.pointsService.saveProblemScoreInDb(problemPointModel);
+      this.cd.detectChanges();      
     }
   }
 

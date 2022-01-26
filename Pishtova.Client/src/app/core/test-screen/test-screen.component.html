@@ -22,7 +22,7 @@
               'test-a-active': !someAnswerIsClicked, 
               'test-a-correct': someAnswerIsClicked && a.isCorrect,
               'test-a-selected': a.id == selectedAnswerId
-            }" (click)="chooseAnswer(a)">
+            }" (click)="chooseAnswer(a, p.subjectCategoryId)">
             <span>{{a.text}}</span>
           </div>
           <a class="btn" [ngClass]="{'btn-active': someAnswerIsClicked}" (click)="nextProblem()">

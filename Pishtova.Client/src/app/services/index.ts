@@ -6,3 +6,4 @@ export * from './subject/subject.service';
 export * from './problem/problem.service';
 export * from './storage/storage.service';
 export * from './test/test.service';
+export * from './points/points.service';
