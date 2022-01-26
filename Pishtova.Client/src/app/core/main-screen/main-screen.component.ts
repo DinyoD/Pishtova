@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubjectModel } from 'src/app/models/subject';
-import { StorageService, SubjectService} from '../../services';
+import { SubjectService} from '../../services';
 
 @Component({
   selector: 'app-main-screen',
@@ -15,19 +15,18 @@ export class MainScreenComponent implements OnInit {
 
   constructor(
     private subjectService: SubjectService, 
-    private router : Router,
-    private storage: StorageService
-    ) { }
+    private router : Router
+    ) {}
 
   ngOnInit(): void {
     this.subjectService.getAllSubjects().subscribe(
       s => this.subjects = s
     );
   }
-  chooseSubject(subject: SubjectModel){
-    this.storage.setItem('subjectName', subject.name);
-    this.storage.setItem('subjectId', subject.id.toString());
-    this.router.navigate([`subject/${subject.id}`]);
+  chooseSubject(sbj: SubjectModel): void{
+    this.subjectService.subjectChanged.subscribe(s => this.router.navigate([`subject/${s?.id}`]));
+    this.subjectService.settingSubjectModel(sbj);
+    console.log(sbj);
   }
 
 }

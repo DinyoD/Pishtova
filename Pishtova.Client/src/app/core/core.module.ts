@@ -13,11 +13,11 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SubjectScreenComponent } from './subject-screen/subject-screen.component';
 import { TestScreenComponent } from './test-screen/test-screen.component';
-import { ForAuthenticatedUserGuard } from '../authentication/guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { MainScreenComponent } from './main-screen/main-screen.component';
+import { ForAuthenticatedUserGuard } from '../authentication/guards/auth.guard';
 import { InTestGuard } from './guards/inTest.guard';
 
 @NgModule({

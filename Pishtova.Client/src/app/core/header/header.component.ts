@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { AuthService, SubjectService } from 'src/app/services';
+import { AuthService, SubjectService, TestService  } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -12,24 +12,30 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
+
   public showModal: boolean = false;
   public isAuth: boolean = false;
   public inTest: boolean = false;
+  public subjectName : string|undefined = undefined;
 
   constructor(
     private cd: ChangeDetectorRef, 
     private userService : AuthService,
     private dialog: MatDialog,
     private router: Router,
-    private subjectService: SubjectService) {
+    private subjectService: SubjectService,
+    private testService: TestService) {
+
       this.isAuth = userService.isUserAuthenticated();
-      this.inTest = subjectService.isInTest();
+      this.inTest = testService.isInTest();
+      this.subjectName = this.subjectService.getCurrentSubject()?.name;
     }
 
 
   ngOnInit(): void {
     this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
-    this.subjectService.inTestChanged.subscribe(inTest => this.inTest = inTest);
+    this.testService.inTestChanged.subscribe(inTest => this.inTest = inTest);
+    this.subjectService.subjectChanged.subscribe(sbj => this.subjectName = sbj?.name)
   }
 
   changeShowModal(): void{
@@ -70,7 +76,7 @@ export class HeaderComponent implements OnInit{
     dialogRef.afterClosed().subscribe(dialogResult => {
         if (dialogResult) {
             this.userService.logout();
-            this.hideModal()
+            this.hideModal();
             this.router.navigate(["/"]);
         }
     });

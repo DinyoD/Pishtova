@@ -31,7 +31,10 @@ export const storageServiceProvider: Provider = {
 export class BrowserStorage{
   private localStorage = localStorage;
 
-  setItem<T>(key: string, item: T): T {
+  setItem<T>(key: string, item: T): T|null {
+    if(this.localStorage.getItem('token') == null && key != 'token'){
+      return null;
+    }
     const itemAsString = typeof item === 'string' ? item : JSON.stringify(item);
     this.localStorage.setItem(key, itemAsString);
     return item;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 
-import { SubjectService } from 'src/app/services';
+import { SubjectService, TestService } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -15,6 +15,7 @@ export class InTestGuard implements CanActivate {
   constructor(
     private router: Router,
     private dialog: MatDialog,
+    private testService: TestService,
     private subjectService: SubjectService
     ){};
 
@@ -23,7 +24,7 @@ export class InTestGuard implements CanActivate {
     state: RouterStateSnapshot
     ) {
  
-    if (this.subjectService.isInTest()) {
+    if (this.testService.isInTest()) {
       this.openDialog(state.url)
       return false;     
     }
@@ -40,7 +41,10 @@ export class InTestGuard implements CanActivate {
     
         dialogRef.afterClosed().subscribe(dialogResult => {
           if (dialogResult) {
-            this.subjectService.sendInTestStateChangeNotification(false);
+            this.testService.sendInTestStateChangeNotification(false);
+            if(url.includes('/subject/') == false){
+              this.subjectService.settingSubjectModel(null)
+            }
             this.router.navigate([url]);
           }
         })

@@ -20,9 +20,16 @@
       color: $icon;
       text-decoration: none;
     }
+    .icon.open mat-icon {
+      color: $green;
+    }
     mat-icon:hover {
       color: $white;
       cursor: pointer;
+    }
+    .sbj-name {
+      color: $white;
+      font-size: 40px;
     }
   }
   .modal {
@@ -37,7 +44,7 @@
     font-size: 10px;
     height: 192px;
     width: 200px;
-
+    z-index: 150;
     .modal-field {
       height: 45px;
       background-color: $primary;

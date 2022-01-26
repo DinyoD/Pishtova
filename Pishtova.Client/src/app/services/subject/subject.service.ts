@@ -11,8 +11,8 @@ import { StorageService } from '..';
 })
 export class SubjectService {
 
-  private _inTestChangeSub = new Subject<boolean>();
-  public inTestChanged = this._inTestChangeSub.asObservable();
+  private _subjectChangeSub = new Subject<SubjectModel|null>();
+  public subjectChanged = this._subjectChangeSub.asObservable();
 
   constructor(
     private httpClient : HttpClient,
@@ -27,17 +27,26 @@ export class SubjectService {
     return this.httpClient.get<SubjectModel>(env.API_URL + `/subject/${id}`);
   }
 
-  public sendInTestStateChangeNotification = (inTest: boolean): void => {
-    this._inTestChangeSub.next(inTest);
-    if (inTest) {
-      this.storage.setItem('test', 'in');
+  public settingSubjectModel = (sbj: SubjectModel|null): void=> {
+    this._subjectChangeSub.next(sbj);
+    if (sbj != null) {
+      this.storage.setItem('subjectName', sbj.name);
+      this.storage.setItem('subjectId', sbj.id.toString());     
     }else{
-      this.storage.removeItem('test');
+      this.storage.removeItem('subjectName');
+      this.storage.removeItem('subjectId');     
     }
   }
 
-  public isInTest = (): boolean => {
-    const storageItem = this.storage.getItem("test");
-    return storageItem != null;
+  public getCurrentSubject = (): SubjectModel|null => {
+    const name= this.storage.getItem<string>('subjectName');
+    const  id =this.storage.getItem<string>('subjectId')
+    if (name == null || id == null) {
+      return null;
+    }
+    return {
+       name: name, 
+       id: +id
+    }
   }
 }

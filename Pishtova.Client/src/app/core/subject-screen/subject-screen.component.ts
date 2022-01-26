@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { StorageService, SubjectService } from 'src/app/services';
+import { SubjectService, TestService  } from 'src/app/services';
+import { SubjectModel } from 'src/app/models/subject';
 
 @Component({
   selector: 'app-subject-screen',
@@ -13,38 +14,42 @@ import { StorageService, SubjectService } from 'src/app/services';
 })
 export class SubjectScreenComponent implements OnInit {
 
-  public subjectId: number|undefined;
-  public subjectName: string | null = null;
+  public subject: SubjectModel| null= null;
   public showTest: boolean = false;
 
   constructor(
     private actRoute: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private storage: StorageService,
-    private subjectService: SubjectService) {
-      this.subjectName = this.storage.getItem('subjectName');
-      this.showTest = this.subjectService.isInTest();
+    private subjectService: SubjectService,
+    private testService: TestService) {
+
+      this.showTest = this.testService.isInTest();
+      this.subject = this.subjectService.getCurrentSubject();
     }
 
   ngOnInit(): void {
-    if (this.storage.getItem('subjectId') != this.actRoute.snapshot.params.id) {
-      this.router.navigate(['main'])
-    }
-    this.subjectId = this.actRoute.snapshot.params.id;
-    this.subjectService.inTestChanged.subscribe( inTest => this.showTest = inTest);
+
+    this.subjectService.subjectChanged.subscribe( sbj => {
+      this.subject = sbj;
+      if (sbj?.id != this.actRoute.snapshot.params.id) {
+        this.router.navigate(['main'])
+      }
+    })
+
+    this.testService.inTestChanged.subscribe( inTest => this.showTest = inTest);
   }
 
   handelStartTest(){
-    const dialogData = new ConfirmationDialogModel(`Стартирате тест по ${this.subjectName}.`);
+    const dialogData = new ConfirmationDialogModel(`Стартирате тест по ${this.subject?.name}.`);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { 
         closeOnNavigation: true,
         data: dialogData
     })
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
-        this.subjectService.sendInTestStateChangeNotification(true)
-        this.router.navigate([`subject/${this.actRoute.snapshot.params.id}/test`]);
+        this.testService.sendInTestStateChangeNotification(true)
+        this.router.navigate([`subject/${this.subject?.id}/test`]);
       }
   });
   }
