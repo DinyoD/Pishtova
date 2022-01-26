@@ -11,9 +11,9 @@
 
         public User User { get; set; }
 
-        public string ProblemId { get; set; }
+        public int SubjectCategoryId { get; set; }
 
-        public Problem Problem { get; set; }
+        public SubjectCategory SubjectCategory { get; set; }
 
         [Range(0, 1)]
         public int Points { get; set; }
