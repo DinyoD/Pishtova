@@ -25,19 +25,39 @@
             }" (click)="chooseAnswer(a, p.subjectCategoryId)">
             <span>{{a.text}}</span>
           </div>
-          <a class="btn" [ngClass]="{'btn-active': someAnswerIsClicked}" (click)="nextProblem()">
-            <span *ngIf="someAnswerIsClicked" class="btn-text">Напред</span>
-          </a>
+          <div class="result-info-container">
+
+            <div class="result-info-sector">
+              <span class="number">{{problemNumber}}</span>
+              <span class="text">въпрос</span>
+            </div>
+            <div class="result-info-sector">
+              <span class="number">{{points ? points : 0}}</span>
+              <span class="text">точки</span>
+            </div>
+            <div class="result-info-sector">
+              <span class="number">{{maxScore}}</span>
+              <span class="text">макс. резултат</span>
+            </div>
+
+          </div>
         </div>
 
-        <div *ngIf="someAnswerIsClicked" class="test-info">
+        <div class="test-info">
           <div class="test-img-container">
             <img class="test-img" src="{{p.pictureUrl}}" alt=""
               onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
           </div>
-          <div class="test-h">
+          <div *ngIf="p.hint && someAnswerIsClicked" class="test-h">
             <span> * {{p.hint}}</span>
           </div>
+          <a *ngIf="problemNumber<20" class="btn" (click)="nextProblem()">
+            <span class="btn-text">Напред</span>
+            <mat-icon>forward</mat-icon>
+          </a>
+          <a *ngIf="problemNumber==20" class="btn-finish" (click)="finishTest()">
+            <span class="btn-text">Край</span>
+          </a>
         </div>
 
 

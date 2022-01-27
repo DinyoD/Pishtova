@@ -18,10 +18,10 @@ export class PointsService {
     private storage: StorageService) { }
 
   saveProblemScoreInDb(points: ProblemPointModel): void{
-    this.settingPoints(points.points)
+    this.addPoints(points.points)
   }
 
-  settingPoints(pointValue: number): void{
+  addPoints(pointValue: number): void{
     const points = this.gettingPoints() + pointValue;
     this._pointsChangeSub.next(points);
     this.storage.setItem('points', points.toString());

@@ -2,21 +2,18 @@
   <div *ngIf="!showTest" class="boxes-container">
     <a class="box" (click)="handelStartTest()">
       <mat-icon>grade</mat-icon>
-      <p>Тест</p>
+      <p>ТЕСТ</p>
     </a>
     <a class="box">
       <mat-icon>grade</mat-icon>
-      <p>Класиране</p>
+      <p>КЛАСИРАНЕ</p>
     </a>
     <a class="box">
       <mat-icon>grade</mat-icon>
-      <p>Метериали</p>
+      <p>МАТЕРИАЛИ</p>
     </a>
   </div>
 
   <app-test-screen *ngIf="showTest" [subjectId]="subject?.id"></app-test-screen>
 
-  <!-- <div class="title-box">
-    <p class="title-text">{{subjectName?.toUpperCase()}}</p>
-  </div> -->
 </div>

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { SubjectService, TestService  } from 'src/app/services';
+import { PointsService, SubjectService, TestService  } from 'src/app/services';
 import { SubjectModel } from 'src/app/models/subject';
 
 @Component({
@@ -22,14 +22,15 @@ export class SubjectScreenComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private subjectService: SubjectService,
-    private testService: TestService) {
+    private testService: TestService,
+    private pointsService: PointsService) {
 
       this.showTest = this.testService.isInTest();
       this.subject = this.subjectService.getCurrentSubject();
     }
 
   ngOnInit(): void {
-
+    this.pointsService.clearPoints();
     this.subjectService.subjectChanged.subscribe( sbj => {
       this.subject = sbj;
       if (sbj?.id != this.actRoute.snapshot.params.id) {

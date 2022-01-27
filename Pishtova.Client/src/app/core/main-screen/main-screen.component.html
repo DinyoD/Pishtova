@@ -2,11 +2,11 @@
   <div class="boxes-container">
     <a (click)="chooseSubject(s)" *ngFor="let s of subjects" class="box">
       <mat-icon>grade</mat-icon>
-      <p>{{s.name}}</p>
+      <p>{{s.name.toUpperCase()}}</p>
     </a>
     <a (click)="chooseSubject(s)" *ngFor="let s of subjects" class="box">
       <mat-icon>grade</mat-icon>
-      <p>{{s.name}}</p>
+      <p>{{s.name.toUpperCase()}}</p>
     </a>
   </div>
 </div>

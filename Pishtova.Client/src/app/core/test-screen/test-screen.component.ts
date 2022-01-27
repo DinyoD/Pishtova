@@ -26,6 +26,7 @@ export class TestScreenComponent implements OnInit {
   public selectedAnswerId: string|null = null
 
   public points: number|null = null;
+  public maxScore: number = 20;
 
   constructor(
     private problemService: ProblemService,
@@ -40,18 +41,12 @@ export class TestScreenComponent implements OnInit {
     
     ngOnInit(): void {
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe( (problems) => this.problems = problems);
-      this.pointsService.pointsChanged.subscribe(p => this.points = p);
+      this.pointsService.pointsChanged.subscribe(p =>{ 
+        this.points = p;
+        this.maxScore = p + 20 - this.problemNumber;
+      });
     }
     
-    nextProblem(){
-      if (!this.someAnswerIsClicked) {
-        return;
-      }
-      this.store.dispatch(new StateActions.SetProblemNumber(this.problemNumber + 1));
-      this.someAnswerIsClicked = false;
-       
-    }
-
     chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number){
       if (this.someAnswerIsClicked) {
         return;
@@ -65,6 +60,19 @@ export class TestScreenComponent implements OnInit {
       this.pointsService.saveProblemScoreInDb(problemPointModel);
       this.cd.detectChanges();      
     }
+
+    nextProblem(){
+      if (!this.someAnswerIsClicked) {
+        return;
+      }
+      this.store.dispatch(new StateActions.SetProblemNumber(this.problemNumber + 1));
+      this.someAnswerIsClicked = false;    
+    }
+
+    finishTest(){
+      
+    }
+
   }
 
 
