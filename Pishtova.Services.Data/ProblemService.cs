@@ -24,32 +24,37 @@
             foreach (var catId in testPattern)
             {
                 var problemsCount = this.db.Problems.Where(x => x.SubjectCategoryId == catId).Count();
-                var randomIndex = new Random().Next(1, problemsCount);
-                var problem = await this.db.Problems
-                    .Where(x => x.SubjectCategoryId == catId)
-                    .Skip(randomIndex)
-                    .Select(x => new ProblemModel
-                    {
-                        Id = x.Id,
-                        PictureUrl = x.PictureUrl,
-                        Hint = x.Hint,
-                        QuestionText = x.QuestionText,
-                        SubjectCategoryId = x.SubjectCategoryId,
-                        Answers = x.Answers.Select(a => new AnswerModel
-                        {
-                            Id = a.Id,
-                            Text = a.Text,
-                            IsCorrect = a.IsCorrect
-                        }).ToList(),
-                    })
-                    .FirstAsync();
-                if (!result.Select(x => x.Id).ToList().Contains(problem.Id))
+                var problem = await getRandomProblem(catId, new Random().Next(1, problemsCount));
+                while(result.Select(x => x.Id).ToList().Contains(problem.Id))
                 {
-                    result.Add(problem);
+                    problem = await getRandomProblem(catId, new Random().Next(1, problemsCount));
                 }
+                result.Add(problem);
             }
 
             return result;
+        }
+
+        private async Task<ProblemModel> getRandomProblem(int catId, int randomIndex)
+        {
+            return await this.db.Problems
+                .Where(x => x.SubjectCategoryId == catId)
+                .Skip(randomIndex)
+                .Select(x => new ProblemModel
+                {
+                    Id = x.Id,
+                    PictureUrl = x.PictureUrl,
+                    Hint = x.Hint,
+                    QuestionText = x.QuestionText,
+                    SubjectCategoryId = x.SubjectCategoryId,
+                    Answers = x.Answers.Select(a => new AnswerModel
+                    {
+                        Id = a.Id,
+                        Text = a.Text,
+                        IsCorrect = a.IsCorrect
+                    }).ToList(),
+                })
+                .FirstAsync();
         }
     }
 }
