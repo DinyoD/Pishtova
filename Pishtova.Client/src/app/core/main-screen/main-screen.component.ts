@@ -26,7 +26,11 @@ export class MainScreenComponent implements OnInit {
     );
   }
   chooseSubject(sbj: SubjectModel): void{
-    this.subjectService.subjectChanged.subscribe(s => this.router.navigate([`subject/${s?.id}`]));
+    this.subjectService.subjectChanged.subscribe(s =>{ 
+      if (s) {   
+        this.router.navigate([`subject/${s?.id}`]);
+      }
+    });
     this.subjectService.settingSubjectModel(sbj);
     console.log(sbj);
   }

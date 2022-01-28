@@ -1,33 +1,38 @@
 @import "../../utilities/colors/colors.scss";
+$font-size: calc(100vw / 45);
 
 .container {
   height: 64px;
   display: flex;
   flex-direction: row;
-  padding: 0 20px;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
-  border-bottom: 0.5px solid $secondary;
+  padding: 0 5px;
+  //border-bottom: 0.5px solid $secondary;
   align-self: flex-start;
   .link {
     height: 50px;
-    width: 30%;
+    width: 20%;
+    margin: 0 5px;
     text-decoration: none;
-    border-radius: 5px;
+    border-bottom: 0.5px solid rgba($secondary, 0.2);
+    border-left: 0.5px solid rgba($secondary, 0.2);
+    border-bottom-left-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: auto;
     span {
-      font-size: 24px;
-      color: $secondary;
+      font-size: $font-size;
+      color: rgba($secondary, 0.5);
     }
   }
-  .link:hover {
+  .link-active:hover {
     cursor: pointer;
     background-color: $secondary;
+    border-radius: 10px;
     span {
       color: $icon;
-      font-size: 28px;
     }
   }
 }

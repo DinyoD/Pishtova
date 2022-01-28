@@ -11,7 +11,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     private subjectService :SubjectService) { 
       
-    this.subjectService.settingSubjectModel(null);
+    if (this.subjectService.getCurrentSubject() != null) {
+      this.subjectService.settingSubjectModel(null);
+    } 
   }
 
   ngOnInit(): void {

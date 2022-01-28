@@ -1,6 +1,7 @@
 @import "../../utilities/colors/colors.scss";
 $box_size: calc((100vw - 200px) / 4);
 $icon_size: calc(((100vw - 200px) / 4) * 0.7);
+$font-size: calc(((100vw - 200px) / 4) * 0.1);
 
 .container {
   width: 100vw;
@@ -35,7 +36,7 @@ $icon_size: calc(((100vw - 200px) / 4) * 0.7);
       }
       p {
         color: $secondary;
-        font-size: 38px;
+        font-size: $font-size;
       }
     }
 
@@ -46,8 +47,6 @@ $icon_size: calc(((100vw - 200px) / 4) * 0.7);
       }
       p {
         color: $icon;
-        font-size: 38px;
-        margin: 18px 0;
       }
     }
   }

@@ -6,6 +6,7 @@ import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/conf
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { PointsService, SubjectService, TestService  } from 'src/app/services';
 import { SubjectModel } from 'src/app/models/subject';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-subject-screen',
@@ -33,10 +34,11 @@ export class SubjectScreenComponent implements OnInit {
     this.pointsService.clearPoints();
     this.subjectService.subjectChanged.subscribe( sbj => {
       this.subject = sbj;
-      if (sbj?.id != this.actRoute.snapshot.params.id) {
+      if (sbj!= null && sbj?.id != this.actRoute.snapshot.params.id ) {
         this.router.navigate(['main'])
       }
     })
+    
 
     this.testService.inTestChanged.subscribe( inTest => this.showTest = inTest);
   }
