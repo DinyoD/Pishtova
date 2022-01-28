@@ -52,11 +52,11 @@
             <span> * {{p.hint}}</span>
           </div>
           <a *ngIf="problemNumber<20" class="btn" (click)="nextProblem()">
-            <span class="btn-text">Напред</span>
-            <mat-icon>forward</mat-icon>
+            <span *ngIf="someAnswerIsClicked" class="btn-text">Напред</span>
+            <mat-icon *ngIf="someAnswerIsClicked">forward</mat-icon>
           </a>
           <a *ngIf="problemNumber==20" class="btn-finish" (click)="finishTest()">
-            <span class="btn-text">Край</span>
+            <span *ngIf="someAnswerIsClicked" class="btn-text">Край</span>
           </a>
         </div>
 

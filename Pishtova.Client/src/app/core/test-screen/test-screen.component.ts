@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 
 import { ProblemModel } from 'src/app/models/problem';
@@ -32,7 +32,8 @@ export class TestScreenComponent implements OnInit {
     private problemService: ProblemService,
     private pointsService: PointsService,
     private store: Store<SubjectState>,
-    private cd: ChangeDetectorRef) { 
+    private cd: ChangeDetectorRef,
+    private router: Router) { 
 
       this.problemNumber$.subscribe( n => this.problemNumber = n);
       this.store.dispatch(new StateActions.SetProblemNumber(1));
@@ -70,7 +71,10 @@ export class TestScreenComponent implements OnInit {
     }
 
     finishTest(){
-      
+      if (!this.someAnswerIsClicked) {
+        return;
+      }
+      this.router.navigate(['/test-result']);
     }
 
   }
