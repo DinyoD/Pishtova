@@ -5,10 +5,9 @@ $font-size: calc(100vw / 45);
   height: 64px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   padding: 0 5px;
-  //border-bottom: 0.5px solid $secondary;
   align-self: flex-start;
   .link {
     height: 50px;

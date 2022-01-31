@@ -44,7 +44,11 @@
         </div>
 
         <div class="test-info">
-          <div class="test-img-container">
+          <div *ngIf="p.pictureUrl == null" class="test-img-container default-img">
+            <img class="test-img" src="../../../assets/icons/favicon.ico" alt="">
+          </div>
+
+          <div *ngIf="p.pictureUrl != null" class="test-img-container true-img">
             <img class="test-img" src="{{p.pictureUrl}}" alt=""
               onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
           </div>

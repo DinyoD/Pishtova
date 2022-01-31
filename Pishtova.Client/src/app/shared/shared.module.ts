@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
 
 
@@ -13,7 +14,8 @@ import { AppRoutingModule } from '../app-routing.module';
   declarations: [
     TimeCounterComponent,
     ConfirmationDialogComponent,
-    NavBarComponent
+    NavBarComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { AppRoutingModule } from '../app-routing.module';
   exports: [
     TimeCounterComponent,
     ConfirmationDialogComponent,
-    NavBarComponent
+    NavBarComponent,
+    LoadingIndicatorComponent
   ]
 })
 export class SharedModule { }
