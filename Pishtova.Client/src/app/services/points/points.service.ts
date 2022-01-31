@@ -10,8 +10,8 @@ import { StorageService } from '..';
 })
 export class PointsService {
 
-  private _pointsChangeSub = new Subject<number>();
-  public pointsChanged = this._pointsChangeSub.asObservable();
+  private _pointsChangeSub: Subject<number> = new Subject<number>();
+  public pointsChanged: Observable<number> = this._pointsChangeSub.asObservable();
 
   constructor(
     private httpClient : HttpClient,

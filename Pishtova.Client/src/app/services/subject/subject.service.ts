@@ -11,8 +11,8 @@ import { StorageService } from '..';
 })
 export class SubjectService {
 
-  private _subjectChangeSub = new Subject<SubjectModel|null>();
-  public subjectChanged = this._subjectChangeSub.asObservable();
+  private _subjectChangeSub: Subject<SubjectModel|null> = new Subject<SubjectModel|null>();
+  public subjectChanged: Observable<SubjectModel|null> = this._subjectChangeSub.asObservable();
 
   constructor(
     private httpClient : HttpClient,

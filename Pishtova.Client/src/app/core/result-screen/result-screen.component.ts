@@ -25,8 +25,6 @@ export class ResultScreenComponent implements OnInit {
   }
 
   generateNewTest(): void{
-    console.log(this.subjectId);
-    
     if (this.subjectId != undefined) {
       this.testService.sendInTestStateChangeNotification(true);
       this.router.navigate([`/subject/${this.subjectId}/test`])

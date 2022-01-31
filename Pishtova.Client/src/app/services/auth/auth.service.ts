@@ -17,8 +17,8 @@ import { StorageService } from '..';
 })
 export class AuthService {
 
-  private _authChangeSub = new Subject<boolean>()
-  public isAuthChange = this._authChangeSub.asObservable();
+  private _authChangeSub: Subject<boolean> = new Subject<boolean>()
+  public isAuthChange: Observable<boolean> = this._authChangeSub.asObservable();
 
   constructor(
     private httpClient: HttpClient, 

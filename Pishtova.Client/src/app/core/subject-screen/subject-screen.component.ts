@@ -34,9 +34,6 @@ export class SubjectScreenComponent implements OnInit {
     this.pointsService.clearPoints();
     this.subjectService.subjectChanged.subscribe( sbj => {
       this.subject = sbj;
-      if (sbj!= null && sbj?.id != this.actRoute.snapshot.params.id ) {
-        this.router.navigate(['main'])
-      }
     })
     
 

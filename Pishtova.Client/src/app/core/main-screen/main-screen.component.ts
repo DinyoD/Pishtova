@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { SubjectModel } from 'src/app/models/subject';
 import { SubjectService} from '../../services';
 
@@ -8,23 +9,18 @@ import { SubjectService} from '../../services';
   templateUrl: './main-screen.component.html',
   styleUrls: ['./main-screen.component.css']
 })
-export class MainScreenComponent implements OnInit {
+export class MainScreenComponent{
 
 
-  public subjects: SubjectModel[] = []
+  public subjects: Observable<SubjectModel[]> = this.subjectService.getAllSubjects()
 
   constructor(
     private subjectService: SubjectService, 
-    private router : Router
+    private router : Router 
     ) {
       this.subjectService.settingSubjectModel(null);
     }
 
-  ngOnInit(): void {
-    this.subjectService.getAllSubjects().subscribe(
-      s => this.subjects = s
-    );
-  }
   chooseSubject(sbj: SubjectModel): void{
     this.subjectService.subjectChanged.subscribe(s =>{ 
       if (s) {   

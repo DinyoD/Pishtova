@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { StorageService } from '..';
 
 @Injectable({
@@ -7,8 +7,8 @@ import { StorageService } from '..';
 })
 export class TestService {
 
-  private _inTestChangeSub = new Subject<boolean>();
-  public inTestChanged = this._inTestChangeSub.asObservable();
+  private _inTestChangeSub: Subject<boolean> = new Subject<boolean>();
+  public inTestChanged: Observable<boolean> = this._inTestChangeSub.asObservable();
 
   constructor(private storage: StorageService) { }
 

@@ -1,10 +1,10 @@
 <div class="container">
   <div class="boxes-container">
-    <a (click)="chooseSubject(s)" *ngFor="let s of subjects" class="box">
+    <a (click)="chooseSubject(s)" *ngFor="let s of subjects | async" class="box">
       <mat-icon>grade</mat-icon>
       <p>{{s.name.toUpperCase()}}</p>
     </a>
-    <a (click)="chooseSubject(s)" *ngFor="let s of subjects" class="box">
+    <a (click)="chooseSubject(s)" *ngFor="let s of subjects | async" class="box">
       <mat-icon>grade</mat-icon>
       <p>{{s.name.toUpperCase()}}</p>
     </a>
