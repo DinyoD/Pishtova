@@ -43,7 +43,7 @@
                 .Select(x => new ProblemModel
                 {
                     Id = x.Id,
-                    PictureUrl = x.PictureUrl,
+                    PictureUrl = x.PictureUrl == "empty" ? null : x.PictureUrl,
                     Hint = x.Hint,
                     QuestionText = x.QuestionText,
                     SubjectCategoryId = x.SubjectCategoryId,

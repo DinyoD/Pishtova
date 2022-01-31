@@ -81,6 +81,7 @@ namespace Pishtova_ASP.NET_web_api
             services.AddTransient<ISchoolService, SchoolService>();
             services.AddTransient<ISubjectService, SubjectService>();
             services.AddTransient<IProblemService, ProblemService>();
+            services.AddTransient<IScoreService, ScoreService>();
 
             services.AddControllers();
         }
