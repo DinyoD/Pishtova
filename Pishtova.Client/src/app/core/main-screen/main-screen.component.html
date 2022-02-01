@@ -1,11 +1,17 @@
 <div class="container">
   <div class="boxes-container">
     <a (click)="chooseSubject(s)" *ngFor="let s of subjects | async" class="box">
-      <mat-icon>grade</mat-icon>
+      <img *ngIf="s.id == 4" class="icon" src="../../../assets/icons/bel.svg" alt="">
+      <img *ngIf="s.id == 3" class="icon" src="../../../assets/icons/bio.svg" alt="">
+      <img *ngIf="false" class="icon" src="../../../assets/icons/geo.svg" alt="">
+      <img *ngIf="false" class="icon" src="../../../assets/icons/bel.svg" alt="">
       <p>{{s.name.toUpperCase()}}</p>
     </a>
     <a (click)="chooseSubject(s)" *ngFor="let s of subjects | async" class="box">
-      <mat-icon>grade</mat-icon>
+      <img *ngIf="s.id == 4" class="icon" src="../../../assets/icons/bel.svg" alt="">
+      <img *ngIf="s.id == 3" class="icon" src="../../../assets/icons/bio.svg" alt="">
+      <img *ngIf="false" class="icon" src="../../../assets/icons/geo.svg" alt="">
+      <img *ngIf="false" class="icon" src="../../../assets/icons/bel.svg" alt="">
       <p>{{s.name.toUpperCase()}}</p>
     </a>
   </div>

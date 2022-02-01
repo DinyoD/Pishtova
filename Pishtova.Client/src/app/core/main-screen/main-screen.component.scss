@@ -1,6 +1,6 @@
 @import "../../utilities/colors/colors.scss";
 $box_size: calc((100vw - 200px) / 4);
-$icon_size: calc(((100vw - 200px) / 4) * 0.7);
+$icon_size: calc(((100vw - 200px) / 4) * 0.5);
 $font-size: calc(((100vw - 200px) / 4) * 0.1);
 
 .container {
@@ -28,8 +28,9 @@ $font-size: calc(((100vw - 200px) / 4) * 0.1);
       border-radius: 5px;
       cursor: pointer;
       text-decoration: none;
-      mat-icon {
-        color: rgba($secondary, 0.5);
+      .icon {
+        //color: rgba($secondary, 0.5);
+        opacity: 0.7;
         font-size: $icon_size;
         width: $icon_size;
         height: $icon_size;
@@ -41,10 +42,7 @@ $font-size: calc(((100vw - 200px) / 4) * 0.1);
     }
 
     .box:hover {
-      background-color: $secondary;
-      mat-icon {
-        color: rgba($icon, 0.85);
-      }
+      background-color: rgba($secondary, 0.5);
       p {
         color: $icon;
       }

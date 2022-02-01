@@ -32,7 +32,7 @@ export class ErrorHandlerService implements HttpInterceptor {
       return this.handleBadRequest(error);
     }
     else if(error.status === 401) {
-      return this.handleUnauthorized();
+      return this.handleUnauthorized(error);
     }
     else if(error.status === 403) {
       return this.handleForbidden(error);
@@ -45,12 +45,12 @@ export class ErrorHandlerService implements HttpInterceptor {
     return "Forbidden";
   }
 
-  private handleUnauthorized = () => {
+  private handleUnauthorized = (error: HttpErrorResponse) => {
     if(this._router.url !== '/') {
       
       this._router.navigate(['/'], { queryParams: { returnUrl: this._router.url }});
     }
-    return 'Вашата парола и/или имейл не са правилни!';
+    return error.error.message;
   }
 
   private handleNotFound = (error: HttpErrorResponse): string => {

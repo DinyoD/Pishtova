@@ -1,7 +1,7 @@
 <mat-toolbar class="header">
   <mat-toolbar-row>
     <a class="icon" routerLink="/main" (click)="hideModal()">
-      <mat-icon>home</mat-icon>
+      <img src="../../../assets/icons/brighterLogo.svg" alt="">
     </a>
     <span *ngIf="subjectName && isAuth" class="sbj-name">
       {{subjectName.toUpperCase()}}
@@ -30,4 +30,4 @@
   </div>
 
 </mat-toolbar>
-<app-nav-bar *ngIf="isAuth && !inTest"></app-nav-bar>
+<!-- <app-nav-bar *ngIf="isAuth && !inTest"></app-nav-bar> -->

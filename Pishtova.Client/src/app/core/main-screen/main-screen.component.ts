@@ -11,7 +11,6 @@ import { SubjectService} from '../../services';
 })
 export class MainScreenComponent{
 
-
   public subjects: Observable<SubjectModel[]> = this.subjectService.getAllSubjects()
 
   constructor(

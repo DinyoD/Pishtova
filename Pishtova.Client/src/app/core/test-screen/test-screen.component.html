@@ -45,7 +45,7 @@
 
         <div class="test-info">
           <div *ngIf="p.pictureUrl == null" class="test-img-container default-img">
-            <img class="test-img" src="../../../assets/icons/favicon.ico" alt="">
+            <img class="test-img" src="../../../assets/icons/Logo.svg" alt="">
           </div>
 
           <div *ngIf="p.pictureUrl != null" class="test-img-container true-img">
@@ -55,12 +55,13 @@
           <div *ngIf="p.hint && someAnswerIsClicked" class="test-h">
             <span> * {{p.hint}}</span>
           </div>
-          <a *ngIf="problemNumber<20" class="btn" (click)="nextProblem()">
-            <span *ngIf="someAnswerIsClicked" class="btn-text">Напред</span>
-            <mat-icon *ngIf="someAnswerIsClicked">forward</mat-icon>
+          <a *ngIf="problemNumber<20" class="btn" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
+            (click)="nextProblem()">
+            <span class="btn-text">Продължи</span>
           </a>
-          <a *ngIf="problemNumber==20" class="btn-finish" (click)="finishTest()">
-            <span *ngIf="someAnswerIsClicked" class="btn-text">Край</span>
+          <a *ngIf="problemNumber==20" class="btn-finish" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
+            (click)="finishTest()">
+            <span class="btn-text">Предай</span>
           </a>
         </div>
 
