@@ -1,1 +1,12 @@
-<p>profile works!</p>
+<div class="container">
+  <div class="profile">
+    <div class="profile-name"><span>{{profile?.name}}</span></div>
+    <div class="profile-town"><span>{{profile?.townName}}</span></div>
+    <div class="profile-school"><span>{{profile?.schoolName}}</span></div>
+    <div class="profile-picture">
+      <img src="{{profile?.pictureUrl}}" alt=""
+        onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+    </div>
+    <div class="profile-grade"><span>{{profile?.grade}}</span></div>
+  </div>
+</div>

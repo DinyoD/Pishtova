@@ -8,3 +8,4 @@ export * from './storage/storage.service';
 export * from './test/test.service';
 export * from './points/points.service';
 export * from './loadingIndicator/loading-indicator.service';
+export * from './user/user.service';
