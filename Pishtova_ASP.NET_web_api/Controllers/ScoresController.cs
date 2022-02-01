@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Pishtova_ASP.NET_web_api.Controllers
 {
-    public class ScoreController: ApiController
+    public class ScoresController: ApiController
     {
         private readonly UserManager<User> userManager;
         private readonly IScoreService scoreService;
-
-        public ScoreController(UserManager<User> userManager, IScoreService scoreService)
+        
+        public ScoresController(UserManager<User> userManager, IScoreService scoreService)
         {
             this.userManager = userManager;
             this.scoreService = scoreService;
