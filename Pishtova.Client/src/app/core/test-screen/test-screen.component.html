@@ -1,14 +1,6 @@
 <div class="test-screen-conatiner">
 
-  <div class="progress-bar-container">
-    <div class="bar-container">
-      <div class="stepper-wrapper" *ngFor="let p of problems, let i = index">
-        <div class="stepper-item" [ngClass]="{'active' : problemNumber == (i+1), 'completed' : problemNumber > i + 1}">
-          <div class="step-counter">{{i + 1}}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-progress-bar [count]="20" [problemNumber]="problemNumber"></app-progress-bar>
 
   <div class="test-container">
     <div *ngFor="let p of problems, let i = index">

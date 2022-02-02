@@ -1,0 +1,8 @@
+<div class="progress-bar-container">
+  <div class="bar-container">
+    <div class="stepper-wrapper" *ngFor="let num of countArray">
+      <div class="stepper-item" [ngClass]="{'completed' : problemNumber >= num}">
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 
 
@@ -15,7 +16,8 @@ import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator
     TimeCounterComponent,
     ConfirmationDialogComponent,
     NavBarComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    ProgressBarComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator
     TimeCounterComponent,
     ConfirmationDialogComponent,
     NavBarComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    ProgressBarComponent
   ]
 })
 export class SharedModule { }
