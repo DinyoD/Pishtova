@@ -3,18 +3,7 @@
 $icon-size: calc(100vw * 0.16);
 $font-size: calc(100vw * 0.02);
 $points-size: calc((100vw * 0.026));
-.container.b {
-  background-color: rgba($red, 0.05);
-  border: 1px dotted rgba($red, 0.2);
-}
-.container.n {
-  background-color: rgba($secondary, 0.05);
-  border: 1px dotted rgba($secondary, 0.2);
-}
-.container.e {
-  background-color: rgba($green, 0.05);
-  border: 1px dotted rgba($green, 0.2);
-}
+
 .container {
   width: 45vw;
   height: 66vh;
@@ -22,7 +11,7 @@ $points-size: calc((100vw * 0.026));
   flex-direction: column;
   margin: 10px auto;
   padding: 4vh 0 2vh 0;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   align-self: center;
   border-radius: 20px;
@@ -32,12 +21,6 @@ $points-size: calc((100vw * 0.026));
     font-size: $icon-size;
     color: rgba($secondary, 0.6);
     margin-bottom: 50px;
-  }
-  .icon.bad {
-    color: rgba($red, 0.9);
-  }
-  .icon.exellent {
-    color: rgba($green, 0.9);
   }
   p,
   a {
@@ -57,18 +40,16 @@ $points-size: calc((100vw * 0.026));
     font-size: $font-size;
     color: rgba($secondary, 0.8);
   }
-  .text.bad {
-    color: rgba($red, 0.9);
-  }
-  .text.exellent {
-    color: rgba($green, 0.9);
-  }
   a.text {
     margin-top: auto;
     background-color: rgba($green, 0.3);
     cursor: pointer;
     padding: 5px 25px;
-    border: 1px dotted rgba($green, 0.3);
     border-radius: 10px;
+    box-shadow: 2px 1px 8px rgba($black, 0.5);
+  }
+
+  a.text:hover {
+    box-shadow: 1px 0px 4px rgba($black, 0.5);
   }
 }

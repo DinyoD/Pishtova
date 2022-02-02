@@ -1,65 +1,61 @@
-<div class="test-screen-conatiner">
+<app-progress-bar [count]="20" [problemNumber]="problemNumber"></app-progress-bar>
 
-  <app-progress-bar [count]="20" [problemNumber]="problemNumber"></app-progress-bar>
+<div class="test-container">
+  <div *ngFor="let p of problems, let i = index">
+    <div *ngIf="problemNumber == i+1" class="test">
 
-  <div class="test-container">
-    <div *ngFor="let p of problems, let i = index">
-      <div *ngIf="problemNumber == i+1" class="test">
-
-        <div class="test-content">
-          <div class="test-q">
-            <span>{{p.questionText}}</span>
-          </div>
-          <div *ngFor="let a of p.answers" class="test-a" [ngClass]="{
-              'test-a-active': !someAnswerIsClicked, 
-              'test-a-correct': someAnswerIsClicked && a.isCorrect,
-              'test-a-selected': a.id == selectedAnswerId
-            }" (click)="chooseAnswer(a, p.subjectCategoryId)">
-            <span>{{a.text}}</span>
-          </div>
-          <div class="result-info-container">
-
-            <div class="result-info-sector">
-              <span class="number">{{problemNumber}}</span>
-              <span class="text">въпрос</span>
-            </div>
-            <div class="result-info-sector">
-              <span class="number">{{points ? points : 0}}</span>
-              <span class="text">точки</span>
-            </div>
-            <div class="result-info-sector">
-              <span class="number">{{maxScore}}</span>
-              <span class="text">макс. резултат</span>
-            </div>
-
-          </div>
+      <div class="test-content">
+        <div class="test-q">
+          <span>{{p.questionText}}</span>
         </div>
-
-        <div class="test-info">
-          <div *ngIf="p.pictureUrl == null" class="test-img-container default-img">
-            <img class="test-img" src="../../../assets/icons/Logo.svg" alt="">
-          </div>
-
-          <div *ngIf="p.pictureUrl != null" class="test-img-container true-img">
-            <img class="test-img" src="{{p.pictureUrl}}" alt=""
-              onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
-          </div>
-          <div *ngIf="p.hint && someAnswerIsClicked" class="test-h">
-            <span> * {{p.hint}}</span>
-          </div>
-          <a *ngIf="problemNumber<20" class="btn" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
-            (click)="nextProblem()">
-            <span class="btn-text">Продължи</span>
-          </a>
-          <a *ngIf="problemNumber==20" class="btn-finish" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
-            (click)="finishTest()">
-            <span class="btn-text">Предай</span>
-          </a>
+        <div *ngFor="let a of p.answers" class="test-a" [ngClass]="{
+            'test-a-active': !someAnswerIsClicked, 
+            'test-a-correct': someAnswerIsClicked && a.isCorrect,
+            'test-a-selected': a.id == selectedAnswerId
+          }" (click)="chooseAnswer(a, p.subjectCategoryId)">
+          <span>{{a.text}}</span>
         </div>
+        <div class="result-info-container">
 
+          <div class="result-info-sector">
+            <span class="number">{{problemNumber}}</span>
+            <span class="text">въпрос</span>
+          </div>
+          <div class="result-info-sector">
+            <span class="number">{{points ? points : 0}}</span>
+            <span class="text">точки</span>
+          </div>
+          <div class="result-info-sector">
+            <span class="number">{{maxScore}}</span>
+            <span class="text">макс. резултат</span>
+          </div>
 
+        </div>
       </div>
+
+      <div class="test-info">
+        <div *ngIf="p.pictureUrl == null" class="test-img-container default-img">
+          <img class="test-img" src="../../../assets/icons/brownLogo.svg" alt="">
+        </div>
+
+        <div *ngIf="p.pictureUrl != null" class="test-img-container true-img">
+          <img class="test-img" src="{{p.pictureUrl}}" alt=""
+            onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+        </div>
+        <div *ngIf="p.hint && someAnswerIsClicked" class="test-h">
+          <span> * {{p.hint}}</span>
+        </div>
+        <a *ngIf="problemNumber<20" class="btn" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
+          (click)="nextProblem()">
+          <span class="btn-text">Продължи</span>
+        </a>
+        <a *ngIf="problemNumber==20" class="btn-finish" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
+          (click)="finishTest()">
+          <span class="btn-text">Предай</span>
+        </a>
+      </div>
+
+
     </div>
   </div>
-
 </div>

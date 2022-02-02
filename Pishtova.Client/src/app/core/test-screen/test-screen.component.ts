@@ -33,15 +33,13 @@ export class TestScreenComponent implements OnInit {
     private pointsService: PointsService,
     private store: Store<SubjectState>,
     private cd: ChangeDetectorRef,
-    private router: Router) { 
-
-      this.problemNumber$.subscribe( n => this.problemNumber = n);
-      this.store.dispatch(new StateActions.SetProblemNumber(1));
-      this.points = this.pointsService.gettingPoints();
-    }
+    private router: Router) {}
     
     ngOnInit(): void {
-      this.problemService.generateTestBySubjectId(this.subjectId).subscribe( (problems) => this.problems = problems);
+      this.store.dispatch(new StateActions.SetProblemNumber(1));
+      this.problemService.generateTestBySubjectId(this.subjectId).subscribe(problems => this.problems = problems);
+      this.problemNumber$.subscribe( n => this.problemNumber = n);
+      this.points = this.pointsService.gettingPoints();
       this.pointsService.pointsChanged.subscribe(p =>{ 
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;

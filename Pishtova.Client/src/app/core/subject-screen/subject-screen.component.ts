@@ -25,19 +25,15 @@ export class SubjectScreenComponent implements OnInit {
     private subjectService: SubjectService,
     private testService: TestService,
     private pointsService: PointsService) {
-
-      this.showTest = this.testService.isInTest();
-      this.subject = this.subjectService.getCurrentSubject();
+      
+      this.pointsService.clearPoints();
     }
-
-  ngOnInit(): void {
-    this.pointsService.clearPoints();
-    this.subjectService.subjectChanged.subscribe( sbj => {
-      this.subject = sbj;
-    })
     
-
+    ngOnInit(): void {
+    this.showTest = this.testService.isInTest();
     this.testService.inTestChanged.subscribe( inTest => this.showTest = inTest);
+    this.subject = this.subjectService.getCurrentSubject();
+    this.subjectService.subjectChanged.subscribe( sbj => this.subject = sbj); 
   }
 
   handelStartTest(){

@@ -24,16 +24,13 @@ export class HeaderComponent implements OnInit{
     private router: Router,
     private userService : AuthService,
     private subjectService: SubjectService,
-    private testService: TestService) {
-
-      this.isAuth = userService.isUserAuthenticated();
-      this.inTest = testService.isInTest();
-      this.subjectName = this.subjectService.getCurrentSubject()?.name;
-
-    }
-
-
-  ngOnInit(): void {
+    private testService: TestService) {}
+    
+    
+    ngOnInit(): void {
+    this.isAuth = this.userService.isUserAuthenticated();
+    this.inTest = this.testService.isInTest();
+    this.subjectName = this.subjectService.getCurrentSubject()?.name;
     this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
     this.testService.inTestChanged.subscribe(inTest => this.inTest = inTest);
     this.subjectService.subjectChanged.subscribe(sbj => this.subjectName = sbj?.name);

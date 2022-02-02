@@ -1,16 +1,17 @@
-<div class="container" [ngClass]="{
-    'b': points !=null && points <= 10,
-    'n': points !=null && (points > 10 && points < 17),
-    'e': points !=null && points >= 17
-}">
-  <mat-icon *ngIf="points !=null && points <= 10 " class="icon bad">mood</mat-icon>
-  <mat-icon *ngIf="points !=null && (points > 10 && points < 17)" class="icon">mood</mat-icon>
-  <mat-icon *ngIf="points !=null && points >= 17" class="icon exellent">mood</mat-icon>
+<div class="container">
+  <img *ngIf="points !=null && points <= 5 " class="icon" src="../../../assets/icons/whiteFlag.svg" alt="">
+  <img *ngIf="points !=null && (points > 5 && points <= 10) " class="icon" src="../../../assets/icons/knife.svg" alt="">
+  <img *ngIf="points !=null && (points > 10 && points <= 15) " class="icon" src="../../../assets/icons/pistol.svg"
+    alt="">
+  <img *ngIf="points !=null && points > 15 " class="icon" src="../../../assets/icons/rifles.svg" alt="">
+
   <div class="result">
-    <p>Резултатът ти е <span class="points score">{{points}}</span> от <span class="points">20</span> точки.</p>
+    <p>Резултатът ти е <span class="points score">{{points}}</span> от възможни <span class="points">20</span> точки.
+    </p>
   </div>
-  <p *ngIf="points!=null && points <= 10" class="text bad">Не се предавай!</p>
-  <p *ngIf="points!=null && (points > 10 && points < 17)" class="text">Справи се добре!</p>
-  <p *ngIf="points!=null && points >= 17" class="text exellent">Поздравления!</p>
+  <p *ngIf="points !=null && points <= 5 " class="text">Не се предавай!</p>
+  <p *ngIf="points !=null && (points > 5 && points <= 10)" class="text">Не отивай с нож в престрелка!</p>
+  <p *ngIf="points !=null && (points > 10 && points <= 15)" class="text">Добре! Продължавай да гърмиш.</p>
+  <p *ngIf="points!=null && points > 15" class="text">Браво! Пушка си.</p>
   <a class="text" (click)="generateNewTest()">Пробвай oтново</a>
 </div>

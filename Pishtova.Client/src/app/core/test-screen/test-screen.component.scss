@@ -46,8 +46,8 @@ $btn-iconSize: calc(100vw / 50 * 1.5);
       .test-a {
         width: 49%;
         height: 25%;
-        background-color: rgba($icon, 0.7);
-        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.18);
+        background-color: rgba($white, 0.5);
+        box-shadow: 3px 3px 8px rgba($black, 0.5);
         border-radius: 45px;
         padding: 20px;
         display: flex;
@@ -79,7 +79,7 @@ $btn-iconSize: calc(100vw / 50 * 1.5);
       .test-a-active:hover {
         cursor: pointer;
         background-color: rgba($white, 0.8);
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.28);
+        box-shadow: 1px 1px 4px rgba($black, 0.5);
       }
       .result-info-container {
         width: 100%;
@@ -95,16 +95,18 @@ $btn-iconSize: calc(100vw / 50 * 1.5);
           flex-direction: column;
           align-content: center;
           width: 112px;
-          span {
-            font-size: 14px;
-            color: $icon;
+          .text,
+          .number {
             text-align: center;
           }
           .number {
             font-size: $btn-fontSize;
+            font-weight: bold;
+            color: $white;
           }
           .text {
-            color: rgba($icon, 1);
+            font-size: 14px;
+            color: $icon;
           }
         }
       }
@@ -179,6 +181,14 @@ $btn-iconSize: calc(100vw / 50 * 1.5);
       .btn.btn-active,
       .btn-finish.btn-active {
         background-color: rgba($green, 1);
+        box-shadow: 2px 1px 8px rgba($black, 0.5);
+        span {
+          color: $white;
+        }
+      }
+      .btn.btn-active:hover,
+      .btn-finish.btn-active:hover {
+        box-shadow: 0px 0px 4px rgba($black, 0.5);
         cursor: pointer;
       }
     }
