@@ -20,10 +20,10 @@ body {
     font-family: inherit;
   }
   .header {
-    height: calc(100vh / 8);
+    height: calc(100vh / 15 * 2);
   }
   .footer {
-    height: calc(100vh / 14);
+    height: calc(100vh / 15 * 1);
   }
   div {
     box-sizing: inherit;

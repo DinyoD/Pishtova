@@ -2,6 +2,7 @@ import { SubjectModel } from "./subject";
 
 export interface ProfileModel {
     id: string;
+    email: string,
     pictureUrl: SVGStringList;
     name: string;
     townName: string;

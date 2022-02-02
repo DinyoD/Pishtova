@@ -21,6 +21,7 @@
                 .Select(u => new UserModel
                 {
                     Id = u.Id,
+                    Email = u.Email,
                     Name = u.Name,
                     PictureUrl = u.PictureUrl,
                     Grade = u.Grade,

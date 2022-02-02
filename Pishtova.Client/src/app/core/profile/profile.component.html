@@ -1,12 +1,35 @@
 <div class="container">
-  <div class="profile">
-    <div class="profile-name"><span>{{profile?.name}}</span></div>
-    <div class="profile-town"><span>{{profile?.townName}}</span></div>
-    <div class="profile-school"><span>{{profile?.schoolName}}</span></div>
+  <div class="profile-aside">
     <div class="profile-picture">
-      <img src="{{profile?.pictureUrl}}" alt=""
-        onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+      <div class="profile-img">
+        <img *ngIf="profile?.pictureUrl != null" src="{{profile?.pictureUrl}}" alt=""
+          onerror="this.onerror=null;this.src='../../../assets/icons/brighterLogo.svg';">
+        <span>{{ profile == null ? '' : profile.name[0].toUpperCase()}}</span>
+        <div class="add-img">
+
+        </div>
+      </div>
     </div>
-    <div class="profile-grade"><span>{{profile?.grade}}</span></div>
+    <div class="profile-info">
+      <div class="info-field"><span>{{profile?.name}}</span></div>
+      <div class="info-field">
+        <p>{{profile?.email}}</p>
+      </div>
+      <div class="info-field">
+        <span>{{profile?.grade}}</span>
+        <span *ngIf="profile?.grade == 7 || profile?.grade == 8">-ми</span>
+        <span *ngIf="profile?.grade != 7 && profile?.grade != 8">-ти</span>
+        <span> клас</span>
+      </div>
+      <div class="info-field">
+        <p>{{profile?.schoolName}}</p>
+      </div>
+      <div class="info-field"><span>{{profile?.townName}}</span></div>
+    </div>
+  </div>
+  <div class="profile-content">
+    <div class="content-part"></div>
+    <div class="content-part"></div>
+    <div class="content-part"></div>
   </div>
 </div>
