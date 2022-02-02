@@ -3,7 +3,6 @@
 
 body {
   background-image: url("./assets/images/background-main.jpg");
-  // opacity: 0.6;
   margin: 0;
   font-family: "Rubik", sans-serif;
   box-sizing: border-box;
@@ -18,10 +17,13 @@ body {
   .header,
   .footer {
     background-color: $secondary;
-    font-family: "Rubik", sans-serif;
+    font-family: inherit;
   }
   .header {
-    height: 120px;
+    height: calc(100vh / 8);
+  }
+  .footer {
+    height: calc(100vh / 14);
   }
   div {
     box-sizing: inherit;

@@ -1,6 +1,7 @@
 @import "../../utilities/colors/colors.scss";
 
-$iconSize: 80px;
+$iconSize: calc(100vh / 8 * 2 / 3);
+$imageSize: calc((100vh / 8 * 2 / 3) * 0.8);
 
 .header {
   position: relative;
@@ -11,24 +12,34 @@ $iconSize: 80px;
     justify-content: space-between;
     z-index: 2;
     img {
-      width: $iconSize;
-      height: $iconSize;
+      width: $imageSize;
+      height: $imageSize;
     }
     mat-icon,
     .icon {
-      align-content: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: $iconSize;
       height: $iconSize;
       width: $iconSize;
       color: $icon;
       text-decoration: none;
+      box-sizing: border-box;
     }
     .icon.open mat-icon {
       color: $green;
     }
-    mat-icon:hover {
-      color: $white;
+    .icon:hover {
+      border-radius: 15px;
       cursor: pointer;
+      // border: 0.1px solid $icon;
+    }
+    .left:hover {
+      box-shadow: 2px 2px 4px rgba($icon, 0.5);
+    }
+    .right:hover {
+      box-shadow: -2px 2px 4px rgba($icon, 0.5);
     }
     .sbj-name {
       color: $icon;

@@ -1,12 +1,12 @@
 <mat-toolbar class="header">
   <mat-toolbar-row>
-    <a class="icon" routerLink="/main" (click)="hideModal()">
+    <a class="icon left" routerLink="/main" (click)="hideModal()">
       <img src="../../../assets/icons/brighterLogo.svg" alt="">
     </a>
     <span *ngIf="subjectName && isAuth" class="sbj-name">
       {{subjectName.toUpperCase()}}
     </span>
-    <a *ngIf="isAuth" class="icon" [ngClass]="{'open': showModal == true}" (click)="changeShowModal()">
+    <a *ngIf="isAuth" class="icon right" [ngClass]="{'open': showModal == true}" (click)="changeShowModal()">
       <mat-icon>menu</mat-icon>
     </a>
   </mat-toolbar-row>
