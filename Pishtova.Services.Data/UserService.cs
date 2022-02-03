@@ -4,6 +4,7 @@
     using Pishtova_ASP.NET_web_api.Model.Subject;
     using Pishtova_ASP.NET_web_api.Model.User;
     using System.Linq;
+    using System.Security.Claims;
 
     public class UserService : IUserService
     {
@@ -43,6 +44,11 @@
                         .ToList(),
                 })
                 .FirstOrDefault();
+        }
+
+        public string GetUserId(ClaimsPrincipal user)
+        {
+            return user.FindFirstValue(ClaimTypes.Email);
         }
     }
 }

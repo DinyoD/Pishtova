@@ -5,7 +5,7 @@
 
     public interface IScoreService
     {
-        Task AddScoreInDbAsync(Score score);
+        Task SaveScoreInDbAsync(Score score);
     }
 
 }

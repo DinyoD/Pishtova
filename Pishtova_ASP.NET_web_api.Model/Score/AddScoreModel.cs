@@ -2,7 +2,7 @@
 {
     public class AddScoreModel
     {
-        public int SubjectId { get; set; }
+        public int SubjectCategoryId { get; set; }
 
         public int Points { get; set; }
     }

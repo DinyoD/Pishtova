@@ -1,35 +1,35 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Pishtova.Data.Model;
-using Pishtova.Services.Data;
-using Pishtova_ASP.NET_web_api.Model.Results;
-using Pishtova_ASP.NET_web_api.Model.Score;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Pishtova_ASP.NET_web_api.Controllers
+﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Pishtova.Data.Model;
+    using Pishtova.Services.Data;
+    using Pishtova_ASP.NET_web_api.Model.Results;
+    using Pishtova_ASP.NET_web_api.Model.Score;
+    using System.Threading.Tasks;
+
     public class ScoresController: ApiController
     {
-        private readonly UserManager<User> userManager;
         private readonly IScoreService scoreService;
-        
-        public ScoresController(UserManager<User> userManager, IScoreService scoreService)
+        private readonly IUserService userService;
+
+        public ScoresController(
+            IScoreService scoreService,
+            IUserService userService)
         {
-            this.userManager = userManager;
             this.scoreService = scoreService;
+            this.userService = userService;
         }
 
 
         [HttpPost]
-        [Route(nameof(AddScore))]
-        public async Task<IActionResult> AddScore([FromBody] AddScoreModel  scoreModel)
+        [Route(nameof(Save))]
+        public async Task<IActionResult> Save([FromBody] AddScoreModel  scoreModel)
         {
             if (scoreModel == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "The request body is empty" });
             }
-            var userId = User.Claims.FirstOrDefault(i => i.Type == "userId").Value;
+            var userId = this.userService.GetUserId(User);
             if (userId == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "Unauthorized request" });
@@ -37,10 +37,10 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             var score = new Score
             {
                 UserId = userId,
-                SubjectCategoryId = scoreModel.SubjectId,
+                SubjectCategoryId = scoreModel.SubjectCategoryId,
                 Points = scoreModel.Points
             };
-            await this.scoreService.AddScoreInDbAsync(score);
+            await this.scoreService.SaveScoreInDbAsync(score);
             return StatusCode(201);
         }
     }

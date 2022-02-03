@@ -12,7 +12,7 @@
         {
             this.db = db;
         }
-        public async Task AddScoreInDbAsync(Score score)
+        public async Task SaveScoreInDbAsync(Score score)
         {
             await this.db.Scores.AddAsync(score);
             await this.db.SaveChangesAsync();

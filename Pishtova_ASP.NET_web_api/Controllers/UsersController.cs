@@ -1,32 +1,26 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Pishtova.Data.Model;
     using Pishtova.Services.Data;
     using Pishtova_ASP.NET_web_api.Model.User;
-    using System.Security.Claims;
 
     public class UsersController : ApiController
     {
-        private readonly IUserService userservice;
-        private readonly UserManager<User> userManager;
+        private readonly IUserService userService;
 
-        public UsersController(
-            IUserService userservice,
-            UserManager<User> userManager)
+        public UsersController(IUserService userservice)
         {
-            this.userservice = userservice;
-            this.userManager = userManager;
+            this.userService = userservice;
         }
 
         [HttpGet]
         [Route(nameof(GetProfile))]
         public ActionResult<UserModel> GetProfile()
         {
-            var userId = User.FindFirstValue(ClaimTypes.Email);
-            return this.userservice.GetProfileInfo(userId);
+            var userId = this.userService.GetUserId(User);
+            return this.userService.GetProfileInfo(userId);
 
         }
+
     }
 }
