@@ -14,6 +14,11 @@ export class LoadingIndicatorInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (req.method == 'POST') {
+      return next.handle(req);
+    }
+
     // Start the loading indicator
     this.loadingIndicatorService.start();
 

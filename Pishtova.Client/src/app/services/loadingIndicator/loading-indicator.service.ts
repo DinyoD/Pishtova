@@ -21,7 +21,7 @@ export class LoadingIndicatorService {
   /**
    * Start a loading task (e.g. when a new server connection is started)
    */
-  start() {
+  public start = (): void => {
     this.loading++;
     this.emit();
   }
@@ -29,7 +29,7 @@ export class LoadingIndicatorService {
   /**
    * Stop a loading task (e.g. when a server connection has been finished)
    */
-  stop() {
+  public stop = (): void => {
     if (this.loading > 0) {
       this.loading--;
       this.emit();
@@ -39,14 +39,14 @@ export class LoadingIndicatorService {
   /**
    * Emit the loading state
    */
-  private emit() {
+  private emit = (): void => {
     this._loading$.next(this.isLoading());
   }
 
   /**
    * Return the loading state
    */
-  private isLoading(): boolean {
+  private isLoading = (): boolean => {
     return this.loading > 0;
   }
 }

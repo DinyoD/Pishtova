@@ -12,7 +12,7 @@ export class UserService {;
 
   constructor(private httpClient: HttpClient) { }
 
-  getUserInfo = (): Observable<ProfileModel> => {
+  public getUserInfo = (): Observable<ProfileModel> => {
     return this.httpClient.get<ProfileModel>(env.API_URL + '/users/getprofile');
   }
 }

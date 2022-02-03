@@ -31,7 +31,7 @@ export const storageServiceProvider: Provider = {
 export class BrowserStorage{
   private localStorage = localStorage;
 
-  setItem<T>(key: string, item: T): T|null {
+  public setItem<T>(key: string, item: T): T|null {
     if(this.localStorage.getItem('token') == null && key != 'token'){
       return null;
     }
@@ -40,7 +40,7 @@ export class BrowserStorage{
     return item;
   }
 
-  getItem<T>(key: string): T|string|null {
+  public getItem<T>(key: string): T|string|null {
     let item: T|string|null = null;
     const tmp = this.localStorage.getItem(key) ? this.localStorage.getItem(key) : null;
     if (tmp) {
@@ -53,7 +53,7 @@ export class BrowserStorage{
     return item;
   }
 
-  removeItem<T>(key: string): boolean {
+  public removeItem<T>(key: string): boolean {
     let result: boolean = false;
     let item:  T|string|null = this.getItem(key);
     if (item) {
@@ -63,7 +63,7 @@ export class BrowserStorage{
     return result;
   }
 
-  clear(){
+  public clear(): void {
     this.localStorage.clear();
   }
 }

@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { ProblemPointModel } from 'src/app/models/problemPoint';
+import { ProblemScoreModel } from 'src/app/models/problemScore';
+import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
 
 @Injectable({
@@ -17,11 +18,12 @@ export class PointsService {
     private httpClient : HttpClient,
     private storage: StorageService) { }
 
-  saveProblemScoreInDb(points: ProblemPointModel): void{
-    this.addPoints(points.points)
+  public saveScore = (score: ProblemScoreModel): Observable<Object> => {
+    this.addPoints(score.points)
+    return this.httpClient.post(env.API_URL + '/scores/save', score);
   }
 
-  addPoints(pointValue: number): void{
+  private addPoints = (pointValue: number): void => {
     const points = this.gettingPoints() + pointValue;
     this._pointsChangeSub.next(points);
     this.storage.setItem('points', points.toString());
@@ -38,7 +40,7 @@ export class PointsService {
     }
   }
 
-  clearPoints(){
+  public clearPoints =(): void => {
     this._pointsChangeSub.next(0);
     this.storage.removeItem('points');
   }

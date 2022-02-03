@@ -1,4 +1,4 @@
-export interface ProblemPointModel{
+export interface ProblemScoreModel{
     subjectCategoryId: number;
     points: number
 }

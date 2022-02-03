@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 
 import { ProblemModel } from 'src/app/models/problem';
 import { AnswerModel } from 'src/app/models/answer';
-import { ProblemPointModel } from 'src/app/models/problemPoint';
+import { ProblemScoreModel } from 'src/app/models/problemScore';
 import { ProblemService, PointsService } from 'src/app/services'
 import { SubjectState } from '../+store/core.state';
 import * as StateActions from '../+store/actions';
@@ -34,7 +34,7 @@ export class TestScreenComponent implements OnInit {
     private store: Store<SubjectState>,
     private cd: ChangeDetectorRef,
     private router: Router) {}
-    
+
     ngOnInit(): void {
       this.store.dispatch(new StateActions.SetProblemNumber(1));
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe(problems => this.problems = problems);
@@ -47,16 +47,21 @@ export class TestScreenComponent implements OnInit {
     }
     
     chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number){
+      
       if (this.someAnswerIsClicked) {
         return;
       }
       this.someAnswerIsClicked = true;
       this.selectedAnswerId = selectedAnswer.id;
-      const problemPointModel: ProblemPointModel = {
+      const problemPointModel: ProblemScoreModel = {
         subjectCategoryId: subjectCategoryId,
         points: selectedAnswer.isCorrect ? 1 : 0
       }
-      this.pointsService.saveProblemScoreInDb(problemPointModel);
+      this.pointsService.saveScore(problemPointModel).subscribe(() => {
+      }, err => {
+        console.log(err.message);
+        
+      });
       this.cd.detectChanges();      
     }
 

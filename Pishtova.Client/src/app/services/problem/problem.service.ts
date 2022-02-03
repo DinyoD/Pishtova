@@ -12,7 +12,7 @@ export class ProblemService {
 
   constructor(private httpClient : HttpClient) { }
 
-  generateTestBySubjectId(subjectId: number| undefined): Observable<ProblemModel[]>{
+  public generateTestBySubjectId = (subjectId: number| undefined): Observable<ProblemModel[]> => {
     
     return this.httpClient.get<ProblemModel[]>(env.API_URL + `/problems/generateTest/${subjectId}`)
   }

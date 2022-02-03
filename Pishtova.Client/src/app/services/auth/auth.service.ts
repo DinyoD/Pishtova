@@ -48,11 +48,11 @@ export class AuthService {
     return this.httpClient.get(env.API_URL + `/identity/emailconfirmation`,{ params: params})
   }
 
-  public forgotPassword(body: ForgotPasswordModel): Observable<Object> {
+  public forgotPassword = (body: ForgotPasswordModel): Observable<Object> => {
     return this.httpClient.post(env.API_URL + '/identity/forgotpassword', body);
   }
 
-  public resetPassword (body: ResetPasswordModel): Observable<Object>{
+  public resetPassword = (body: ResetPasswordModel): Observable<Object> => {
     return this.httpClient.post(env.API_URL + '/identity/resetpassword', body)
   }
 
