@@ -18,7 +18,7 @@
 
         public string TownName { get; set; }
 
-        public virtual ICollection<UserScoreModel> UserScores { get; set; }
+        public UserPointStatsModel Stats { get; set; }
 
         //public virtual ICollection<UserBadge> BadgeUsers { get; set; }
 

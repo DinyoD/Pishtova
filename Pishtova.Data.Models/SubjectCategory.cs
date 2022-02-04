@@ -15,6 +15,8 @@
 
         public Subject Subject { get; set; }
 
+        public virtual ICollection<Score> Scores { get; set; }
+
         public virtual ICollection<Problem> Problems { get; set; }
     }
 }
