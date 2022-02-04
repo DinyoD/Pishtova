@@ -29,7 +29,21 @@
   </div>
   <div class="profile-content">
     <div class="content-part"></div>
-    <div class="content-part"></div>
-    <div class="content-part"></div>
-  </div>
-</div>
+    <div *ngIf="profile?.stats != null" class="content-part">
+      <div class="info subject-info " *ngFor="let sbj of profile?.stats?.subjects">
+        <p class="subject-name">{{sbj.subjectName.toUpperCase()}}</p>
+        <p class="subject-points">{{sbj.subjectAllPoints}} точки</p>
+        <p class="subject-points">{{sbj.subjectAllProblems}} въпроса</p>
+        <a (click)="showDetail(sbj)"><span>детайли</span></a>
+      </div>
+    </div>
+    <div *ngIf="subjectDetails!= null" class="content-part">
+      <div class="info" *ngFor="let cat of subjectDetails.subjectCategories">
+        <p class="cat-name">{{cat.categoryName}}</p>
+        <p class="cat-points">{{cat.points}} точки</p>
+        <p class="cat-points">{{cat.problemsCount}} въпроса</p>
+      </div>
+      <div class="icon-close" (click)="closeDetails()">
+        <mat-icon>cancel</mat-icon>
+      </div>
+    </div>

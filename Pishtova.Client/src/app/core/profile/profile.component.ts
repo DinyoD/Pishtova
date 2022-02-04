@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileModel } from 'src/app/models/profile';
+import { ProfileModel, SubjectsWithPointsByCategory } from 'src/app/models/profile';
 import { SubjectService, UserService } from 'src/app/services';
 
 @Component({
@@ -9,7 +9,9 @@ import { SubjectService, UserService } from 'src/app/services';
 })
 export class ProfileComponent implements OnInit {
 
-  public profile: ProfileModel|null = null
+  public profile: ProfileModel|null = null;
+  public showDetails: boolean = false;
+  public subjectDetails: SubjectsWithPointsByCategory|null = null
 
   constructor(
     private subjectService: SubjectService,
@@ -21,7 +23,17 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserInfo().subscribe( profile => this.profile = profile);
+    this.userService.getUserInfo().subscribe( profile => this.profile = profile );
+
   }
 
+  showDetail(sbj: SubjectsWithPointsByCategory): void{
+    console.log(sbj.subjectCategories);
+    this.showDetails= true;
+    this.subjectDetails = sbj;
+  }
+
+  closeDetails(){
+    this.subjectDetails = null;
+  }
 }

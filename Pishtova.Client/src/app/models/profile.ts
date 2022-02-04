@@ -1,24 +1,29 @@
-import { SubjectModel } from "./subject";
+//import { SubjectModel } from "./subject";
 
 export interface ProfileModel {
     id: string;
     email: string,
-    pictureUrl: SVGStringList;
     name: string;
+    pictureUrl: SVGStringList;
+    grade: number;
     townName: string;
     schoolName: string;
-    grade: number;
-    scores: UserScoreModel[];
+    stats: ProfilePointsStats;
 }
 
-interface UserScoreModel{
-    pionts: number;
-    subjectCategory: SubjectCategoryModel;
+interface ProfilePointsStats {
+    subjects: SubjectsWithPointsByCategory[];
 }
 
-interface SubjectCategoryModel{
-    id: number;
-    name: string;
-    subject: SubjectModel; 
+export interface SubjectsWithPointsByCategory{
+    subjectName: string;
+    subjectCategories: CategoryWithPoints[];
+    subjectAllPoints: number;
+    subjectAllProblems: number;
 }
 
+interface CategoryWithPoints{
+    categoryName: string;
+    points: number;
+    problemsCount: number;
+}
