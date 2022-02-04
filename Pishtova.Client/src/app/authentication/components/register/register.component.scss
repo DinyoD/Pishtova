@@ -4,12 +4,17 @@
   padding: 2.8vh 0;
 
   mat-card {
+    width: 33.3vw;
+    height: 82vh;
+    padding: 30px;
+    mat-card-title {
+      font-weight: bold;
+    }
     mat-card-content {
       form {
+        height: 75vh;
         display: flex;
         flex-direction: column;
-        width: 600px;
-        height: 74.4vh;
         display: flex;
         justify-content: space-around;
         mat-form-field {

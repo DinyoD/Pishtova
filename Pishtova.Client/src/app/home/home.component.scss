@@ -1,5 +1,7 @@
+@import "../utilities/colors/colors.scss";
+
 .container {
-  width: 630px;
+  width: 33.3vw;
   height: 82vh;
   margin: 20px auto;
   display: flex;
@@ -27,13 +29,14 @@
     }
     .btn {
       height: 60px;
-      width: 100;
+      width: 100%;
       font-size: 18px;
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: white;
-      border-radius: 4px;
+      border-radius: 5px;
+      box-shadow: 4px 4px 8px rgba($black, 0.2);
     }
     .text,
     .btn {
@@ -46,11 +49,7 @@
       color: black;
     }
     .btn:hover {
-      background-color: rgba(0, 0, 0, 0.26);
-    }
-    .btn:not([class*="mat-elevation-z"]) {
-      box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.3),
-        0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: 1px 1px 3px rgba($black, 0.1);
     }
   }
 }

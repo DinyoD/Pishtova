@@ -2,7 +2,7 @@ import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 class RegexConstants {
   public static password = /^[\S]{8,30}$/;
-  public static username = /^[\S]{3,30}$/;
+  public static username = /^[A-za-z\p{L}]{1}[A-za-z\p{L} -]{1,28}[A-za-z\p{L}]{1}$/u;
 }
 
 export class CustomValidators {
@@ -28,11 +28,20 @@ export class CustomValidators {
   }
 
   static nameMatchingRegEx(control: AbstractControl): ValidationErrors | null {
-    const name = control.get('name')?.value;
+    const name: string = control.get('name')?.value;
     const regEx = RegexConstants.username;
-    if (regEx.test(name)) {
+    if (regEx.test(name) 
+        && !name?.includes('  ')
+        && !name?.includes('--')
+        && !name?.includes(' -')
+        && !name?.includes('- ')
+        ) {
+      console.log(12);
+      
       return null;
     } else {
+      console.log(0);
+      
       return { nameNotMatchingRegEx: true };
     }
   }

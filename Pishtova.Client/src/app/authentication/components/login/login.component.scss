@@ -2,11 +2,13 @@
   display: flex;
   justify-content: center;
   mat-card {
+    box-sizing: border-box;
+    width: 33.3vw;
+    padding: 30px;
     mat-card-content {
       form {
         display: flex;
         flex-direction: column;
-        width: 600px;
         height: 23vh;
         display: flex;
         justify-content: space-around;
