@@ -37,7 +37,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:44329"],
+        allowedDomains: ["localhost:44329","pishtova-api.azurewebsites.net"],
         disallowedRoutes: [],
         
       }
