@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class UserService : IUserService
     {
@@ -37,7 +38,6 @@
                 .FirstOrDefault();
             return profile;
         }
-
 
         public string GetUserId(ClaimsPrincipal user)
         {
@@ -98,6 +98,13 @@
             }
 
             return result;
+        }
+
+        public async Task UpdateUserAvatar(string userId, string pictureUrl)
+        {
+            var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
+            dbUser.PictureUrl = pictureUrl;
+            await this.db.SaveChangesAsync();
         }
     }
 }
