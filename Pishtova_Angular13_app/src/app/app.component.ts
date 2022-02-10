@@ -7,9 +7,7 @@ import { AuthService } from './services';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title: string = 'Пищовъ';
-
-  public Auth: boolean|null = null
+  public Auth: boolean;
 
   constructor(private authService: AuthService){
     this.Auth = authService.isUserAuthenticated();

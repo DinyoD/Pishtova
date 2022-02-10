@@ -32,7 +32,6 @@ export class AuthService {
 
   
   public login = (user: UserForLoginModel): Observable<ILoginResult> => {
-    this.sendAuthStateChangeNotification(true);
     return this.httpClient.post<ILoginResult>(env.API_URL + `/identity/login`, user)
   }
 

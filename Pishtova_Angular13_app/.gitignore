@@ -49,3 +49,7 @@ Thumbs.db
 # scss compiled
 *.css
 *.css.map
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

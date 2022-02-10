@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URL : 'https://localhost:44329'
+  API_URL : 'https://localhost:44329',
+  CLIENT_URI: 'http://localhost:4200',
+  firebaseConfig: null
 };
 
 /*

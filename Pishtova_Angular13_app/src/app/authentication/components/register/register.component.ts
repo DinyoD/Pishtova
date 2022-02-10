@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { environment as env} from 'src/environments/environment';
 import { CustomValidators } from '../../helpers/custom-validators';
 import { MunicipalityModel } from 'src/app/models/municipality';
 import { TownModel } from 'src/app/models/town';
@@ -73,7 +74,7 @@ export class RegisterComponent implements OnInit  {
         confirmPassword: formValues.confirmPassword,
         grade: formValues.grade,
         schoolId: formValues.school,
-        clientURI: `http://localhost:4200/auth/emailconfirmation`,
+        clientURI: env.CLIENT_URI + `/auth/emailconfirmation`,
       }
       console.log(user);
       

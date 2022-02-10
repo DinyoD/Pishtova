@@ -36,9 +36,9 @@ export class LoginComponent {
     }
    this.userService.login(user)
     .subscribe((res: { token: string; }) => {
-      this.storage.setItem('token', res.token)
-      this.userService.sendAuthStateChangeNotification(res.token != null)
       this.route.navigate(['/main'])
+      this.userService.sendAuthStateChangeNotification(res.token != null)
+      this.storage.setItem('token', res.token)
     }, (err) => {
       this.showError = true;
       this.errorMessage = err;

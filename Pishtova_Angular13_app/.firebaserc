@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pishtova-55f26": {
+      "hosting": {
+        "pishtova": [
+          "pishtova-55f26"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pishtova-55f26"
+  }
+}

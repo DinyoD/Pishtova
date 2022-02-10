@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
+import { AngularFireModule } from '@angular/fire/compat';
 
+import { environment as env } from '../environments/environment.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -40,8 +42,9 @@ export function tokenGetter() {
         allowedDomains: ["localhost:44329","pishtova-api.azurewebsites.net"],
         disallowedRoutes: [],
         
-      }
-    })
+      },
+    }),
+    AngularFireModule.initializeApp(env.firebaseConfig, 'pishtova')
   ],
   providers: [
     {
