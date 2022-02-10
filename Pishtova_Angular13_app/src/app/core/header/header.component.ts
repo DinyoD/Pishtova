@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { AuthService, PointsService, SubjectService, TestService  } from 'src/app/services';
+import { AuthService, SubjectService, TestService  } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit{
     private testService: TestService) {}
     
     
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.isAuth = this.userService.isUserAuthenticated();
     this.inTest = this.testService.isInTest();
     this.subjectName = this.subjectService.getCurrentSubject()?.name;
@@ -39,29 +39,12 @@ export class HeaderComponent implements OnInit{
   changeShowModal(): void{
     this.showModal = !this.showModal;
     this.cd.detectChanges();
-    //this.clickDocumentSubstiption(true)
   }
 
   hideModal(): void{
     this.showModal = false;
     this.cd.detectChanges();   
-    //this.clickDocumentSubstiption(false)
   };
-
-  // clickDocumentSubstiption(subscripe: boolean): void{
-  //   let subscription = new Subscription();
-  //   if (subscripe) {
-  //     subscription = fromEvent(document, 'click',).subscribe(() => {
-  //       console.log(this.shouldShowModale);
-  //       this.hideModal();
-  //       console.log(this.shouldShowModale);
-  //     })
-  //   }
-  //   else{
-  //     subscription.unsubscribe();
-  //     console.log(subscription);     
-  //   }
-  // }
 
   handleSignOut() {
     this.hideModal();

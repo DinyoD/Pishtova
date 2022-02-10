@@ -8,6 +8,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { UploadFileDialogComponent } from './upload-file-dialog/upload-file-dialog.component';
 
 
 
@@ -17,7 +18,8 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     ConfirmationDialogComponent,
     NavBarComponent,
     LoadingIndicatorComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    UploadFileDialogComponent
   ],
   imports: [
     CommonModule,

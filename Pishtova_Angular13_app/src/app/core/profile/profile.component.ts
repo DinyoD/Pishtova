@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ProfileModel, SubjectsWithPointsByCategory } from 'src/app/models/profile';
 import { SubjectService, UserService } from 'src/app/services';
+import { UploadFileDialogComponent } from 'src/app/shared/upload-file-dialog/upload-file-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +17,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private subjectService: SubjectService,
-    private userService: UserService) { 
+    private userService: UserService, 
+    private dialog: MatDialog,) { 
       
     if (this.subjectService.getCurrentSubject() != null) {
       this.subjectService.settingSubjectModel(null);
@@ -35,5 +38,9 @@ export class ProfileComponent implements OnInit {
 
   closeDetails(){
     this.subjectDetails = null;
+  }
+
+  updatePicture(){
+    this.dialog.open(UploadFileDialogComponent);
   }
 }
