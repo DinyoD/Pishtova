@@ -1,7 +1,9 @@
-import { ForgotPasswordModel } from '../../models/forgotPassword';
-import { AuthService } from '../../../services/auth/auth.service';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { ForgotPasswordModel } from '../../models/forgotPassword';
+import { AuthService } from '../../../services/auth/auth.service';
+import { environment as env} from 'src/environments/environment';
 
 @Component({
   selector: 'app-forgot-password',
@@ -32,7 +34,7 @@ export class ForgotPasswordComponent {
     const formValues = { ...this.form.value };
     const forgotPassDto: ForgotPasswordModel = {
       email: formValues.email,
-      clientURI: 'http://localhost:4200/auth/resetpassword'
+      clientURI: env.CLIENT_URI + '/auth/resetpassword'
     }
 
   this.userService.forgotPassword(forgotPassDto)

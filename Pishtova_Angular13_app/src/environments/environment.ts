@@ -6,14 +6,9 @@ export const environment = {
   production: false,
   API_URL : 'https://localhost:44329',
   CLIENT_URI: 'http://localhost:4200',
-  firebaseConfig: null
+  firebaseConfig: null,
+  Imgur_Client_ID: '74d88bb9375f249',
+  Imgur_Client_Secret: '9122920fb61ad38056966e7d6fa1c74b7997e920',
+  Imgur_Url: 'https://api.imgur.com/3/image',
 };
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
