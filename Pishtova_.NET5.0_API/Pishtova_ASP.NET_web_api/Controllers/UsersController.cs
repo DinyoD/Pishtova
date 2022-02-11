@@ -31,11 +31,11 @@
         }
 
         [HttpPut]
-        [Route(nameof(UpdateAvatar))]
-        public async Task<IActionResult> UpdateAvatar([FromBody]string pictureUrl)
+        [Route(nameof(UpdatePictureUrl))]
+        public async Task<IActionResult> UpdatePictureUrl([FromBody] UserUpdatePictureUrlModel model)
         {
 
-            if (string.IsNullOrEmpty(pictureUrl))
+            if (string.IsNullOrEmpty(model.PictureUrl))
             {
                 return StatusCode(400, new ErrorResult { Message = "Uncorrect pictureUrl" });
             }
@@ -43,7 +43,7 @@
             try
             {
                 var userId = this.userService.GetUserId(User);
-                await this.userService.UpdateUserAvatar(userId, pictureUrl);
+                await this.userService.UpdateUserAvatar(userId, model.PictureUrl);
                 return StatusCode(200);
             }
             catch
