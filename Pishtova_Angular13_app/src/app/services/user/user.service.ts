@@ -15,4 +15,8 @@ export class UserService {;
   public getUserInfo = (): Observable<ProfileModel> => {
     return this.httpClient.get<ProfileModel>(env.API_URL + '/users/getprofile');
   }
+
+  public SetUserPictureUrl = (url: string): Observable<object> => {
+    return this.httpClient.put(env.API_URL + '/users/updatepictureurl', {pictureUrl: url})
+  }
 }

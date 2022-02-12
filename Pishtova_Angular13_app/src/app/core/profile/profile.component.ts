@@ -31,7 +31,6 @@ export class ProfileComponent implements OnInit {
   }
 
   showDetail(sbj: SubjectsWithPointsByCategory): void{
-    console.log(sbj.subjectCategories);
     this.showDetails= true;
     this.subjectDetails = sbj;
   }

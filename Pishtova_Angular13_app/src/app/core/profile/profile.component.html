@@ -1,13 +1,15 @@
 <div class="container">
   <div class="profile-aside">
     <div class="profile-picture">
-      <div class="profile-img">
-        <img *ngIf="profile?.pictureUrl != null" src="{{profile?.pictureUrl}}" alt=""
+      <div *ngIf="profile?.pictureUrl != null" class="profile-img">
+        <img src="{{profile?.pictureUrl}}" alt=""
           onerror="this.onerror=null;this.src='../../../assets/icons/brighterLogo.svg';">
-        <span>{{ profile == null ? '' : profile.name[0].toUpperCase()}}</span>
-        <mat-icon (click)="updatePicture()" title="редактирай профилната снимка" class="edit-picture-icon">edit
-        </mat-icon>
       </div>
+      <div *ngIf="profile?.pictureUrl == null" class="profile-img-default">
+        <span *ngIf="profile?.pictureUrl == null">{{ profile == null ? '*' : profile.name[0].toUpperCase()}}</span>
+      </div>
+      <mat-icon (click)="updatePicture()" title="смени профилната снимка" class="profile-img-update">monochrome_photos
+      </mat-icon>
     </div>
     <div class="profile-info">
       <div class="info-field">

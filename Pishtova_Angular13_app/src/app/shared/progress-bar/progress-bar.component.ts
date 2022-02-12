@@ -15,11 +15,7 @@ export class ProgressBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.count);
-    
     this.countArray = Array(this.count).fill(1).map((x, i) => i + 1);
-    console.log(this.countArray);
-    
   }
 
 }
