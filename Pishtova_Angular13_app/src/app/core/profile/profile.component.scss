@@ -47,10 +47,9 @@
         justify-content: center;
         align-items: center;
         img {
-          width: 100%;
+          width: auto;
           height: 100%;
           overflow: hidden;
-          object-fit: contain;
         }
       }
       .mat-icon.profile-img-update {

@@ -33,12 +33,10 @@
       color: $secondary;
       background-color: $white;
       border-radius: 4px;
+      box-shadow: 3px 3px 8px rgba($black, 0.5);
     }
     .btn:hover {
-      width: 166px;
-      height: 44px;
-      font-size: 24px;
-      font-weight: bold;
+      box-shadow: 1px 1px 4px rgba($black, 0.5);
     }
     .btn:focus {
       outline: none;

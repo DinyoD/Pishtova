@@ -1,5 +1,5 @@
-import { Component, Inject} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ImageService } from 'src/app/services';
 
 @Component({
@@ -8,6 +8,7 @@ import { ImageService } from 'src/app/services';
   styleUrls: ['./upload-file-dialog.component.css']
 })
 export class UploadFileDialogComponent {
+  
   public file: File|null = null;
 
    constructor(
@@ -20,7 +21,6 @@ export class UploadFileDialogComponent {
   }
   
   Upload(): void {
-    console.log(this.file);
     if (this.file != null) {
       this.imageService.uploadImageAsync(this.file);
     }

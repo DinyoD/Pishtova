@@ -27,6 +27,7 @@ export class ImageService {
   }
   
   async uploadImageAsync(imageFile: File): Promise<boolean> {
+    let operationResult: boolean = false
     try {
       let formData = new FormData();
       formData.append('image', imageFile, imageFile.name);
@@ -37,16 +38,11 @@ export class ImageService {
      
       const imageData: IImageData = await this.http.post(this.url, formData, {headers:header}).toPromise() as IImageData;
       if (imageData.success) {
-         this.userService.SetUserPictureUrl(imageData.data.link).subscribe(
-           result => console.log(result),
-           err => console.log(err)
-         );
+         this.userService.SetUserPictureUrl(imageData.data.link)
+          .subscribe(() => operationResult = true);
       };
-      return true;
-    } catch{
-      return false;
-    }
-    
+    }finally{
+      return operationResult;
+    };
   }
-
 }

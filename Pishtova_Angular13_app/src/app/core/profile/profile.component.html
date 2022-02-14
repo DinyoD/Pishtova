@@ -25,12 +25,12 @@
         <span> клас</span>
       </div>
       <div class="info-field">
-        <p>{{profile?.schoolName}}</p>
+        <p>{{profile?.school?.name}}</p>
       </div>
       <div class="info-field">
         <span>{{profile?.townName}}</span>
       </div>
-      <mat-icon title="редактирай профилната информация" class="edit-icon">edit</mat-icon>
+      <mat-icon (click)="updateInfo()" title="редактирай профилната информация" class="edit-icon">edit</mat-icon>
     </div>
   </div>
   <div class="profile-content">

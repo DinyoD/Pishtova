@@ -1,5 +1,7 @@
 //import { SubjectModel } from "./subject";
 
+import { SchoolModel } from "./school";
+
 export interface ProfileModel {
     id: string;
     email: string,
@@ -7,7 +9,7 @@ export interface ProfileModel {
     pictureUrl: SVGStringList;
     grade: number;
     townName: string;
-    schoolName: string;
+    school: SchoolModel;
     stats: ProfilePointsStats;
 }
 
