@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Pishtova.Data\Pishtova.Data.csproj" />
+    <ProjectReference Include="..\Pishtova.Services.Messaging\Pishtova.Services.Messaging.csproj" />
     <ProjectReference Include="..\Pishtova.Services.Models\Pishtova.Services.Models.csproj" />
     <ProjectReference Include="..\Pishtova_ASP.NET_web_api.Model\Pishtova_ASP.NET_web_api.Model.csproj" />
   </ItemGroup>

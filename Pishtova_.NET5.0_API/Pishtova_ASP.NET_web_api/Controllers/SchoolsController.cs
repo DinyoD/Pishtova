@@ -21,7 +21,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 
         [HttpGet]
         [Route("[action]/{townId}")]
-        public async Task<ICollection<SchoolModel>> ByTown(int townId)
+        public async Task<ICollection<SchoolForRegistrationModel>> ByTown(int townId)
         {
             if (townId == 0) throw new ArgumentNullException(nameof(townId));
 

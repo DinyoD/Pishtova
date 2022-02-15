@@ -15,6 +15,7 @@
     using Microsoft.IdentityModel.Tokens;
 
     using Pishtova.Data.Model;
+    using Pishtova.Services.Data;
     using Pishtova.Services.Messaging;
     using Pishtova_ASP.NET_web_api.Model.Identity;
     using Pishtova_ASP.NET_web_api.Model.Results;
@@ -22,16 +23,16 @@
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
-        private readonly IEmailSender emailSender;
+        private readonly IUserService userService;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettings,
-            IEmailSender emailSender)          
+            IUserService userService)          
         {
             this.userManager = userManager;
-            this.emailSender = emailSender;
+            this.userService = userService;
             this.applicationSettings = applicationSettings.Value;
         }
 
@@ -58,19 +59,12 @@
                 var errors = result.Errors.Select(x => x.Description).ToList();
                 return StatusCode(400, new ErrorResult { Message = errors[0] });
             }
-
-            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            var param = new Dictionary<string, string>
-                            {
-                                {"token", token },
-                                {"email", user.Email }
-                            };
-            var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
-            var message = new Message(new string[] { user.Email }, "Email Confirmation token", callback, null);
-            await this.emailSender.SendEmailAsync(message);
+            var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+            await this.userService.SendEmailConfirmationTokenAsync(model.ClientURI, model.Email, token);
 
             return StatusCode(201);
         }
+
 
         [Route(nameof(Login))]
         public async Task<IActionResult> Login([FromBody] LoginUserModel model)
@@ -142,16 +136,7 @@
             }
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
-            var param = new Dictionary<string, string>
-            {
-                {"token", token },
-                {"email", model.Email }
-            };
-
-            var callback = QueryHelpers.AddQueryString(model.ClientURI, param);
-
-            var message = new Message(new string[] { model.Email }, "Reset password token", callback, null);
-            await emailSender.SendEmailAsync(message);
+            await this.userService.SendResetPaswordTokenAsync(model.ClientURI, model.Email, token);
 
             return StatusCode(200);
         }

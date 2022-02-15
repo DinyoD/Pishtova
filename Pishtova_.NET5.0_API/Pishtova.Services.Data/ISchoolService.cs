@@ -8,7 +8,7 @@
     {
         Task CreateAsync(string name, int townId);
 
-        Task<ICollection<SchoolModel>> GetAllByTownId(int townId);
+        Task<ICollection<SchoolForRegistrationModel>> GetAllByTownId(int townId);
     }
 
 }
