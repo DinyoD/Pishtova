@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { SchoolModel } from 'src/app/models/school';
+import { SchoolForRegisterModel } from 'src/app/models/school/schoolForRegister';
 import { environment as env } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class SchoolService {
 
   constructor(private httpClient : HttpClient) { }
 
-  public getSchoolsByTownId = (townId: number): Observable<SchoolModel[]> => {
-    return this.httpClient.get<SchoolModel[]>(env.API_URL + `/schools/bytown/${townId}`)
+  public getSchoolsByTownId = (townId: number): Observable<SchoolForRegisterModel[]> => {
+    return this.httpClient.get<SchoolForRegisterModel[]>(env.API_URL + `/schools/bytown/${townId}`)
   }
 }

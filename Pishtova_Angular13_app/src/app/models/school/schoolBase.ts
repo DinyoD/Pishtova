@@ -1,4 +1,4 @@
-export interface SchoolModel{
+export interface SchoolBaseModel {
     id: number;
     name: string;
 }

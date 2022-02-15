@@ -36,13 +36,19 @@ export class CustomValidators {
         && !name?.includes(' -')
         && !name?.includes('- ')
         ) {
-      console.log(12);
-      
       return null;
     } else {
-      console.log(0);
-      
       return { nameNotMatchingRegEx: true };
+    }
+  }
+
+  static gradeMatching(control: AbstractControl): ValidationErrors | null {
+    const grade = control.get('grade')?.value;
+
+    if (grade >= 4 && grade <= 12 ) {
+      return null;
+    } else {
+      return { gradeNotMatching: true };
     }
   }
 }

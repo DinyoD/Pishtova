@@ -2,8 +2,8 @@
 
 .dialog-container {
   background-color: $primary;
-  width: 450px;
-  height: 100px;
+  // width: 450px;
+  // height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -30,6 +30,10 @@
     }
     .btn:hover {
       box-shadow: 1px 1px 4px rgba($black, 0.5);
+    }
+    .btn:disabled:hover {
+      box-shadow: 3px 3px 8px rgba($black, 0.5);
+      cursor: none;
     }
     .btn:focus {
       outline: none;

@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import { ProfileModel } from 'src/app/models/profile';
+import { ProfileModel } from 'src/app/models/profile/profile';
+import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
+import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,15 @@ export class UserService {;
     return this.httpClient.get<ProfileModel>(env.API_URL + '/users/getprofile');
   }
 
-  public SetUserPictureUrl = (url: string): Observable<object> => {
+  public setUserPictureUrl = (url: string): Observable<object> => {
     return this.httpClient.put(env.API_URL + '/users/updatepictureurl', {pictureUrl: url})
+  }
+
+  public updateUserInfo = (dataModel: ChangeProfileInfoModel): Observable<object> => {
+    return this.httpClient.put(env.API_URL + '/users/updateuserinfo', dataModel)
+  }
+
+  public updateUserEmail = (dataModel: ChangeProfileEmailModel): Observable<object> => {
+    return this.httpClient.put(env.API_URL + '/users/updateuseremail', dataModel)
   }
 }

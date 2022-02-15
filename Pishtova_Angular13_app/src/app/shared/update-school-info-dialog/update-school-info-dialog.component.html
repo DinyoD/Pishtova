@@ -8,9 +8,6 @@
           <mat-option *ngFor="let m of municipalities" [value]="m.id">{{m.name}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="municipality.touched && municipality.hasError('required')">
-          *полето е задължително
-        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -18,20 +15,18 @@
           (selectionChange)="getSchools($event.value)">
           <mat-option *ngFor="let t of towns" [value]="t.id">{{t.name}}</mat-option>
         </mat-select>
-        <mat-error *ngIf="town.touched && town.hasError('required')">*полето е задължително</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-select placeholder="Изберете училище..." formControlName="school">
-          <mat-option *ngFor="let sch of schools" [value]="sch.id">{{sch.name}}</mat-option>
+          <mat-option *ngFor="let sch of schools" [value]="{name: sch.name, id: sch.id}">{{sch.name}}</mat-option>
         </mat-select>
-        <mat-error *ngIf="school.touched && school.hasError('required')">*полето е задължително</mat-error>
       </mat-form-field>
 
     </form>
   </mat-card-content>
   <div class="dialog-btn-container">
     <button class="btn" (click)="cancel()">Отказ</button>
-    <button class="btn" (click)="confirm()">Потвърди</button>
+    <button class="btn" [disabled]="!school.value" (click)="confirm()">Потвърди</button>
   </div>
 </mat-card>

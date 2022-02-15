@@ -1,15 +1,13 @@
 //import { SubjectModel } from "./subject";
 
-import { SchoolModel } from "./school";
+import { SchoolForRegisterModel } from "../school/schoolForRegister";
+import { ProfileBaseModel } from "./profileBase";
 
-export interface ProfileModel {
+export interface ProfileModel extends ProfileBaseModel {
     id: string;
-    email: string,
-    name: string;
-    pictureUrl: SVGStringList;
-    grade: number;
+    pictureUrl: string;
     townName: string;
-    school: SchoolModel;
+    school: SchoolForRegisterModel;
     stats: ProfilePointsStats;
 }
 

@@ -38,7 +38,7 @@ export class ImageService {
      
       const imageData: IImageData = await this.http.post(this.url, formData, {headers:header}).toPromise() as IImageData;
       if (imageData.success) {
-         this.userService.SetUserPictureUrl(imageData.data.link)
+         this.userService.setUserPictureUrl(imageData.data.link)
           .subscribe(() => operationResult = true);
       };
     }finally{

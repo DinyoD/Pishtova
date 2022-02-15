@@ -67,6 +67,9 @@
           <mat-error *ngIf="name.touched && form.hasError('nameNotMatchingRegEx')">
             <small>Името трябва да е между 3 и 30 символа, и с валидна структура.</small></mat-error>
 
+          <mat-error *ngIf="grade.touched && form.hasError('gradeNotMatching')">
+            <small>Класът трябва да е цифра между 4 и 12.</small></mat-error>
+
           <mat-error *ngIf="password.touched && form.hasError('passwordNotMatchingRegEx')">
             <small>Паролата трябва да е между 8 и 30 символа.</small></mat-error>
 

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MunicipalityModel } from 'src/app/models/municipality';
-import { SchoolModel } from 'src/app/models/school';
+import { SchoolForRegisterModel } from 'src/app/models/school/schoolForRegister';
+import { SchoolBaseModel } from 'src/app/models/school/schoolBase';
 import { TownModel } from 'src/app/models/town';
 import { MunicipalityService, SchoolService, TownService } from 'src/app/services';
 
@@ -15,7 +16,7 @@ export class UpdateSchoolInfoDialogComponent implements OnInit {
   
   public municipalities?: Array<MunicipalityModel>;
   public towns?: Array<TownModel>;
-  public schools?: Array<SchoolModel> | null;
+  public schools?: Array<SchoolForRegisterModel> | null;
   
 
   public form: FormGroup = new FormGroup({
@@ -29,11 +30,13 @@ export class UpdateSchoolInfoDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<UpdateSchoolInfoDialogComponent>,
     private municipalityService: MunicipalityService, 
     private townService: TownService, 
-    private schoolService: SchoolService) { }
+    private schoolService: SchoolService,
+    private cdr: ChangeDetectorRef) { }
 
     
   ngOnInit(): void {   
     this.municipalityService.getAllMunicipalities().subscribe(m => {this.municipalities = m.sort((a,b) => this.sortName(a.name, b.name))});
+    this.cdr.detectChanges();
   }
     
   getTowns(id: number){
@@ -46,11 +49,11 @@ export class UpdateSchoolInfoDialogComponent implements OnInit {
   }
   
   public cancel  = (): void => {
-    this.dialogRef.close(true);
+    this.dialogRef.close(false);
   }
 
   public confirm = (): void => {
-    this.dialogRef.close(true);
+    this.dialogRef.close(this.school.value as SchoolBaseModel);
   }
 
   get school(): FormControl {

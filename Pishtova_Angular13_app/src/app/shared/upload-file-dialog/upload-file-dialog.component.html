@@ -3,7 +3,7 @@
   <span *ngIf="file != null">{{file?.name}}</span>
   <div class="dialog-btn-container">
     <button class="btn" (click)="fileInput.click()">Изберете</button>
-    <button class="btn " (click)="Upload()">Качете </button>
+    <button class="btn" [disabled]="!file" (click)="Upload()">Качете </button>
     <input style="display: none;" type="file" class="file-upload" (change)="Choose($event)" #fileInput>
   </div>
 </mat-card>

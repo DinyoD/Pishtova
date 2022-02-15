@@ -5,7 +5,7 @@ import { environment as env} from 'src/environments/environment';
 import { CustomValidators } from '../../helpers/custom-validators';
 import { MunicipalityModel } from 'src/app/models/municipality';
 import { TownModel } from 'src/app/models/town';
-import { SchoolModel } from 'src/app/models/school';
+import { SchoolForRegisterModel } from 'src/app/models/school/schoolForRegister';
 import { MunicipalityService, TownService, SchoolService, AuthService } from 'src/app/services';
 import { UserForRegistrationModel } from '../../models/userForRegistration';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit  {
   
   public municipalities?: Array<MunicipalityModel>;
   public towns?: Array<TownModel>;
-  public schools?: Array<SchoolModel> | null;
+  public schools?: Array<SchoolForRegisterModel> | null;
 
   public form: FormGroup = new FormGroup({
     municipality: new FormControl(null, [Validators.required]),
@@ -38,7 +38,8 @@ export class RegisterComponent implements OnInit  {
     { validators: [
       CustomValidators.passwordsMatching, 
       CustomValidators.passwordMatchingRegEx, 
-      CustomValidators.nameMatchingRegEx
+      CustomValidators.nameMatchingRegEx,
+      CustomValidators.gradeMatching
     ] }
   );
   constructor(

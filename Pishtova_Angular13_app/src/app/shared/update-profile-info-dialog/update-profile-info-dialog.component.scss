@@ -1,10 +1,10 @@
 mat-card.dialog-container {
   width: 25vw;
-  height: 33.3vh;
+  height: 42vh;
   //padding: 30px;
   mat-card-content {
     form {
-      height: 20vh;
+      height: 32vh;
       display: flex;
       flex-direction: column;
       display: flex;
@@ -24,6 +24,7 @@ mat-card.dialog-container {
         border-bottom: 1px solid rgba(#000000, 0.45);
         p {
           cursor: pointer;
+          padding-bottom: 5px;
         }
         p:hover {
           font-weight: bold;
