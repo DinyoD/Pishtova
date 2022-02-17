@@ -19,10 +19,6 @@ body {
     background-color: rgba($secondary, 0.9);
     font-family: inherit;
   }
-  .header {
-    height: calc(100vh / 15 * 2);
-    max-height: 130px;
-  }
   .footer {
     height: calc(100vh / 15 * 1);
     max-height: 65px;

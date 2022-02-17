@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
+import { ModalAnimation } from 'src/app/core/header/header.animations';
 import { AuthService, SubjectService, TestService  } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -9,9 +10,15 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  animations: [ ModalAnimation ],
 })
 export class HeaderComponent implements OnInit{
+
+  @HostListener('click', ['$event.target'])
+  onClick(): void {
+    console.log(event?.target); 
+  }
 
   public showModal: boolean = false;
   public isAuth: boolean = false;

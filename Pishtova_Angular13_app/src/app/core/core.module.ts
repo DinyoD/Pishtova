@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StoreModule } from '@ngrx/store';
 
@@ -41,6 +42,7 @@ import { ForAuthenticatedUserGuard } from 'src/app/authentication/guards/auth.gu
     SharedModule,
     MatMenuModule,
     MatProgressBarModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     RouterModule.forChild([
       { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },

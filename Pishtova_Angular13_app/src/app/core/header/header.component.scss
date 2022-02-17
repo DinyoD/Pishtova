@@ -2,9 +2,17 @@
 
 $iconSize: calc(100vh / 8 * 2 / 3);
 $imageSize: calc((100vh / 8 * 2 / 3) * 0.8);
+$headerHeightValue: calc(100vh / 15 * 2);
+$modalHeightValue: calc(100vh / 15 * 12);
+$modalFieldHeightValue: calc(100vh / 15);
+$modalWidthValue: calc(100vh / 15 * 6);
+$modalIconSize: calc(100vh / 8 * 2 / 6);
+$modalFontSize: calc((100vh / 8 * 2 / 6) * 0.8);
 
 .header {
   position: relative;
+  height: $headerHeightValue;
+  max-height: 130px;
   mat-toolbar-row {
     height: 100%;
     display: flex;
@@ -33,7 +41,6 @@ $imageSize: calc((100vh / 8 * 2 / 3) * 0.8);
     .icon:hover {
       border-radius: 15px;
       cursor: pointer;
-      // border: 0.1px solid $icon;
     }
     .left:hover {
       box-shadow: 2px 2px 4px rgba($icon, 0.5);
@@ -47,53 +54,48 @@ $imageSize: calc((100vh / 8 * 2 / 3) * 0.8);
     }
   }
   .modal {
-    background-color: $primary;
-    border-radius: 5px;
+    background-color: rgba($primary, 1);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
     position: absolute;
-    top: 54px;
-    right: 20px;
+    top: $headerHeightValue;
+    right: 2px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    font-size: 10px;
-    height: 192px;
-    width: 200px;
+    justify-content: flex-start;
+    width: $modalWidthValue;
+    height: $modalHeightValue;
+    max-height: calc(100vh - 195px);
     z-index: 150;
     .modal-field {
-      height: 45px;
-      background-color: $primary;
+      height: $modalFieldHeightValue;
       width: 100%;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
       text-decoration: none;
-      border: $secondary solid 0.5px;
-      border-radius: 5px;
       display: flex;
       align-items: center;
       mat-icon {
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
+        font-size: $modalIconSize;
+        width: $modalIconSize;
+        height: $modalIconSize;
         color: rgba($secondary, 0.5);
-        margin: 0 15px;
+        margin: 0 30px;
       }
       .modal-field-text {
         margin: 0;
-        font-size: 18px;
-        color: $secondary;
+        font-size: $modalFontSize;
+        color: rgba($secondary, 0.5);
       }
     }
     .modal-field:hover {
       cursor: pointer;
-      background-color: $secondary;
-      border-color: $primary;
+      background-color: rgba($secondary, 0.5);
       mat-icon {
-        font-size: 26px;
-        width: 26px;
-        height: 26px;
         color: $icon;
       }
       .modal-field-text {
         color: $icon;
-        font-size: 20px;
       }
     }
   }
