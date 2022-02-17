@@ -1,7 +1,17 @@
+@import "../../utilities/colors/colors.scss";
+
 mat-card.dialog-container {
-  width: 25vw;
-  height: 42vh;
-  //padding: 30px;
+  width: 30vw;
+  height: 45vh;
+  padding: 30px;
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  mat-card-title {
+    text-align: center;
+    color: $secondary;
+  }
   mat-card-content {
     form {
       height: 32vh;
@@ -31,6 +41,34 @@ mat-card.dialog-container {
           color: #000000;
         }
       }
+    }
+  }
+  .dialog-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    button {
+      margin-top: 10px;
+      text-decoration: none;
+      width: 160px;
+      height: 40px;
+      border: none;
+      cursor: pointer;
+      font-size: 22px;
+      color: $secondary;
+      background-color: $white;
+      border-radius: 4px;
+      box-shadow: 3px 3px 8px rgba($black, 0.5);
+    }
+    .btn:hover {
+      box-shadow: 1px 1px 4px rgba($black, 0.5);
+    }
+    .btn:disabled:hover {
+      box-shadow: 3px 3px 8px rgba($black, 0.5);
+      cursor: none;
+    }
+    .btn:focus {
+      outline: none;
     }
   }
 }

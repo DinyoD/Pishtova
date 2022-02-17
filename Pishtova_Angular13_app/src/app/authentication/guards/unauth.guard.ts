@@ -19,6 +19,8 @@ export class ForUnauthenticatedUserGuard implements CanActivate {
     ) {
       
     if (!this.userService.isUserAuthenticated()) {
+      console.log('unauth');
+      
       return true;
     }
     this.router.navigate(['/main'])

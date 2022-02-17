@@ -10,7 +10,7 @@ import { MunicipalityService, SchoolService, TownService } from 'src/app/service
 @Component({
   selector: 'app-update-school-info-dialog',
   templateUrl: './update-school-info-dialog.component.html',
-  styleUrls: ['../update-profile-info-dialog/update-profile-info-dialog.component.css','../upload-file-dialog/upload-file-dialog.component.css']
+  styleUrls: ['../update-profile-info-dialog/update-profile-info-dialog.component.css']
 })
 export class UpdateSchoolInfoDialogComponent implements OnInit {
   

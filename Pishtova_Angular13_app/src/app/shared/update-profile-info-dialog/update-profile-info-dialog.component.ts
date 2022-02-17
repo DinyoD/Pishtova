@@ -10,7 +10,7 @@ import { UpdateSchoolInfoDialogComponent } from 'src/app/shared/update-school-in
 @Component({
   selector: 'app-update-profile-info-dialog',
   templateUrl: './update-profile-info-dialog.component.html',
-  styleUrls: ['./update-profile-info-dialog.component.css','../upload-file-dialog/upload-file-dialog.component.css']
+  styleUrls: ['./update-profile-info-dialog.component.css']
 })
 export class UpdateProfileInfoDialogComponent implements OnInit{
 
@@ -88,7 +88,6 @@ export class UpdateProfileInfoDialogComponent implements OnInit{
         schoolId: this.editedProfile.school.id
       };
     }
-    console.log(this.haveChanges);
     
     return this.profileToUpdate;
   }

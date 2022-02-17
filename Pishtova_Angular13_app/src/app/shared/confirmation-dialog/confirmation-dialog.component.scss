@@ -1,22 +1,23 @@
 @import "../../utilities/colors/colors.scss";
 
-.dialog-container {
-  background-color: $primary;
-  width: 450px;
-  height: 100px;
+.mat-card.dialog-container {
+  background-color: rgba($primary, 0.3);
+  width: 480px;
+  height: 160px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   mat-card-title {
     text-align: center;
     color: $secondary;
+    margin-top: 10px;
+    font-weight: bold;
   }
   .content {
     text-align: center;
-    color: $secondary;
-    font-size: 14px;
     margin: 0;
     color: $red;
+    font-weight: bold;
   }
   .dialog-btn-container {
     display: flex;
@@ -40,12 +41,6 @@
     }
     .btn:focus {
       outline: none;
-    }
-    .red:hover {
-      color: $red;
-    }
-    .green:hover {
-      color: $green;
     }
   }
 }

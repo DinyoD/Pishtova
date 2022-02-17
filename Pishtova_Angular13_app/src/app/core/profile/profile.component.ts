@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 import { environment as env } from 'src/environments/environment';
 import { EditProfileModel } from 'src/app/models/profile/editProfile';
@@ -12,6 +12,8 @@ import { UpdateProfileInfoDialogComponent } from 'src/app/shared/update-profile-
 import { UploadFileDialogComponent } from 'src/app/shared/upload-file-dialog/upload-file-dialog.component';
 import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
+import { ProfileToUpdateModel } from 'src/app/models/profile/profileToUpdate';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -29,8 +31,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private dialog: MatDialog,
-    private router: Router,
-    private cd: ChangeDetectorRef) { 
+    private router: Router) { 
       
     if (this.subjectService.getCurrentSubject() != null) {
       this.subjectService.settingSubjectModel(null);
@@ -41,20 +42,20 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserInfo().subscribe( profile => this.profile = profile );
   }
 
-  showDetail(sbj: SubjectsWithPointsByCategory): void{
+  public showDetail = (sbj: SubjectsWithPointsByCategory): void => { 
     this.showDetails= true;
     this.subjectDetails = sbj;
   }
 
-  closeDetails(){
+  public closeDetails = (): void => {
     this.subjectDetails = null;
   }
 
-  updatePicture(){
-    this.dialog.open(UploadFileDialogComponent);
+  public updatePicture = (): void => {
+    this.dialog.open(UploadFileDialogComponent).afterClosed().subscribe( res => this.reload(res));
   }
 
-  updateInfo(){
+  public updateInfo = (): void => {
     if (this.profile == null) {
       return;
     }
@@ -77,47 +78,65 @@ export class ProfileComponent implements OnInit {
                               profileToEdit.grade != updatedProfile.grade ||
                               profileToEdit.school.id != updatedProfile.schoolId;
 
-          if (infoChanged) this.changeProfileInfo(updatedProfile.name, updatedProfile.grade, updatedProfile.schoolId);
-
           const emailChanged = profileToEdit.email.toUpperCase() != updatedProfile.email.toUpperCase();
 
-          if (emailChanged) this.changeUserEmail(updatedProfile.email);           
-        }, 
-       () => {}, 
-       () => this.router.navigate(['/profile']))
-    ;
-    
-  }
+          if(infoChanged)
+          {
+            this.changeProfileInfo(updatedProfile.name, updatedProfile.grade, updatedProfile.schoolId);
+          };
 
-  private changeUserEmail = (email: string): void =>  {
-    const dialogData = new ConfirmationDialogModel(`Имейлът ви ще се промени на ${email}`,
-      '*след промяната трябва да активирате код за потвърждение за да достъпите профила си');
+          if(emailChanged)
+          { 
+            this.changeUserEmail(updatedProfile.email);
+          }
 
-    this.dialog
-      .open(ConfirmationDialogComponent, { data: dialogData })
-      .afterClosed()
-      .subscribe(changeEmail => {
-        if (changeEmail == false) {
-          return;
-        }
-        const dataModel: ChangeProfileEmailModel = {
-          email: email,
-          clientURI: env.CLIENT_URI + `/auth/emailconfirmation`
-        } 
-        this.userService.updateUserEmail(dataModel).subscribe(() => {
-          this.authService.logout();
         });
-      });
   }
 
   private changeProfileInfo = (name: string, grade: number, schoolId: number): void =>  {
-
+    
     const dataModel: ChangeProfileInfoModel = {
       name: name,
       grade: grade,
       schoolId: schoolId
-    } 
+    };
+
     this.userService.updateUserInfo(dataModel)
-    .subscribe();
+    .subscribe( () => this.reload(true));
   }
+
+  private changeUserEmail = (email: string): void =>  {
+    this.confirmEmailChange(email).subscribe((confirmed: boolean) => {
+        if (confirmed) this.updateEmail(email);
+      });
+  }
+
+  private confirmEmailChange = (email: string): Observable<boolean> => {
+    const dialogData = new ConfirmationDialogModel(`Имейлът ви ще се промени на ${email}`,
+    '*след промяната трябва го активирате за да достъпите профила си');
+
+   const dialogObs =   this.dialog
+    .open(ConfirmationDialogComponent, { data: dialogData })
+    .afterClosed();
+
+    return dialogObs;
+  }
+
+  private updateEmail = (email: string): void => {
+    const dataModel: ChangeProfileEmailModel = {
+      email: email,
+      clientURI: env.CLIENT_URI + `/auth/emailconfirmation`
+    };
+    this.userService.updateUserEmail(dataModel)
+    .subscribe(() => {
+      this.authService.logout();
+      this.router.navigate(['/']);
+    });
+  }
+
+  private reload = (reload: boolean) => {
+    if (reload){
+      this.router.navigate(['/']).then(() => this.router.navigate(['/profile']));
+    };
+  } 
 }
