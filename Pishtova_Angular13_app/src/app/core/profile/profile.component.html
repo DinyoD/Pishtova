@@ -44,10 +44,11 @@
       </div>
     </div>
     <div *ngIf="subjectDetails!= null" class="content-part">
-      <div class="info" *ngFor="let cat of subjectDetails.subjectCategories">
-        <p class="cat-name">{{cat.categoryName}}</p>
-        <p class="cat-points">{{cat.points}} точки</p>
-        <p class="cat-points">{{cat.problemsCount}} въпроса</p>
+      <div class="info" *ngFor="let cat of subjectDetails">
+        <p class="cat-name">{{cat.name}}</p>
+        <p class="cat-points">{{cat.percentage}} %</p>
+        <p class="cat-points">коректни</p>
+        <p class="cat-points">отговора</p>
       </div>
       <div class="icon-close" (click)="closeDetails()">
         <mat-icon>cancel</mat-icon>

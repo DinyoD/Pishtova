@@ -7,6 +7,7 @@ body {
   font-family: "Rubik", sans-serif;
   box-sizing: border-box;
   font-size: 16px;
+
   app-root {
     width: 100vw;
     height: 100vh;
@@ -51,5 +52,8 @@ body {
   mat-option span.mat-option-text {
     font-family: "Rubik", sans-serif;
     font-weight: bold;
+  }
+  .mat-dialog-container {
+    padding: 0;
   }
 }

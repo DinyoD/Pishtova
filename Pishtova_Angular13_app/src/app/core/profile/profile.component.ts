@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { environment as env } from 'src/environments/environment';
 import { EditProfileModel } from 'src/app/models/profile/editProfile';
@@ -12,8 +12,8 @@ import { UpdateProfileInfoDialogComponent } from 'src/app/shared/update-profile-
 import { UploadFileDialogComponent } from 'src/app/shared/upload-file-dialog/upload-file-dialog.component';
 import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
-import { ProfileToUpdateModel } from 'src/app/models/profile/profileToUpdate';
 import { Observable } from 'rxjs';
+import { SubjectCategoriesWithPercentageModel } from 'src/app/models/subjectCategory';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
 
   public profile: ProfileModel|null = null;
   public showDetails: boolean = false;
-  public subjectDetails: SubjectsWithPointsByCategory|null = null
+  public subjectDetails: SubjectCategoriesWithPercentageModel[]|null = null
 
   constructor(
     private subjectService: SubjectService,
@@ -44,7 +44,12 @@ export class ProfileComponent implements OnInit {
 
   public showDetail = (sbj: SubjectsWithPointsByCategory): void => { 
     this.showDetails= true;
-    this.subjectDetails = sbj;
+    this.subjectDetails = sbj.subjectCategories.map(c => {
+      return {
+        name: c.categoryName,
+        percentage: Math.round(c.points / c.problemsCount * 100)
+      }
+    });
   }
 
   public closeDetails = (): void => {
