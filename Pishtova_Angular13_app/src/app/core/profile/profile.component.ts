@@ -14,6 +14,7 @@ import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEma
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
 import { Observable } from 'rxjs';
 import { SubjectCategoriesWithPercentageModel } from 'src/app/models/subjectCategory';
+import { LoginComponent } from 'src/app/authentication/components/login/login.component';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ import { SubjectCategoriesWithPercentageModel } from 'src/app/models/subjectCate
 export class ProfileComponent implements OnInit {
 
   public profile: ProfileModel|null = null;
+  public profileSchoolId: number|null = null; 
   public showDetails: boolean = false;
   public subjectDetails: SubjectCategoriesWithPercentageModel[]|null = null
 
@@ -39,7 +41,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserInfo().subscribe( profile => this.profile = profile );
+    this.userService.getUserInfo().subscribe( profile => {
+      this.profile = profile;
+      this.profileSchoolId = profile.school.id;
+     });
   }
 
   public showDetail = (sbj: SubjectsWithPointsByCategory): void => { 
@@ -81,10 +86,10 @@ export class ProfileComponent implements OnInit {
 
           const infoChanged = profileToEdit.name != updatedProfile.name ||
                               profileToEdit.grade != updatedProfile.grade ||
-                              profileToEdit.school.id != updatedProfile.schoolId;
+                              this.profileSchoolId != updatedProfile.schoolId;
 
           const emailChanged = profileToEdit.email.toUpperCase() != updatedProfile.email.toUpperCase();
-
+          
           if(infoChanged)
           {
             this.changeProfileInfo(updatedProfile.name, updatedProfile.grade, updatedProfile.schoolId);
