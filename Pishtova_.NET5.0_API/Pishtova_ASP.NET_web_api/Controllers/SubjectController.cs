@@ -10,10 +10,14 @@
     public class SubjectController : ApiController
     {
         private readonly ISubjectService subjectService;
+        private readonly IScoreService scoreService;
 
-        public SubjectController(ISubjectService subjectService)
+        public SubjectController(
+            ISubjectService subjectService,
+            IScoreService scoreService)
         {
             this.subjectService = subjectService;
+            this.scoreService = scoreService;
         }
 
         [HttpGet]
@@ -25,7 +29,7 @@
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<SubjectModel>> getOneById(int id)
+        public async Task<ActionResult<SubjectModel>> GetOneById(int id)
         {
             var result = await this.subjectService.GetOneById(id);
             if (result == null)
@@ -33,6 +37,14 @@
                 return StatusCode(400, new ErrorResult { Message = "Uncorrect Subject ID!" });
             }
             return result;
+        }
+
+        [HttpGet]
+        [Route("{id}/ranking")]
+        public async Task<ActionResult<SubjectRankingByScores>> Ranking(int id)
+        {
+            return await this.scoreService.GetUsersScoreBySubjectIdAsync(id);
+            
         }
     }
 }

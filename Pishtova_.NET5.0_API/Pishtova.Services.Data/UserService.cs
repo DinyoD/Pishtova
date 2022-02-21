@@ -132,6 +132,7 @@
 
             return dbUser;
         }
+
         public async Task<User> UpdateUserEmail(string userId, UserChangeEmailModel model)
         {
             var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
