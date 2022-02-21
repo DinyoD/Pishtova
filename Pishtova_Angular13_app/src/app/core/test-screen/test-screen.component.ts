@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 
 import { ProblemModel } from 'src/app/models/problem';
@@ -16,7 +16,7 @@ import * as StateActions from '../+store/actions';
 })
 export class TestScreenComponent implements OnInit {
 
-  @Input() subjectId: number | undefined;
+  public subjectId: number | null = null;
   public problemNumber: number = 1;
   public problemNumber$ = this.store.pipe(select(x => x.subjectStateModel.problemNumber));
 
@@ -33,7 +33,13 @@ export class TestScreenComponent implements OnInit {
     private pointsService: PointsService,
     private store: Store<SubjectState>,
     private cd: ChangeDetectorRef,
-    private router: Router) {}
+    private actRoute: ActivatedRoute,
+    private router: Router) {
+      if (this.actRoute.snapshot.paramMap.get('id') != null) {
+        
+        this.subjectId = Number(this.actRoute.snapshot.paramMap.get('id'));
+      }
+    }
 
     ngOnInit(): void {
       this.store.dispatch(new StateActions.SetProblemNumber(1));

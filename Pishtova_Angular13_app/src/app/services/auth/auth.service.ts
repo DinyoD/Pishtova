@@ -64,4 +64,15 @@ export class AuthService {
     return token != null;
       // && !this.jwtHelper.isTokenExpired(token);
   }
+
+  public getUserId = (): string|null => {
+    let result: string|null = null;
+    const token: string|null = this.storage.getItem("token");
+    if (token) {
+      
+      const obj =  this.jwtHelper.decodeToken(token)
+      result = obj.email;      
+    }
+    return result;
+  }
 }

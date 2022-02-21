@@ -14,7 +14,7 @@ import { reducers } from 'src/app/core/+store';
 import { InTestGuard } from 'src/app/core/guards/inTest.guard';
 import { HeaderComponent } from 'src/app/core/header/header.component';
 import { FooterComponent } from 'src/app/core/footer/footer.component';
-import { ProfileComponent } from 'src/app/core/profile/profile.component';
+import { ProfileComponent } from 'src/app/core/profile-screen/profile.component';
 import { MainScreenComponent } from 'src/app/core/main-screen/main-screen.component';
 import { TestScreenComponent } from 'src/app/core/test-screen/test-screen.component';
 import { ResultScreenComponent } from 'src/app/core/result-screen/result-screen.component';
@@ -23,6 +23,7 @@ import { SubjectScreenComponent } from 'src/app/core/subject-screen/subject-scre
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ForAuthenticatedUserGuard } from 'src/app/authentication/guards/auth.guard';
+import { RankingScreenComponent } from './ranking-screen/ranking-screen.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ForAuthenticatedUserGuard } from 'src/app/authentication/guards/auth.gu
     ProfileComponent,
     SubjectScreenComponent,
     TestScreenComponent,
-    ResultScreenComponent
+    ResultScreenComponent,
+    RankingScreenComponent
   ],
   imports: [
     CommonModule,
@@ -48,18 +50,15 @@ import { ForAuthenticatedUserGuard } from 'src/app/authentication/guards/auth.gu
       { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'subject/:id/test', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'subject/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'subject/:id/ranking', component: RankingScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'test-result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
     ]),
     StoreModule.forRoot(reducers)
   ],
   exports: [
     HeaderComponent,
-    FooterComponent,
-    MainScreenComponent,
-    ProfileComponent,
-    SubjectScreenComponent,
-    TestScreenComponent
+    FooterComponent
   ]
 })
 export class CoreModule { }

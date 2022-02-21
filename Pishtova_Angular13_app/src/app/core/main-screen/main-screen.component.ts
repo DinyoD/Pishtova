@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SubjectModel } from 'src/app/models/subject';
+import { SubjectModel } from 'src/app/models/subject/subject';
 import { SubjectService} from '../../services';
 
 @Component({
@@ -27,7 +27,6 @@ export class MainScreenComponent{
       }
     });
     this.subjectService.settingSubjectModel(sbj);
-    console.log(sbj);
   }
 
 }

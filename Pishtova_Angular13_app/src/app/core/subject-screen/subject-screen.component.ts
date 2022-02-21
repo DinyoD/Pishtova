@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { PointsService, SubjectService, TestService  } from 'src/app/services';
-import { SubjectModel } from 'src/app/models/subject';
-import { Subscription } from 'rxjs';
+import { SubjectModel } from 'src/app/models/subject/subject';
 
 @Component({
   selector: 'app-subject-screen',
@@ -19,7 +18,6 @@ export class SubjectScreenComponent implements OnInit {
   public showTest: boolean = false;
 
   constructor(
-    private actRoute: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
     private subjectService: SubjectService,
@@ -48,5 +46,9 @@ export class SubjectScreenComponent implements OnInit {
         this.router.navigate([`subject/${this.subject?.id}/test`]);
       }
   });
+  }
+
+  handelRankingRedirect(){
+    this.router.navigate([`subject/${this.subject?.id}/ranking`]);
   }
 }

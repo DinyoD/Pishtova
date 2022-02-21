@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { SubjectModel } from 'src/app/models/subject';
+import { SubjectModel } from 'src/app/models/subject/subject';
+import { SubjectWithUsersPointsModel } from 'src/app/models/subject/subjectWithUserPoints';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
 
@@ -48,5 +49,9 @@ export class SubjectService {
        name: name, 
        id: +id
     }
+  }
+
+  public getSubjectRanking = (id: number|null): Observable<SubjectWithUsersPointsModel> => {
+    return this.httpClient.get<SubjectWithUsersPointsModel>(env.API_URL + `/subject/${id}/ranking`)
   }
 }

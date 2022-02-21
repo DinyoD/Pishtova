@@ -4,7 +4,7 @@
       <mat-icon>grade</mat-icon>
       <p>ТЕСТ</p>
     </a>
-    <a class="box">
+    <a class="box" (click)="handelRankingRedirect()">
       <mat-icon>grade</mat-icon>
       <p>КЛАСИРАНЕ</p>
     </a>
@@ -13,7 +13,4 @@
       <p>МАТЕРИАЛИ</p>
     </a>
   </div>
-
-  <app-test-screen *ngIf="showTest" [subjectId]="subject?.id"></app-test-screen>
-
 </div>
