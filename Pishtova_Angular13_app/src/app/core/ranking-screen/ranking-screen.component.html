@@ -1,7 +1,30 @@
-<div class="conatainer">
-  <div class="users" *ngFor="let u of users">
-    <p>{{u.userName}}</p>
-    <p>{{u.percentage}}</p>
-    <p>{{u.points}}</p>
+<div class="container">
+  <div class="ranking">
+    <p class="title">Класиране:</p>
+    <hr>
+    <div class="users" *ngFor="let u of users">
+      <p class="user-info name">{{u.userName}}</p>
+      <p class="user-info perc">{{u.percentage}} %</p>
+      <p class="user-info points">{{u.points}} от {{u.problemsCount}}</p>
+    </div>
+  </div>
+  <div class="user-result">
+    <p class="title">Вашият резултат:</p>
+    <hr>
+    <div class="info">
+      <span class="info-text">Място: </span>
+      <span class="info-text info-number">{{logedUserPlace}}</span>
+    </div>
+    <div class="info">
+      <span class="info-text">Успеваемост: </span>
+      <span class="info-text info-number">{{logedUser?.percentage}} %</span>
+    </div>
+    <div class="info">
+      <span class="info-text">Коректни отговори: </span>
+      <span class="info-text info-number">{{logedUser?.points}}</span></div>
+    <div class="info">
+      <span class="info-text">Общо въпроси: </span>
+      <span class="info-text info-number">{{logedUser?.problemsCount}}</span>
+    </div>
   </div>
 </div>

@@ -1,0 +1,62 @@
+@import "../../utilities/colors/colors.scss";
+
+.container {
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .ranking,
+  .user-result {
+    box-sizing: border-box;
+    display: block;
+    border-radius: 8px;
+    height: 100%;
+    padding: 0 30px;
+  }
+  .ranking {
+    width: 69%;
+    background-color: rgba($green, 0.2);
+    overflow-y: auto;
+    .user-info {
+      font-weight: bold;
+      font-size: 24px;
+      color: rgba($black, 0.75);
+    }
+    .users {
+      display: flex;
+      flex-direction: row;
+      .name {
+        width: 60%;
+      }
+      .points {
+        margin-left: auto;
+      }
+    }
+  }
+  .user-result {
+    width: 29%;
+    background-color: rgba($red, 0.2);
+    .info {
+      width: 75%;
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      .info-text {
+        font-weight: bold;
+        font-size: 18px;
+        color: rgba($black, 0.75);
+      }
+      .info-number {
+        margin-left: auto;
+        width: 50px;
+        text-align: center;
+      }
+    }
+  }
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+    color: rgba($black, 0.75);
+  }
+}
