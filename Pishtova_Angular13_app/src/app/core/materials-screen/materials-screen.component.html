@@ -1,0 +1,8 @@
+<div class="poem-frame">
+  <iframe [src]="url | safe" frameborder="0"></iframe>
+  <div class="btn-container">
+    <div class="btn" (click)="handlerTextBtn()">текст</div>
+    <div class="btn" (click)="handlerAnaliseBtn()">анализ</div>
+    <div class="btn" (click)="handlerExtrasBtn()">екстри</div>
+  </div>
+</div>

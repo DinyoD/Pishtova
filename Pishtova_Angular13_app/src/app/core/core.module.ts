@@ -24,6 +24,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ForAuthenticatedUserGuard } from 'src/app/authentication/guards/auth.guard';
 import { RankingScreenComponent } from './ranking-screen/ranking-screen.component';
+import { MaterialsScreenComponent, SafePipe } from './materials-screen/materials-screen.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,9 @@ import { RankingScreenComponent } from './ranking-screen/ranking-screen.componen
     SubjectScreenComponent,
     TestScreenComponent,
     ResultScreenComponent,
-    RankingScreenComponent
+    RankingScreenComponent,
+    MaterialsScreenComponent,
+    SafePipe
   ],
   imports: [
     CommonModule,
@@ -52,6 +55,7 @@ import { RankingScreenComponent } from './ranking-screen/ranking-screen.componen
       { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'subject/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subject/:id/ranking', component: RankingScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'subject/:id/materials', component: MaterialsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'test-result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
     ]),
     StoreModule.forRoot(reducers)

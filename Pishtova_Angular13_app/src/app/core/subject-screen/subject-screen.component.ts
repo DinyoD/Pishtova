@@ -48,7 +48,11 @@ export class SubjectScreenComponent implements OnInit {
   });
   }
 
-  handelRankingRedirect(){
+  public handelRankingRedirect = ():void => {
     this.router.navigate([`subject/${this.subject?.id}/ranking`]);
+  }
+
+  public handelMaterialsRedirect = ():void => {
+    this.router.navigate([`subject/${this.subject?.id}/materials`]);
   }
 }
