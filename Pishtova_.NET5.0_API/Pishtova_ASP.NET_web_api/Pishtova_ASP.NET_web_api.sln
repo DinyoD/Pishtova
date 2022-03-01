@@ -27,13 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Services.Models", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Services", "..\Pishtova.Services\Pishtova.Services.csproj", "{70EEB718-7824-4BD2-85D6-A04526ABB6DD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Data.Models", "..\Pishtova.Data.Models\Pishtova.Data.Models.csproj", "{907650FC-EA24-4B97-A020-84B7A0ECB16F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Data.Model", "..\Pishtova.Data.Models\Pishtova.Data.Model.csproj", "{907650FC-EA24-4B97-A020-84B7A0ECB16F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "..\Sandbox\Sandbox.csproj", "{101B8538-FE0F-44DE-A65D-D1271906428F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pishtova.Services.Messaging", "..\Pishtova.Services.Messaging\Pishtova.Services.Messaging.csproj", "{1D6FA798-33ED-4D43-ADA1-85027859DE47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectHelper", "..\ProjectHelper\ProjectHelper.csproj", "{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectHelper", "..\ProjectHelper\ProjectHelper.csproj", "{98F7EBE0-45A2-4015-81D2-45E4DCCDB31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

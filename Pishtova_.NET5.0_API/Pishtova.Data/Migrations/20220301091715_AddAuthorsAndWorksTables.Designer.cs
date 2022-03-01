@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pishtova.Data;
 
 namespace Pishtova.Data.Migrations
 {
     [DbContext(typeof(PishtovaDbContext))]
-    partial class PishtovaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220301091715_AddAuthorsAndWorksTables")]
+    partial class AddAuthorsAndWorksTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -865,7 +867,7 @@ namespace Pishtova.Data.Migrations
             modelBuilder.Entity("Pishtova.Data.Model.Work", b =>
                 {
                     b.HasOne("Pishtova.Data.Model.Author", "Author")
-                        .WithMany("Works")
+                        .WithMany("Poems")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Pishtova.Data.Model.Subject", "Subject")
@@ -881,7 +883,7 @@ namespace Pishtova.Data.Migrations
 
             modelBuilder.Entity("Pishtova.Data.Model.Author", b =>
                 {
-                    b.Navigation("Works");
+                    b.Navigation("Poems");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.Badge", b =>

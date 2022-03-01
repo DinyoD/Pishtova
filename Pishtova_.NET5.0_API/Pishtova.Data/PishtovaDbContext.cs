@@ -50,6 +50,12 @@ namespace Pishtova.Data
 
         public DbSet<School> Schools { get; set; }
 
+        public DbSet<Author> Authors { get; set; }
+
+        public DbSet<Work> Works { get; set; }
+
+
+
         public override int SaveChanges()
         {
             return this.SaveChanges(true);

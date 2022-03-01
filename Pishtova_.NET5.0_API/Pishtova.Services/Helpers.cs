@@ -158,7 +158,6 @@
             };
         }
 
-
         private static List<List<List<string>>> ExtractSubjectProblems(string firebaseCollectionName)
         {
             var fbHelper = new FirebaseHelper(SandBoxConstants.AuthSecret, SandBoxConstants.BasePath);
@@ -176,7 +175,6 @@
 
             return subjectInfo;
         }
-
 
         private static string FixName(string name)
         {
@@ -237,5 +235,6 @@
             }
             return newText.ToString();
         }
+
     }
 }

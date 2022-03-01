@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pishtova.Data.Common\Pishtova.Data.Common.csproj" />
-    <ProjectReference Include="..\Pishtova.Data.Models\Pishtova.Data.Models.csproj" />
+    <ProjectReference Include="..\Pishtova.Data.Models\Pishtova.Data.Model.csproj" />
     <ProjectReference Include="..\Pishtova.Services.Models\Pishtova.Services.Models.csproj" />
     <ProjectReference Include="..\Pishtova.Services\Pishtova.Services.csproj" />
   </ItemGroup>

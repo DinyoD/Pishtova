@@ -1,10 +1,10 @@
 ﻿namespace Pishtova.Services.Models
 {
-    public class TownDTO
+    public class AuthorDTO
     {
         public string Name { get; set; }
 
-        public MunicipalityDTO MunicipalityDTO { get; set; }
-
+        public int Index { get; set; }
+        
     }
 }
