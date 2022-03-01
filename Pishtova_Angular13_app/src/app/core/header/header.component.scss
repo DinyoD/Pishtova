@@ -42,12 +42,12 @@ $modalFontSize: calc((100vh / 8 * 2 / 6) * 0.8);
       border-radius: 15px;
       cursor: pointer;
     }
-    .left:hover {
-      box-shadow: 2px 2px 4px rgba($icon, 0.5);
-    }
-    .right:hover {
-      box-shadow: -2px 2px 4px rgba($icon, 0.5);
-    }
+    // .left:hover {
+    //   box-shadow: 2px 2px 4px rgba($icon, 0.5);
+    // }
+    // .right:hover {
+    //   box-shadow: -2px 2px 4px rgba($icon, 0.5);
+    // }
     .sbj-name {
       color: $icon;
       font-size: $iconSize;

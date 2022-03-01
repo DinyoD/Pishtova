@@ -29,7 +29,7 @@ export class PointsService {
     this.storage.setItem('points', points.toString());
   }
 
-  gettingPoints(): number{
+  public gettingPoints = (): number => {
     const prevPoints = this.storage.getItem<string>('points');
     let points = 0;
     try {

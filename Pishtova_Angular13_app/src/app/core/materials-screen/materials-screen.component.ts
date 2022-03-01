@@ -1,5 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { AuthorModel } from 'src/app/models/author';
+import { WorkModel } from 'src/app/models/work';
+import { MaterialsService } from 'src/app/services/materials/materials.service';
+
+const comingSoonUrl: string = 'src/app/core/materials-screen/coming-soon-page.html';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -14,31 +20,62 @@ export class SafePipe implements PipeTransform {
   templateUrl: './materials-screen.component.html',
   styleUrls: ['./materials-screen.component.css']
 })
+
 export class MaterialsScreenComponent implements OnInit {
 
   public url: string = "";
-  public authorInd = 1;
-  public poemInd = 4;
+  public authors: AuthorModel[]|null = null;
+  public works: WorkModel[]|null = null
+  public authorIndex: number|null = null;
+  public workIndex: number|null = null;
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(
+    private cd: ChangeDetectorRef,
+    private materialsService: MaterialsService,
+    private actRoute: ActivatedRoute,) { }
 
   ngOnInit(): void {
-    this.url = `https://pishtovyapp.com/${this.authorInd}/${this.poemInd}/1.html`;
+    const urlId = Number(this.actRoute.snapshot.paramMap.get('id'));
+    this.materialsService.getAuthorsWithWorks(urlId).subscribe( a => this.authors = a.sort((x,y) => x.index - y.index))
+  }
+
+  public chooseAuthor = (author: AuthorModel): void => {
+    this.works = author.works.sort((x,y) => x.index - y.index);
+    this.authorIndex = author.index;
+  }
+
+  public chooseWork = (workIndex: number):void => {
+    this.workIndex = workIndex;
+    this.handlerTextBtn();
   }
 
   public handlerTextBtn = ():void => {
-    this.url =`https://pishtovyapp.com/${this.authorInd}/${this.poemInd}/1.html`;
+    this.url = this.setUrl();
     this.cd.detectChanges();
   }
 
   public handlerAnaliseBtn = ():void => {
-    this.url =`https://pishtovyapp.com/${this.authorInd}/${this.poemInd}/2.html`;
+    this.url = this.setUrl(2);
     this.cd.detectChanges();
   }
 
   public handlerExtrasBtn = ():void => {
-    this.url =`https://pishtovyapp.com/${this.authorInd}/${this.poemInd}/3.html`;
+    this.url =this.setUrl(3);
     this.cd.detectChanges();
   }
 
+  private setUrl = (htmlNumber: number = 1): string => {
+    let url: string =  `https://pishtovyapp.com/${this.authorIndex}/${this.workIndex}/${htmlNumber}.html`;
+    return this.checkUrl(url);
+  }
+
+  private checkUrl = (url: string): string => {
+    fetch(new Request(url))
+    .then((a) => {console.log(a)})
+    .catch((r)=>{ console.log(r)})
+
+    return url;
+  }
+
 }
+

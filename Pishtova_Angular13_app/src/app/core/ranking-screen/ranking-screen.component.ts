@@ -24,13 +24,13 @@ export class RankingScreenComponent implements OnInit {
   ) {}
     
   ngOnInit(): void {
-    const urlParam = Number(this.actRoute.snapshot.paramMap.get('id'));
-    if (isNaN(urlParam)) {
+    const urlId = Number(this.actRoute.snapshot.paramMap.get('id'));
+    if (isNaN(urlId)) {
       this.router.navigate(['/main']);
       return;
     }
     this.userId = this.authService.getUserId();     
-    this.subjectService.getSubjectRanking(urlParam)
+    this.subjectService.getSubjectRanking(urlId)
       .subscribe(x => {
         this.users = x.usersPointsForSubject
           .map(u => this.calculatePercentageUsersProperty(u))

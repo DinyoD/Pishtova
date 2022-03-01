@@ -1,8 +1,18 @@
-<div class="poem-frame">
-  <iframe [src]="url | safe" frameborder="0"></iframe>
-  <div class="btn-container">
-    <div class="btn" (click)="handlerTextBtn()">текст</div>
-    <div class="btn" (click)="handlerAnaliseBtn()">анализ</div>
-    <div class="btn" (click)="handlerExtrasBtn()">екстри</div>
+<div class="container">
+  <div class="authors-frame">
+    <p (click)="chooseAuthor(a)" *ngFor="let a of authors">{{a.name}}</p>
+  </div>
+
+  <div class="works-frame">
+    <p (click)="chooseWork(w.index)" *ngFor="let w of works">{{w.name}}</p>
+  </div>
+
+  <div class="texts-frame">
+    <iframe [src]="url | safe" frameborder="0"></iframe>
+    <div class="btn-container">
+      <div class="btn" (click)="handlerTextBtn()">текст</div>
+      <div class="btn" (click)="handlerAnaliseBtn()">анализ</div>
+      <div class="btn" (click)="handlerExtrasBtn()">екстри</div>
+    </div>
   </div>
 </div>
