@@ -13,8 +13,10 @@
     display: flex;
     justify-content: center;
     .image {
-      width: 28vw;
-      height: 28vw;
+      width: 27vw;
+      height: 27vw;
+      max-width: 350px;
+      max-height: 350px;
     }
   }
   .actionContainer {
