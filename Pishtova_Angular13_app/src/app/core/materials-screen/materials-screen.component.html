@@ -1,18 +1,30 @@
 <div class="container">
   <div class="authors-frame">
-    <p (click)="chooseAuthor(a)" *ngFor="let a of authors">{{a.name}}</p>
+    <div class="author" [ngClass]="{'active': authorIndex == a.index}" (click)="chooseAuthor(a)"
+      *ngFor="let a of authors">
+      <img class="pic" src="{{authorsPics[a.index]}}" alt="">
+      <p class="name">{{a.name}}</p>
+    </div>
   </div>
 
-  <div class="works-frame">
-    <p (click)="chooseWork(w.index)" *ngFor="let w of works">{{w.name}}</p>
+  <div class="works-frame" [ngClass]="{'empty': authorIndex == null}">
+    <div class="work" [ngClass]="{'active': selectedWorkInd == w.index}" (click)="chooseWork(w.index)"
+      *ngFor="let w of works">
+      <img class="icon" *ngIf="w.index == 0" src="../../../assets/icons/authorGeneralInfo.svg" alt="">
+      <img class="icon" *ngIf="w.index != 0" src="../../../assets/icons/authorWork.svg" alt="">
+      <p class="name">{{w.name}}</p>
+    </div>
   </div>
 
-  <div class="texts-frame">
+  <div class="texts-frame" [ngClass]="{'empty': !showButton}">
     <iframe [src]="url | safe" frameborder="0"></iframe>
-    <div class="btn-container">
-      <div class="btn" (click)="handlerTextBtn()">текст</div>
-      <div class="btn" (click)="handlerAnaliseBtn()">анализ</div>
-      <div class="btn" (click)="handlerExtrasBtn()">екстри</div>
+    <div *ngIf="showButton" class="btn-container">
+      <div class="btn" [ngClass]="{'active': selectedButton == 'text'}" (click)="handlerTextBtn()"><span>текс</span>
+      </div>
+      <div class="btn" [ngClass]="{'active': selectedButton == 'analize'}" (click)="handlerAnaliseBtn()">
+        <span>анализ</span></div>
+      <div class="btn" [ngClass]="{'active': selectedButton == 'extras'}" (click)="handlerExtrasBtn()">
+        <span>екстри</span></div>
     </div>
   </div>
 </div>
