@@ -8,9 +8,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { StoreModule } from '@ngrx/store';
-
-import { reducers } from 'src/app/core/+store';
 import { InTestGuard } from 'src/app/core/guards/inTest.guard';
 import { HeaderComponent } from 'src/app/core/header/header.component';
 import { FooterComponent } from 'src/app/core/footer/footer.component';
@@ -58,7 +55,6 @@ import { MaterialsScreenComponent, SafePipe } from './materials-screen/materials
       { path: 'subject/:id/materials', component: MaterialsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'test-result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
     ]),
-    StoreModule.forRoot(reducers)
   ],
   exports: [
     HeaderComponent,

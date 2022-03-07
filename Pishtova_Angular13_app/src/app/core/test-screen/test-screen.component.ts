@@ -1,13 +1,12 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
 
 import { ProblemModel } from 'src/app/models/problem';
 import { AnswerModel } from 'src/app/models/answer';
 import { ProblemScoreModel } from 'src/app/models/problemScore';
 import { ProblemService, PointsService } from 'src/app/services'
-import { SubjectState } from '../+store/core.state';
-import * as StateActions from '../+store/actions';
+import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-test-screen',
@@ -17,21 +16,17 @@ import * as StateActions from '../+store/actions';
 export class TestScreenComponent implements OnInit {
 
   public subjectId: number | null = null;
-  public problemNumber: number = 1;
-  public problemNumber$ = this.store.pipe(select(x => x.subjectStateModel.problemNumber));
-
   public problems: ProblemModel[] = [];
-
+  public problemNumber: number = 1;
   public someAnswerIsClicked: boolean = false;
   public selectedAnswerId: string|null = null
-
   public points: number|null = null;
   public maxScore: number = 20;
 
   constructor(
     private problemService: ProblemService,
     private pointsService: PointsService,
-    private store: Store<SubjectState>,
+    private dialog: MatDialog,
     private cd: ChangeDetectorRef,
     private actRoute: ActivatedRoute,
     private router: Router) {
@@ -42,9 +37,7 @@ export class TestScreenComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      this.store.dispatch(new StateActions.SetProblemNumber(1));
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe(problems => this.problems = problems);
-      this.problemNumber$.subscribe( n => this.problemNumber = n);
       this.points = this.pointsService.gettingPoints();
       this.pointsService.pointsChanged.subscribe(p =>{ 
         this.points = p;
@@ -64,10 +57,28 @@ export class TestScreenComponent implements OnInit {
         points: selectedAnswer.isCorrect ? 1 : 0
       }
       this.pointsService.saveScore(problemPointModel).subscribe(() => {
-      }, err => {
-        console.log(err.message);
-        
-      });
+          if (problemPointModel.points == 0 ) {
+            return;
+          }
+          const points = this.pointsService.gettingPoints();
+          switch (points) {
+          case 14:
+            this.dialog.open( GreetingDialogComponent, { data:  70})
+            break;
+          case 16:
+            this.dialog.open( GreetingDialogComponent, { data:  80})
+          break;   
+          case 18:
+            this.dialog.open( GreetingDialogComponent, { data:  90})
+            break;
+          case 20:
+            this.dialog.open( GreetingDialogComponent, { data:  100})
+          break; 
+          default:
+            break;
+          }
+        }
+      );
       this.cd.detectChanges();      
     }
 
@@ -75,7 +86,8 @@ export class TestScreenComponent implements OnInit {
       if (!this.someAnswerIsClicked) {
         return;
       }
-      this.store.dispatch(new StateActions.SetProblemNumber(this.problemNumber + 1));
+      //this.store.dispatch(new StateActions.SetTestProblems(this.problemNumber + 1));
+      this.problemNumber += 1;
       this.someAnswerIsClicked = false;    
     }
 
@@ -83,6 +95,7 @@ export class TestScreenComponent implements OnInit {
       if (!this.someAnswerIsClicked) {
         return;
       }
+
       this.router.navigate(['/test-result']);
     }
 

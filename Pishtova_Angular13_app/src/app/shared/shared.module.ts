@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { UpdateSchoolInfoDialogComponent } from './update-school-info-dialog/update-school-info-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { GreetingDialogComponent } from './greeting-dialog/greeting-dialog.component';
 
 
 
@@ -28,7 +29,8 @@ import { MatIconModule } from '@angular/material/icon';
     ProgressBarComponent,
     UploadFileDialogComponent,
     UpdateProfileInfoDialogComponent,
-    UpdateSchoolInfoDialogComponent
+    UpdateSchoolInfoDialogComponent,
+    GreetingDialogComponent
   ],
   imports: [
     CommonModule,
