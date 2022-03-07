@@ -26,10 +26,45 @@
     .users {
       display: flex;
       flex-direction: row;
+      .rank-container {
+        width: 15%;
+        max-width: 92px;
+        display: flex;
+
+        mat-icon {
+          margin: 10px 10px;
+          width: 52px;
+          height: 52px;
+          font-size: 52px;
+        }
+        mat-icon.gold {
+          color: gold;
+        }
+        mat-icon.silver {
+          color: silver;
+        }
+        mat-icon.bronz {
+          color: rgb(85, 74, 60);
+        }
+      }
       .name {
-        width: 60%;
+        width: 40%;
+        max-width: 600px;
       }
       .points {
+        display: flex;
+        p {
+          text-align: end;
+        }
+        .number {
+          width: 60px;
+        }
+        .text {
+          width: 70px;
+          font-weight: normal;
+        }
+      }
+      .perc {
         margin-left: auto;
       }
     }

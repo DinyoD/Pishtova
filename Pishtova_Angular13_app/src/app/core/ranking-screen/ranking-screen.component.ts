@@ -34,13 +34,13 @@ export class RankingScreenComponent implements OnInit {
       .subscribe(x => {
         this.users = x.usersPointsForSubject
           .map(u => this.calculatePercentageUsersProperty(u))
-          .sort((a,b) => b.percentage - a.percentage);
+          .sort((a,b) => b.points - a.points);
 
         this.logedUser = this.calculatePercentageUsersProperty(x.usersPointsForSubject.filter(x => x.userId == this.userId)[0]);
 
         this.logedUserPlace = x.usersPointsForSubject
           .map(u => this.calculatePercentageUsersProperty(u))
-          .sort((a,b) => b.percentage - a.percentage)
+          .sort((a,b) => b.points - a.points)
           .findIndex(u => u.userId == this.userId) + 1;
       });
     
