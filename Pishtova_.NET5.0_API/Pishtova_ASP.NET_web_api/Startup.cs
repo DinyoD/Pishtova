@@ -84,6 +84,8 @@ namespace Pishtova_ASP.NET_web_api
             services.AddTransient<IScoreService, ScoreService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IUsersBadgesService, UsersBadgesService>();
+            services.AddTransient<IBadgeService, BadgeService>();
 
             services.AddControllers();
         }

@@ -22,7 +22,8 @@
                           {
                               new SchoolsSeeder(),
                               new SubjectsSeeder(),
-                              new AuthorsSeeder()
+                              new AuthorsSeeder(),
+                              new BadgesSeeder()
                           };
 
             foreach (var seeder in seeders)
