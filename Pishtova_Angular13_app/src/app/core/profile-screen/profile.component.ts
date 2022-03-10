@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
-import { EditProfileModel } from 'src/app/models/profile/editProfile';
-import { ProfileModel, SubjectsWithPointsByCategory } from 'src/app/models/profile/profile';
-import { AuthService, SubjectService, UserService } from 'src/app/services';
-import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
+import { UploadFileDialogComponent } from 'src/app/shared/upload-file-dialog/upload-file-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { UpdateProfileInfoDialogComponent } from 'src/app/shared/update-profile-info-dialog/update-profile-info-dialog.component';
-import { UploadFileDialogComponent } from 'src/app/shared/upload-file-dialog/upload-file-dialog.component';
-import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
+import { AuthService, SubjectService, UserService, BadgesService } from 'src/app/services';
+import { EditProfileModel } from 'src/app/models/profile/editProfile';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
-import { Observable } from 'rxjs';
+import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
 import { SubjectCategoriesWithPercentageModel } from 'src/app/models/subjectCategory';
-import { LoginComponent } from 'src/app/authentication/components/login/login.component';
+import { ProfileModel, SubjectsWithPointsByCategory } from 'src/app/models/profile/profile';
+import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
+import { BadgesModel } from 'src/app/models/badge';
 
 @Component({
   selector: 'app-profile',
@@ -26,12 +26,14 @@ export class ProfileComponent implements OnInit {
   public profile: ProfileModel|null = null;
   public profileSchoolId: number|null = null; 
   public showDetails: boolean = false;
-  public subjectDetails: SubjectCategoriesWithPercentageModel[]|null = null
+  public subjectDetails: SubjectCategoriesWithPercentageModel[]|null = null;
+  public badges: BadgesModel[]|null = null;
 
   constructor(
     private subjectService: SubjectService,
     private userService: UserService,
     private authService: AuthService,
+    private badgeService: BadgesService,
     private dialog: MatDialog,
     private router: Router) { 
       
@@ -45,6 +47,7 @@ export class ProfileComponent implements OnInit {
       this.profile = profile;
       this.profileSchoolId = profile.school.id;
      });
+     this.badgeService.getUserBadges().subscribe(res => this.badges = res.badges)
   }
 
   public showDetail = (sbj: SubjectsWithPointsByCategory): void => { 
@@ -101,6 +104,10 @@ export class ProfileComponent implements OnInit {
           }
 
         });
+  }
+
+  public badgeIsOwned = (code: number): boolean => {
+    return  this.badges?.find(x => x.code == code) != undefined ? true : false;
   }
 
   private changeProfileInfo = (name: string, grade: number, schoolId: number): void =>  {

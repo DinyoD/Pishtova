@@ -1,6 +1,6 @@
 <div class="container">
   <div class="authors-frame">
-    <div class="author" [ngClass]="{'active': authorIndex == a.index}" (click)="chooseAuthor(a)"
+    <div class="author" [ngClass]="{'active': selectedAuthorIndex == a.index}" (click)="chooseAuthor(a)"
       *ngFor="let a of authors">
       <img class="pic" src="{{authorsPics[a.index]}}" alt="">
       <p class="name">{{a.name}}</p>
@@ -19,12 +19,18 @@
   <div class="texts-frame" [ngClass]="{'empty': !showButton}">
     <iframe [src]="url | safe" frameborder="0"></iframe>
     <div *ngIf="showButton" class="btn-container">
-      <div class="btn" [ngClass]="{'active': selectedButton == 'text'}" (click)="handlerTextBtn()"><span>текс</span>
+      <div class="btn" [ngClass]="{'active': selectedButton == 'text'}" (click)="handlerTextBtn()">
+        <span *ngIf="workIndex == 0">част 1</span>
+        <span *ngIf="workIndex != 0">текс</span>
       </div>
       <div class="btn" [ngClass]="{'active': selectedButton == 'analize'}" (click)="handlerAnaliseBtn()">
-        <span>анализ</span></div>
+        <span *ngIf="workIndex == 0">част 2</span>
+        <span *ngIf="workIndex != 0">анализ</span>
+      </div>
       <div class="btn" [ngClass]="{'active': selectedButton == 'extras'}" (click)="handlerExtrasBtn()">
-        <span>екстри</span></div>
+        <span *ngIf="workIndex == 0">част 3</span>
+        <span *ngIf="workIndex != 0">екстри</span>
+      </div>
     </div>
   </div>
 </div>

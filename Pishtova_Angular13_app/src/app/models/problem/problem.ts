@@ -1,4 +1,4 @@
-import { AnswerModel } from "./answer";
+import { AnswerModel } from "../answer";
 
 export interface ProblemModel{
     id: string

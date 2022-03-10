@@ -28,6 +28,7 @@ export class MaterialsScreenComponent implements OnInit {
   public authors: AuthorModel[]|null = null;
   public works: WorkModel[]|null = null
   public authorIndex: number|null = null;
+  public selectedAuthorIndex: number|null = null;
   public workIndex: number|null = null;
   public selectedWorkIndex: number|null = null;
   public authorsPics: string[] =[];
@@ -51,13 +52,14 @@ export class MaterialsScreenComponent implements OnInit {
 
   public chooseAuthor = (author: AuthorModel): void => {
     this.works = author.works.sort((x,y) => x.index - y.index);
-    this.authorIndex = author.index;
+    this.selectedAuthorIndex = author.index;
     this.selectedWorkInd = null;
   }
 
   public chooseWork = (workIndex: number):void => {
     this.workIndex = workIndex;
     this.selectedWorkInd = workIndex;
+    this.authorIndex = this.selectedAuthorIndex;
     this.handlerTextBtn();
     this.showButton = true;
   }

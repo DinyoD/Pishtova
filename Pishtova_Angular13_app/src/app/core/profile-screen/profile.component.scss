@@ -1,5 +1,8 @@
 @import "../../utilities/colors/colors.scss";
 
+$badgeSize: calc(((100vh / 15 * 12) * 0.3) * 0.7);
+$badgeFontSize: calc(((100vh / 15 * 12) * 0.3) * 0.15);
+
 .container {
   width: 100vw;
   height: calc(100vh / 15 * 12);
@@ -128,6 +131,28 @@
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
+      .badge {
+        width: $badgeSize;
+        height: $badgeSize;
+        border-radius: 100%;
+        background-color: rgba($green, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .badge-text {
+          color: rgba($black, 0.1);
+          font-size: $badgeFontSize;
+          font-weight: bolder;
+          margin: 0;
+        }
+      }
+      .badge.owned {
+        background-color: rgba($green, 0.8);
+        .badge-text {
+          color: rgba($black, 0.8);
+        }
+      }
       .info {
         display: flex;
         flex-direction: column;

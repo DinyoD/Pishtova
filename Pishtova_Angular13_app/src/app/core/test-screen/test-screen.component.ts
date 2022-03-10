@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ProblemModel } from 'src/app/models/problem';
+import { ProblemModel } from 'src/app/models/problem/problem';
 import { AnswerModel } from 'src/app/models/answer';
-import { ProblemScoreModel } from 'src/app/models/problemScore';
+import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
 import { ProblemService, PointsService } from 'src/app/services'
 import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';

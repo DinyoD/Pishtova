@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { ProblemScoreModel } from 'src/app/models/problemScore';
+import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
 

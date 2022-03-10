@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserPointsForSubjectModel } from 'src/app/models/userPointBySubject';
+import { UserPointsForSubjectModel } from 'src/app/models/user/userPointBySubject';
 import { AuthService, SubjectService } from 'src/app/services';
 
 @Component({
