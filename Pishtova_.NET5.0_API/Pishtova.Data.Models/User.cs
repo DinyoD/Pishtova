@@ -18,7 +18,7 @@
             //this.Roles = new HashSet<IdentityUserRole<string>>();
 
             this.UserScores = new HashSet<Score>();
-            this.BadgeUsers = new HashSet<UserBadge>();
+            this.UserBadges = new HashSet<UserBadge>();
             this.UserGroups = new HashSet<UserGroup>();
         }
 
@@ -37,7 +37,7 @@
 
         public virtual ICollection<Score> UserScores { get; set; }
 
-        public virtual ICollection<UserBadge> BadgeUsers { get; set; }
+        public virtual ICollection<UserBadge> UserBadges { get; set; }
 
         public virtual ICollection<UserGroup> UserGroups { get; set; }
 

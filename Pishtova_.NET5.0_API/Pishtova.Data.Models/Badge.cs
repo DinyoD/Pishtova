@@ -15,7 +15,10 @@
         }
 
         [Required]
-        public string PictureUrl { get; set; }
+        public int Code { get; set; }
+
+        [Required]
+        public string Name { get; set; }
 
         public virtual ICollection<UserBadge> UserBadges { get; set; }
     }
