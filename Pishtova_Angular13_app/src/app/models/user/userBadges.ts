@@ -1,6 +1,6 @@
-import { BadgesModel } from "../badge";
+import { BadgesCountModel } from "../badge/badgesCount";
 
 export interface UserBadgesModel {
-    badges: BadgesModel[];
+    badges: BadgesCountModel[];
 }
 

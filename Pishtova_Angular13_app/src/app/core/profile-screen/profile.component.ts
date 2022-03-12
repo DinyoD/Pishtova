@@ -14,7 +14,7 @@ import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEma
 import { SubjectCategoriesWithPercentageModel } from 'src/app/models/subjectCategory';
 import { ProfileModel, SubjectsWithPointsByCategory } from 'src/app/models/profile/profile';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
-import { BadgesModel } from 'src/app/models/badge';
+import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   public profileSchoolId: number|null = null; 
   public showDetails: boolean = false;
   public subjectDetails: SubjectCategoriesWithPercentageModel[]|null = null;
-  public badges: BadgesModel[]|null = null;
+  public badges: BadgesCountModel[]|null = null;
 
   constructor(
     private subjectService: SubjectService,

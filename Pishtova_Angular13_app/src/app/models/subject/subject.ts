@@ -1,4 +1,5 @@
-export interface SubjectModel{
-    id: number;
+import { SubjectBaseModel } from "./subjectBase";
+
+export interface SubjectModel extends SubjectBaseModel{
     name: string;
 }

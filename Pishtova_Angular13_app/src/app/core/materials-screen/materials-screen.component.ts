@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AuthorModel } from 'src/app/models/author';
 import { WorkModel } from 'src/app/models/work';
-import { Authors } from 'src/app/resource/data-maps/authors';
+import { Authors } from 'src/app/resource/authors';
 import { MaterialsService } from 'src/app/services/materials/materials.service';
 
 const comingSoonUrl: string = 'src/app/core/materials-screen/coming-soon-page.html';

@@ -30,13 +30,11 @@ export class PointsService {
   }
 
   public gettingPoints = (): number => {
-    const prevPoints = this.storage.getItem<string>('points');
-    let points = 0;
     try {
-      points = prevPoints != null ? +prevPoints : 0;
-      return points;
+      const prevPoints = this.storage.getItem<string>('points');
+      return prevPoints != null ? +prevPoints : 0;
     } catch (error) {
-      return 0
+      return 0;
     }
   }
 

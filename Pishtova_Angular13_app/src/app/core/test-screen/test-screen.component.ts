@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProblemModel } from 'src/app/models/problem/problem';
 import { AnswerModel } from 'src/app/models/answer';
 import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
-import { ProblemService, PointsService } from 'src/app/services'
+import { ProblemService, PointsService, TestService, BadgesService } from 'src/app/services'
 import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Badges } from 'src/app/resource/badgesCode';
 
 @Component({
   selector: 'app-test-screen',
@@ -16,16 +17,21 @@ import { MatDialog } from '@angular/material/dialog';
 export class TestScreenComponent implements OnInit {
 
   public subjectId: number | null = null;
+
   public problems: ProblemModel[] = [];
   public problemNumber: number = 1;
+
   public someAnswerIsClicked: boolean = false;
   public selectedAnswerId: string|null = null
-  public points: number|null = null;
+  public points: number = 0;
+  public badgeCodeByPointsMap : Map<number,number>| null = null;
   public maxScore: number = 20;
 
   constructor(
     private problemService: ProblemService,
     private pointsService: PointsService,
+    private testService: TestService,
+    private badgeService: BadgesService,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
     private actRoute: ActivatedRoute,
@@ -39,10 +45,11 @@ export class TestScreenComponent implements OnInit {
     ngOnInit(): void {
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe(problems => this.problems = problems);
       this.points = this.pointsService.gettingPoints();
-      this.pointsService.pointsChanged.subscribe(p =>{ 
+      this.pointsService.pointsChanged.subscribe(p => { 
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
       });
+      this.badgeCodeByPointsMap = new Badges().codeByPoints;
     }
     
     chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number){
@@ -94,6 +101,15 @@ export class TestScreenComponent implements OnInit {
     finishTest(){
       if (!this.someAnswerIsClicked) {
         return;
+      }
+
+      if (this.subjectId) {       
+        this.testService.saveTest(this.subjectId).subscribe();
+      }
+
+      const code = this.badgeCodeByPointsMap?.get(this.points);
+      if (code) {       
+        this.badgeService.saveBadge(code).subscribe();
       }
 
       this.router.navigate(['/test-result']);
