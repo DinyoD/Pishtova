@@ -54,7 +54,7 @@ namespace Pishtova.Data
 
         public DbSet<Work> Works { get; set; }
 
-
+        public DbSet<Test> Tests { get; set; }
 
         public override int SaveChanges()
         {

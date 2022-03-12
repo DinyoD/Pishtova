@@ -6,7 +6,7 @@
 
     using Pishtova.Data.Common.Model;
 
-    public class Badge : BaseDeletableModel<string>
+    public class Badge: BaseDeletableModel<string>
     {
         public Badge()
         {

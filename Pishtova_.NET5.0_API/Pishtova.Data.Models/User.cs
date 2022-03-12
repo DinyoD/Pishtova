@@ -20,6 +20,7 @@
             this.UserScores = new HashSet<Score>();
             this.UserBadges = new HashSet<UserBadge>();
             this.UserGroups = new HashSet<UserGroup>();
+            this.UserTest = new HashSet<Test>();
         }
 
         [Required]
@@ -41,6 +42,7 @@
 
         public virtual ICollection<UserGroup> UserGroups { get; set; }
 
+        public virtual ICollection<Test> UserTest { get; set; }
 
         //Deletable entity
         public bool IsDeleted { get; set; }

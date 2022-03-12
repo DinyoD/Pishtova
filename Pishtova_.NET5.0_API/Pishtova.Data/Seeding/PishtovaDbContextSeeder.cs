@@ -23,7 +23,8 @@
                               new SchoolsSeeder(),
                               new SubjectsSeeder(),
                               new AuthorsSeeder(),
-                              new BadgesSeeder()
+                              new BadgesSeeder(),
+                              //new UsersBadgesSeeder()
                           };
 
             foreach (var seeder in seeders)

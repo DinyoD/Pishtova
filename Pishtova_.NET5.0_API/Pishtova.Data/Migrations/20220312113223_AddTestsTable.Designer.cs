@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pishtova.Data;
 
 namespace Pishtova.Data.Migrations
 {
     [DbContext(typeof(PishtovaDbContext))]
-    partial class PishtovaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220312113223_AddTestsTable")]
+    partial class AddTestsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -665,31 +667,12 @@ namespace Pishtova.Data.Migrations
                     b.Property<string>("BadgeId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BadgeId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("TestId");
 
                     b.HasIndex("UserId");
 
@@ -913,19 +896,11 @@ namespace Pishtova.Data.Migrations
                         .WithMany("UserBadges")
                         .HasForeignKey("BadgeId");
 
-                    b.HasOne("Pishtova.Data.Model.Test", "Test")
-                        .WithMany("Badges")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Pishtova.Data.Model.User", "User")
                         .WithMany("UserBadges")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Badge");
-
-                    b.Navigation("Test");
 
                     b.Navigation("User");
                 });
@@ -1004,11 +979,6 @@ namespace Pishtova.Data.Migrations
                     b.Navigation("Problems");
 
                     b.Navigation("Scores");
-                });
-
-            modelBuilder.Entity("Pishtova.Data.Model.Test", b =>
-                {
-                    b.Navigation("Badges");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.Town", b =>
