@@ -27,16 +27,16 @@
 
         [HttpPost]
         [Route(nameof(Save))]
-        public async Task<IActionResult> Save([FromBody] int badgeCode)
+        public async Task<IActionResult> Save([FromBody] int code)
         {
-            if (badgeCode == 0)
+            if (code == 0)
             {
                 return StatusCode(400, new ErrorResult { Message = "The request body is empty" });
             }
             try
             {
                 var userId = this.userService.GetUserId(User);
-                var badge = await this.badgeService.GetBadgeByCodeAsync(badgeCode);
+                var badge = await this.badgeService.GetBadgeByCodeAsync(code);
                 await this.usersBadgesService.CreateUserBadgeAsync(userId, badge.Id);
                 return StatusCode(201);
             }
