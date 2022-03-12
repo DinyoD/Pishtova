@@ -153,6 +153,11 @@ $badgeFontSize: calc(((100vh / 15 * 12) * 0.3) * 0.15);
           color: rgba($black, 0.8);
         }
       }
+      .badge-count {
+        text-align: center;
+        color: rgba($black, 0.8);
+        font-weight: bolder;
+      }
       .info {
         display: flex;
         flex-direction: column;
@@ -174,6 +179,12 @@ $badgeFontSize: calc(((100vh / 15 * 12) * 0.3) * 0.15);
           margin: 5px;
           text-align: center;
         }
+      }
+    }
+    .content-part.percent-badge-part {
+      align-items: flex-start;
+      .badge {
+        margin-top: 8px;
       }
     }
   }

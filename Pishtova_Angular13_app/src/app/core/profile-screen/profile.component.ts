@@ -106,9 +106,14 @@ export class ProfileComponent implements OnInit {
         });
   }
 
-  public badgeIsOwned = (code: number): boolean => {
-    return  this.badges?.find(x => x.code == code) != undefined ? true : false;
+  public badgeCount = (code: number): number => {
+    const badgeModel =this.badges?.find(x => x.code == code);
+    return  badgeModel == undefined 
+                ? 0 
+                : badgeModel.count;
   }
+
+  public badgeIsOwned = (code: number): boolean => { return this.badgeCount(code) > 0}
 
   private changeProfileInfo = (name: string, grade: number, schoolId: number): void =>  {
     
