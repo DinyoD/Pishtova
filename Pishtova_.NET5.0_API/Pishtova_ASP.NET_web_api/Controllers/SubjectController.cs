@@ -40,7 +40,7 @@
         }
 
         [HttpGet]
-        [Route("{id}/ranking")]
+        [Route("{id}/[action]")]
         public async Task<ActionResult<SubjectRankingByScores>> Ranking(int id)
         {
             return await this.scoreService.GetUsersScoreBySubjectIdAsync(id);

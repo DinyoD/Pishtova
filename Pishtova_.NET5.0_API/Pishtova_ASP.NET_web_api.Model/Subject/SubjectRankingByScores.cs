@@ -7,8 +7,8 @@
     {
         public SubjectRankingByScores()
         {
-            this.UsersPointsForSubject = new HashSet<UserPointsForSubject>();
+            this.UsersPointsForSubject = new HashSet<UserPointsForSubjectModel>();
         }
-        public ICollection<UserPointsForSubject> UsersPointsForSubject { get; set; }
+        public ICollection<UserPointsForSubjectModel> UsersPointsForSubject { get; set; }
     }
 }

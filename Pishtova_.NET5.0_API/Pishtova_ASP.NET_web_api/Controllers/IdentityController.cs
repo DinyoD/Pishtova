@@ -37,7 +37,8 @@
         }
 
         // TODO Implement Pishtova status-code
-        [Route(nameof(Register))]
+        [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> Register([FromBody] RegisterUserModel model)
         {
             if (model == null)
@@ -65,8 +66,8 @@
             return StatusCode(201);
         }
 
-
-        [Route(nameof(Login))]
+        [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginUserModel model)
         {
             var user = await this.userManager.FindByEmailAsync(model.Email);
@@ -108,7 +109,8 @@
             return StatusCode(200, new LoginResult { Token = tokenHandler.WriteToken(token) });
         }
 
-        [HttpGet(nameof(EmailConfirmation))]
+        [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -126,7 +128,8 @@
             return StatusCode(200);
         }
 
-        [HttpPost(nameof(ForgotPassword))]
+        [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
             var user = await userManager.FindByEmailAsync(model.Email);
@@ -141,7 +144,8 @@
             return StatusCode(200);
         }
 
-        [HttpPost(nameof(ResetPassword))]
+        [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
         {
             var user = await userManager.FindByEmailAsync(model.Email);

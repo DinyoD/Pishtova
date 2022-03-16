@@ -20,7 +20,7 @@
         }
 
         [HttpGet]
-        [Route(nameof(GetProfile))]
+        [Route("[action]")]
         public ActionResult<UserModel> GetProfile()
         {
             try
@@ -35,7 +35,7 @@
         }
 
         [HttpPut]
-        [Route(nameof(UpdatePictureUrl))]
+        [Route("[action]")]
         public async Task<IActionResult> UpdatePictureUrl([FromBody] UserUpdatePictureUrlModel model)
         {
 
@@ -57,7 +57,7 @@
         }
 
         [HttpPut]
-        [Route(nameof(UpdateUserInfo))]
+        [Route("[action]")]
         public async Task<IActionResult> UpdateUserInfo([FromBody] UserUpdateInfoModel model)
         {
 
@@ -79,7 +79,7 @@
         }
 
         [HttpPut]
-        [Route(nameof(UpdateUserEmail))]
+        [Route("[action]")]
         public async Task<IActionResult> UpdateUserEmail([FromBody] UserChangeEmailModel model)
         {
             if (model == null)

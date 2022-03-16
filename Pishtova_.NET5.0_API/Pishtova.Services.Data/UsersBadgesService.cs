@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Pishtova.Data;
     using Pishtova.Data.Model;
+    using Pishtova_ASP.NET_web_api.Model.UserBadge;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -17,9 +18,9 @@
         }
 
 
-        public async Task CreateUserBadgeAsync(string userId, string badgeId)
+        public async Task CreateUserBadgeAsync(UserBadgeModel model)
         {
-            await this.db.UsersBadges.AddAsync(new UserBadge { UserId = userId, BadgeId = badgeId });
+            await this.db.UsersBadges.AddAsync(new UserBadge { UserId = model.UserId, BadgeId = model.BadgeId, TestId = model.TestId });
         }
 
         public async Task<ICollection<UserBadge>> GetUserAllBadgesAsync (string userId)

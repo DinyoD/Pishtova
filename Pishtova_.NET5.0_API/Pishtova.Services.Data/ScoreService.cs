@@ -42,7 +42,7 @@
                 var user = result.UsersPointsForSubject.FirstOrDefault(x=>x.UserId == score.UserId);
                 if (user == null)
                 {
-                    user = new UserPointsForSubject { 
+                    user = new UserPointsForSubjectModel { 
                         UserName = score.User.Name,
                         UserId = score.UserId,
                         Points = 0,
