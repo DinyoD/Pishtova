@@ -1,5 +1,5 @@
 
-export class Badges{
+export class BadgesCode{
     public readonly codeByPoints: Map<number,number> = new Map([
         [14, 1070],
         [15, 1070],

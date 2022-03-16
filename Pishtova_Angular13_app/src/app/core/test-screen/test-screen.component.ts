@@ -7,7 +7,8 @@ import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
 import { ProblemService, PointsService, TestService, BadgesService } from 'src/app/services'
 import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Badges } from 'src/app/resource/badgesCode';
+import { BadgesCode } from 'src/app/resource/badgesCode';
+import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
 
 @Component({
   selector: 'app-test-screen',
@@ -49,7 +50,7 @@ export class TestScreenComponent implements OnInit {
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
       });
-      this.badgeCodeByPointsMap = new Badges().codeByPoints;
+      this.badgeCodeByPointsMap = new BadgesCode().codeByPoints;
     }
     
     chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number){
@@ -93,24 +94,24 @@ export class TestScreenComponent implements OnInit {
       if (!this.someAnswerIsClicked) {
         return;
       }
-      //this.store.dispatch(new StateActions.SetTestProblems(this.problemNumber + 1));
       this.problemNumber += 1;
       this.someAnswerIsClicked = false;    
     }
 
     finishTest(){
-      if (!this.someAnswerIsClicked) {
+      if (!this.someAnswerIsClicked || !this.subjectId) {
         return;
       }
-
-      if (this.subjectId) {       
-        this.testService.saveTest(this.subjectId).subscribe();
-      }
-
-      const code = this.badgeCodeByPointsMap?.get(this.points);
-      if (code) {       
-        this.badgeService.saveBadge(code).subscribe();
-      }
+    
+      this.testService.saveTest(this.subjectId).subscribe( (res: ISaveTestResult) => {
+        const code = this.badgeCodeByPointsMap?.get(this.points);
+        console.log(code);
+        
+        if (code) {       
+          this.badgeService.saveBadge(code, res.testId).subscribe(
+            (a) => console.log(a) );
+        }
+      } );
 
       this.router.navigate(['/test-result']);
     }

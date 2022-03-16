@@ -1,3 +1,4 @@
 export interface BadgeModel {
-    code: number
+    code: number;
+    testId: number;
 }

@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment as env } from '../../../environments/environment';
 import { StorageService } from '..';
 import { SubjectBaseModel } from 'src/app/models/subject/subjectBase';
+import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,8 @@ export class TestService {
     private httpClient: HttpClient) { }
 
 
-  public saveTest = (subjectId: number): Observable<Object> => {
-    const model: SubjectBaseModel = { id : subjectId}
-    return this.httpClient.post(env.API_URL + `/tests/save`, model)
+  public saveTest = (subjectId: number): Observable<ISaveTestResult> => {
+    return this.httpClient.post<ISaveTestResult>(env.API_URL + `/tests/save`, subjectId);
   }
 
   public sendInTestStateChangeNotification = (inTest: boolean): void => {

@@ -15,11 +15,11 @@ export class BadgesService {
     private httpClient: HttpClient ) { }
 
   public getUserBadges = (userId?: string): Observable<UserBadgesModel> => {
-    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/badges/${userId}`)
+    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/all/${userId}`)
   }
 
-  public saveBadge = (code: number): Observable<Object> => {
-    const model: BadgeModel = {code: code}
-    return this.httpClient.post(env.API_URL + `/badges/save`, model)
+  public saveBadge = (code: number, testId: number): Observable<Object> => {
+    const model: BadgeModel = {code: code, testId: testId}
+    return this.httpClient.post(env.API_URL + `/userbadges/save`, model)
   }
 }
