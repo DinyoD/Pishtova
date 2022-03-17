@@ -5,5 +5,7 @@
     public interface ITestService
     {
         Task<int> CreateTestAsync(string userId, int subjectId);
+
+        int GetUserTestCount(string userId);
     }
 }
