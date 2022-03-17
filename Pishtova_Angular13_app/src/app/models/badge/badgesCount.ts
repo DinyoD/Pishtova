@@ -1,5 +1,5 @@
-import { BadgeModel } from "./badge";
 
-export interface BadgesCountModel extends BadgeModel{
+export interface BadgesCountModel {
     count: number;
+    code: number;
 }

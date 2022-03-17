@@ -2,7 +2,7 @@
   <div class="authors-frame">
     <div class="author" [ngClass]="{'active': selectedAuthorIndex == a.index}" (click)="chooseAuthor(a)"
       *ngFor="let a of authors">
-      <img class="pic" src="{{authorsPics[a.index]}}" alt="">
+      <img class="pic" src="{{authorPicLinks[a.index]}}" alt="">
       <p class="name">{{a.name}}</p>
     </div>
   </div>
@@ -21,7 +21,7 @@
     <div *ngIf="showButton" class="btn-container">
       <div class="btn" [ngClass]="{'active': selectedButton == 'text'}" (click)="handlerTextBtn()">
         <span *ngIf="workIndex == 0">част 1</span>
-        <span *ngIf="workIndex != 0">текс</span>
+        <span *ngIf="workIndex != 0">текст</span>
       </div>
       <div class="btn" [ngClass]="{'active': selectedButton == 'analize'}" (click)="handlerAnaliseBtn()">
         <span *ngIf="workIndex == 0">част 2</span>

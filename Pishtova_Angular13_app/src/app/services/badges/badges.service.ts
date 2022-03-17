@@ -19,7 +19,7 @@ export class BadgesService {
   }
 
   public saveBadge = (code: number, testId: number): Observable<Object> => {
-    const model: BadgeModel = {code: code, testId: testId}
+    const model: BadgeModel = {badgeCode: code, testId: testId}
     return this.httpClient.post(env.API_URL + `/userbadges/save`, model)
   }
 }

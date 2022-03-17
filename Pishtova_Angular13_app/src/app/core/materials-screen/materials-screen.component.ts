@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AuthorModel } from 'src/app/models/author';
 import { WorkModel } from 'src/app/models/work';
-import { Authors } from 'src/app/resource/authors';
+import { getAuthorPictureLinksCollection } from 'src/app/resource/data';
 import { MaterialsService } from 'src/app/services/materials/materials.service';
 
 const comingSoonUrl: string = 'src/app/core/materials-screen/coming-soon-page.html';
@@ -31,7 +31,7 @@ export class MaterialsScreenComponent implements OnInit {
   public selectedAuthorIndex: number|null = null;
   public workIndex: number|null = null;
   public selectedWorkIndex: number|null = null;
-  public authorsPics: string[] =[];
+  public authorPicLinks: string[] =[];
 
   public showButton: boolean = false;
 
@@ -44,10 +44,10 @@ export class MaterialsScreenComponent implements OnInit {
     private materialsService: MaterialsService,
     private actRoute: ActivatedRoute,) { }
 
-  ngOnInit(): void {
-    this.authorsPics = new Authors().pictures;
+  ngOnInit(): void {;
     const urlId = Number(this.actRoute.snapshot.paramMap.get('id'));
-    this.materialsService.getAuthorsWithWorks(urlId).subscribe( a => this.authors = a.sort((x,y) => x.index - y.index))
+    this.materialsService.getAuthorsWithWorks(urlId).subscribe( a => this.authors = a.sort((x,y) => x.index - y.index));
+    this.authorPicLinks = getAuthorPictureLinksCollection();
   }
 
   public chooseAuthor = (author: AuthorModel): void => {

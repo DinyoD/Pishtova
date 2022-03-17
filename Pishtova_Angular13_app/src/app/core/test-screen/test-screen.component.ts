@@ -7,7 +7,7 @@ import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
 import { ProblemService, PointsService, TestService, BadgesService } from 'src/app/services'
 import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { BadgesCode } from 'src/app/resource/badgesCode';
+import { getBadgeCodeByPoints } from 'src/app/resource/data';
 import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
 
 @Component({
@@ -25,7 +25,6 @@ export class TestScreenComponent implements OnInit {
   public someAnswerIsClicked: boolean = false;
   public selectedAnswerId: string|null = null
   public points: number = 0;
-  public badgeCodeByPointsMap : Map<number,number>| null = null;
   public maxScore: number = 20;
 
   constructor(
@@ -50,7 +49,6 @@ export class TestScreenComponent implements OnInit {
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
       });
-      this.badgeCodeByPointsMap = new BadgesCode().codeByPoints;
     }
     
     chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number){
@@ -102,14 +100,10 @@ export class TestScreenComponent implements OnInit {
       if (!this.someAnswerIsClicked || !this.subjectId) {
         return;
       }
-    
-      this.testService.saveTest(this.subjectId).subscribe( (res: ISaveTestResult) => {
-        const code = this.badgeCodeByPointsMap?.get(this.points);
-        console.log(code);
-        
-        if (code) {       
-          this.badgeService.saveBadge(code, res.testId).subscribe(
-            (a) => console.log(a) );
+      this.testService.saveTest(this.subjectId).subscribe( (res: ISaveTestResult) => {          
+        const code = getBadgeCodeByPoints().get(this.points);
+        if (code) {
+          this.badgeService.saveBadge(code, res.testId).subscribe();
         }
       } );
 
