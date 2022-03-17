@@ -5,6 +5,6 @@
 
     public interface IBadgeService
     {
-        Task<Badge> GetBadgeByCodeAsync(int badgeCode);
+        Task<string> GetBadgeIdByCodeAsync(int badgeCode);
     }
 }

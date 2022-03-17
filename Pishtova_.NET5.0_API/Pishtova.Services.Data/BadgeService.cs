@@ -14,9 +14,10 @@
         {
             this.db = db;
         }
-        public async Task<Badge> GetBadgeByCodeAsync(int badgeCode)
+        public async Task<string> GetBadgeIdByCodeAsync(int badgeCode)
         {
-            return await this.db.Badges.Where(x => x.Code == badgeCode).FirstOrDefaultAsync();
+            var badge = await this.db.Badges.Where(x => x.Code == badgeCode).FirstOrDefaultAsync();
+            return badge.Id;
         }
     }
 }

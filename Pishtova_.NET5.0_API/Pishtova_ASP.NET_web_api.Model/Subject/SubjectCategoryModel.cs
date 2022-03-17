@@ -8,6 +8,6 @@
 
         public string Name { get; set; }
 
-        public SubjectModel Subject { get; set; }
+        public SubjectDTO Subject { get; set; }
     }
 }

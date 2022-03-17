@@ -1,6 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.Identity
 {
-    public class ResetPasswordModel
+    public class ResetPasswordDTO
     {
         public string Token { get; set; }
         public string Email { get; set; }

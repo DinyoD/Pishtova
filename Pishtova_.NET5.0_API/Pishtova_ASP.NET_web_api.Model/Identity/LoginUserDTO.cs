@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class LoginUserModel
+    public class LoginUserDTO
     {
         [Required]
         public string Email { get; set; }

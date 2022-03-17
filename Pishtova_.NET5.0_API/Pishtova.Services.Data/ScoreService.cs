@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Pishtova.Data;
     using Pishtova.Data.Model;
+    using Pishtova_ASP.NET_web_api.Model.Score;
     using Pishtova_ASP.NET_web_api.Model.Subject;
     using Pishtova_ASP.NET_web_api.Model.User;
     using System.Collections.Generic;
@@ -18,13 +19,19 @@
             this.db = db;
         }
 
-        public async Task SaveScoreInDbAsync(Score score)
+        public async Task SaveScoreInDbAsync(ScoreModel model)
         {
+            var score = new Score
+            {
+                UserId = model.UserId,
+                SubjectCategoryId = model.SubjectCategoryId,
+                Points = model.Points
+            };
             await this.db.Scores.AddAsync(score);
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<SubjectRankingByScores> GetUsersScoreBySubjectIdAsync(int subjectId)
+        public async Task<SubjectRankingByScoresModel> GetUsersScoreBySubjectIdAsync(int subjectId)
         {
             var scoresForSubject =  await this.db.Scores
                 .Include(x => x.SubjectCategory)
@@ -34,9 +41,9 @@
             return this.aggreteUsersInfo(scoresForSubject);
         }
 
-        private SubjectRankingByScores aggreteUsersInfo(List<Score> scoresForSubject)
+        private SubjectRankingByScoresModel aggreteUsersInfo(List<Score> scoresForSubject)
         {
-            var result = new SubjectRankingByScores();
+            var result = new SubjectRankingByScoresModel();
             foreach (var score in scoresForSubject)
             {
                 var user = result.UsersPointsForSubject.FirstOrDefault(x=>x.UserId == score.UserId);

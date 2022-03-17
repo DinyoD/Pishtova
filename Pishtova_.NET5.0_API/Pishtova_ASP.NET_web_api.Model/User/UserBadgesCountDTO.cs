@@ -2,9 +2,9 @@
 
 namespace Pishtova_ASP.NET_web_api.Model.User
 {
-    public class UserBadgesCountModel
+    public class UserBadgesCountDTO
     {
-        public UserBadgesCountModel()
+        public UserBadgesCountDTO()
         {
             this.Badges = new HashSet<BadgeCountModel>();
         }

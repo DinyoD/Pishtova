@@ -1,15 +1,15 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Pishtova.Data.Model;
+    using Pishtova_ASP.NET_web_api.Model.Score;
     using Pishtova_ASP.NET_web_api.Model.Subject;
     using System.Threading.Tasks;
 
     public interface IScoreService 
     { 
   
-        Task SaveScoreInDbAsync(Score score);
+        Task SaveScoreInDbAsync(ScoreModel model);
 
-        Task<SubjectRankingByScores> GetUsersScoreBySubjectIdAsync (int subjectId);
+        Task<SubjectRankingByScoresModel> GetUsersScoreBySubjectIdAsync (int subjectId);
     }
 
 }

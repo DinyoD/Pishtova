@@ -6,6 +6,6 @@
 
     public interface IProblemService
     {
-        Task<ICollection<ProblemModel>> GenerateTest(List<int> testPattern);
+        Task<ICollection<ProblemDTO>> GenerateTest(List<int> testPattern);
     }
 }

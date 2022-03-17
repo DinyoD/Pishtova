@@ -2,7 +2,7 @@
 {
     using Pishtova_ASP.NET_web_api.Model.Answer;
     using System.Collections.Generic;
-    public class ProblemModel
+    public class ProblemDTO
     {
         public string Id { get; set; }
 

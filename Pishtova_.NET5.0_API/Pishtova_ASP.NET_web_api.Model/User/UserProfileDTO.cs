@@ -3,7 +3,7 @@
     using Pishtova_ASP.NET_web_api.Model.School;
     using System.Collections.Generic;
 
-    public class UserModel: UserBaseModel
+    public class UserProfileDTO: UserBaseModel
     {
         public string Id { get; set; }
 

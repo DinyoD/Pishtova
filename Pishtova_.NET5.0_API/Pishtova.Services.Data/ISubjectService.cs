@@ -6,8 +6,8 @@
 
     public interface ISubjectService
     {
-        Task<ICollection<SubjectModel>> GetAll();
+        Task<ICollection<SubjectDTO>> GetAll();
 
-        Task<SubjectModel> GetOneById(int id);
+        Task<SubjectDTO> GetOneById(int id);
     }
 }

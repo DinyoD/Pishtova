@@ -23,9 +23,9 @@
 
         [HttpPost]
         [Route(nameof(Save))]
-        public async Task<IActionResult> Save([FromBody] AddScoreModel  scoreModel)
+        public async Task<IActionResult> Save([FromBody] ScoreDTO data)
         {
-            if (scoreModel == null)
+            if (data == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "The request body is empty" });
             }
@@ -34,11 +34,11 @@
             {
                 return StatusCode(400, new ErrorResult { Message = "Unauthorized request" });
             }
-            var score = new Score
+            var score = new ScoreModel
             {
                 UserId = userId,
-                SubjectCategoryId = scoreModel.SubjectCategoryId,
-                Points = scoreModel.Points
+                SubjectCategoryId = data.SubjectCategoryId,
+                Points = data.Points
             };
             await this.scoreService.SaveScoreInDbAsync(score);
             return StatusCode(201);

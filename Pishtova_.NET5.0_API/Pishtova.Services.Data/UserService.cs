@@ -28,12 +28,12 @@
             this.emailSender = emailSender;
         }
 
-        public UserModel GetProfileInfo(string userId)
+        public UserProfileDTO GetProfileInfo(string userId)
         {
             var profile =  this.db.Users
                 .Where(x => x.Id == userId)
                 .Include(x => x.UserScores).ThenInclude(x => x.SubjectCategory).ThenInclude(x => x.Subject)
-                .Select(u => new UserModel
+                .Select(u => new UserProfileDTO
                 {
                     Id = u.Id,
                     Email = u.Email,
@@ -64,7 +64,7 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<User> UpdateUserInfo(string userId, UserUpdateInfoModel model)
+        public async Task UpdateUserInfo(string userId, UserInfoDTO model)
         {
             var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
 
@@ -73,11 +73,9 @@
             dbUser.Grade = model.Grade;
             dbUser.SchoolId = model.SchoolId;
             await this.db.SaveChangesAsync();
-
-            return dbUser;
         }
 
-        public async Task<User> UpdateUserEmail(string userId, UserChangeEmailModel model)
+        public async Task<User> UpdateUserEmail(string userId, UserChangeEmailDTO model)
         {
             var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
             if (dbUser.NormalizedEmail != model.Email.ToUpper())
@@ -95,7 +93,6 @@
 
         public async Task SendEmailConfirmationTokenAsync(string clientURI, string email, string token)
         {
-            //var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
             var param = new Dictionary<string, string>
                             {
                                 {"token", token },

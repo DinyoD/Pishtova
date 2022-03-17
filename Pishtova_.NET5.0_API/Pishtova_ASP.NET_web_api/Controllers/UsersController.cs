@@ -21,7 +21,7 @@
 
         [HttpGet]
         [Route("[action]")]
-        public ActionResult<UserModel> GetProfile()
+        public ActionResult<UserProfileDTO> GetProfile()
         {
             try
             {
@@ -36,10 +36,10 @@
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdatePictureUrl([FromBody] UserUpdatePictureUrlModel model)
+        public async Task<IActionResult> UpdatePictureUrl([FromBody] UserPictureDTO data)
         {
 
-            if (string.IsNullOrEmpty(model.PictureUrl))
+            if (string.IsNullOrEmpty(data.PictureUrl))
             {
                 return StatusCode(400, new ErrorResult { Message = "Uncorrect pictureUrl" });
             }
@@ -47,7 +47,7 @@
             try
             {
                 var userId = this.userService.GetUserId(User);
-                await this.userService.UpdateUserAvatar(userId, model.PictureUrl);
+                await this.userService.UpdateUserAvatar(userId, data.PictureUrl);
                 return StatusCode(204);
             }
             catch
@@ -58,10 +58,10 @@
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdateUserInfo([FromBody] UserUpdateInfoModel model)
+        public async Task<IActionResult> UpdateUserInfo([FromBody] UserInfoDTO data)
         {
 
-            if (model == null)
+            if (data == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "Uncorrect model" });
             }
@@ -69,7 +69,7 @@
             try
             {
                 var userId = this.userService.GetUserId(User);
-                var user = await this.userService.UpdateUserInfo(userId, model);
+                await this.userService.UpdateUserInfo(userId, data);
                 return StatusCode(204);
             }
             catch
@@ -80,9 +80,9 @@
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdateUserEmail([FromBody] UserChangeEmailModel model)
+        public async Task<IActionResult> UpdateUserEmail([FromBody] UserChangeEmailDTO data)
         {
-            if (model == null)
+            if (data == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "Uncorrect model" });
             }
@@ -90,9 +90,9 @@
             try
             {
                 var userId = this.userService.GetUserId(User);
-                var user = await this.userService.UpdateUserEmail(userId, model);
+                var user = await this.userService.UpdateUserEmail(userId, data);
                 var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-                await this.userService.SendEmailConfirmationTokenAsync(model.ClientURI, user.Email, token);
+                await this.userService.SendEmailConfirmationTokenAsync(data.ClientURI, user.Email, token);
                 return StatusCode(204);
             }
             catch

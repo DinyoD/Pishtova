@@ -20,13 +20,13 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public async Task<ICollection<ProblemModel>> generateTest(int id)
+        public async Task<ICollection<ProblemDTO>> generateTest(int id)
         {
             var testPattern = new Pattern().ProblemsSubjectIDs[id];
             var result = await this.problemService.GenerateTest(testPattern);
             if (result == null)
             {
-                return (ICollection<ProblemModel>)BadRequest(new ErrorResult { Message = "Uncorrect Subject ID!" });
+                return (ICollection<ProblemDTO>)BadRequest(new ErrorResult { Message = "Uncorrect Subject ID!" });
             }
             return result;
         }

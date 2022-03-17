@@ -17,9 +17,9 @@
         {
             this.db = db;
         }
-        public async Task<ICollection<ProblemModel>> GenerateTest(List<int> testPattern)
+        public async Task<ICollection<ProblemDTO>> GenerateTest(List<int> testPattern)
         {
-            var result = new List<ProblemModel>();
+            var result = new List<ProblemDTO>();
 
             foreach (var catId in testPattern)
             {
@@ -35,12 +35,12 @@
             return result;
         }
 
-        private async Task<ProblemModel> getRandomProblem(int catId, int randomIndex)
+        private async Task<ProblemDTO> getRandomProblem(int catId, int randomIndex)
         {
             return await this.db.Problems
                 .Where(x => x.SubjectCategoryId == catId)
                 .Skip(randomIndex)
-                .Select(x => new ProblemModel
+                .Select(x => new ProblemDTO
                 {
                     Id = x.Id,
                     PictureUrl = x.PictureUrl == "empty" ? null : x.PictureUrl,

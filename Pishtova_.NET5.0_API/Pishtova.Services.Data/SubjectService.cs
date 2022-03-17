@@ -18,14 +18,14 @@
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<ICollection<SubjectModel>> GetAll()
+        public async Task<ICollection<SubjectDTO>> GetAll()
         {
-            return await this.db.Subjects.Select(x=> new SubjectModel { Id = x.Id, Name = x.Name }).ToListAsync();
+            return await this.db.Subjects.Select(x=> new SubjectDTO { Id = x.Id, Name = x.Name }).ToListAsync();
         }
 
-        public async Task<SubjectModel> GetOneById(int id)
+        public async Task<SubjectDTO> GetOneById(int id)
         {
-            return await this.db.Subjects.Where(x => x.Id == id).Select(x => new SubjectModel { Id = x.Id, Name = x.Name }).FirstOrDefaultAsync();
+            return await this.db.Subjects.Where(x => x.Id == id).Select(x => new SubjectDTO { Id = x.Id, Name = x.Name }).FirstOrDefaultAsync();
         }
     }
 }

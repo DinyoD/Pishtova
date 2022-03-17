@@ -20,7 +20,7 @@
 
         [HttpGet]
         [Route("[action]/{municipalityId}")]
-        public async Task<ICollection<TownModel>> ByMunicipality(int municipalityId)
+        public async Task<ICollection<TownDTO>> ByMunicipality(int municipalityId)
         {
             return await this.townService.GetAllByMunicipalityId(municipalityId);
         }

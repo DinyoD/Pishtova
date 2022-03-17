@@ -27,11 +27,11 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<ICollection<SchoolForRegistrationModel>> GetAllByTownId(int townId)
+        public async Task<ICollection<SchoolForRegistrationDTO>> GetAllByTownId(int townId)
         {
             return await this.db.Schools
                 .Where(x => x.TownId == townId)
-                .Select(x => new SchoolForRegistrationModel
+                .Select(x => new SchoolForRegistrationDTO
                 {
                     Id = x.Id,
                     Name = x.Name,

@@ -22,14 +22,14 @@
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<ICollection<SubjectModel>> All()
+        public async Task<ICollection<SubjectDTO>> All()
         {
             return await this.subjectService.GetAll();
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<SubjectModel>> GetOneById(int id)
+        public async Task<ActionResult<SubjectDTO>> GetOneById(int id)
         {
             var result = await this.subjectService.GetOneById(id);
             if (result == null)
@@ -41,7 +41,7 @@
 
         [HttpGet]
         [Route("{id}/[action]")]
-        public async Task<ActionResult<SubjectRankingByScores>> Ranking(int id)
+        public async Task<ActionResult<SubjectRankingByScoresModel>> Ranking(int id)
         {
             return await this.scoreService.GetUsersScoreBySubjectIdAsync(id);
             

@@ -15,11 +15,11 @@
             this.db = db ?? throw new System.ArgumentNullException(nameof(db));
         }
 
-        public List<AuthorModel> GetAuthorsWithWorks(int subjectId)
+        public List<AuthorDTO> GetAuthorsWithWorks(int subjectId)
         {
             return this.db.Authors
                 .Where(x => x.Works.Any(w => w.SubjectId == subjectId))
-                .Select(x => new AuthorModel
+                .Select(x => new AuthorDTO
                 {
                     Name = x.Name,
                     Index = x.Index,

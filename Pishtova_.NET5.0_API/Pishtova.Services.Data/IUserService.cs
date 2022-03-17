@@ -10,13 +10,13 @@
     {
         string GetUserId(ClaimsPrincipal user);
 
-        UserModel GetProfileInfo(string userId);
+        UserProfileDTO GetProfileInfo(string userId);
 
         Task UpdateUserAvatar(string userId, string pictureUrl);
 
-        Task<User> UpdateUserInfo(string userId, UserUpdateInfoModel model);
+        Task UpdateUserInfo(string userId, UserInfoDTO model);
 
-        Task<User> UpdateUserEmail(string userId, UserChangeEmailModel model);
+        Task<User> UpdateUserEmail(string userId, UserChangeEmailDTO model);
 
         Task SendEmailConfirmationTokenAsync(string clientURI, string email, string token);
 

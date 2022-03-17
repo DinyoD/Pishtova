@@ -8,6 +8,6 @@
     {
         Task<int> CreateAsync(string name, int municipalityId);
 
-        Task<ICollection<TownModel>> GetAllByMunicipalityId(int municipalityId);
+        Task<ICollection<TownDTO>> GetAllByMunicipalityId(int municipalityId);
     }
 }

@@ -18,7 +18,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<ICollection<MunicipalityModel>> All()
+        public async Task<ICollection<MunicipalityDTO>> All()
         {
             var result =await municipalityService.GetAllAsync();
             return result;

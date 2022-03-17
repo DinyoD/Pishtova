@@ -39,38 +39,38 @@
         // TODO Implement Pishtova status-code
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDTO data)
         {
-            if (model == null)
+            if (data == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "The form is not fulfilled correctly!" });
             }
             var user = new User
             {
-                Name = model.Name,
-                Email = model.Email,
-                UserName = model.Email,
-                Grade = model.Grade,
-                SchoolId = model.SchoolId
+                Name = data.Name,
+                Email = data.Email,
+                UserName = data.Email,
+                Grade = data.Grade,
+                SchoolId = data.SchoolId
             };
 
-            var result = await this.userManager.CreateAsync(user, model.Password);
+            var result = await this.userManager.CreateAsync(user, data.Password);
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(x => x.Description).ToList();
                 return StatusCode(400, new ErrorResult { Message = errors[0] });
             }
             var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-            await this.userService.SendEmailConfirmationTokenAsync(model.ClientURI, model.Email, token);
+            await this.userService.SendEmailConfirmationTokenAsync(data.ClientURI, data.Email, token);
 
             return StatusCode(201);
         }
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Login([FromBody] LoginUserModel model)
+        public async Task<IActionResult> Login([FromBody] LoginUserDTO data)
         {
-            var user = await this.userManager.FindByEmailAsync(model.Email);
+            var user = await this.userManager.FindByEmailAsync(data.Email);
 
             if (user == null)
             {
@@ -82,7 +82,7 @@
                 return StatusCode(401, new ErrorResult { Message = "Sorry, your email is not confirmed" });
             }
 
-            var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
+            var passwordValid = await this.userManager.CheckPasswordAsync(user, data.Password);
 
             if (!passwordValid)
             {
@@ -130,32 +130,32 @@
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO data)
         {
-            var user = await userManager.FindByEmailAsync(model.Email);
+            var user = await userManager.FindByEmailAsync(data.Email);
             if (user == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "Your email is not correct!" });
             }
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
-            await this.userService.SendResetPaswordTokenAsync(model.ClientURI, model.Email, token);
+            await this.userService.SendResetPaswordTokenAsync(data.ClientURI, data.Email, token);
 
             return StatusCode(200);
         }
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO data)
         {
-            var user = await userManager.FindByEmailAsync(model.Email);
+            var user = await userManager.FindByEmailAsync(data.Email);
 
             if (user == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "Your email is not correct!" });
             }
 
-            var resetPassResult = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            var resetPassResult = await userManager.ResetPasswordAsync(user, data.Token, data.Password);
             if (!resetPassResult.Succeeded)
             {
                 var errors = resetPassResult.Errors.Select(e => e.Description).ToList();

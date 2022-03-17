@@ -5,6 +5,6 @@
 
     public interface IAuthorService
     {
-        List<AuthorModel> GetAuthorsWithWorks(int subjectId);
+        List<AuthorDTO> GetAuthorsWithWorks(int subjectId);
     }
 }

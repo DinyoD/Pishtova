@@ -36,19 +36,19 @@
             return municipality.Id;
         }
 
-        public async Task<ICollection<MunicipalityModel>> GetAllAsync()
+        public async Task<ICollection<MunicipalityDTO>> GetAllAsync()
         {
             return await  this.db.Municipalities
                 .Where<Municipality>(x => x.IsDeleted == false)
-                .Select(x => new MunicipalityModel { Id = x.Id, Name = x.Name })
+                .Select(x => new MunicipalityDTO { Id = x.Id, Name = x.Name })
                 .ToListAsync();
         }
 
-        public async Task<MunicipalityModel> GetOneByIdAsync(int id)
+        public async Task<MunicipalityDTO> GetOneByIdAsync(int id)
         {
             var m =  await this.db.Municipalities
                 .FindAsync(id);
-            return new MunicipalityModel { Id = m.Id, Name = m.Name };
+            return new MunicipalityDTO { Id = m.Id, Name = m.Name };
         }
     }
 }

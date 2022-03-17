@@ -3,7 +3,7 @@
     using Pishtova_ASP.NET_web_api.Model.Work;
     using System.Collections.Generic;
 
-    public class AuthorModel
+    public class AuthorDTO
     {
         public string Name { get; set; }
 

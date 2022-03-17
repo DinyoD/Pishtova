@@ -31,13 +31,13 @@
             return town.Id;
         }
 
-        public async Task<ICollection<TownModel>> GetAllByMunicipalityId(int municipalityId)
+        public async Task<ICollection<TownDTO>> GetAllByMunicipalityId(int municipalityId)
         {
             if (municipalityId == 0) throw new ArgumentNullException(nameof(municipalityId));
 
             return await this.db.Towns
                 .Where(x => x.MunicipalityId == municipalityId)
-                .Select(x => new TownModel{ 
+                .Select(x => new TownDTO{ 
                     Id = x.Id,
                     Name = x.Name,
                     MunicipalityId = x.MunicipalityId

@@ -1,6 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.User
 {
-    public class UserChangeEmailModel
+    public class UserChangeEmailDTO
     {
         public string Email { get; set; }
 

@@ -18,12 +18,12 @@
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public ICollection<AuthorModel> All (int id)
+        public ICollection<AuthorDTO> All (int id)
         {
             var result = this.authorService.GetAuthorsWithWorks(id);
             if (result == null)
             {
-                return (ICollection<AuthorModel>)BadRequest(new ErrorResult { Message = "Uncorrect Subject ID!" });
+                return (ICollection<AuthorDTO>)BadRequest(new ErrorResult { Message = "Uncorrect Subject ID!" });
             }
             return result;
         }

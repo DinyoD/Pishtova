@@ -3,9 +3,9 @@
     using Pishtova_ASP.NET_web_api.Model.User;
     using System.Collections.Generic;
 
-    public class SubjectRankingByScores
+    public class SubjectRankingByScoresModel
     {
-        public SubjectRankingByScores()
+        public SubjectRankingByScoresModel()
         {
             this.UsersPointsForSubject = new HashSet<UserPointsForSubjectModel>();
         }
