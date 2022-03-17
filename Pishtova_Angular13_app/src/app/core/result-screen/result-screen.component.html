@@ -1,17 +1,58 @@
 <div class="container">
-  <img *ngIf="points !=null && points <= 5 " class="icon" src="../../../assets/icons/whiteFlag.svg" alt="">
-  <img *ngIf="points !=null && (points > 5 && points <= 10) " class="icon" src="../../../assets/icons/knife.svg" alt="">
-  <img *ngIf="points !=null && (points > 10 && points <= 15) " class="icon" src="../../../assets/icons/pistol.svg"
-    alt="">
-  <img *ngIf="points !=null && points > 15 " class="icon" src="../../../assets/icons/rifles.svg" alt="">
-
-  <div class="result">
-    <p>Резултатът ти е <span class="points score">{{points}}</span> от възможни <span class="points">20</span> точки.
-    </p>
+  <div class="badge-container">
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(1100)}">
+      <p class="badge-text">100%</p>
+      <p class="badge-text">успех</p>
+    </div>
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(1090)}">
+      <p class="badge-text">90%</p>
+      <p class="badge-text">успех</p>
+    </div>
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(1080)}">
+      <p class="badge-text">80%</p>
+      <p class="badge-text">успех</p>
+    </div>
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(1070)}">
+      <p class="badge-text">70%</p>
+      <p class="badge-text">успех</p>
+    </div>
   </div>
-  <p *ngIf="points !=null && points <= 5 " class="text">Не се предавай!</p>
-  <p *ngIf="points !=null && (points > 5 && points <= 10)" class="text">Не отивай с нож в престрелка!</p>
-  <p *ngIf="points !=null && (points > 10 && points <= 15)" class="text">Добре! Продължавай да гърмиш.</p>
-  <p *ngIf="points!=null && points > 15" class="text">Браво! Пушка си.</p>
-  <a class="text" (click)="generateNewTest()">Пробвай oтново</a>
+
+  <div class="result-container">
+    <img *ngIf="points !=null && points <= 5 " class="icon" src="../../../assets/icons/whiteFlag.svg" alt="">
+    <img *ngIf="points !=null && (points > 5 && points <= 10) " class="icon" src="../../../assets/icons/knife.svg"
+      alt="">
+    <img *ngIf="points !=null && (points > 10 && points <= 15) " class="icon" src="../../../assets/icons/pistol.svg"
+      alt="">
+    <img *ngIf="points !=null && points > 15 " class="icon" src="../../../assets/icons/rifles.svg" alt="">
+
+    <div class="result">
+      <p>Резултатът ти е <span class="points score">{{points}}</span> от възможни <span class="points">20</span> точки.
+      </p>
+    </div>
+    <p *ngIf="points !=null && points <= 5 " class="text">Не се предавай!</p>
+    <p *ngIf="points !=null && (points > 5 && points <= 10)" class="text">Не отивай с нож в престрелка!</p>
+    <p *ngIf="points !=null && (points > 10 && points <= 15)" class="text">Добре! Продължавай да гърмиш.</p>
+    <p *ngIf="points!=null && points > 15" class="text">Браво! Пушка си.</p>
+    <a class="text" (click)="generateNewTest()">Пробвай oтново</a>
+  </div>
+
+  <div class="badge-container">
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(2100)}">
+      <p class="badge-text">100</p>
+      <p class="badge-text">теста</p>
+    </div>
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(2050)}">
+      <p class="badge-text">50</p>
+      <p class="badge-text">теста</p>
+    </div>
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(2020)}">
+      <p class="badge-text">20</p>
+      <p class="badge-text">теста</p>
+    </div>
+    <div class="badge" [ngClass]="{'owned': badgeIsOwned(2010)}">
+      <p class="badge-text">10</p>
+      <p class="badge-text">теста</p>
+    </div>
+  </div>
 </div>

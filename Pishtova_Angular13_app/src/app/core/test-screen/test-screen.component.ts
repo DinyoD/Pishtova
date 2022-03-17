@@ -103,11 +103,14 @@ export class TestScreenComponent implements OnInit {
       this.testService.saveTest(this.subjectId).subscribe( (res: ISaveTestResult) => {          
         const code = getBadgeCodeByPoints().get(this.points);
         if (code) {
-          this.badgeService.saveBadge(code, res.testId).subscribe();
+          this.badgeService.saveBadge(code, res.testId).subscribe(
+            () => this.router.navigate(['/test-result'], {state: {testId: res.testId}})
+          );
+        }else{
+          this.router.navigate(['/test-result'], {state: {testId: res.testId}});
         }
       } );
 
-      this.router.navigate(['/test-result']);
     }
 
   }

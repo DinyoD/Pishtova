@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { PointsService, SubjectService, TestService } from 'src/app/services';
+import { BadgesService, PointsService, SubjectService, TestService } from 'src/app/services';
 
 @Component({
   selector: 'app-result-screen',
@@ -12,8 +12,11 @@ export class ResultScreenComponent implements OnInit {
 
   public points: number|null = null
   public subjectId: number|undefined = undefined;
+  public newBadgesCode: number[]|null = [1070, 2020];
+
   constructor(
     private testService: TestService,
+    private badgesService: BadgesService,
     private pointsService: PointsService,
     private subjectService: SubjectService,
     private router: Router) { }
@@ -22,6 +25,7 @@ export class ResultScreenComponent implements OnInit {
     this.testService.sendInTestStateChangeNotification(false);
     this.points = this.pointsService.gettingPoints();
     this.subjectId = this.subjectService.getCurrentSubject()?.id ;
+    //this.badgesService.getUserBadgesByTestId(history.state.testId).subscribe(res => this.newBadgesCode = res);   
   }
 
   generateNewTest(): void{
@@ -33,4 +37,6 @@ export class ResultScreenComponent implements OnInit {
     }
     this.router.navigate(['/main']);
   }
+
+  public badgeIsOwned = (code: number): boolean => { return this.newBadgesCode?.indexOf(code) != -1}
 }
