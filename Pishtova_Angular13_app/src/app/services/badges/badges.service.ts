@@ -19,7 +19,7 @@ export class BadgesService {
   }
 
   public getUserBadges = (userId?: string): Observable<UserBadgesModel> => {
-    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/all/${userId}`)
+    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/${userId}/all`)
   }
 
   public getUserBadgesByTestId = (testId: number): Observable<number[]> => {

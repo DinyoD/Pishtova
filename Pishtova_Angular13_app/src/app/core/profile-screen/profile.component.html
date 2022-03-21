@@ -82,22 +82,22 @@
         <p class="badge-count" *ngIf="badgeIsOwned(1100)">{{badgeCount(1100)}}</p>
       </div>
     </div>
-    <div *ngIf="profile?.stats != null && subjectDetails == null" class="content-part">
-      <div class="info subject-info " *ngFor="let sbj of profile?.stats?.subjects">
+    <div *ngIf="!showDetails" class="content-part">
+      <div class="info subject-info " *ngFor="let sbj of pointsBySubjects">
         <p class="subject-name">{{sbj.subjectName.toUpperCase()}}</p>
-        <p class="subject-points">{{sbj.subjectAllPoints}} точки</p>
-        <p class="subject-points">{{sbj.subjectAllProblems}} въпроса</p>
-        <a (click)="showDetail(sbj)"><span>детайли</span></a>
+        <p class="subject-points">{{sbj.points}} точки</p>
+        <p class="subject-points">{{sbj.problems}} въпроса</p>
+        <a (click)="showSubjectDetails(sbj.subjectId)"><span>детайли</span></a>
       </div>
     </div>
-    <div *ngIf="subjectDetails!= null" class="content-part">
-      <div class="info" *ngFor="let cat of subjectDetails">
+    <div *ngIf="showDetails" class="content-part">
+      <div class="info" *ngFor="let cat of subjectCategories">
         <p class="cat-name">{{cat.name}}</p>
         <p class="cat-points">{{cat.percentage}} %</p>
         <p class="cat-points">коректни</p>
         <p class="cat-points">отговора</p>
       </div>
-      <div class="icon-close" (click)="closeDetails()">
+      <div class="icon-close" (click)="closeSubjectDetails()">
         <mat-icon>cancel</mat-icon>
       </div>
     </div>
