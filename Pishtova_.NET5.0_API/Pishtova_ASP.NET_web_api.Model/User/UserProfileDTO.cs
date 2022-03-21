@@ -1,7 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.User
 {
     using Pishtova_ASP.NET_web_api.Model.School;
-    using System.Collections.Generic;
 
     public class UserProfileDTO: UserBaseModel
     {
@@ -14,11 +13,5 @@
         public SchoolForUserModel School { get; set; }
 
         public string TownName { get; set; }
-
-        public UserPointStatsModel Stats { get; set; }
-
-        //public virtual ICollection<UserBadge> BadgeUsers { get; set; }
-
-        //public virtual ICollection<UserGroup> UserGroups { get; set; }
     }
 }

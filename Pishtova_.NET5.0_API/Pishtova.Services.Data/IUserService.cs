@@ -10,7 +10,7 @@
     {
         string GetUserId(ClaimsPrincipal user);
 
-        UserProfileDTO GetProfileInfo(string userId);
+        Task<UserProfileDTO> GetProfileInfoAsync(string userId);
 
         Task UpdateUserAvatar(string userId, string pictureUrl);
 

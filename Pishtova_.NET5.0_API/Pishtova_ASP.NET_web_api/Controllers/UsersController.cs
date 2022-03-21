@@ -21,17 +21,10 @@
 
         [HttpGet]
         [Route("[action]")]
-        public ActionResult<UserProfileDTO> GetProfile()
+        public async Task<UserProfileDTO> GetProfile()
         {
-            try
-            {
-                var userId = this.userService.GetUserId(User);
-                return this.userService.GetProfileInfo(userId);
-            }
-            catch
-            {
-                return StatusCode(400, new ErrorResult { Message = "Uncorrect request" });
-            }
+            var userId = this.userService.GetUserId(User);
+            return await this.userService.GetProfileInfoAsync(userId);
         }
 
         [HttpPut]

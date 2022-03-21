@@ -2,10 +2,10 @@
 {
     public class CategoryWithPointsModel
     {
-        public string CategoryName { get; set; }
+        public string Name { get; set; }
 
         public int Points { get; set; }
 
-        public int ProblemsCount { get; set; }
+        public int Problems { get; set; }
     }
 }

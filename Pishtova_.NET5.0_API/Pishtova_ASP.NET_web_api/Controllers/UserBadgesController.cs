@@ -51,7 +51,7 @@
         }
 
         [HttpGet]
-        [Route("[action]/{id}")]
+        [Route("{id}/[action]")]
         public async Task<UserBadgesCountDTO> All([FromQuery] string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -60,7 +60,8 @@
             }
 
             var badges = await this.usersBadgesService.GetUserAllBadgesAsync(id);
-            return CreateUserBadgesModel(badges);                                               
+            var result = CreateUserBadgesModel(badges);
+            return result;
         }
 
         private static UserBadgesCountDTO CreateUserBadgesModel(ICollection<UserBadgeWithCodeModel> badges)

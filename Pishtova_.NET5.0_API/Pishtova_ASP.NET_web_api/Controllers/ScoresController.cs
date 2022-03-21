@@ -5,6 +5,8 @@
     using Pishtova.Services.Data;
     using Pishtova_ASP.NET_web_api.Model.Results;
     using Pishtova_ASP.NET_web_api.Model.Score;
+    using Pishtova_ASP.NET_web_api.Model.User;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class ScoresController: ApiController
@@ -22,7 +24,7 @@
 
 
         [HttpPost]
-        [Route(nameof(Save))]
+        [Route("[action]")]
         public async Task<IActionResult> Save([FromBody] ScoreDTO data)
         {
             if (data == null)
@@ -42,6 +44,23 @@
             };
             await this.scoreService.SaveScoreInDbAsync(score);
             return StatusCode(201);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ICollection<SubjectPointsModel>> UserPointsBySubject()
+        {
+            var usetrId = this.userService.GetUserId(User);
+            return await this.scoreService.GetUserSubjectScoresAsync(usetrId);
+        }
+
+        [HttpGet]
+        [Route("[action]/{sbjId}")]
+        public async Task<ICollection<CategoryWithPointsModel>> SubjectPointsByCategories(int sbjId)
+        {
+            var usetrId = this.userService.GetUserId(User);
+            var result =  await this.scoreService.GetSubjectCategoriesScoresAsync(usetrId, sbjId);
+            return result;
         }
     }
 }

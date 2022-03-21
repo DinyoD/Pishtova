@@ -6,7 +6,6 @@
     using System.Collections.Generic;
 
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.WebUtilities;
 
     using Pishtova.Data;
@@ -28,11 +27,10 @@
             this.emailSender = emailSender;
         }
 
-        public UserProfileDTO GetProfileInfo(string userId)
+        public async Task<UserProfileDTO> GetProfileInfoAsync(string userId)
         {
-            var profile =  this.db.Users
+            var profile = await this.db.Users
                 .Where(x => x.Id == userId)
-                .Include(x => x.UserScores).ThenInclude(x => x.SubjectCategory).ThenInclude(x => x.Subject)
                 .Select(u => new UserProfileDTO
                 {
                     Id = u.Id,
@@ -42,13 +40,12 @@
                     Grade = u.Grade,
                     TownName = u.School.Town.Name,
                     School = new SchoolForUserModel
-                    { 
+                    {
                         Name = u.School.Name,
                         Id = u.School.Id
-                    },
-                    Stats = getStatsByScores(u.UserScores),
+                    }
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
             return profile;
         }
 
@@ -115,62 +112,6 @@
 
             var message = new Message(new string[] { email }, "Reset password token", callback, null);
             await emailSender.SendEmailAsync(message);
-        }
-
-        private static UserPointStatsModel getStatsByScores(ICollection<Score> userScores)
-        {
-            var result = new UserPointStatsModel();
-            foreach (var item in userScores)
-            {
-                var subject = result.Subjects.FirstOrDefault(x => x.SubjectName == item.SubjectCategory.Subject.Name);
-
-                if (subject != null)
-                {
-                    var category = result.Subjects
-                        .Where(x => x.SubjectName == item.SubjectCategory.Subject.Name)
-                        .First().SubjectCategories
-                        .FirstOrDefault(x => x.CategoryName == item.SubjectCategory.Name);
-
-                    if (category != null)
-                    {
-                        var currCategory = result.Subjects
-                            .Where(x => x.SubjectName == item.SubjectCategory.Subject.Name)
-                            .First().SubjectCategories
-                            .Where(x => x.CategoryName == item.SubjectCategory.Name)
-                            .First();
-
-                        currCategory.Points += item.Points;
-                        currCategory.ProblemsCount += 1;
-                    }
-                    else
-                    {
-                        var currSubject = result.Subjects
-                            .Where(x => x.SubjectName == item.SubjectCategory.Subject.Name)
-                            .First();
-
-                        currSubject.SubjectCategories.Add(new CategoryWithPointsModel {
-                                                                    CategoryName = item.SubjectCategory.Name,
-                                                                    Points = item.Points,
-                                                                    ProblemsCount = 1
-                                                                });
-                    }
-                }
-                else
-                {
-                    var newSubject = new SubjectWithPointsByCategoryModel
-                    {
-                        SubjectName = item.SubjectCategory.Subject.Name
-                    };
-                    newSubject.SubjectCategories.Add(new CategoryWithPointsModel {
-                                                            CategoryName = item.SubjectCategory.Name,
-                                                            Points = item.Points,
-                                                            ProblemsCount = 1
-                                                        });
-                    result.Subjects.Add(newSubject);
-                }
-            }
-
-            return result;
         }
     }
 }
