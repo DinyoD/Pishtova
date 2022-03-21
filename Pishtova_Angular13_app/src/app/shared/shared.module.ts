@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { UpdateSchoolInfoDialogComponent } from './update-school-info-dialog/update-school-info-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { GreetingDialogComponent } from './greeting-dialog/greeting-dialog.component';
+import { UserInfoDialogComponent } from './user-info-dialog/user-info-dialog.component';
 
 
 
@@ -30,7 +31,8 @@ import { GreetingDialogComponent } from './greeting-dialog/greeting-dialog.compo
     UploadFileDialogComponent,
     UpdateProfileInfoDialogComponent,
     UpdateSchoolInfoDialogComponent,
-    GreetingDialogComponent
+    GreetingDialogComponent,
+    UserInfoDialogComponent
   ],
   imports: [
     CommonModule,

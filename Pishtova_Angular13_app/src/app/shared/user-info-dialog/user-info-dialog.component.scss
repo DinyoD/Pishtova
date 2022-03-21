@@ -1,0 +1,11 @@
+@import "../../utilities/colors/colors.scss";
+
+mat-card.dialog-container {
+  width: 30vw;
+  height: 45vh;
+  padding: 30px;
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

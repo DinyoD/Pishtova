@@ -1,0 +1,26 @@
+<mat-card class="dialog-container">
+  <mat-card-content>
+    <div>
+      <p class="text">{{userInfo?.name}}</p>
+    </div>
+    <div>
+      <p class="text">{{userInfo?.grade}}</p>
+    </div>
+    <div>
+      <p class="text">{{userInfo?.schoolName}}</p>
+    </div>
+    <div>
+      <p class="text">{{userInfo?.townName}}</p>
+    </div>
+    <div>
+      <p class="text">{{userInfo?.pictureUrl}}</p>
+    </div>
+    <div *ngFor="let b of userInfo?.badges">
+      <p><span>{{b.code}}</span><span>{{b.count}}</span></p>
+    </div>
+  </mat-card-content>
+  <div class="dialog-btn-container">
+    <button class="btn" (click)="close()">Затвори</button>
+
+  </div>
+</mat-card>

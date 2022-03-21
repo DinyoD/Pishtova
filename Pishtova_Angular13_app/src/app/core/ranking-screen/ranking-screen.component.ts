@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserBadgesModel } from 'src/app/models/user/userBadges';
+import { UserInfoModel } from 'src/app/models/user/userInfo';
 import { UserPointsForSubjectModel } from 'src/app/models/user/userPointBySubject';
-import { AuthService, SubjectService } from 'src/app/services';
+import { AuthService, BadgesService, SubjectService, UserService } from 'src/app/services';
+import { UserInfoDialogComponent } from 'src/app/shared/user-info-dialog/user-info-dialog.component';
 
 @Component({
   selector: 'app-ranking-screen',
@@ -10,7 +14,6 @@ import { AuthService, SubjectService } from 'src/app/services';
 })
 export class RankingScreenComponent implements OnInit {
 
-  //public subjectId: number | null = null;
   public userId: string|null = null;
   public users: UserPointsForSubjectModel[]|null = null;
   public logedUser: UserPointsForSubjectModel|null = null;
@@ -20,7 +23,10 @@ export class RankingScreenComponent implements OnInit {
     private subjectService: SubjectService,
     private actRoute: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
+    private userService: UserService,
+    private badgesService: BadgesService,
+    private router: Router,
+    private dialog: MatDialog,
   ) {}
     
   ngOnInit(): void {
@@ -45,6 +51,17 @@ export class RankingScreenComponent implements OnInit {
       });
     
   }
+
+  public getUserInfo = (userId: string):void => {
+    this.userService.getUserInfo(userId).subscribe(user => {
+      this.badgesService.getUserBadges(userId).subscribe(userBadges => {
+        const userInfo: UserInfoModel = {...user, badges: userBadges.badges};
+        this.dialog.open(UserInfoDialogComponent,  {autoFocus: false, data: userInfo})
+      })
+    });
+  
+  }
+
   private calculatePercentageUsersProperty = (user: UserPointsForSubjectModel): UserPointsForSubjectModel => {
       return {
         ...user,

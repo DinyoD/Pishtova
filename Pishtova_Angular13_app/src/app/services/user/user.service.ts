@@ -6,6 +6,7 @@ import { environment as env } from 'src/environments/environment';
 import { ProfileModel } from 'src/app/models/profile/profile';
 import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
+import { UserInfoModel } from 'src/app/models/user/userInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,12 @@ export class UserService {;
 
   constructor(private httpClient: HttpClient) { }
 
-  public getUserInfo = (): Observable<ProfileModel> => {
+  public getUserProfile = (): Observable<ProfileModel> => {
     return this.httpClient.get<ProfileModel>(env.API_URL + '/users/getprofile');
+  }
+
+  public getUserInfo = (userId: string): Observable<UserInfoModel> => {
+    return this.httpClient.get<UserInfoModel>(env.API_URL + `/users/getinfo/${userId}`);
   }
 
   public setUserPictureUrl = (url: string): Observable<object> => {

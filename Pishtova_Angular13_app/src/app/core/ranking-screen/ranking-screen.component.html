@@ -9,12 +9,10 @@
         <mat-icon *ngIf="i == 1" class="silver">star</mat-icon>
         <mat-icon *ngIf="i == 2" class="bronz">star</mat-icon>
       </div>
-      <p class="user-info name">{{u.userName}}</p>
+      <p class="user-info name" (click)="getUserInfo(u.userId)">{{u.userName}}</p>
       <div class="user-info points">
         <p class="number">{{u.points}}</p>
         <p class="text">точки</p>
-        <!-- <p class="text">от </p>
-        <p class="number">{{u.problemsCount}}</p> -->
       </div>
       <p class="user-info perc">{{u.percentage}} %</p>
     </div>
