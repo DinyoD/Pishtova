@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -24,8 +24,7 @@ export class UpdateProfileInfoDialogComponent implements OnInit{
   constructor(
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: EditProfileModel,
-    public dialogRef: MatDialogRef<UpdateProfileInfoDialogComponent>,
-    private cdr: ChangeDetectorRef) {
+    public dialogRef: MatDialogRef<UpdateProfileInfoDialogComponent>) {
 
       this.editedProfile = data;
       this.form = new FormGroup({

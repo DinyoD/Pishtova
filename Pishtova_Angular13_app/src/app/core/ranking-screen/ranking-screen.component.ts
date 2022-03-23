@@ -56,7 +56,9 @@ export class RankingScreenComponent implements OnInit {
     this.userService.getUserInfo(userId).subscribe(user => {
       this.badgesService.getUserBadges(userId).subscribe(userBadges => {
         const userInfo: UserInfoModel = {...user, badges: userBadges.badges};
-        this.dialog.open(UserInfoDialogComponent,  {autoFocus: false, data: userInfo})
+        this.dialog.open(UserInfoDialogComponent,  {autoFocus: false, data: userInfo});
+        console.log(userInfo);
+        
       })
     });
   

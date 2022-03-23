@@ -16,11 +16,11 @@ export class UserService {;
   constructor(private httpClient: HttpClient) { }
 
   public getUserProfile = (): Observable<ProfileModel> => {
-    return this.httpClient.get<ProfileModel>(env.API_URL + '/users/getprofile');
+    return this.httpClient.get<ProfileModel>(env.API_URL + '/users/profile');
   }
 
   public getUserInfo = (userId: string): Observable<UserInfoModel> => {
-    return this.httpClient.get<UserInfoModel>(env.API_URL + `/users/getinfo/${userId}`);
+    return this.httpClient.get<UserInfoModel>(env.API_URL + `/users/info/${userId}`);
   }
 
   public setUserPictureUrl = (url: string): Observable<object> => {

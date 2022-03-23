@@ -2,14 +2,14 @@
   <div class="ranking">
     <p class="title">Класиране:</p>
     <hr>
-    <div class="users" *ngFor="let u of users, let i = index ">
+    <div class="users" *ngFor="let u of users, let i = index " (click)="getUserInfo(u.userId)">
       <div class="user-info rank-container">
         <p class="rank">{{i + 1}}.</p>
         <mat-icon *ngIf="i == 0" class="gold">star</mat-icon>
         <mat-icon *ngIf="i == 1" class="silver">star</mat-icon>
         <mat-icon *ngIf="i == 2" class="bronz">star</mat-icon>
       </div>
-      <p class="user-info name" (click)="getUserInfo(u.userId)">{{u.userName}}</p>
+      <p class="user-info name">{{u.userName}}</p>
       <div class="user-info points">
         <p class="number">{{u.points}}</p>
         <p class="text">точки</p>
@@ -29,11 +29,11 @@
       <span class="info-text info-number">{{logedUser?.points}}</span>
     </div>
     <div class="info">
-      <span class="info-text">Общо въпроси: </span>
+      <span class="info-text">Въпроси: </span>
       <span class="info-text info-number">{{logedUser?.problemsCount}}</span>
     </div>
     <div class="info">
-      <span class="info-text">Успеваемост: </span>
+      <span class="info-text">Точност: </span>
       <span class="info-text info-number">{{logedUser?.percentage}} %</span>
     </div>
   </div>

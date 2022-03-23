@@ -9,14 +9,19 @@
   .ranking,
   .user-result {
     box-sizing: border-box;
-    display: block;
     border-radius: 8px;
     height: 100%;
-    padding: 0 30px;
   }
   .ranking {
-    width: 69%;
+    width: 72%;
+    padding: 0 15px;
     background-color: rgba($green, 0.2);
+    .title {
+      padding: 0 15px;
+      font-weight: bold;
+      font-size: 18px;
+      color: rgba($black, 0.75);
+    }
     overflow-y: auto;
     .user-info {
       font-weight: bold;
@@ -26,6 +31,8 @@
     .users {
       display: flex;
       flex-direction: row;
+      padding: 0 15px;
+      cursor: pointer;
       .rank-container {
         width: 15%;
         max-width: 92px;
@@ -68,30 +75,36 @@
         margin-left: auto;
       }
     }
+    .users:hover {
+      background-color: rgba($white, 0.2);
+      border-radius: 8px;
+    }
   }
   .user-result {
-    width: 29%;
+    padding: 0 30px;
+    width: 27%;
     background-color: rgba($red, 0.2);
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      color: rgba($black, 0.75);
+    }
     .info {
-      width: 75%;
       margin-top: 40px;
       display: flex;
       justify-content: space-between;
       .info-text {
+        width: 70%;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 24px;
         color: rgba($black, 0.75);
       }
       .info-number {
+        width: 30%;
         margin-left: auto;
-        width: 50px;
-        text-align: center;
+        width: 100px;
+        text-align: end;
       }
     }
-  }
-  .title {
-    font-weight: bold;
-    font-size: 18px;
-    color: rgba($black, 0.75);
   }
 }
