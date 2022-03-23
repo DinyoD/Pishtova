@@ -1,8 +1,10 @@
 @import "../../utilities/colors/colors.scss";
 
-$icon-size: calc(100vw * 0.28);
-$font-size: calc(100vw * 0.02);
-$points-size: calc((100vw * 0.026));
+$iconSize: calc(100vw * 0.28);
+$fontSize3: calc(100vw * 0.016);
+$fontSize2: calc(100vw * 0.02);
+$fontSize1: calc(100vw * 0.024);
+$pointsSize: calc((100vw * 0.026));
 $badgeSize: calc(((100vh / 15 * 12) * 0.3) * 0.6);
 $badgeFontSize: calc(((100vh / 15 * 12) * 0.3) * 0.15);
 
@@ -23,11 +25,11 @@ $badgeFontSize: calc(((100vh / 15 * 12) * 0.3) * 0.15);
     align-items: center;
     align-self: center;
     .icon {
-      width: $icon-size;
+      width: $iconSize;
       max-width: 400px;
-      height: $icon-size;
+      height: $iconSize;
       max-height: 400px;
-      font-size: $icon-size;
+      font-size: $iconSize;
       color: rgba($secondary, 0.6);
     }
     p,
@@ -35,24 +37,26 @@ $badgeFontSize: calc(((100vh / 15 * 12) * 0.3) * 0.15);
       margin: 15px 0;
     }
     .result {
-      font-size: $font-size;
+      font-size: $fontSize2;
       color: rgba($green, 0.7);
       .points {
-        font-size: $points-size;
+        font-size: $pointsSize;
       }
       .points.score {
         color: rgba($green, 1);
       }
     }
     .text {
-      font-size: $font-size;
+      font-size: $fontSize3;
       color: rgba($secondary, 0.8);
     }
-    a.text {
+    a.btn {
+      font-size: $fontSize1;
+      color: rgba($secondary, 0.8);
       margin-top: auto;
       background-color: rgba($green, 0.3);
       cursor: pointer;
-      padding: 5px 25px;
+      padding: 8px 28px;
       border-radius: 10px;
       box-shadow: 2px 1px 8px rgba($black, 0.5);
     }

@@ -8,7 +8,7 @@
       <mat-icon>grade</mat-icon>
       <p>КЛАСИРАНЕ</p>
     </a>
-    <a class="box" (click)="handelMaterialsRedirect()">
+    <a *ngIf="subject?.id == 4" class="box" (click)="handelMaterialsRedirect()">
       <mat-icon>grade</mat-icon>
       <p>МАТЕРИАЛИ</p>
     </a>

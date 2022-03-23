@@ -1,6 +1,7 @@
 @import "../../utilities/colors/colors.scss";
 
 $iconSize: calc(100vh / 8 * 2 / 3);
+$sbjFontSize: calc(100vh / 8 * 2 / 5);
 $imageSize: calc((100vh / 8 * 2 / 3) * 0.8);
 $headerHeightValue: calc(100vh / 15 * 2);
 $modalHeightValue: calc(100vh / 15 * 12);
@@ -55,7 +56,7 @@ $modalFontSize: calc((100vh / 8 * 2 / 6) * 0.8);
     }
     .sbj-name {
       color: $icon;
-      font-size: $iconSize;
+      font-size: $sbjFontSize;
     }
   }
   .modal {

@@ -12,7 +12,7 @@ export class ResultScreenComponent implements OnInit {
 
   public points: number|null = null
   public subjectId: number|undefined = undefined;
-  public newBadgesCode: number[]|null = [1070, 2020];
+  public newBadgesCode: number[] = [];
 
   constructor(
     private testService: TestService,
@@ -25,7 +25,7 @@ export class ResultScreenComponent implements OnInit {
     this.testService.sendInTestStateChangeNotification(false);
     this.points = this.pointsService.gettingPoints();
     this.subjectId = this.subjectService.getCurrentSubject()?.id ;
-    //this.badgesService.getUserBadgesByTestId(history.state.testId).subscribe(res => this.newBadgesCode = res);   
+    this.badgesService.getUserBadgesByTestId(history.state.testId).subscribe(res => this.newBadgesCode = res);   
   }
 
   generateNewTest(): void{

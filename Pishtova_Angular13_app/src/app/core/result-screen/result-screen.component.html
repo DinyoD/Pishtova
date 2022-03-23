@@ -34,7 +34,7 @@
     <p *ngIf="points !=null && (points > 5 && points <= 10)" class="text">Не отивай с нож в престрелка!</p>
     <p *ngIf="points !=null && (points > 10 && points <= 15)" class="text">Добре! Продължавай да гърмиш.</p>
     <p *ngIf="points!=null && points > 15" class="text">Браво! Пушка си.</p>
-    <a class="text" (click)="generateNewTest()">Пробвай oтново</a>
+    <a class="btn" (click)="generateNewTest()">Пробвай oтново</a>
   </div>
 
   <div class="badge-container">
