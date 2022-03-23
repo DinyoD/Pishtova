@@ -61,7 +61,7 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task UpdateUserInfo(string userId, UserInfoDTO model)
+        public async Task UpdateUserInfo(string userId, UserInfoToUpdateDTO model)
         {
             var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
 
@@ -112,6 +112,22 @@
 
             var message = new Message(new string[] { email }, "Reset password token", callback, null);
             await emailSender.SendEmailAsync(message);
+        }
+
+        public async Task<UserInfoDTO> GetUserInfoAsync(string userId)
+        {
+            var info = await this.db.Users
+                .Where(x => x.Id == userId)
+                .Select(u => new UserInfoDTO
+                {
+                    Name = u.Name,
+                    PictureUrl = u.PictureUrl,
+                    Grade = u.Grade,
+                    TownName = u.School.Town.Name,
+                    SchoolName = u.School.Name
+                })
+                .FirstOrDefaultAsync();
+            return info;
         }
     }
 }

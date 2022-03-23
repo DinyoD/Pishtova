@@ -52,7 +52,7 @@
 
         [HttpGet]
         [Route("{id}/[action]")]
-        public async Task<UserBadgesCountDTO> All([FromQuery] string id)
+        public async Task<UserBadgesCountDTO> All(string id)
         {
             if (string.IsNullOrEmpty(id))
             {

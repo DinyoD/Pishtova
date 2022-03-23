@@ -21,10 +21,17 @@
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<UserProfileDTO> GetProfile()
+        public async Task<UserProfileDTO> Profile()
         {
             var userId = this.userService.GetUserId(User);
             return await this.userService.GetProfileInfoAsync(userId);
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public async Task<UserInfoDTO> Info(string id)
+        {
+            return await this.userService.GetUserInfoAsync(id);
         }
 
         [HttpPut]
@@ -51,7 +58,7 @@
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdateUserInfo([FromBody] UserInfoDTO data)
+        public async Task<IActionResult> UpdateUserInfo([FromBody] UserInfoToUpdateDTO data)
         {
 
             if (data == null)

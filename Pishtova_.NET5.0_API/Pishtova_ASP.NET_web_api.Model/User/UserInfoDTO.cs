@@ -2,7 +2,10 @@
 {
     public class UserInfoDTO: UserBaseModel
     {
-        public int SchoolId { get; set; }
+        public string SchoolName { get; set; }
 
+        public string TownName { get; set; }
+
+        public string PictureUrl { get; set; }
     }
 }
