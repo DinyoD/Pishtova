@@ -64,6 +64,17 @@
             return result;
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<UserBadgesCountDTO> All()
+        {
+            var  userId = this.userService.GetUserId(User);
+
+            var badges = await this.usersBadgesService.GetUserAllBadgesAsync(userId);
+            var result = CreateUserBadgesModel(badges);
+            return result;
+        }
+
         private static UserBadgesCountDTO CreateUserBadgesModel(ICollection<UserBadgeWithCodeModel> badges)
         {
             var result = new UserBadgesCountDTO();
