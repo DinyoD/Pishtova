@@ -12,9 +12,9 @@
   <div class="userInfo-info">
     <div class="info-field">
       <span>{{userInfo?.grade}}</span>
-      <span *ngIf="userInfo?.grade == 7 || userInfo?.grade == 8">-ми </span>
-      <span *ngIf="userInfo?.grade != 7 && userInfo?.grade != 8">-ти </span>
-      <span>клас</span>
+      <span *ngIf="userInfo?.grade == 7 || userInfo?.grade == 8">-ми клас</span>
+      <span *ngIf="userInfo?.grade != 7 && userInfo?.grade != 8">-ти клас</span>
+
     </div>
     <div class="info-field">
       <span>{{userInfo?.schoolName}}</span>
