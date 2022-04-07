@@ -22,6 +22,10 @@ export class BadgesService {
     return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/${userId}/all`)
   }
 
+  public getProfileBadges = (): Observable<UserBadgesModel> => {
+    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/all`)
+  }
+
   public getUserBadgesByTestId = (testId: number): Observable<number[]> => {
     return this.httpClient.get<number[]>(env.API_URL + `/userbadges/test/${testId}`)
   }
