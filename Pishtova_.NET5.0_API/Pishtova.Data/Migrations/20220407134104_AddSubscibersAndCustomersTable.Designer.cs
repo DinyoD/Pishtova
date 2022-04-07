@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pishtova.Data;
 
 namespace Pishtova.Data.Migrations
 {
     [DbContext(typeof(PishtovaDbContext))]
-    partial class PishtovaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220407134104_AddSubscibersAndCustomersTable")]
+    partial class AddSubscibersAndCustomersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,6 +220,35 @@ namespace Pishtova.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Badges");
+                });
+
+            modelBuilder.Entity("Pishtova.Data.Model.Customer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.Group", b =>
@@ -489,6 +520,41 @@ namespace Pishtova.Data.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("SubjectCategories");
+                });
+
+            modelBuilder.Entity("Pishtova.Data.Model.Subscription", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CurrentPeriodEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.Test", b =>
@@ -818,6 +884,15 @@ namespace Pishtova.Data.Migrations
                     b.Navigation("Problem");
                 });
 
+            modelBuilder.Entity("Pishtova.Data.Model.Customer", b =>
+                {
+                    b.HasOne("Pishtova.Data.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Pishtova.Data.Model.Problem", b =>
                 {
                     b.HasOne("Pishtova.Data.Model.SubjectCategory", "SubjectCategory")
@@ -866,6 +941,15 @@ namespace Pishtova.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("Pishtova.Data.Model.Subscription", b =>
+                {
+                    b.HasOne("Pishtova.Data.Model.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.Test", b =>

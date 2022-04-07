@@ -56,6 +56,10 @@ namespace Pishtova.Data
 
         public DbSet<Test> Tests { get; set; }
 
+        public DbSet<Subscription> Subscriptions { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
         public override int SaveChanges()
         {
             return this.SaveChanges(true);
