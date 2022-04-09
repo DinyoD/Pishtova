@@ -39,7 +39,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
                 var userId = this.userService.GetUserId(User);
                 var testId = await this.testService.CreateTestAsync(userId, subjectId);
                 await this.SaveBadgeForTestCount(userId, testId);
-                return StatusCode(200, new SaveTestReult { TestId = testId });
+                return StatusCode(200, new SaveTestResult { TestId = testId });
             }
             catch (System.Exception)
             {
