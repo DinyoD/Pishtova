@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { storageServiceProvider } from './services';
 import { LoadingIndicatorInterceptor } from './interceptor/loading-indicator-interceptor.service';
 import { SharedModule } from './shared/shared.module';
+import { MembershipModule } from './membership/membership.module';
 //import { NotFoundComponent } from './error/error-screens/not-found/not-found.component';
 
 
@@ -30,12 +31,8 @@ export function tokenGetter() {
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    AuthenticationModule,
     MatDialogModule,
-    CoreModule,
-    SharedModule,
+    HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -44,7 +41,12 @@ export function tokenGetter() {
         
       },
     }),
-    AngularFireModule.initializeApp(env.firebaseConfig, 'pishtova')
+    AngularFireModule.initializeApp(env.firebaseConfig, 'pishtova'),
+    AppRoutingModule,
+    CoreModule,
+    SharedModule,
+    MembershipModule,
+    AuthenticationModule,
   ],
   providers: [
     {
