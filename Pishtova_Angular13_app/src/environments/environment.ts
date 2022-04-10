@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   API_URL : 'https://localhost:44329',
-  API_HOME_URL: 'http://localhost:4200/home',
+  API_HOME_URL: 'http://localhost:4200/profile',
   API_PAY_SUCCESS_URL: 'http://localhost:4200/success',
   API_PAY_CANCEL_URL: 'http://localhost:4200/failure',
   CLIENT_URI: 'http://localhost:4200',

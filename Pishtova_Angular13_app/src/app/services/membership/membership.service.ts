@@ -6,6 +6,7 @@ import { environment as env} from 'src/environments/environment';
 import { MemberShipPlanModel } from 'src/app/membership/models/MembershipPlan';
 import { SessionModel } from 'src/app/membership/models/Session';
 import { RequestMemberSessionModel } from 'src/app/membership/models/RequestMemberSession';
+import { CustomerPortalModel } from 'src/app/membership/models/CustomerPortal';
 
 declare const Stripe: any;
 
@@ -17,7 +18,7 @@ export class MembershipService {
 
   constructor(private http: HttpClient) { }
 
-  getMembership(): Observable<MemberShipPlanModel> {
+  public getMembership = (): Observable<MemberShipPlanModel> => {
     return of({
       id: 'prod_LSupAmVWkLF05P',
       priceId: 'price_1KlyzeBd9uAKWbJc8pdwcItm',
@@ -31,21 +32,23 @@ export class MembershipService {
     });
   }
   
-requestMemberSession(priceId: string): void {
-    const model: RequestMemberSessionModel = {
-      priceId: priceId,
-      successUrl: env.API_PAY_SUCCESS_URL,
-      failureUrl: env.API_PAY_CANCEL_URL
-    }
-    this.http.post<SessionModel>(env.API_URL+ '/payments/create-checkout-session', model)
-             .subscribe((session) => {this.redirectToCheckout(session)});
+  public requestMemberSession = (priceId: string): void => {
+      const model: RequestMemberSessionModel = {
+        priceId: priceId,
+        successUrl: env.API_PAY_SUCCESS_URL,
+        failureUrl: env.API_PAY_CANCEL_URL
+      }
+      this.http.post<SessionModel>(env.API_URL+ '/payments/create-checkout-session', model)
+              .subscribe((session) => {this.redirectToCheckout(session)});
   }
 
-  redirectToCheckout(session: SessionModel) {
+  public redirectToCheckout = (session: SessionModel): void => {
     const stripe = Stripe(session.publicKey);
-
-    stripe.redirectToCheckout({
-      sessionId: session.sessionId,
-    });
+    stripe.redirectToCheckout({ sessionId: session.sessionId });
   }
+
+  public redirectToCustomerPortal():Observable<CustomerPortalModel> {
+     return this.http.post<CustomerPortalModel>( env.API_URL + '/payments/customer-portal', { returnUrl: env.API_HOME_URL } );
+  }
+
 }

@@ -7,7 +7,7 @@ import { environment as env } from 'src/environments/environment';
 import { UploadFileDialogComponent } from 'src/app/shared/upload-file-dialog/upload-file-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { UpdateProfileInfoDialogComponent } from 'src/app/shared/update-profile-info-dialog/update-profile-info-dialog.component';
-import { AuthService, SubjectService, UserService, BadgesService, PointsService } from 'src/app/services';
+import { AuthService, SubjectService, UserService, BadgesService, PointsService, MembershipService } from 'src/app/services';
 import { EditProfileModel } from 'src/app/models/profile/editProfile';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
 import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private badgeService: BadgesService,
     private pointsService: PointsService,
+    private membershipService: MembershipService,
     private dialog: MatDialog,
     private router: Router) { 
       
@@ -115,6 +116,11 @@ export class ProfileComponent implements OnInit {
   }
 
   public badgeIsOwned = (code: number): boolean => { return this.badgeCount(code) > 0}
+
+  public goToBillingPortal():void {
+    console.log(456);
+    this.membershipService.redirectToCustomerPortal().subscribe((data) => { window.location.href = data.url });
+  }
 
   private changeProfileInfo = (name: string, grade: number, schoolId: number): void =>  {
     

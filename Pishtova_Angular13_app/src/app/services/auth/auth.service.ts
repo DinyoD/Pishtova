@@ -60,9 +60,8 @@ export class AuthService {
   }
 
   public isUserAuthenticated = (): boolean => {
-    const token = this.storage.getItem("token");
-    return token != null;
-      // && !this.jwtHelper.isTokenExpired(token);
+    const token = this.storage.getItem<string>("token");
+    return token != null && !this.jwtHelper.isTokenExpired(token);
   }
 
   public getUserId = (): string|null => {
