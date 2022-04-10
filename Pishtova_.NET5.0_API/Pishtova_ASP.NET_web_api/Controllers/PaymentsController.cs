@@ -13,15 +13,26 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 	using Pishtova_ASP.NET_web_api.Model.Payment;
 	using Pishtova_ASP.NET_web_api.Model.Results;
     using Microsoft.Extensions.Options;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Pishtova.Data.Model;
+    using Pishtova.Services.Data;
 
     public class PaymentsController: ApiController
     {
         private readonly StripeSettings stripeSettings;
+        private readonly UserManager<User> userManager;
+        private readonly IUserService userService;
 
-        public PaymentsController(IOptions<StripeSettings> stripeSettings)
+        public PaymentsController(
+			IOptions<StripeSettings> stripeSettings,
+			UserManager<User> userManager,
+			IUserService userService)
 		{
 			this.stripeSettings = stripeSettings.Value;
-		}
+            this.userManager = userManager;
+            this.userService = userService;
+        }
 
 		[HttpPost("create-checkout-session")]
 		public async Task<IActionResult> CreateCheckoutSession([FromBody] CreateCheckoutSessionRequest req)
@@ -57,25 +68,26 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			}
 			catch (StripeException e)
 			{
-				Console.WriteLine(e.StripeError.Message);
-				return BadRequest(new ErrorResponse
-				{
-					ErrorResult = new ErrorResult
-                    {
-						Message = e.StripeError.Message,
-					}
-				});
+				return BadRequest(new ErrorResult { Message = e.StripeError.Message });
 			}
 		}
 
+
+		[Authorize]
 		[HttpPost("customer-portal")]
 		public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
 		{
+			var userId = this.userService.GetUserId(User);
+			var userFromDb = await this.userManager.FindByIdAsync(userId);
+            if (userFromDb == null)
+            {
+				return BadRequest(new ErrorResult { Message = "Unauthorized or no user" });
+			}
 			try
 			{
 				var options = new Stripe.BillingPortal.SessionCreateOptions
 				{
-					Customer = "cus_LTwJyJFmSdCgUb",
+					Customer = userFromDb.CustomerId,
 					ReturnUrl = req.ReturnUrl,
 				};
 				var service = new Stripe.BillingPortal.SessionService();
@@ -88,14 +100,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			}
 			catch (StripeException e)
 			{
-				Console.WriteLine(e.StripeError.Message);
-				return BadRequest(new ErrorResponse
-				{
-					ErrorResult = new ErrorResult
-					{
-						Message = e.StripeError.Message,
-					}
-				});
+				return BadRequest(new ErrorResult { Message = e.StripeError.Message });
 			}
 
 		}

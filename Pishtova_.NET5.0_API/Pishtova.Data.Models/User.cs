@@ -36,6 +36,8 @@
 
         public School School { get; set; }
 
+        public string CustomerId { get; set; }
+
         public virtual ICollection<Score> UserScores { get; set; }
 
         public virtual ICollection<UserBadge> UserBadges { get; set; }

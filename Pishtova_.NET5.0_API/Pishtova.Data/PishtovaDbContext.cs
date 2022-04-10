@@ -58,8 +58,6 @@ namespace Pishtova.Data
 
         public DbSet<Subscription> Subscriptions { get; set; }
 
-        public DbSet<Customer> Customers { get; set; }
-
         public override int SaveChanges()
         {
             return this.SaveChanges(true);
