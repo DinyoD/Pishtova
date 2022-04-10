@@ -12,13 +12,15 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 
 	using Pishtova_ASP.NET_web_api.Model.Payment;
 	using Pishtova_ASP.NET_web_api.Model.Results;
+    using Microsoft.Extensions.Options;
 
     public class PaymentsController: ApiController
     {
+        private readonly StripeSettings stripeSettings;
 
-		public PaymentsController()
+        public PaymentsController(IOptions<StripeSettings> stripeSettings)
 		{
-			StripeConfiguration.ApiKey = "sk_test_51KlsUjBd9uAKWbJc1M1IAR6barYfnAUHC3FTwm8uVoqObQ2s2SuipPzOIs4O88kx6Bf3hmFOytnYFqedkrOnq2je00EDSSc9de";
+			this.stripeSettings = stripeSettings.Value;
 		}
 
 		[HttpPost("create-checkout-session")]
@@ -26,8 +28,8 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 		{
 			var options = new SessionCreateOptions
 			{
-				SuccessUrl = "http://localhost:4200/success",
-				CancelUrl = "http://localhost:4200/failure",
+				SuccessUrl = req.SuccessUrl,
+				CancelUrl = req.FailureUrl,
 				PaymentMethodTypes = new List<string>
 				{
 					"card",
@@ -50,6 +52,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				return Ok(new CreateCheckoutSessionResponse
 				{
 					SessionId = session.Id,
+					PublicKey = this.stripeSettings.PublicKey
 				});
 			}
 			catch (StripeException e)
@@ -64,24 +67,37 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				});
 			}
 		}
-		//[HttpGet("products")]
-		//public IActionResult Products()
-		//{
 
-		//	StripeConfiguration.ApiKey = "sk_test_51KlsUjBd9uAKWbJc1M1IAR6barYfnAUHC3FTwm8uVoqObQ2s2SuipPzOIs4O88kx6Bf3hmFOytnYFqedkrOnq2je00EDSSc9de";
+		[HttpPost("customer-portal")]
+		public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
+		{
+			try
+			{
+				var options = new Stripe.BillingPortal.SessionCreateOptions
+				{
+					Customer = "cus_LTwJyJFmSdCgUb",
+					ReturnUrl = req.ReturnUrl,
+				};
+				var service = new Stripe.BillingPortal.SessionService();
+				var session = await service.CreateAsync(options);
 
-		//	var options = new ProductListOptions
-		//	{
-		//		Limit = 3,
-		//	};
-		//	var service = new ProductService();
-		//	StripeList<Product> products = service.List(
-		//	  options
-		//	);
+				return Ok(new
+				{
+					url = session.Url
+				});
+			}
+			catch (StripeException e)
+			{
+				Console.WriteLine(e.StripeError.Message);
+				return BadRequest(new ErrorResponse
+				{
+					ErrorResult = new ErrorResult
+					{
+						Message = e.StripeError.Message,
+					}
+				});
+			}
 
-
-		//	return Ok(products);
-		//}
-
+		}
 	}
 }

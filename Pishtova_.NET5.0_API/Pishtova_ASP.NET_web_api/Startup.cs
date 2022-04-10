@@ -19,20 +19,24 @@ namespace Pishtova_ASP.NET_web_api
     using Pishtova.Services;
     using Pishtova.Services.Data;
 	using Pishtova.Services.Messaging;
+    using Pishtova_ASP.NET_web_api.Model.Payment;
+    using Stripe;
 
-	public class Startup
+    public class Startup
     {
         private readonly IConfiguration configuration;
 
         public Startup(IConfiguration configuration)
         {
             this.configuration = configuration;
+            StripeConfiguration.ApiKey = configuration.GetValue<string>("StripeSettings:PrivateKey");
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PishtovaDbContext>(options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+            services.Configure<StripeSettings>(configuration.GetSection("StripeSettings"));
 
             services
                 .AddIdentity<User, Role>(IdentityOptionsProvider.GetIdentityOptions)
