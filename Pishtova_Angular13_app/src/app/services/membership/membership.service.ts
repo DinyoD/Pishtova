@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { environment as env} from 'src/environments/environment';
 import { MemberShipPlanModel } from 'src/app/membership/models/MembershipPlan';
 import { SessionModel } from 'src/app/membership/models/Session';
+import { RequestMemberSessionModel } from 'src/app/membership/models/RequestMemberSession';
 
 declare const Stripe: any;
 
@@ -31,20 +32,20 @@ export class MembershipService {
   }
   
 requestMemberSession(priceId: string): void {
-    this.http
-      .post<SessionModel>(env.API_URL+ '/payments/create-checkout-session', {
-        priceId: priceId,
-      })
-      .subscribe((session) => {
-        this.redirectToCheckout(session.sessionId);
-      });
+    const model: RequestMemberSessionModel = {
+      priceId: priceId,
+      successUrl: env.API_PAY_SUCCESS_URL,
+      failureUrl: env.API_PAY_CANCEL_URL
+    }
+    this.http.post<SessionModel>(env.API_URL+ '/payments/create-checkout-session', model)
+             .subscribe((session) => {this.redirectToCheckout(session)});
   }
 
-  redirectToCheckout(sessionId: string) {
-    const stripe = Stripe('pk_test_51KlsUjBd9uAKWbJcxmeKwIhKST32aXS6qhxwwj51aNS6LucDgNJCh9dpZsGoSFoUzufMoNB20lsXbtgMaWTmSLMY001SEdj7lK');
+  redirectToCheckout(session: SessionModel) {
+    const stripe = Stripe(session.publicKey);
 
     stripe.redirectToCheckout({
-      sessionId: sessionId,
+      sessionId: session.sessionId,
     });
   }
 }

@@ -7,13 +7,17 @@ import { MembershipOptionsComponent } from './membership-options/membership-opti
 import { RouterModule } from '@angular/router';
 import { ForAuthenticatedUserGuard } from '../authentication/guards/auth.guard';
 import { InTestGuard } from '../core/guards/inTest.guard';
+import { MembershipFailureComponent } from './membership-failure/membership-failure.component';
+import { MembershipSuccessComponent } from './membership-success/membership-success.component';
 
 
 
 @NgModule({
   declarations: [
     MembershipCheckoutComponent,
-    MembershipOptionsComponent
+    MembershipOptionsComponent,
+    MembershipFailureComponent,
+    MembershipSuccessComponent
   ],
   imports: [
     CommonModule,
@@ -22,12 +26,14 @@ import { InTestGuard } from '../core/guards/inTest.guard';
     RouterModule.forChild([
       { path: 'checkout', component: MembershipCheckoutComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'failure', component: MembershipFailureComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'success', component: MembershipSuccessComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
     ]),
   ],
   exports: [
     MembershipOptionsComponent,
-    // MembershipFailureComponent,
-    // MembershipSuccessComponent,
+    MembershipFailureComponent,
+    MembershipSuccessComponent,
   ],
 })
 export class MembershipModule { }
