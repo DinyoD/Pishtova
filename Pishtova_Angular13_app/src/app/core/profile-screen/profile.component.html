@@ -30,7 +30,7 @@
       <div class="info-field">
         <span>{{profile?.townName}}</span>
       </div>
-      <a (click)="goToBillingPortal()">Редактирай абонамент</a>
+      <a *ngIf="currentUser?.isSubscriber" (click)="goToBillingPortal()">Редактирай абонамент</a>
       <mat-icon (click)="updateInfo()" title="редактирай профилната информация" class="edit-icon">edit</mat-icon>
     </div>
   </div>

@@ -16,6 +16,7 @@ import { ProfilePointsBySubjectModel } from "src/app/models/profile/profilePoint
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 import { CategoryWithPointsModel } from 'src/app/models/subjectCategory/categoryPoints';
+import { CurrentUserModel } from 'src/app/models/user/currentUser';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +25,7 @@ import { CategoryWithPointsModel } from 'src/app/models/subjectCategory/category
 })
 export class ProfileComponent implements OnInit {
 
+  public currentUser: CurrentUserModel|null = null;
   public profile: ProfileModel|null = null;
   public profileSchoolId: number|null = null; 
   public showDetails: boolean = false;
@@ -53,6 +55,7 @@ export class ProfileComponent implements OnInit {
      });
      this.pointsService.getPointsBySubjects().subscribe(res => this.pointsBySubjects = res);
      this.badgeService.getProfileBadges().subscribe(res => this.badges = res.badges);
+     this.currentUser = this.authService.getCurrentUser();
   }
 
   public showSubjectDetails = (subjectId: number): void => { 

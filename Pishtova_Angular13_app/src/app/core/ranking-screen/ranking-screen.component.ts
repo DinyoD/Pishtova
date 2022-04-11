@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserBadgesModel } from 'src/app/models/user/userBadges';
+import { CurrentUserModel } from 'src/app/models/user/currentUser';
 import { UserInfoModel } from 'src/app/models/user/userInfo';
 import { UserPointsForSubjectModel } from 'src/app/models/user/userPointBySubject';
 import { AuthService, BadgesService, SubjectService, UserService } from 'src/app/services';
@@ -14,7 +14,7 @@ import { UserInfoDialogComponent } from 'src/app/shared/user-info-dialog/user-in
 })
 export class RankingScreenComponent implements OnInit {
 
-  public userId: string|null = null;
+  public currentUser: CurrentUserModel|null = null;
   public users: UserPointsForSubjectModel[]|null = null;
   public logedUser: UserPointsForSubjectModel|null = null;
   public logedUserPlace: number|null = null;
@@ -35,19 +35,19 @@ export class RankingScreenComponent implements OnInit {
       this.router.navigate(['/main']);
       return;
     }
-    this.userId = this.authService.getUserId();     
+    this.currentUser = this.authService.getCurrentUser();     
     this.subjectService.getSubjectRanking(urlId)
       .subscribe(x => {
         this.users = x.usersPointsForSubject
           .map(u => this.calculatePercentageUsersProperty(u))
           .sort((a,b) => b.points - a.points);
 
-        this.logedUser = this.calculatePercentageUsersProperty(x.usersPointsForSubject.filter(x => x.userId == this.userId)[0]);
+        this.logedUser = this.calculatePercentageUsersProperty(x.usersPointsForSubject.filter(x => x.userId == this.currentUser?.id)[0]);
 
         this.logedUserPlace = x.usersPointsForSubject
           .map(u => this.calculatePercentageUsersProperty(u))
           .sort((a,b) => b.points - a.points)
-          .findIndex(u => u.userId == this.userId) + 1;
+          .findIndex(u => u.userId == this.currentUser?.id) + 1;
       });
     
   }

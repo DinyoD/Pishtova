@@ -11,6 +11,7 @@ import { ResetPasswordModel } from '../../authentication/models/resetPassword';
 import  ILoginResult  from '../../authentication/models/results/LoginResult';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
+import { CurrentUserModel } from 'src/app/models/user/currentUser';
 
 @Injectable({
   providedIn: 'root'
@@ -64,14 +65,18 @@ export class AuthService {
     return token != null && !this.jwtHelper.isTokenExpired(token);
   }
 
-  public getUserId = (): string|null => {
-    let result: string|null = null;
-    const token: string|null = this.storage.getItem("token");
+  public getCurrentUser = (): CurrentUserModel|null => {
+    let user: CurrentUserModel|null = null;
+    const token: string|null = this.storage.getItem<string>("token");
     if (token) {
-      
-      const obj =  this.jwtHelper.decodeToken(token)
-      result = obj.userId;      
+      const decodedToken = this.jwtHelper.decodeToken(token)
+      user = {
+         id: decodedToken.userId,
+         email: decodedToken.email,
+         isSubscriber: decodedToken.isSubscriber == 'True'
+      }
     }
-    return result;
+    return user;
   }
+
 }
