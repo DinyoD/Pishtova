@@ -23,7 +23,7 @@
         [Route("[action]")]
         public async Task<UserProfileDTO> Profile()
         {
-            var userId = this.userService.GetUserId(User);
+            var userId =await this.userService.GetUserIdAsync(User);
             return await this.userService.GetProfileInfoAsync(userId);
         }
 
@@ -46,7 +46,7 @@
 
             try
             {
-                var userId = this.userService.GetUserId(User);
+                var userId = await this.userService.GetUserIdAsync(User);
                 await this.userService.UpdateUserAvatar(userId, data.PictureUrl);
                 return StatusCode(204);
             }
@@ -68,7 +68,7 @@
 
             try
             {
-                var userId = this.userService.GetUserId(User);
+                var userId = await this.userService.GetUserIdAsync(User);
                 await this.userService.UpdateUserInfo(userId, data);
                 return StatusCode(204);
             }
@@ -89,7 +89,7 @@
 
             try
             {
-                var userId = this.userService.GetUserId(User);
+                var userId = await this.userService.GetUserIdAsync(User);
                 var user = await this.userService.UpdateUserEmail(userId, data);
                 var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
                 await this.userService.SendEmailConfirmationTokenAsync(data.ClientURI, user.Email, token);

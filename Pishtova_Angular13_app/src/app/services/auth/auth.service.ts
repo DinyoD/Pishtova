@@ -70,7 +70,7 @@ export class AuthService {
     if (token) {
       
       const obj =  this.jwtHelper.decodeToken(token)
-      result = obj.email;      
+      result = obj.userId;      
     }
     return result;
   }

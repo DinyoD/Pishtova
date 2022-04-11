@@ -32,7 +32,7 @@
         {
             try
             {
-                var userId = this.userService.GetUserId(User);
+                var userId = await this.userService.GetUserIdAsync(User);
                 var badgeId = await this.badgeService.GetBadgeIdByCodeAsync(data.BadgeCode);
                 var model = new UserBadgeModel
                 {
@@ -56,7 +56,7 @@
         {
             if (string.IsNullOrEmpty(id))
             {
-                id = this.userService.GetUserId(User);
+                id = await this.userService.GetUserIdAsync(User);
             }
 
             var badges = await this.usersBadgesService.GetUserAllBadgesAsync(id);
@@ -68,7 +68,7 @@
         [Route("[action]")]
         public async Task<UserBadgesCountDTO> All()
         {
-            var  userId = this.userService.GetUserId(User);
+            var  userId = await this.userService.GetUserIdAsync(User);
 
             var badges = await this.usersBadgesService.GetUserAllBadgesAsync(userId);
             var result = CreateUserBadgesModel(badges);

@@ -8,7 +8,7 @@
 
     public interface IUserService
     {
-        string GetUserId(ClaimsPrincipal user);
+        Task<string> GetUserIdAsync(ClaimsPrincipal user);
 
         Task<UserProfileDTO> GetProfileInfoAsync(string userId);
 

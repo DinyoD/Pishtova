@@ -31,7 +31,7 @@
             {
                 return StatusCode(400, new ErrorResult { Message = "The request body is empty" });
             }
-            var userId = this.userService.GetUserId(User);
+            var userId = await this.userService.GetUserIdAsync(User);
             if (userId == null)
             {
                 return StatusCode(400, new ErrorResult { Message = "Unauthorized request" });
@@ -50,16 +50,16 @@
         [Route("[action]")]
         public async Task<ICollection<SubjectPointsModel>> UserPointsBySubject()
         {
-            var usetrId = this.userService.GetUserId(User);
-            return await this.scoreService.GetUserSubjectScoresAsync(usetrId);
+            var userId = await this.userService.GetUserIdAsync(User);
+            return await this.scoreService.GetUserSubjectScoresAsync(userId);
         }
 
         [HttpGet]
         [Route("[action]/{sbjId}")]
         public async Task<ICollection<CategoryWithPointsModel>> SubjectPointsByCategories(int sbjId)
         {
-            var usetrId = this.userService.GetUserId(User);
-            var result =  await this.scoreService.GetSubjectCategoriesScoresAsync(usetrId, sbjId);
+            var userId = await this.userService.GetUserIdAsync(User);
+            var result =  await this.scoreService.GetSubjectCategoriesScoresAsync(userId, sbjId);
             return result;
         }
     }

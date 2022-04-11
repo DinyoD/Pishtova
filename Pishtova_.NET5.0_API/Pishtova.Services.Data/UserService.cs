@@ -13,18 +13,22 @@
     using Pishtova.Services.Messaging;
     using Pishtova_ASP.NET_web_api.Model.User;
     using Pishtova_ASP.NET_web_api.Model.School;
+    using Microsoft.AspNetCore.Identity;
 
     public class UserService : IUserService
     {
         private readonly PishtovaDbContext db;
         private readonly IEmailSender emailSender;
+        private readonly UserManager<User> userManager;
 
         public UserService(
                 PishtovaDbContext db,
-                IEmailSender emailSender)
+                IEmailSender emailSender,
+                UserManager<User> userManager)
         { 
             this.db = db;
             this.emailSender = emailSender;
+            this.userManager = userManager;
         }
 
         public async Task<UserProfileDTO> GetProfileInfoAsync(string userId)
@@ -49,9 +53,11 @@
             return profile;
         }
 
-        public string GetUserId(ClaimsPrincipal user)
+        public async Task<string> GetUserIdAsync(ClaimsPrincipal principal)
         {
-            return user.FindFirstValue(ClaimTypes.Email);
+            var userEmail = principal.FindFirstValue(ClaimTypes.Email);
+            var user = await this.userManager.FindByNameAsync(userEmail);
+            return user.Id;
         }
 
         public async Task UpdateUserAvatar(string userId, string pictureUrl)
@@ -129,5 +135,6 @@
                 .FirstOrDefaultAsync();
             return info;
         }
+
     }
 }

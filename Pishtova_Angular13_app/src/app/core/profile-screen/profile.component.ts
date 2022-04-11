@@ -118,7 +118,6 @@ export class ProfileComponent implements OnInit {
   public badgeIsOwned = (code: number): boolean => { return this.badgeCount(code) > 0}
 
   public goToBillingPortal():void {
-    console.log(456);
     this.membershipService.redirectToCustomerPortal().subscribe((data) => { window.location.href = data.url });
   }
 

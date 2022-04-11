@@ -81,7 +81,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 		[HttpPost("customer-portal")]
 		public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
 		{
-			var userId = this.userService.GetUserId(User);
+			var userId = await this.userService.GetUserIdAsync(User);
 			var userFromDb = await this.userManager.FindByIdAsync(userId);
             if (userFromDb == null)
             {

@@ -24,15 +24,18 @@
     {
         private readonly UserManager<User> userManager;
         private readonly IUserService userService;
+        private readonly IPishtovaSubscriptionService subscriptionService;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettings,
-            IUserService userService)          
+            IUserService userService,
+            IPishtovaSubscriptionService subscriptionService)          
         {
             this.userManager = userManager;
             this.userService = userService;
+            this.subscriptionService = subscriptionService;
             this.applicationSettings = applicationSettings.Value;
         }
 
@@ -89,24 +92,14 @@
                 return StatusCode(401, new ErrorResult { Message = "Sorry, your username and / or password do not match" });
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.applicationSettings.Secret);
+            var subscription = await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
+            DateTime expDate = subscription != null && subscription.Status == "active" ? subscription.CurrentPeriodEnd : DateTime.Now.AddDays(7);
+            var isSubscriber = subscription != null && subscription.Status == "active";
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Email, user.Id)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key), 
-                    SecurityAlgorithms.HmacSha256Signature)
-            };
+            string token = this.GenerateToken(user, expDate, isSubscriber);
+            return StatusCode(200, new LoginResult { Token = token });
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return StatusCode(200, new LoginResult { Token = tokenHandler.WriteToken(token) });
         }
 
         [HttpGet]
@@ -164,6 +157,29 @@
             }
 
             return Ok();
+        }
+
+        private string GenerateToken(User user, DateTime expDate, bool isSubscriber)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(this.applicationSettings.Secret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("userId", user.Id),
+                    new Claim("isSubscriber", isSubscriber.ToString())
+                }),
+                Expires = expDate,
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }
