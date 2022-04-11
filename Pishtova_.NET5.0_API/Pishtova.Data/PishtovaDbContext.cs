@@ -56,7 +56,7 @@ namespace Pishtova.Data
 
         public DbSet<Test> Tests { get; set; }
 
-        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
 
         public override int SaveChanges()
         {

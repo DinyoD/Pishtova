@@ -2,6 +2,7 @@
 namespace Pishtova_ASP.NET_web_api.Controllers
 {
 	using System;
+    using System.IO;
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
 
@@ -23,15 +24,18 @@ namespace Pishtova_ASP.NET_web_api.Controllers
         private readonly StripeSettings stripeSettings;
         private readonly UserManager<User> userManager;
         private readonly IUserService userService;
+        private readonly IPishtovaSubscriptionService subscriptionService;
 
         public PaymentsController(
 			IOptions<StripeSettings> stripeSettings,
 			UserManager<User> userManager,
-			IUserService userService)
+			IUserService userService,
+			IPishtovaSubscriptionService subscriptionService)
 		{
 			this.stripeSettings = stripeSettings.Value;
             this.userManager = userManager;
             this.userService = userService;
+            this.subscriptionService = subscriptionService;
         }
 
 		[HttpPost("create-checkout-session")]
@@ -103,6 +107,111 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				return BadRequest(new ErrorResult { Message = e.StripeError.Message });
 			}
 
+		}
+
+		[HttpPost("webhook")]
+		public async Task<IActionResult> WebHook()
+		{
+			var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+
+			try
+			{
+				var stripeEvent = EventUtility.ConstructEvent(
+				 json,
+				 Request.Headers["Stripe-Signature"],
+				 this.stripeSettings.WHSecret
+			   );
+
+				// Handle the event
+				if (stripeEvent.Type == Events.CustomerSubscriptionCreated)
+				{
+					var subscription = stripeEvent.Data.Object as Subscription;
+					await AddSubscriptionToDb(subscription);
+				}
+				else if (stripeEvent.Type == Events.CustomerSubscriptionUpdated)
+				{
+					var session = stripeEvent.Data.Object as Stripe.Subscription;
+					await UpdateSubscription(session);
+				}
+				else if (stripeEvent.Type == Events.CustomerCreated)
+				{
+					var customer = stripeEvent.Data.Object as Customer;
+					await AddCustomerIdToUser(customer);
+				}
+				// ... handle other event types
+				else
+				{
+					// Unexpected event type
+					Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
+				}
+				return Ok();
+			}
+			catch (StripeException e)
+			{
+				Console.WriteLine(e.StripeError.Message);
+				return BadRequest(new ErrorResult { Message = e.StripeError.Message });
+			}
+		}
+
+		private async Task AddCustomerIdToUser(Customer customer)
+		{
+			try
+			{
+				var userFromDb = await this.userManager.FindByEmailAsync(customer.Email);
+
+				if (userFromDb != null)
+				{
+					userFromDb.CustomerId = customer.Id;
+					await this.userManager.UpdateAsync(userFromDb);
+				}
+
+			}
+			catch (System.Exception ex)
+			{
+				Console.WriteLine("Unable to add customer id to user");
+				Console.WriteLine(ex);
+			}
+		}
+
+		private async Task AddSubscriptionToDb(Subscription subscription)
+		{
+			try
+			{
+				var subscriber = new Subscriber
+				{
+					Id = subscription.Id,
+					CustomerId = subscription.CustomerId,
+					Status = "active",
+					CurrentPeriodEnd = subscription.CurrentPeriodEnd
+				};
+				await this.subscriptionService.CreateAsync(subscriber);
+
+				//Can send an email welcoming the new subscriber
+			}
+			catch (System.Exception ex)
+			{
+				Console.WriteLine("Unable to add new subscriber to Database");
+				Console.WriteLine(ex.Message);
+			}
+		}
+		private async Task UpdateSubscription(Subscription subscription)
+		{
+			try
+			{
+				var subscriptionFromDb = await this.subscriptionService.GetByIdAsync(subscription.Id);
+				if (subscriptionFromDb != null)
+				{
+					subscriptionFromDb.Status = subscription.Status;
+					subscriptionFromDb.CurrentPeriodEnd = subscription.CurrentPeriodEnd;
+					await this.subscriptionService.UpdateAsync(subscriptionFromDb);
+				}
+
+			}
+			catch (System.Exception ex)
+			{
+				Console.WriteLine("Unable to update subscription");
+				Console.WriteLine(ex.Message);
+			}
 		}
 	}
 }
