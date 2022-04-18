@@ -2,7 +2,6 @@
 
 $fontSize: calc(13px + 0.5vw);
 $badgeSize: calc(20px + 3.5vw);
-$badgeFontSize: calc(13px +1vw);
 
 mat-card.dialog-container {
   width: 25vw;
@@ -15,16 +14,15 @@ mat-card.dialog-container {
   justify-content: space-between;
   .userInfo-picture {
     width: 100%;
-    height: 100px;
+    height: 120px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     .userInfo-img-default,
     .userInfo-img {
-      width: 100px;
-      height: 100px;
-      background-color: rgba($secondary, 0.5);
+      width: 120px;
+      height: 120px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -80,29 +78,18 @@ mat-card.dialog-container {
     .badge {
       width: $badgeSize;
       height: $badgeSize;
-      border-radius: 100%;
-      background-color: rgba($green, 0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      opacity: 0.2;
       align-items: center;
-      .badge-text {
-        color: rgba($black, 0.1);
-        font-size: $badgeFontSize;
-        font-weight: bolder;
-        margin: 0;
-      }
     }
     .badge.owned {
-      background-color: rgba($green, 0.8);
-      .badge-text {
-        color: rgba($black, 0.8);
-      }
+      opacity: 1;
     }
     .badge-count {
       text-align: center;
-      color: rgba($black, 0.8);
+      color: rgba($green, 0.8);
+      font-size: 32px;
       font-weight: bolder;
+      margin: 0;
     }
   }
   .userInfo-badges-percent {

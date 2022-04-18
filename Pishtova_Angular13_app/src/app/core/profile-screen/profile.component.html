@@ -36,50 +36,27 @@
   </div>
   <div class="profile-content">
     <div class="content-part">
-      <div class="badge" [ngClass]="{'owned': badgeIsOwned(2010)}">
-        <p class="badge-text">10</p>
-        <p class="badge-text">теста</p>
-      </div>
-      <div class="badge" [ngClass]="{'owned': badgeIsOwned(2020)}">
-        <p class="badge-text">20</p>
-        <p class="badge-text">теста</p>
-      </div>
-      <div class="badge" [ngClass]="{'owned': badgeIsOwned(2050)}">
-        <p class="badge-text">50</p>
-        <p class="badge-text">теста</p>
-      </div>
-      <div class="badge" [ngClass]="{'owned': badgeIsOwned(2100)}">
-        <p class="badge-text">100</p>
-        <p class="badge-text">теста</p>
-      </div>
+      <img class="badge" [ngClass]="{'owned': badgeIsOwned(2010)}" src="../../../assets/icons/badge10Testa.svg" alt="">
+      <img class="badge" [ngClass]="{'owned': badgeIsOwned(2020)}" src="../../../assets/icons/badge20Testa.svg" alt="">
+      <img class="badge" [ngClass]="{'owned': badgeIsOwned(2050)}" src="../../../assets/icons/badge50Testa.svg" alt="">
+      <img class="badge" [ngClass]="{'owned': badgeIsOwned(2100)}" src="../../../assets/icons/badge100Testa.svg" alt="">
     </div>
     <div class="content-part percent-badge-part">
-      <div class="badje-container">
-        <div class="badge" [ngClass]="{'owned': badgeIsOwned(1070)}">
-          <p class="badge-text">70%</p>
-          <p class="badge-text">успех</p>
-        </div>
+      <div class="badge-container">
+        <img class="badge" [ngClass]="{'owned': badgeIsOwned(1070)}" src="../../../assets/icons/badge70Perc.svg" alt="">
         <p class="badge-count" *ngIf="badgeIsOwned(1070)">{{badgeCount(1070)}}</p>
       </div>
-      <div class="badje-container">
-        <div class="badge" [ngClass]="{'owned': badgeIsOwned(1080)}">
-          <p class="badge-text">80%</p>
-          <p class="badge-text">успех</p>
-        </div>
+      <div class="badge-container">
+        <img class="badge" [ngClass]="{'owned': badgeIsOwned(1080)}" src="../../../assets/icons/badge80Perc.svg" alt="">
         <p class="badge-count" *ngIf="badgeIsOwned(1080)">{{badgeCount(1080)}}</p>
       </div>
-      <div class="badje-container">
-        <div class="badge" [ngClass]="{'owned': badgeIsOwned(1090)}">
-          <p class="badge-text">90%</p>
-          <p class="badge-text">успех</p>
-        </div>
+      <div class="badge-container">
+        <img class="badge" [ngClass]="{'owned': badgeIsOwned(1090)}" src="../../../assets/icons/badge90Perc.svg" alt="">
         <p class="badge-count" *ngIf="badgeIsOwned(1090)">{{badgeCount(1090)}}</p>
       </div>
-      <div class="badje-container">
-        <div class="badge" [ngClass]="{'owned': badgeIsOwned(1100)}">
-          <p class="badge-text">100%</p>
-          <p class="badge-text">успех</p>
-        </div>
+      <div class="badge-container">
+        <img class="badge" [ngClass]="{'owned': badgeIsOwned(1100)}" src="../../../assets/icons/badge100Perc.svg"
+          alt="">
         <p class="badge-count" *ngIf="badgeIsOwned(1100)">{{badgeCount(1100)}}</p>
       </div>
     </div>

@@ -1,4 +1,4 @@
-export interface MemberShipPlanModel {
+export interface MembershipPlanModel {
     priceId: string;
     id: string;
     name: string;

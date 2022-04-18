@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MembershipService } from 'src/app/services';
-import { MemberShipPlanModel } from '../models/MembershipPlan';
+import { MembershipPlanModel } from '../models/MembershipPlan';
 
 @Component({
   selector: 'app-membership-checkout',
@@ -11,7 +11,7 @@ import { MemberShipPlanModel } from '../models/MembershipPlan';
 })
 export class MembershipCheckoutComponent {
 
-  $membership: Observable<MemberShipPlanModel>;
+  $membership: Observable<MembershipPlanModel>;
 
   constructor(private membershipService: MembershipService) {
 

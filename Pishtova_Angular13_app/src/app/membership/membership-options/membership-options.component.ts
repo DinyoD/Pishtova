@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MembershipService } from 'src/app/services';
-import { MemberShipPlanModel } from '../models/MembershipPlan';
+import { MembershipPlanModel } from '../models/MembershipPlan';
 
 @Component({
   selector: 'app-membership-options',
@@ -10,7 +10,7 @@ import { MemberShipPlanModel } from '../models/MembershipPlan';
 })
 export class MembershipOptionsComponent{
 
-  $membership: Observable<MemberShipPlanModel>;
+  $membership: Observable<MembershipPlanModel>;
   constructor(private membershipService: MembershipService) { 
     this.$membership = this.membershipService.getMembership();
   }

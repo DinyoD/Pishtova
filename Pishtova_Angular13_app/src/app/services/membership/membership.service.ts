@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { environment as env} from 'src/environments/environment';
-import { MemberShipPlanModel } from 'src/app/membership/models/MembershipPlan';
+import { MembershipPlanModel } from 'src/app/membership/models/MembershipPlan';
 import { SessionModel } from 'src/app/membership/models/Session';
 import { RequestMemberSessionModel } from 'src/app/membership/models/RequestMemberSession';
 import { CustomerPortalModel } from 'src/app/membership/models/CustomerPortal';
@@ -18,7 +18,7 @@ export class MembershipService {
 
   constructor(private http: HttpClient) { }
 
-  public getMembership = (): Observable<MemberShipPlanModel> => {
+  public getMembership = (): Observable<MembershipPlanModel> => {
     return of({
       id: 'prod_LSupAmVWkLF05P',
       priceId: 'price_1KlyzeBd9uAKWbJc8pdwcItm',
