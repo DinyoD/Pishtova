@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MembershipCheckoutComponent } from './membership-checkout/membership-checkout.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MembershipOptionsComponent } from './membership-options/membership-options.component';
@@ -14,7 +13,6 @@ import { MembershipSuccessComponent } from './membership-success/membership-succ
 
 @NgModule({
   declarations: [
-    MembershipCheckoutComponent,
     MembershipOptionsComponent,
     MembershipFailureComponent,
     MembershipSuccessComponent
@@ -24,7 +22,6 @@ import { MembershipSuccessComponent } from './membership-success/membership-succ
     HttpClientModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'checkout', component: MembershipCheckoutComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'failure', component: MembershipFailureComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'success', component: MembershipSuccessComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },

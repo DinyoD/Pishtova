@@ -7,6 +7,7 @@ import { MembershipPlanModel } from 'src/app/membership/models/MembershipPlan';
 import { SessionModel } from 'src/app/membership/models/Session';
 import { RequestMemberSessionModel } from 'src/app/membership/models/RequestMemberSession';
 import { CustomerPortalModel } from 'src/app/membership/models/CustomerPortal';
+import { ProductModel } from 'src/app/membership/models/Product';
 
 declare const Stripe: any;
 
@@ -18,18 +19,8 @@ export class MembershipService {
 
   constructor(private http: HttpClient) { }
 
-  public getMembership = (): Observable<MembershipPlanModel> => {
-    return of({
-      id: 'prod_LSupAmVWkLF05P',
-      priceId: 'price_1KlyzeBd9uAKWbJc8pdwcItm',
-      name: 'Premium Membership Plan',
-      price: '15.84 BGN',
-      features: [
-        'Materials',
-        'Tests',
-        'Free cancelation',
-      ],
-    });
+  public getMembership = (): Observable<ProductModel> => {
+    return this.http.get<ProductModel>(env.API_URL + `/payments/product`);
   }
   
   public requestMemberSession = (priceId: string): void => {

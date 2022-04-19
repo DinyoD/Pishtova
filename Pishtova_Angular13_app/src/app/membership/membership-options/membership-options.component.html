@@ -1,22 +1,17 @@
-<div class="py-4 text-center">
-  <h2 class="mb-1">Видове абонаменти</h2>
-</div>
-<div class="container mb-2">
-  <div class="row justify-content-md-center mb-2">
-    <div class="card card-pricing text-center px-3 mb-1 w-50" *ngIf="$membership|async as membership">
-      <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-primary text-white shadow-sm">{{membership.name}}</span>
-      <div class="bg-transparent card-header pt-2 border-0">
-        <h1 class="h1 font-weight-normal text-primary text-center mb-0" data-pricing-value="15"><span
-            class="price">{{membership.price}}</span><span class="h6 text-muted ml-2"> за месец</span></h1>
-      </div>
-      <div class="card-body pt-0">
-        <ul class="list-unstyled mb-2" *ngFor="let feature of membership.features">
-          <li>{{feature}}</li>
-        </ul>
-        <button type="button" [routerLink]="['/checkout']" class="btn btn-outline-secondary mb-3">
-          <i class="fas fa-shopping-cart"></i> Избери</button>
-      </div>
-    </div>
+<div class="container">
 
+  <h2>{{product?.name}}</h2>
+  <h5>{{product?.description}}</h5>
+  <div class="prices-container">
+    <div class="price" *ngFor="let pr of prices">
+      <h3>{{pr.description}}</h3>
+      <h5 *ngIf="pr.subscription == null">interval: n/a</h5>
+      <p *ngIf="pr.subscription == null">recurring: no</p>
+      <h5 *ngIf="pr.subscription">interval: {{pr.subscription}}</h5>
+      <p *ngIf="pr.subscription">recurring: yes</p>
+      <h5>price: {{pr.price}} BGN</h5>
+      <h4>Free cancelation</h4>
+      <a class="btn" (click)="Checkout(pr.id)">Checkout</a>
+    </div>
   </div>
 </div>

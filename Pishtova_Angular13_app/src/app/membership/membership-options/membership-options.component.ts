@@ -1,20 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { MembershipService } from 'src/app/services';
-import { MembershipPlanModel } from '../models/MembershipPlan';
+import { MembershipService } from 'src/app/services';import { PriceModel } from '../models/Price';
+;
+import { ProductModel } from '../models/Product';
 
 @Component({
   selector: 'app-membership-options',
   templateUrl: './membership-options.component.html',
   styleUrls: ['./membership-options.component.css']
 })
-export class MembershipOptionsComponent{
+export class MembershipOptionsComponent implements OnInit{
 
-  $membership: Observable<MembershipPlanModel>;
+  public product:ProductModel|null = null;
+  public prices: PriceModel[]|null = null
   constructor(private membershipService: MembershipService) { 
-    this.$membership = this.membershipService.getMembership();
   }
 
-  //ngOnInit(): void {}
+  ngOnInit(): void {
+    this.membershipService.getMembership().subscribe(product => {
+      this.product = product;
+      this.prices = product.prices;
+    })
+  }
+
+  public Checkout = (priceId: string): void =>  {
+    this.membershipService.requestMemberSession(priceId);
+  }
 
 }
