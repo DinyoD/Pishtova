@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Pishtova.Data;
-using Pishtova.Data.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pishtova.Services.Data
+﻿namespace Pishtova.Services.Data
 {
+	using Microsoft.EntityFrameworkCore;
+	using Pishtova.Data;
+	using Pishtova.Data.Model;
+	using System;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+
     public class PishtovaSubscriptionService: IPishtovaSubscriptionService
     {
         private readonly PishtovaDbContext db;

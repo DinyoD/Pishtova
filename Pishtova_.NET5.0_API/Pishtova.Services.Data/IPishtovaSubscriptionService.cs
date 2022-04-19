@@ -1,9 +1,9 @@
-﻿using Pishtova.Data.Model;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Pishtova.Services.Data
+﻿namespace Pishtova.Services.Data
 {
+	using Pishtova.Data.Model;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+
     public interface IPishtovaSubscriptionService
     {
 		Task<Subscriber> UpdateAsync(Subscriber subscription);

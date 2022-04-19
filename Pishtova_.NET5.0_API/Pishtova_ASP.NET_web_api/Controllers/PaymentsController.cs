@@ -18,6 +18,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
     using Microsoft.AspNetCore.Identity;
     using Pishtova.Data.Model;
     using Pishtova.Services.Data;
+    using System.Linq;
 
     public class PaymentsController: ApiController
     {
@@ -37,6 +38,42 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             this.userService = userService;
             this.subscriptionService = subscriptionService;
         }
+
+		[HttpGet("product")]
+		public IActionResult GetProduct()
+        {
+            try
+            {
+				var priceService = new PriceService();
+				var productService = new ProductService();
+				var prices = priceService
+					.List()
+					.Select(x => new StripePriceModel
+					{
+						Id = x.Id,
+						Subscription = x.Recurring?.Interval,
+						Description = x.Nickname,
+						Price = (double)(x.UnitAmount != null ? x.UnitAmount / 100.00 : 0.00),
+                    })
+                    .ToList();
+
+				var product = productService
+					.List()
+					.Select(x => new StripeProductModel
+					{
+						Id = x.Id,
+						Name = x.Name,
+						Description =x.Description
+					})
+					.FirstOrDefault();
+				product.Prices = prices;
+                return Ok(product);
+            }
+			catch (StripeException e)
+			{
+				return BadRequest(new ErrorResult { Message = e.StripeError.Message });
+			}
+		}
 
 		[HttpPost("create-checkout-session")]
 		public async Task<IActionResult> CreateCheckoutSession([FromBody] CreateCheckoutSessionRequest req)
@@ -75,7 +112,6 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				return BadRequest(new ErrorResult { Message = e.StripeError.Message });
 			}
 		}
-
 
 		[Authorize]
 		[HttpPost("customer-portal")]
@@ -194,6 +230,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				Console.WriteLine(ex.Message);
 			}
 		}
+
 		private async Task UpdateSubscription(Subscription subscription)
 		{
 			try
