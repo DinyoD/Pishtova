@@ -93,7 +93,7 @@
             }
 
             var subscription = await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
-            DateTime expDate = subscription != null && subscription.Status == "active" ? subscription.CurrentPeriodEnd : DateTime.Now.AddDays(7);
+            DateTime expDate = subscription != null && subscription.CurrentPeriodEnd > DateTime.Now ? subscription.CurrentPeriodEnd : DateTime.Now.AddDays(7);
             var isSubscriber = subscription != null && subscription.Status == "active";
 
             string token = this.GenerateToken(user, expDate, isSubscriber);
