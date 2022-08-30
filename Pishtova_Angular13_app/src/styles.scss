@@ -1,14 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./app/utilities/colors/colors.scss";
 
-body {
+body::before {
+  content: "";
+  background-size: cover;
   background-image: url("./assets/images/background-main.jpg");
+  opacity: 30%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+body {
+  position: relative;
   margin: 0;
-  font-family: "Rubik", sans-serif;
   box-sizing: border-box;
+  font-family: "Rubik", sans-serif;
   font-size: 16px;
 
   app-root {
+    position: relative;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -17,13 +29,9 @@ body {
   }
   .header,
   .footer {
-    background-color: rgba($secondary, 0.9);
     font-family: inherit;
   }
-  .footer {
-    height: calc(100vh / 15 * 1);
-    max-height: 65px;
-  }
+
   div {
     box-sizing: inherit;
   }

@@ -10,53 +10,37 @@ $modalWidthValue: calc(100vh / 15 * 6);
 $modalIconSize: calc(100vh / 8 * 2 / 6);
 $modalFontSize: calc((100vh / 8 * 2 / 6) * 0.8);
 
-.header {
+.container {
   position: relative;
-  height: $headerHeightValue;
-  max-height: 130px;
-  mat-toolbar-row {
+  height: 40px;
+  padding: 40px;
+  .header {
     height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     z-index: 2;
-    img {
-      width: $imageSize;
-      height: $imageSize;
-    }
-    mat-icon,
-    .icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: $iconSize;
-      height: $iconSize;
-      width: $iconSize;
-      color: $icon;
-      text-decoration: none;
-      box-sizing: border-box;
-    }
-    .icon.open mat-icon {
-      color: $green;
-    }
-    .icon:hover {
-      border-radius: 15px;
-      cursor: pointer;
-    }
-    // .left:hover {
-    //   box-shadow: 2px 2px 4px rgba($icon, 0.5);
-    // }
-    // .right:hover {
-    //   box-shadow: -2px 2px 4px rgba($icon, 0.5);
-    // }
+
     a {
       text-decoration: none;
-      display: flex;
-      align-items: center;
     }
+
+    .app-name {
+      width: 124px;
+      height: 32px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
     .sbj-name {
-      color: $icon;
-      font-size: $sbjFontSize;
+      color: $secondary;
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 40px;
     }
   }
   .modal {

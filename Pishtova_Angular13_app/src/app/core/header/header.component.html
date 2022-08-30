@@ -1,17 +1,32 @@
-<mat-toolbar class="header">
-  <mat-toolbar-row>
-    <a class="icon left" routerLink="/main" (click)="hideModal()">
+<div class="container">
+  <div class="header">
+
+    <div class="icon">
+      <a *ngIf="isAuth" routerLink="/main" (click)="hideModal()">
+        <img src="../../../assets/icons/menu.svg" alt="">
+      </a>
+    </div>
+
+
+    <div *ngIf="isAuth == null || subject == null" class="app-name">
       <img src="../../../assets/icons/logoText.svg" alt="">
-    </a>
+    </div>
+
     <a *ngIf="subject && isAuth" routerLink="/subject/{{subject.id}}">
       <span class="sbj-name">
-        {{subject.name.toUpperCase()}}
+        {{subject.name}}
       </span>
     </a>
-    <a *ngIf="isAuth" class="icon right" [ngClass]="{'open': showModal == true}" (click)="changeShowModal()">
-      <mat-icon>menu</mat-icon>
-    </a>
-  </mat-toolbar-row>
+
+
+    <div>
+      <a *ngIf="isAuth" [ngClass]="{'open': showModal == true}" (click)="changeShowModal()">
+        <img src="../../../assets/icons/menu.svg" alt="">
+      </a>
+    </div>
+
+  </div>
+
   <div class="modal" @slideRight *ngIf="showModal">
     <a class="modal-field" routerLink="/profile" (click)="hideModal()">
       <mat-icon>account_circle</mat-icon>
@@ -31,4 +46,4 @@
     </a>
   </div>
 
-</mat-toolbar>
+</div>

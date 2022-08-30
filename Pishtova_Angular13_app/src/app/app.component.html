@@ -1,5 +1,5 @@
-<app-header *ngIf="Auth"></app-header>
+<app-header></app-header>
 <router-outlet>
   <app-loading-indicator></app-loading-indicator>
 </router-outlet>
-<app-footer></app-footer>
+<app-footer *ngIf="Auth"></app-footer>
