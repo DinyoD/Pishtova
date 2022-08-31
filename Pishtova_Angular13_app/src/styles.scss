@@ -19,17 +19,17 @@ body {
   font-family: "Rubik", sans-serif;
   font-size: 16px;
 
+  .header,
+  .footer {
+    font-family: inherit;
+  }
   app-root {
     position: relative;
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-  }
-  .header,
-  .footer {
-    font-family: inherit;
+    justify-content: start;
   }
 
   div {
