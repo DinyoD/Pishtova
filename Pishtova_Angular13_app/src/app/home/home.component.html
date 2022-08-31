@@ -1,9 +1,16 @@
 <div class="container">
-  <div class="actionContainer">
-    <app-login></app-login>
-    <div>
-      <a routerLink="/auth/forgotpassword" class="text"><span>Забравили сте паролата си?</span></a>
+  <div class="box-container">
+    <div class="title-container">
+      <span class="title">Вход</span>
+      <span class="text">Добре дошли отново!</span>
+      <span class="text">Моля, въведете своите данни.</span>
     </div>
-    <a routerLink="/auth/register" class="btn"><span>Регистрация</span></a>
+    <div class="login-container">
+      <app-login></app-login>
+    </div>
+    <div class="sign_up-container">
+      <span class="text">Нямате акаунт?</span>
+      <a routerLink="/auth/register"><span class="link"> Регистрация</span></a>
+    </div>
   </div>
 </div>

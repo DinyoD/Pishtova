@@ -1,46 +1,52 @@
 @import "../utilities/colors/colors.scss";
 
 .container {
-  width: 33.3vw;
-  height: 82vh;
-  margin: 20px auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-
-  .actionContainer {
-    height: 50%;
-    width: 100%;
+  align-items: center;
+  justify-content: center;
+  .box-container {
+    width: 320px;
+    height: 440px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    .text {
+    justify-content: space-between;
+    .title-container {
       display: flex;
-      justify-content: flex-end;
-    }
-    .btn {
-      height: 60px;
-      width: 100%;
-      font-size: 18px;
-      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: white;
-      border-radius: 5px;
-      box-shadow: 4px 4px 8px rgba($black, 0.2);
+      line-height: 1.5rem;
+      margin-bottom: 32px;
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      .text {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        color: rgba(51, 51, 51, 0.8);
+      }
     }
-    .text,
-    .btn {
-      text-decoration: none;
-      color: rgba(0, 0, 0, 0.5);
+    .login-container {
     }
-    .text:hover,
-    .btn:hover {
-      cursor: pointer;
-      color: black;
-    }
-    .btn:hover {
-      box-shadow: 1px 1px 3px rgba($black, 0.1);
+    .sign_up-container {
+      display: flex;
+      margin-top: 16px;
+      justify-content: center;
+      .text,
+      .link {
+        font-size: 14px;
+        line-height: 24px;
+      }
+      .text {
+        font-weight: 400;
+      }
+      .link {
+        font-weight: 700;
+      }
     }
   }
 }
