@@ -3,7 +3,6 @@
 
 body::before {
   content: "";
-  background-size: cover;
   background-image: url("./assets/images/background-main.jpg");
   opacity: 30%;
   position: absolute;
@@ -25,8 +24,10 @@ body {
   }
   app-root {
     position: relative;
-    width: 100vw;
-    height: 100vh;
+    width: max-content;
+    min-width: 100vw;
+    height: max-content;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
