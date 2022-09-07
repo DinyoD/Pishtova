@@ -23,7 +23,7 @@
         </div>
 
         <mat-error *ngIf="email.touched && email.hasError('required')">Имейлът е задължителен</mat-error>
-        <mat-error *ngIf="email.touched && email.hasError('email')">Имейл адресът не е валиден!</mat-error>
+        <mat-error *ngIf="email.touched && email.hasError('email')">Имейл адресът не е валиден</mat-error>
         <mat-error *ngIf="password.touched && password.hasError('required')">Паролата е зъдължителна</mat-error>
 
       </form>
