@@ -1,12 +1,36 @@
 <div class="container">
+
+  <div class="menu-container" *ngIf="showModal">
+    <div class="close-box" (click)="hideModal()">
+      <img class="icon icon-close" src="../../../assets/icons/burger-menu/close.svg" alt="">
+    </div>
+    <div class="menu-box">
+      <a class="menu-field" routerLink="/profile">
+        <div class="icon"><img src="../../../assets/icons/burger-menu/profile.svg" alt=""></div>
+        <p class="menu-field-text">Профил</p>
+      </a>
+      <a class="menu-field" routerLink="/memberships">
+        <div class="icon"><img src="../../../assets/icons/burger-menu/subsciption.svg" alt=""></div>
+        <p class="menu-field-text">Абонамент</p>
+      </a>
+      <a class="menu-field">
+        <div class="icon"><img src="../../../assets/icons/burger-menu/help.svg" alt=""></div>
+        <p class="menu-field-text">Помощ</p>
+      </a>
+      <div class="menu-field" (click)="handleSignOut()">
+        <div class="icon"> <img src="../../../assets/icons/burger-menu/logout.svg" alt=""></div>
+        <p class="menu-field-text">Отписване</p>
+      </div>
+    </div>
+  </div>
+
   <div class="header">
 
-    <div class="icon">
-      <a *ngIf="isAuth" routerLink="/main" (click)="hideModal()">
+    <div>
+      <a *ngIf="isAuth" routerLink="/main" (click)="changeShowModal()">
         <img src="../../../assets/icons/menu.svg" alt="">
       </a>
     </div>
-
 
     <div *ngIf="isAuth == null || subject == null" class="app-name">
       <img src="../../../assets/icons/logoText.svg" alt="">
@@ -18,32 +42,12 @@
       </span>
     </a>
 
-
     <div>
       <a *ngIf="isAuth" [ngClass]="{'open': showModal == true}" (click)="changeShowModal()">
         <img src="../../../assets/icons/menu.svg" alt="">
       </a>
     </div>
 
-  </div>
-
-  <div class="modal" @slideRight *ngIf="showModal">
-    <a class="modal-field" routerLink="/profile" (click)="hideModal()">
-      <mat-icon>account_circle</mat-icon>
-      <p class="modal-field-text">Профил</p>
-    </a>
-    <a class="modal-field" routerLink="/memberships" (click)="hideModal()">
-      <mat-icon>payment</mat-icon>
-      <p class="modal-field-text">Абонамент</p>
-    </a>
-    <a class="modal-field" (click)="hideModal()">
-      <mat-icon>help</mat-icon>
-      <p class="modal-field-text">Помощ</p>
-    </a>
-    <a class="modal-field" (click)="handleSignOut()">
-      <mat-icon>exit_to_app</mat-icon>
-      <p class="modal-field-text">Отписване</p>
-    </a>
   </div>
 
 </div>

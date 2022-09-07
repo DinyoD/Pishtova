@@ -1,26 +1,50 @@
 @import "../../utilities/colors/colors.scss";
-
-$iconSize: calc(100vh / 8 * 2 / 3);
-$sbjFontSize: calc(100vh / 8 * 2 / 5);
-$imageSize: calc((100vh / 8 * 2 / 3) * 0.8);
-$headerHeightValue: calc(100vh / 15 * 2);
-$modalHeightValue: calc(100vh / 15 * 12);
-$modalFieldHeightValue: calc(100vh / 15);
-$modalWidthValue: calc(100vh / 15 * 6);
-$modalIconSize: calc(100vh / 8 * 2 / 6);
-$modalFontSize: calc((100vh / 8 * 2 / 6) * 0.8);
+@import "../../utilities/devices/breakpoints.scss";
 
 .container {
   position: relative;
   height: 40px;
-  padding: 40px;
+  padding: 10px;
+  .menu-container {
+    background-color: $menu;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 15;
+    padding-top: 54px;
+    padding-left: 24px;
+
+    .close-box {
+      margin-bottom: 48px;
+    }
+    .menu-box {
+      width: 200px;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .menu-field {
+      height: 32px;
+      display: flex;
+      text-decoration: none;
+      .menu-field-text {
+        margin: 0 0 0 16px;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 600;
+        color: $white;
+      }
+    }
+  }
   .header {
     height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    z-index: 2;
 
     a {
       text-decoration: none;
@@ -43,50 +67,10 @@ $modalFontSize: calc((100vh / 8 * 2 / 6) * 0.8);
       line-height: 40px;
     }
   }
-  .modal {
-    background-color: rgba($primary, 1);
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    position: absolute;
-    top: $headerHeightValue;
-    right: 2px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: $modalWidthValue;
-    height: $modalHeightValue;
-    max-height: calc(100vh - 195px);
-    z-index: 150;
-    .modal-field {
-      height: $modalFieldHeightValue;
-      width: 100%;
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      mat-icon {
-        font-size: $modalIconSize;
-        width: $modalIconSize;
-        height: $modalIconSize;
-        color: rgba($secondary, 0.5);
-        margin: 0 30px;
-      }
-      .modal-field-text {
-        margin: 0;
-        font-size: $modalFontSize;
-        color: rgba($secondary, 0.5);
-      }
-    }
-    .modal-field:hover {
-      cursor: pointer;
-      background-color: rgba($secondary, 0.5);
-      mat-icon {
-        color: $icon;
-      }
-      .modal-field-text {
-        color: $icon;
-      }
-    }
+}
+
+@media (min-width: $tablet) {
+  .container {
+    padding: 40px;
   }
 }
