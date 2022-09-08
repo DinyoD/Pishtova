@@ -39,17 +39,12 @@ export class HeaderComponent implements OnInit{
     this.subjectService.subjectChanged.subscribe(sbj => this.subject = sbj);
   }
 
-  changeShowModal(): void{
+  public changeShowModal(): void{
     this.showModal = !this.showModal;
     this.cd.detectChanges();
   }
 
-  hideModal(): void{
-    this.showModal = false;
-    this.cd.detectChanges();   
-  };
-
-  handleSignOut() {
+  public handleSignOut() {
     this.hideModal();
     const dialogData = new ConfirmationDialogModel('Моля, потвърдете отписване!', '*Ако сте в тест, той ще се прекрати и изтрие!');
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { 
@@ -65,4 +60,10 @@ export class HeaderComponent implements OnInit{
         }
     });
   }
+
+  public hideModal(): void {
+    if (this.showModal) {
+      this.showModal = false;
+    }
+  };
 }

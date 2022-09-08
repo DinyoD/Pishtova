@@ -7,6 +7,7 @@
   padding: 10px;
   .menu-container {
     background-color: $menu;
+    box-sizing: border-box;
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -30,6 +31,7 @@
       height: 32px;
       display: flex;
       text-decoration: none;
+      cursor: pointer;
       .menu-field-text {
         margin: 0 0 0 16px;
         font-size: 24px;
@@ -48,6 +50,7 @@
 
     a {
       text-decoration: none;
+      cursor: pointer;
     }
 
     .app-name {
@@ -72,5 +75,8 @@
 @media (min-width: $tablet) {
   .container {
     padding: 40px;
+    .menu-container {
+      width: 320px;
+    }
   }
 }
