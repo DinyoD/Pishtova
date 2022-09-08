@@ -48,5 +48,6 @@ import { UserInfoDialogComponent } from './user-info-dialog/user-info-dialog.com
     ConfirmationDialogComponent,
     LoadingIndicatorComponent,
     ProgressBarComponent
+  ]
 })
 export class SharedModule { }

@@ -9,7 +9,7 @@ export class TimeCounterComponent {
 
   constructor() { }
 
-  countDownDate = new Date('may 18, 2022 08:00:00').getTime()
+  countDownDate = new Date('may 20, 2023 08:00:00').getTime()
   days: string = '';
   hours: string = '';
   min: string = '';
