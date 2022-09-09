@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['../styles/form.css', './register.component.scss']
 })
 
 export class RegisterComponent implements OnInit  {
@@ -82,9 +82,10 @@ export class RegisterComponent implements OnInit  {
       this.userService.register(user)
       .subscribe(()=>{
         this.route.navigate(['/'])
-      }, err => {
+      }, (err) => {
         this.showError = true;
-        this.errorMessage = err.error.message ?  err.error.message : 'The form is not fullfiled correctly!';
+        console.log(err.message);
+        this.errorMessage = err ?  err : 'The form is not fullfiled correctly!';
       });
     }
   }

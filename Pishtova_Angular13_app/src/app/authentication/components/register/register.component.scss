@@ -1,37 +1,14 @@
+@import "../../../utilities/colors/colors.scss";
+
 .container {
-  display: flex;
-  justify-content: center;
-  padding: 2.8vh 0;
-
-  mat-card {
-    width: 33.3vw;
-    height: 82vh;
-    padding: 15px;
-    mat-card-title {
-      font-weight: bold;
-    }
-    mat-card-content {
-      form {
-        height: 75vh;
-        display: flex;
-        flex-direction: column;
-        display: flex;
-        justify-content: space-around;
-        mat-form-field {
-          width: 100%;
-          height: 45px;
-          input,
-          mat-select,
-          mat-option {
-            width: 100%;
-            height: 30px;
-          }
-        }
-
-        .button {
-          display: flex;
-          justify-content: flex-end;
-        }
+  .action-container {
+    .form-container {
+      box-sizing: content-box;
+      .note {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba($black, 0.8);
+        text-align: end;
       }
     }
   }

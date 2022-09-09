@@ -1,91 +1,86 @@
 <div class="container">
-  <div>
-    <mat-card>
-      <mat-card-title>Регистрирай нов акаунт</mat-card-title>
-
-      <mat-card-content>
+  <div class="action-container">
+    <div class="title-container">
+      <span class="title">Регистрация</span>
+      <span class="text">Добре дошли!</span>
+      <span class="text">Моля, въведете своите данни.</span>
+    </div>
+    <div class="sign_up-container">
+      <span class="text">Вече имате акаунт?&nbsp;</span>
+      <a routerLink="/"><span class="link">Вход.</span></a>
+    </div>
+    <div class="form-container">
+      <div class="form-box">
         <form [formGroup]="form" (ngSubmit)="register()">
 
-          <mat-error *ngIf="showError">{{errorMessage}}</mat-error>
+          <mat-error *ngIf="showError" class="server-error">{{errorMessage}}</mat-error>
 
-          <mat-form-field>
-            <mat-select placeholder="Изберете община..." formControlName="municipality"
-              (selectionChange)="getTowns($event.value)">
-              <mat-option *ngFor="let m of municipalities" [value]="m.id">{{m.name}}
-              </mat-option>
+          <div class="input-container">
+            <span class="label">Община</span>
+            <mat-select placeholder="Изберете обищина..." formControlName="municipality"
+              (selectionChange)="getTowns($event.value)" class="input">
+              <mat-option *ngFor="let m of municipalities" [value]="m.id">{{m.name}}</mat-option>
             </mat-select>
-            <mat-error *ngIf="municipality.touched && municipality.hasError('required')">
-              *полето е задължително
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-select placeholder="Изберете град/село..." formControlName="town"
-              (selectionChange)="getSchools($event.value)">
-              <mat-option *ngFor="let t of towns" [value]="t.id">{{t.name}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="town.touched && town.hasError('required')">*полето е задължително</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-select placeholder="Изберете училище..." formControlName="school">
-              <mat-option *ngFor="let sch of schools" [value]="sch.id">{{sch.name}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="school.touched && school.hasError('required')">*полето е задължително</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="number" min="4" max="12" placeholder="Изберете клас..." formControlName="grade">
-            <mat-error *ngIf="grade.touched && grade.hasError('required')">*полето е задължително</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="email" placeholder="Имейл" formControlName="email">
-            <mat-error *ngIf="email.touched && email.hasError('required')">*полето е задължително</mat-error>
-            <mat-error *ngIf="email.touched && email.hasError('email')">*имейлът трябва да е валиден такъв</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="text" placeholder="Име" formControlName="name">
-            <mat-error *ngIf="name.touched && name.hasError('required')">*полето е задължително</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="password" placeholder="Парола" formControlName="password">
-            <mat-error *ngIf="password.touched && password.hasError('required')">*полето е задължително</mat-error>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="password" placeholder="Повторете парола" formControlName="confirmPassword">
-            <mat-error *ngIf="confirmPassword.touched && confirmPassword.hasError('required')">*полето е задължително
-            </mat-error>
-          </mat-form-field>
-
-
-          <!-- <mat-hint *ngIf="!form.valid"><small>Please fill out all needed information</small></mat-hint> -->
-
-          <mat-error *ngIf="name.touched && form.hasError('nameNotMatchingRegEx')">
-            <small>Името трябва да е между 3 и 30 символа, и с валидна структура.</small></mat-error>
-
-          <mat-error *ngIf="grade.touched && form.hasError('gradeNotMatching')">
-            <small>Класът трябва да е цифра между 4 и 12.</small></mat-error>
-
-          <mat-error *ngIf="password.touched && form.hasError('passwordNotMatchingRegEx')">
-            <small>Паролата трябва да е между 8 и 30 символа.</small></mat-error>
-
-          <mat-error *ngIf="confirmPassword.touched && form.hasError('passwordsNotMatching')">
-            <small>Паролите не съвпадат.</small></mat-error>
-
-          <div class="button">
-            <button mat-button type="submit" [disabled]="!form.valid">Регистрирай</button>
           </div>
 
+          <div class="input-container">
+            <span class="label">Град</span>
+            <mat-select placeholder="Изберете град..." formControlName="town"
+              (selectionChange)="getSchools($event.value)" class="input">
+              <mat-option *ngFor="let t of towns" [value]="t.id">{{t.name}}</mat-option>
+            </mat-select>
+          </div>
+
+          <div class="input-container">
+            <span class="label">Училище</span>
+            <mat-select placeholder="Изберете училище..." formControlName="school" class="input">
+              <mat-option *ngFor="let sch of schools" [value]="sch.id">{{sch.name}}</mat-option>
+            </mat-select>
+          </div>
+
+          <div class="input-container">
+            <span class="label">Клас</span>
+            <input matInput type="number" min="4" max="12" formControlName="grade" class="input">
+            <mat-error *ngIf="grade.touched && form.hasError('gradeNotMatching')">Класът трябва да е цифра между 4 и 12.
+            </mat-error>
+          </div>
+
+          <div class="input-container">
+            <span class="label">Имейл</span>
+            <input matInput type="email" formControlName="email" class="input">
+            <mat-error *ngIf="email.touched && email.hasError('email')">Имейл адресът не е валиден</mat-error>
+          </div>
+
+          <div class="input-container">
+            <span class="label">Име</span>
+            <input matInput type="text" formControlName="name" class="input">
+            <mat-error *ngIf="name.touched && form.hasError('nameNotMatchingRegEx')">Име - в стандартна структура, между
+              3 и 30
+              символа.</mat-error>
+          </div>
+
+          <div class="input-container">
+            <span class="label">Парола</span>
+            <input matInput type="password" formControlName="password" class="input">
+            <mat-error *ngIf="password.touched && form.hasError('passwordNotMatchingRegEx')">Паролата трябва да е между
+              8 и 30 символа.</mat-error>
+          </div>
+
+          <div class="input-container">
+            <span class="label">Повтори парола</span>
+            <input matInput type="password" formControlName="confirmPassword" class="input">
+            <mat-error *ngIf="confirmPassword.touched && form.hasError('passwordsNotMatching')">Паролите не съвпадат.
+            </mat-error>
+          </div>
+
+          <div class="button-container">
+            <button mat-button type="submit" [disabled]="!form.valid" class="button">Регистрирай</button>
+          </div>
+
+          <span class="note">* всички полета са задължителни</span>
+
         </form>
-
-      </mat-card-content>
-
-      <div class="under-line-text">Ако, вече имате акаунт, <a routerLink="/main">влезте тук</a>. При забравена парола,
-        <a routerLink="/auth/forgotpassword">тук</a>.</div>
-    </mat-card>
+      </div>
+    </div>
   </div>
 </div>
