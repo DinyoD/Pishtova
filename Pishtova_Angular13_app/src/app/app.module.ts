@@ -7,7 +7,6 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment as env } from '../environments/environment.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { AuthenticationModule } from './authentication/components/authentication.module';
 import { CoreModule } from './core/core.module';
 import { ErrorHandlerService } from './error/error-handler.service';
@@ -27,7 +26,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
   ],
   imports: [
     BrowserModule,
