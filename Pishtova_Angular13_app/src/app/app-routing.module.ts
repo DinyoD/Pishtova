@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ForUnauthenticatedUserGuard } from './authentication/guards/unauth.guard';
-import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './authentication/components/login/login.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: HomeComponent,
+    component: LoginComponent,
     canActivate: [ForUnauthenticatedUserGuard]
   }
 ];
