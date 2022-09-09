@@ -1,11 +1,17 @@
 @import "../../../utilities/colors/colors.scss";
 
-.forgot-pass {
-  margin-left: auto;
-  .text {
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 700;
-    color: rgba($black, 0.8);
+.action-container {
+  height: 440px;
+  form {
+    height: 320px;
+    .forgot-pass {
+      margin-left: auto;
+      .text {
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 700;
+        color: rgba($black, 0.8);
+      }
+    }
   }
 }

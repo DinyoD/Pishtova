@@ -17,6 +17,9 @@ body {
   box-sizing: border-box;
   font-family: "Rubik", sans-serif;
   font-size: 16px;
+  width: 100vw;
+  height: fit-content;
+  min-height: 100vh;
 
   .header,
   .footer {
@@ -24,10 +27,6 @@ body {
   }
   app-root {
     position: relative;
-    width: max-content;
-    min-width: 100vw;
-    height: max-content;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
