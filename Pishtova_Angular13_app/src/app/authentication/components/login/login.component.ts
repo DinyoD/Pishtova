@@ -7,7 +7,7 @@ import { AuthService, StorageService } from 'src/app/services';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['../styles/form.css','./login.component.css']
 })
 export class LoginComponent {
 
