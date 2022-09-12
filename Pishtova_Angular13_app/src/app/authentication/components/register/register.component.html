@@ -16,24 +16,24 @@
 
         <div class="input-container">
           <span class="label">Община</span>
-          <mat-select placeholder="Изберете обищина..." formControlName="municipality"
+          <mat-select placeholder="Изберете община" formControlName="municipality"
             (selectionChange)="getTowns($event.value)" class="input">
             <mat-option *ngFor="let m of municipalities" [value]="m.id">{{m.name}}</mat-option>
           </mat-select>
         </div>
 
         <div class="input-container">
-          <span class="label">Град</span>
-          <mat-select placeholder="Изберете град..." formControlName="town" (selectionChange)="getSchools($event.value)"
-            class="input">
+          <span class="label">Населено място</span>
+          <mat-select placeholder="Изберете населено място" formControlName="town"
+            (selectionChange)="getSchools($event.value)" class="input">
             <mat-option *ngFor="let t of towns" [value]="t.id">{{t.name}}</mat-option>
           </mat-select>
         </div>
 
         <div class="input-container">
           <span class="label">Училище</span>
-          <mat-select placeholder="Изберете училище..." formControlName="school" class="input">
-            <mat-option *ngFor="let sch of schools" [value]="sch.id">{{sch.name}}</mat-option>
+          <mat-select placeholder="Изберете училище" formControlName="school" class="input">
+            <mat-option *ngFor="let sch of schools" [value]="sch.id" class="option">{{sch.name}}</mat-option>
           </mat-select>
         </div>
 
@@ -43,7 +43,8 @@
             <mat-error *ngIf="grade.touched && form.hasError('gradeNotMatching')">*цифра между 4 и 12.
             </mat-error>
           </div>
-          <input matInput type="number" min="4" max="12" formControlName="grade" class="input">
+          <input matInput type="number" min="4" max="12" formControlName="grade" placeholder="Въведете клас"
+            class="input">
         </div>
 
         <div class="input-container">
@@ -51,7 +52,7 @@
             <span class="label">Имейл</span>
             <mat-error *ngIf="email.touched && email.hasError('email')">*имейл адресът не е валиден</mat-error>
           </div>
-          <input matInput type="email" formControlName="email" class="input">
+          <input matInput type="email" formControlName="email" placeholder="Въведете своя имейл" class="input">
         </div>
 
         <div class="input-container">
@@ -61,7 +62,7 @@
               3 до 30
               символа</mat-error>
           </div>
-          <input matInput type="text" formControlName="name" class="input">
+          <input matInput type="text" formControlName="name" placeholder="Въведете своето име" class="input">
         </div>
 
         <div class="input-container">
@@ -70,7 +71,7 @@
             <mat-error *ngIf="password.touched && form.hasError('passwordNotMatchingRegEx')">*от
               8 до 30 символа.</mat-error>
           </div>
-          <input matInput type="password" formControlName="password" class="input">
+          <input matInput type="password" formControlName="password" placeholder="Въведете парола" class="input">
         </div>
 
         <div class="input-container">
@@ -79,7 +80,8 @@
             <mat-error *ngIf="confirmPassword.touched && form.hasError('passwordsNotMatching')">*паролите не съвпадат.
             </mat-error>
           </div>
-          <input matInput type="password" formControlName="confirmPassword" class="input">
+          <input matInput type="password" formControlName="confirmPassword" placeholder="Въведете паролата отново"
+            class="input">
         </div>
 
         <div class="button-container">

@@ -22,12 +22,13 @@
         font-size: 24px;
         font-weight: 600;
         margin-bottom: 12px;
+        color: $text;
       }
       .text {
         font-size: 16px;
         line-height: 24px;
         font-weight: 500;
-        color: rgba($black, 0.8);
+        color: rgba($text, 0.8);
       }
     }
     .form-container {
@@ -52,7 +53,7 @@
             justify-content: space-between;
           }
           .label {
-            color: rgba($black, 0.6);
+            color: rgba($text, 0.6);
             font-size: 12px;
             line-height: 16px;
             font-weight: 600;
@@ -67,7 +68,12 @@
             padding: 12px;
             font-size: 14px;
             line-height: 24px;
-            color: rgba($black, 0.4);
+            color: rgba($black, 0.6);
+          }
+          .input::placeholder {
+            font-family: "Rubik", sans-serif;
+            color: rgba($black, 0.42);
+            font-size: 14px;
           }
         }
 

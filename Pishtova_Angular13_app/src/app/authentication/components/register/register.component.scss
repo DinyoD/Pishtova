@@ -5,6 +5,14 @@
   .action-container {
     .form-container {
       box-sizing: content-box;
+      .form {
+        .input-container {
+          mat-option.option,
+          mat-select.input {
+            font-family: "Rubik", sans-serif;
+          }
+        }
+      }
       .note {
         margin-top: 10px;
         font-size: 12px;
@@ -39,6 +47,9 @@
           }
           .input-container {
             width: 320px;
+            mat-select::placeholder {
+              font-family: "Rubik";
+            }
           }
         }
       }

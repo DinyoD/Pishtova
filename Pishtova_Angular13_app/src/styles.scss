@@ -43,29 +43,4 @@ body {
     color: $black;
     font-family: "Rubik", sans-serif;
   }
-  mat-card {
-    mat-card-title,
-    div {
-      font-family: "Rubik", sans-serif;
-    }
-    mat-card-content {
-      form {
-        mat-error,
-        mat-select span,
-        mat-option,
-        mat-form-field input,
-        mat-form-field input.mat-input-element,
-        button span {
-          font-family: "Rubik", sans-serif;
-        }
-      }
-    }
-  }
-  mat-option span.mat-option-text {
-    font-family: "Rubik", sans-serif;
-    font-weight: bold;
-  }
-  .mat-dialog-container {
-    padding: 0;
-  }
 }
