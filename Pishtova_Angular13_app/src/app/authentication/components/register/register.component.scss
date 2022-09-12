@@ -34,6 +34,9 @@
           flex-direction: row;
           justify-content: space-between;
           flex-wrap: wrap;
+          .server-error {
+            width: 100%;
+          }
           .input-container {
             width: 320px;
           }
