@@ -61,7 +61,7 @@
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(x => x.Description).ToList();
-                return StatusCode(400, new ErrorResult { Message = errors[0] });
+                return StatusCode(400, new ErrorResult { Message = errors[1] });
             }
             var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
             await this.userService.SendEmailConfirmationTokenAsync(data.ClientURI, data.Email, token);

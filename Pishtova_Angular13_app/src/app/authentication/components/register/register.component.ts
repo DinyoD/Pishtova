@@ -81,11 +81,10 @@ export class RegisterComponent implements OnInit  {
       
       this.userService.register(user)
       .subscribe(()=>{
-        this.route.navigate(['/'])
+        this.route.navigate(['/']);
       }, (err) => {
         this.showError = true;
-        console.log(err.message);
-        this.errorMessage = err ?  err : 'The form is not fullfiled correctly!';
+        this.errorMessage = err;
       });
     }
   }
