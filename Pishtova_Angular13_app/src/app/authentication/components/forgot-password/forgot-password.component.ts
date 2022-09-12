@@ -12,7 +12,6 @@ import { environment as env} from 'src/environments/environment';
 })
 export class ForgotPasswordComponent {
 
-  public successMessage: string = '';
   public errorMessage: string = '';
   public showSuccess: boolean = false;
   public showError: boolean = false;
@@ -37,15 +36,18 @@ export class ForgotPasswordComponent {
       clientURI: env.CLIENT_URI + '/auth/resetpassword'
     }
 
-  this.userService.forgotPassword(forgotPassDto)
-    .subscribe(() => {
-      this.showSuccess = true;
-      this.successMessage = 'The link has been sent, please check your email to reset your password.'
-    },
-    err => {
-      this.showError = true;
-      this.errorMessage = err.error.message ?  err.error.message : 'The form is not fullfiled correctly!';
-    })
+    this.userService.forgotPassword(forgotPassDto)
+      .subscribe(() => {
+        this.showSuccess = true;
+      },
+      err => {
+        this.showError = true;
+        this.errorMessage = err;
+      })
+  }
+
+  public changeInput(): void {
+    this.showError = false;
   }
 
   get email(): FormControl {
