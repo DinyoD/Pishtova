@@ -8,7 +8,7 @@ import { environment as env} from 'src/environments/environment';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  styleUrls: ['../styles/form.css']
 })
 export class ForgotPasswordComponent {
 
