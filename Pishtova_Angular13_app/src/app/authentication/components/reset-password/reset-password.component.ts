@@ -9,7 +9,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['../styles/form.css']
 })
 export class ResetPasswordComponent implements OnInit {
   public showSuccess: boolean = false;
@@ -52,7 +52,7 @@ export class ResetPasswordComponent implements OnInit {
     },
     error => {
       this.showError = true;
-      this.errorMessage = error.error.message;
+      this.errorMessage = 'Изтекла сесия. Моля, пробвайте отново!';
     })
   }
 

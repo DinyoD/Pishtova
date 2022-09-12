@@ -30,6 +30,8 @@ export class ForgotPasswordComponent {
   }
 
   public forgotPassword = () => {
+
+    this.userService.logout();
     const formValues = { ...this.form.value };
     const forgotPassDto: ForgotPasswordModel = {
       email: formValues.email,
