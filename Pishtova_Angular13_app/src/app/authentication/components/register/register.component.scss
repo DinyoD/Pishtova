@@ -1,14 +1,43 @@
 @import "../../../utilities/colors/colors.scss";
+@import "../../../utilities/devices/breakpoints.scss";
 
 .container {
   .action-container {
     .form-container {
       box-sizing: content-box;
       .note {
+        margin-top: 10px;
         font-size: 12px;
         font-weight: 400;
         color: rgba($black, 0.8);
-        text-align: end;
+        margin-left: auto;
+      }
+    }
+    .sign_up-container-desktop {
+      display: none;
+    }
+  }
+}
+@media (min-width: $tablet) {
+  .container {
+    .action-container {
+      width: 660px;
+      .sign_up-container-mobile {
+        display: none;
+      }
+      .sign_up-container-desktop {
+        display: flex;
+      }
+      .form-container {
+        width: 660px;
+        .form {
+          flex-direction: row;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          .input-container {
+            width: 320px;
+          }
+        }
       }
     }
   }

@@ -7,12 +7,11 @@
   align-items: center;
   justify-content: center;
   .action-container {
-    padding: 31px;
+    padding: 24px;
     width: 320px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 16px 0;
     .title-container {
       display: flex;
       flex-direction: column;
@@ -32,77 +31,74 @@
       }
     }
     .form-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      margin-top: 12px;
       color: transparent;
       box-sizing: border-box;
       width: 320px;
-      .form-box {
+      .form {
         width: 100%;
-        form {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        .input-container {
           width: 100%;
+          height: 72px;
           display: flex;
           flex-direction: column;
-          justify-content: start;
-          padding-top: 5px;
-          .input-container {
-            width: 100%;
-            height: 72px;
+          justify-content: space-between;
+          margin-top: 12px;
+          .info {
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            margin-top: 12px;
-            .label {
-              color: rgba($black, 0.6);
-              font-size: 12px;
-              line-height: 16px;
-              font-weight: 600;
-            }
-            .input {
-              box-sizing: border-box;
-              border-radius: 8px;
-              border: 1px solid rgba($black, 0.2);
-              background: $white;
-              width: 100%;
-              height: 48px;
-              padding: 12px;
-              font-size: 14px;
-              line-height: 24px;
-              color: rgba($black, 0.4);
-            }
           }
-
-          .button-container {
-            width: 100%;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            border-radius: 8px;
-            background-color: $secondary;
-            margin: 24px 0;
-            .button {
-              color: $white;
-              font-size: 20px;
-              line-height: 24px;
-              font-weight: 400;
-            }
-          }
-          mat-error {
+          .label {
+            color: rgba($black, 0.6);
             font-size: 12px;
             line-height: 16px;
-            font-weight: 700;
-            color: rgba(red, 0.6);
+            font-weight: 600;
           }
-          .server-error {
-            text-align: center;
+          .input {
+            box-sizing: border-box;
+            border-radius: 8px;
+            border: 1px solid rgba($black, 0.2);
+            background: $white;
+            width: 100%;
+            height: 48px;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 24px;
+            color: rgba($black, 0.4);
           }
+        }
+
+        .button-container {
+          width: 100%;
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          border-radius: 8px;
+          background-color: $secondary;
+          margin-top: 24px;
+          .button {
+            color: $white;
+            font-size: 20px;
+            line-height: 24px;
+            font-weight: 400;
+          }
+        }
+        mat-error {
+          font-size: 12px;
+          line-height: 16px;
+          font-weight: 700;
+          color: rgba(red, 0.6);
+        }
+        .server-error {
+          text-align: center;
         }
       }
     }
     .sign_up-container {
       display: flex;
-      margin-top: 16px;
       justify-content: center;
       .text,
       .link {
