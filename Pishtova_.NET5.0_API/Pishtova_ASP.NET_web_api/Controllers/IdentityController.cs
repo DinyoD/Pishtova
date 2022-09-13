@@ -170,7 +170,8 @@
                 {
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim("userId", user.Id),
-                    new Claim("isSubscriber", isSubscriber.ToString())
+                    new Claim("isSubscriber", isSubscriber.ToString()),
+                    new Claim("avatarUrl", user.PictureUrl)
                 }),
                 Expires = expDate,
                 SigningCredentials = new SigningCredentials(

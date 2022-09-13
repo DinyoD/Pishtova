@@ -73,7 +73,8 @@ export class AuthService {
       user = {
          id: decodedToken.userId,
          email: decodedToken.email,
-         isSubscriber: decodedToken.isSubscriber == 'True'
+         isSubscriber: decodedToken.isSubscriber == 'True',
+         avatarUrl: decodedToken.avatarUrl
       }
     }
     return user;
