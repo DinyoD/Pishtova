@@ -27,7 +27,7 @@
   <div class="header">
 
     <div>
-      <a *ngIf="isAuth">
+      <a *ngIf="isAuth" class="icon-menu">
         <img src="../../../assets/icons/menu.svg" alt="" (click)="changeShowModal()">
       </a>
     </div>
@@ -43,8 +43,8 @@
     </a>
 
     <div>
-      <a *ngIf="isAuth" routerLink="/profile" (click)="hideModal()">
-        <img src="../../../assets/icons/menu.svg" alt="">
+      <a *ngIf="isAuth" routerLink="/profile" (click)="hideModal()" class="icon-avatar">
+        <img src={{avatarUrl}} alt="" class="avatar-img">
       </a>
     </div>
 

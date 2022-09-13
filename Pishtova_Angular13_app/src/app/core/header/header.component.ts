@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit{
   public isAuth: boolean = false;
   public inTest: boolean = false;
   public subject : SubjectModel|null = null;
+  public avatarUrl : string|undefined = undefined;
 
   constructor(
     private cd: ChangeDetectorRef, 
@@ -34,7 +35,13 @@ export class HeaderComponent implements OnInit{
     this.isAuth = this.userService.isUserAuthenticated();
     this.inTest = this.testService.isInTest();
     this.subject = this.subjectService.getCurrentSubject();
-    this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
+    this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl;
+
+    this.userService.isAuthChange.subscribe(
+      isAuth => this.isAuth = isAuth, 
+      () => {}, 
+      () => {this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl
+    });
     this.testService.inTestChanged.subscribe(inTest => this.inTest = inTest);
     this.subjectService.subjectChanged.subscribe(sbj => this.subject = sbj);
   }

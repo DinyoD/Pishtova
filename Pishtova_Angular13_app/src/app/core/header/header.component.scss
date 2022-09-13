@@ -69,6 +69,10 @@
       font-weight: bold;
       line-height: 40px;
     }
+    .icon-avatar,
+    .icon-menu {
+      display: none;
+    }
   }
 }
 
@@ -77,6 +81,20 @@
     padding: 40px;
     .menu-container {
       width: 320px;
+    }
+    .header {
+      .icon-avatar,
+      .icon-menu {
+        display: inline;
+      }
+      .icon-avatar {
+        .avatar-img {
+          vertical-align: middle;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 }
