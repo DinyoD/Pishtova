@@ -93,8 +93,8 @@
             }
 
             var subscription = await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
-            DateTime expDate = subscription != null && subscription.CurrentPeriodEnd > DateTime.Now ? subscription.CurrentPeriodEnd : DateTime.Now.AddDays(7);
-            var isSubscriber = subscription != null && subscription.Status == "active";
+            DateTime expDate = DateTime.Now.AddDays(7);
+            var isSubscriber = subscription != null && subscription.CurrentPeriodEnd > DateTime.Now;
 
             string token = this.GenerateToken(user, expDate, isSubscriber);
             return StatusCode(200, new LoginResult { Token = token });
@@ -163,6 +163,7 @@
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.applicationSettings.Secret);
+            var avatarUrl = user.PictureUrl ?? string.Empty;
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -171,7 +172,7 @@
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim("userId", user.Id),
                     new Claim("isSubscriber", isSubscriber.ToString()),
-                    new Claim("avatarUrl", user.PictureUrl)
+                    new Claim("avatarUrl", avatarUrl)
                 }),
                 Expires = expDate,
                 SigningCredentials = new SigningCredentials(
