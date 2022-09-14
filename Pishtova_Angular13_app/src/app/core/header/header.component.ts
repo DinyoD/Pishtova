@@ -1,3 +1,4 @@
+import { CloseScrollStrategy } from '@angular/cdk/overlay';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -28,20 +29,19 @@ export class HeaderComponent implements OnInit{
     private router: Router,
     private userService : AuthService,
     private subjectService: SubjectService,
-    private testService: TestService) {}
-    
-    
-  ngOnInit(): void {
-    this.isAuth = this.userService.isUserAuthenticated();
-    this.inTest = this.testService.isInTest();
-    this.subject = this.subjectService.getCurrentSubject();
-    this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl;
+    private testService: TestService) {
 
-    this.userService.isAuthChange.subscribe(
-      isAuth => this.isAuth = isAuth, 
-      () => {}, 
-      () => {this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl
-    });
+    }
+    
+    
+    ngOnInit(): void {
+      this.isAuth = this.userService.isUserAuthenticated();
+      this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl;
+      this.inTest = this.testService.isInTest();
+      this.subject = this.subjectService.getCurrentSubject();
+
+    this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
+    this.userService.isAvatarChange.subscribe(avatarUrl => this.avatarUrl = avatarUrl)
     this.testService.inTestChanged.subscribe(inTest => this.inTest = inTest);
     this.subjectService.subjectChanged.subscribe(sbj => this.subject = sbj);
   }
