@@ -28,12 +28,12 @@
 
     <div>
       <a *ngIf="isAuth" (click)="changeShowModal()" class="icon-menu">
-        <img src="../../../assets/icons/menu.svg" alt="">
+        <img src="../../../assets/icons/header/menu.svg" alt="">
       </a>
     </div>
 
     <a *ngIf="isAuth == null || subject == null" routerLink="/main" class="app-name" (click)="hideModal()">
-      <img src="../../../assets/icons/logoText.svg" alt="">
+      <img src="../../../assets/icons/header/logoText.svg" alt="">
     </a>
 
     <a *ngIf="subject && isAuth" routerLink="/subject/{{subject.id}}" (click)="hideModal()">
