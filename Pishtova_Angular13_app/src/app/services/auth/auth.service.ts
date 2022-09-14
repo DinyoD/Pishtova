@@ -21,6 +21,9 @@ export class AuthService {
   private _authChangeSub: Subject<boolean> = new Subject<boolean>()
   public isAuthChange: Observable<boolean> = this._authChangeSub.asObservable();
 
+  private _avatarChangeSub: Subject<string> = new Subject<string>();
+  public isAvatarChange: Observable<string> = this._avatarChangeSub.asObservable();
+
   constructor(
     private httpClient: HttpClient, 
     private jwtHelper: JwtHelperService,
@@ -58,6 +61,10 @@ export class AuthService {
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean): void => {
     this._authChangeSub.next(isAuthenticated);
+    if (isAuthenticated) {
+      const url = this.getCurrentUser()?.avatarUrl;
+      this._avatarChangeSub.next(url)
+    }
   }
 
   public isUserAuthenticated = (): boolean => {
