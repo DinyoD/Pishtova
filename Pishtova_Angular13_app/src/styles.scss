@@ -20,20 +20,28 @@ body {
   width: 100vw;
   height: fit-content;
   min-height: 100vh;
-
-  .header,
-  .footer {
-    font-family: inherit;
-  }
   app-root {
+    width: 100vw;
+    height: fit-content;
+    min-height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: start;
+    box-sizing: inherit;
+    app-footer {
+      margin-top: auto;
+    }
+
+    .header,
+    .footer {
+      font-family: inherit;
+      box-sizing: inherit;
+    }
   }
 
   div {
-    box-sizing: inherit;
+    box-sizing: border-box;
   }
   button,
   p {

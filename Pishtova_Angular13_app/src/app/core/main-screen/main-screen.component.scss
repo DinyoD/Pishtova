@@ -1,14 +1,17 @@
 @import "../../utilities/colors/colors.scss";
-@import "../../utilities/devices/breakpoints.css";
+@import "../../utilities/devices/breakpoints.scss";
 
 .container {
   display: flex;
   width: 100%vw;
   justify-content: center;
   .sbj-container {
+    width: 100%;
+    padding: 0 40px;
     margin-top: 32px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     .sbj {
       background-color: rgba($white, 0.5);
       border-radius: 8px;
@@ -19,6 +22,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
       .sbj-icon {
         width: 96px;
         height: 96px;
@@ -40,6 +44,40 @@
       }
       .chm {
         color: $sbj-chm;
+      }
+    }
+  }
+}
+
+@media (min-width: $tablet) {
+  .container {
+    .sbj-container {
+      flex-direction: row;
+      justify-content: space-around;
+      align-content: space-around;
+      .sbj {
+        margin: 0 0;
+        width: 230px;
+        height: 180px;
+        .sbj-name {
+          font-size: 24px;
+          line-height: 32px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $desktop) {
+  .container {
+    .sbj-container {
+      .sbj {
+        width: 320px;
+        height: 240px;
+        .sbj-name {
+          font-size: 32px;
+          line-height: 44px;
+        }
       }
     }
   }
