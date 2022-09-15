@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
     private router: Router) { 
       
     if (this.subjectService.getCurrentSubject() != null) {
-      this.subjectService.settingSubjectModel(null);
+      this.subjectService.setSubject(null);
     } 
   }
 

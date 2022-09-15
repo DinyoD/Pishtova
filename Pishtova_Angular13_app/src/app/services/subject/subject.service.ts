@@ -28,7 +28,7 @@ export class SubjectService {
     return this.httpClient.get<SubjectModel>(env.API_URL + `/subject/${id}`);
   }
 
-  public settingSubjectModel = (sbj: SubjectModel|null): void=> {
+  public setSubject = (sbj: SubjectModel|null): void=> {
     this._subjectChangeSub.next(sbj);
     if (sbj != null) {
       this.storage.setItem('subjectName', sbj.name);
