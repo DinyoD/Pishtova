@@ -5,14 +5,14 @@
   display: flex;
   width: 100%vw;
   justify-content: center;
-  .sbj-container {
+  .box-container {
     width: 100%;
     padding: 0 40px;
     margin-top: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    .sbj {
+    .box {
       background-color: rgba($white, 0.5);
       border-radius: 8px;
       width: 320px;
@@ -23,11 +23,11 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      .sbj-icon {
+      .box-icon {
         width: 96px;
         height: 96px;
       }
-      .sbj-name {
+      .box-name {
         font-size: 32px;
         line-height: 44px;
         font-weight: 700;
@@ -51,15 +51,15 @@
 
 @media (min-width: $tablet) {
   .container {
-    .sbj-container {
+    .box-container {
       flex-direction: row;
       justify-content: space-around;
       align-content: space-around;
-      .sbj {
+      .box {
         margin: 0 0;
         width: 230px;
         height: 180px;
-        .sbj-name {
+        .box-name {
           font-size: 24px;
           line-height: 32px;
         }
@@ -70,11 +70,11 @@
 
 @media (min-width: $desktop) {
   .container {
-    .sbj-container {
-      .sbj {
+    .box-container {
+      .box {
         width: 320px;
         height: 240px;
-        .sbj-name {
+        .box-name {
           font-size: 32px;
           line-height: 44px;
         }

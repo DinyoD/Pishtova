@@ -1,19 +1,19 @@
 <div class="container">
-  <div class="sbj-container">
-    <a (click)="chooseSubject(s)" *ngFor="let s of subjects|async" class="sbj">
-      <img *ngIf="s.name.toUpperCase() == 'БЪЛГАРСКИ ЕЗИК'" src="../../../assets/icons/subjects/bel.svg" alt=""
-        class="sbj-icon">
-      <img *ngIf="s.name.toUpperCase() == 'БИОЛОГИЯ'" src="../../../assets/icons/subjects/bio.svg" alt=""
-        class="sbj-icon">
-      <span class="sbj-name" [ngClass]="[setClassBySbjName(s.name)]">{{s.name}}</span>
+  <div class="box-container">
+    <a (click)="chooseSubject(s)" *ngFor="let s of subjects|async" class="box">
+      <img *ngIf="setClassBySbjName(s.name) == 'bel'" src="../../../assets/icons/subjects/bel.svg" alt=""
+        class="box-icon">
+      <img *ngIf="setClassBySbjName(s.name) == 'bio'" src="../../../assets/icons/subjects/bio.svg" alt=""
+        class="box-icon">
+      <span class="box-name" [ngClass]="[setClassBySbjName(s.name)]">{{s.name}}</span>
     </a>
-    <a class=" sbj">
-      <img src="../../../assets/icons/subjects/geo.svg" alt="" class="sbj-icon">
-      <span class="sbj-name geo">География</span>
+    <a class="box">
+      <img src="../../../assets/icons/subjects/geo.svg" alt="" class="box-icon">
+      <span class="box-name geo">География</span>
     </a>
-    <a class="sbj">
-      <img src="../../../assets/icons/subjects/chm.svg" alt="" class="sbj-icon">
-      <span class="sbj-name chm">Химия</span>
+    <a class="box">
+      <img src="../../../assets/icons/subjects/chm.svg" alt="" class="box-icon">
+      <span class="box-name chm">Химия</span>
     </a>
   </div>
 </div>
