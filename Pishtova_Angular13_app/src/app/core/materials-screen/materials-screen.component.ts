@@ -6,8 +6,6 @@ import { WorkModel } from 'src/app/models/work';
 import { getAuthorPictureLinksCollection } from 'src/app/resource/data';
 import { MaterialsService } from 'src/app/services/materials/materials.service';
 
-const comingSoonUrl: string = 'src/app/core/materials-screen/coming-soon-page.html';
-
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) { }

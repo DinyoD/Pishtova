@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="authors != null && authors.length > 0" class="container">
   <div class="authors-frame">
     <div class="author" [ngClass]="{'active': selectedAuthorIndex == a.index}" (click)="chooseAuthor(a)"
       *ngFor="let a of authors">
@@ -6,7 +6,6 @@
       <p class="name">{{a.name}}</p>
     </div>
   </div>
-
   <div class="works-frame" [ngClass]="{'empty': authorIndex == null}">
     <div class="work" [ngClass]="{'active': selectedWorkInd == w.index}" (click)="chooseWork(w.index)"
       *ngFor="let w of works">
@@ -33,4 +32,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="authors == null || authors.length == 0" class="coming-soon">
+  <p>Очаквайте скоро!</p>
 </div>
