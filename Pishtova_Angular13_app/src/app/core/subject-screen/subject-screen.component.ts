@@ -10,7 +10,7 @@ import { SubjectModel } from 'src/app/models/subject/subject';
 @Component({
   selector: 'app-subject-screen',
   templateUrl: './subject-screen.component.html',
-  styleUrls: ['./subject-screen.component.css', '../main-screen/main-screen.component.css']
+  styleUrls: ['../main-screen/main-screen.component.css','./subject-screen.component.css']
 })
 export class SubjectScreenComponent implements OnInit {
 

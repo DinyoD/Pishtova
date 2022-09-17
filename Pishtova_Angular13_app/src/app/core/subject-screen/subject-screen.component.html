@@ -1,16 +1,16 @@
 <div class="container">
-  <div *ngIf="!showTest" class="boxes-container">
-    <a class="box" (click)="handelStartTest()">
-      <mat-icon>grade</mat-icon>
-      <p>ТЕСТ</p>
+  <div *ngIf="!showTest" class="box-container">
+    <a class="box sbj-assets-box" (click)="handelStartTest()">
+      <img src="../../../assets/icons/subjects/sbj-test.svg" alt="" class="box-icon">
+      <span class="box-name">Тест</span>
     </a>
-    <a class="box" (click)="handelRankingRedirect()">
-      <mat-icon>grade</mat-icon>
-      <p>КЛАСИРАНЕ</p>
+    <a class="box sbj-assets-box" (click)="handelRankingRedirect()">
+      <img src="../../../assets/icons/subjects/sbj-leaderboard.svg" alt="" class="box-icon">
+      <span class="box-name">Класиране</span>
     </a>
-    <a *ngIf="subject?.id == 4" class="box" (click)="handelMaterialsRedirect()">
-      <mat-icon>grade</mat-icon>
-      <p>МАТЕРИАЛИ</p>
+    <a class="box sbj-assets-box" (click)="handelMaterialsRedirect()">
+      <img src="../../../assets/icons/subjects/sbj-materials.svg" alt="" class="box-icon">
+      <span class="box-name">Материали</span>
     </a>
   </div>
 </div>

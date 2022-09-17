@@ -1,1 +1,27 @@
+@import "../../utilities/devices/breakpoints.scss";
 
+@media (min-width: $tablet) {
+  .container {
+    .box-container {
+      .sbj-assets-box {
+        width: 320px;
+        height: 240px;
+      }
+    }
+  }
+}
+
+@media (min-width: $desktop) {
+  .container {
+    .box-container {
+      .sbj-assets-box {
+        width: 424px;
+        height: 240px;
+        .box-name {
+          font-size: 32px;
+          line-height: 44px;
+        }
+      }
+    }
+  }
+}
