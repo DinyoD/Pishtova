@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { UserForLoginModel } from '../../models/userForLogin';
 import { AuthService, StorageService } from 'src/app/services';
 
@@ -9,10 +9,11 @@ import { AuthService, StorageService } from 'src/app/services';
   templateUrl: './login.component.html',
   styleUrls: ['../styles/form.css','./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   public errorMessage: string = '';
   public showError: boolean = false;
+  public returnUrl: string = '/main';
 
   public form: FormGroup = new FormGroup({
 
@@ -23,8 +24,13 @@ export class LoginComponent {
   constructor(
     private userService: AuthService,
     private route: Router,
+    private actRouter: ActivatedRoute,
     private storage: StorageService
   ) { }
+    
+  ngOnInit(): void {
+    this.actRouter.queryParams.subscribe(p => this.returnUrl = p.returnUrl || '/main');
+  }
   
 
   // TODO display error message on BG depends on responce status code!!!!
@@ -36,7 +42,7 @@ export class LoginComponent {
     }
    this.userService.login(user)
     .subscribe((res: { token: string; }) => {
-      this.route.navigate(['/main'])
+      this.route.navigateByUrl(this.returnUrl);
       this.storage.setItem('token', res.token)
       this.userService.sendAuthStateChangeNotification(res.token != null)
     }, (err) => {

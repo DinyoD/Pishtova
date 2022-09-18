@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit{
         if (dialogResult) {
             this.userService.logout();
             this.hideModal();
-            this.router.navigate(["/"]);
+            this.router.navigate(["/auth/login"]);
         }
     });
   }
