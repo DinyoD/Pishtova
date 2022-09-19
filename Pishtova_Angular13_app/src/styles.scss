@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./app/utilities/colors/colors.scss";
+@import "./app/utilities/devices/breakpoints.scss";
 
 body::before {
   content: "";
@@ -14,6 +15,7 @@ body::before {
 body {
   position: relative;
   margin: 0;
+  padding-top: 44px;
   box-sizing: border-box;
   font-family: "Rubik", sans-serif;
   font-size: 16px;
@@ -27,7 +29,7 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     box-sizing: inherit;
     app-footer {
       margin-top: auto;
@@ -50,5 +52,10 @@ body {
   a {
     color: $black;
     font-family: "Rubik", sans-serif;
+  }
+}
+@media (min-width: $phone) {
+  body {
+    padding-top: 0;
   }
 }
