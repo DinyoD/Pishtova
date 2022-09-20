@@ -1,46 +1,57 @@
 @import "../../utilities/colors/colors.scss";
 
-.mat-card.dialog-container {
-  background-color: rgba($primary, 0.3);
-  width: 480px;
-  height: 160px;
+.dialog-container {
+  width: 320px;
+  height: 180px;
+  padding: 24px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  mat-card-title {
+  justify-content: space-between;
+  .title {
     text-align: center;
-    color: $secondary;
-    margin-top: 10px;
-    font-weight: bold;
+    color: $text;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: bolder;
   }
   .content {
     text-align: center;
-    margin: 0;
-    color: $red;
-    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: $text;
+    font-weight: 600;
   }
   .dialog-btn-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    button {
-      margin-top: 10px;
+    .btn {
       text-decoration: none;
-      width: 160px;
-      height: 40px;
+      width: 108px;
+      height: 32px;
       border: none;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 22px;
-      color: $secondary;
-      background-color: $white;
-      border-radius: 4px;
-      box-shadow: 3px 3px 8px rgba($black, 0.5);
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 600;
+      //box-shadow: 3px 3px 8px rgba($black, 0.5);
     }
-    .btn:hover {
-      box-shadow: 1px 1px 4px rgba($black, 0.5);
+    .btn-no {
+      background-color: $primary;
+      color: $white;
+    }
+    .btn-yes {
+      border: solid 1px $primary;
+      background-color: $white;
+      color: $primary;
     }
     .btn:focus {
       outline: none;
     }
+    // .btn:hover {
+    //   box-shadow: 1px 1px 4px rgba($black, 0.5);
+    // }
   }
 }

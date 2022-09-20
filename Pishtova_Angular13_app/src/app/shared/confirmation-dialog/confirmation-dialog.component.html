@@ -1,10 +1,10 @@
-<mat-card class="dialog-container">
-  <mat-card-title>
+<div class="dialog-container">
+  <div class="title">
     {{title}}
-  </mat-card-title>
+  </div>
   <p *ngIf="content" class="content">{{content}}</p>
   <div class="dialog-btn-container">
-    <button class="btn" (click)="onDismiss()">Не</button>
-    <button class="btn" (click)="onConfirm()">Да</button>
+    <button class="btn btn-no" (click)="onDismiss()">Не</button>
+    <button class="btn btn-yes" (click)="onConfirm()">Да</button>
   </div>
-</mat-card>
+</div>

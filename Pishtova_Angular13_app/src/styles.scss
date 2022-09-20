@@ -55,6 +55,11 @@ body {
     color: $black;
     font-family: "Rubik", sans-serif;
   }
+
+  .mat-dialog-container {
+    padding: 0;
+    border-radius: 16px;
+  }
 }
 @media (min-width: $phone) {
   body {
