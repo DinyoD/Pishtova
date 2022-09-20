@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="title-container">
+    <span class="title">Предмети</span>
+  </div>
   <div class="box-container">
     <a (click)="chooseSubject(s)" *ngFor="let s of subjects|async" class="box">
       <img *ngIf="setClassBySbjName(s.name) == 'bel'" src="../../../assets/icons/subjects/bel.svg" alt=""
@@ -14,6 +17,24 @@
     <a class="box">
       <img src="../../../assets/icons/subjects/chm.svg" alt="" class="box-icon">
       <span class="box-name chm">Химия</span>
+    </a>
+  </div>
+
+  <div class="title-container">
+    <span class="title">Активност</span>
+  </div>
+  <div class="box-container">
+    <a class="box box-active-big">
+      <span class="box-name">Активност 1</span>
+    </a>
+    <a class="box box-active-small">
+      <span class="box-name">Активност 2</span>
+    </a>
+    <a class="box box-active-small">
+      <span class="box-name">Активност 3</span>
+    </a>
+    <a class="box box-active-big">
+      <span class="box-name">Активност 4</span>
     </a>
   </div>
 </div>
