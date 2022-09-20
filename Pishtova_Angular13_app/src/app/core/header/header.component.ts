@@ -1,4 +1,4 @@
-import { CloseScrollStrategy } from '@angular/cdk/overlay';
+import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -25,8 +25,9 @@ export class HeaderComponent implements OnInit{
 
   constructor(
     private cd: ChangeDetectorRef, 
-    private dialog: MatDialog,
     private router: Router,
+    private location: Location,
+    private dialog: MatDialog,
     private userService : AuthService,
     private subjectService: SubjectService,
     private testService: TestService) {
@@ -73,4 +74,8 @@ export class HeaderComponent implements OnInit{
       this.showModal = false;
     }
   };
+
+  public goBack(): void {
+    this.location.back();
+  }
 }

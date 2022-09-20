@@ -2,9 +2,8 @@
 @import "../../utilities/devices/breakpoints.scss";
 
 .container {
-  position: relative;
-  height: 40px;
-  padding: 10px;
+  height: 24px;
+  padding: 10px 20px;
   .menu-container {
     background-color: $menu;
     box-sizing: border-box;
@@ -14,11 +13,12 @@
     top: 0;
     left: 0;
     z-index: 15;
-    padding-top: 54px;
-    padding-left: 24px;
+    padding: 54px 24px;
 
     .close-box {
       margin-bottom: 48px;
+      display: flex;
+      justify-content: flex-end;
     }
     .menu-box {
       width: 200px;
@@ -54,46 +54,79 @@
     }
 
     .app-name {
-      width: 124px;
-      height: 32px;
-
+      width: 80px;
+      height: 24px;
+      padding-top: 4px;
       img {
-        width: 100%;
-        height: 100%;
+        width: inherit;
+        height: inherit;
       }
     }
 
     .sbj-name {
       color: $secondary;
-      font-size: 32px;
+      font-size: 20px;
       font-weight: bold;
-      line-height: 40px;
+      line-height: 28px;
     }
-    .icon-avatar,
-    .icon-menu {
-      display: none;
+    .icon-container {
+      width: 24px;
+      height: 24px;
+      a {
+        width: inherit;
+        height: inherit;
+      }
+      .icon-menu {
+        display: none;
+      }
+      .icon-arrow,
+      .icon-avatar {
+        width: inherit;
+        height: inherit;
+      }
+      .icon-avatar {
+        align-items: center;
+        .avatar-img {
+          vertical-align: middle;
+          width: inherit;
+          height: inherit;
+          border-radius: 50%;
+          color: brown;
+        }
+      }
     }
   }
 }
 
-@media (min-width: $tablet) {
+@media (min-width: $phone) {
   .container {
+    height: 40px;
     padding: 40px;
     .menu-container {
       width: 320px;
+      margin-left: calc(100vw - 320px);
+      .close-box {
+        margin-right: 20px;
+      }
     }
     .header {
-      .icon-avatar,
-      .icon-menu {
-        display: inline;
+      .app-name {
+        width: 124px;
+        height: 32px;
       }
-      .icon-avatar {
-        .avatar-img {
-          vertical-align: middle;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          color: brown;
+      .sbj-name {
+        font-size: 32px;
+        line-height: 40px;
+      }
+      .icon-container {
+        width: 40px;
+        height: 40px;
+        .icon-arrow {
+          display: none;
+        }
+        .icon-avatar,
+        .icon-menu {
+          display: inline;
         }
       }
     }

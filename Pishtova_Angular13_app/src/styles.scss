@@ -15,7 +15,6 @@ body::before {
 body {
   position: relative;
   margin: 0;
-  padding-top: 44px;
   box-sizing: border-box;
   font-family: "Rubik", sans-serif;
   font-size: 16px;
@@ -31,6 +30,9 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     box-sizing: inherit;
+    app-header {
+      margin-top: 44px;
+    }
     app-footer {
       margin-top: auto;
     }
@@ -56,6 +58,10 @@ body {
 }
 @media (min-width: $phone) {
   body {
-    padding-top: 0;
+    app-root {
+      app-header {
+        margin-top: 0;
+      }
+    }
   }
 }
