@@ -10,7 +10,7 @@
   box-sizing: border-box;
   .title-container,
   .box-container {
-    width: 328px;
+    width: calc(100% - 48px);
     box-sizing: border-box;
   }
   .title-container {
@@ -23,13 +23,11 @@
     }
   }
   .box-container {
-    box-sizing: border-box;
     margin-top: 24px;
     display: flex;
-    flex-direction: row;
     flex-flow: wrap;
     align-content: space-between;
-    justify-content: space-between;
+    justify-content: space-around;
     .box {
       background-color: rgba($white, 0.5);
       border-radius: 8px;
