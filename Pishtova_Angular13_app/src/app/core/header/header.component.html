@@ -30,7 +30,7 @@
       <a *ngIf="isAuth" routerLink="/main" (click)="hideModal()" class="icon-menu">
         <img src="../../../assets/icons/header/menu.svg" alt="">
       </a>
-      <a *ngIf="isAuth" (click)="goBack()" class="icon-arrow">
+      <a *ngIf="isAuth && !inTest" (click)="goBack()" class="icon-arrow">
         <img src="../../../assets/icons/header/arrowLeft.svg" alt="">
       </a>
     </div>
@@ -46,11 +46,15 @@
     </a>
 
     <div class="icon-container">
-      <a *ngIf="isAuth" (click)="changeShowModal()" class="icon-avatar">
+      <a *ngIf="isAuth" (click)="changeShowModal()" class="icon-avatar" [ngClass]="{'avatar-hide': inTest}">
         <img *ngIf="avatarUrl != '' " src={{avatarUrl}} alt="" class="avatar-img">
         <img *ngIf="avatarUrl == '' " src="../../../assets/images/avatar.jpg" alt="" class="avatar-img">
       </a>
+      <a *ngIf="inTest" (click)="exitTest()" class="cancel-btn">
+        <span class="cancel-text">Изход</span>
+      </a>
     </div>
+
 
   </div>
 

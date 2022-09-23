@@ -78,4 +78,14 @@ export class HeaderComponent implements OnInit{
   public goBack(): void {
     this.location.back();
   }
+
+  public exitTest(): void {
+    const sbjId = localStorage.getItem("subjectId");
+    if (sbjId) {
+      this.router.navigate(["/subject/"+{sbjId}]);
+    }
+    else {
+      this.router.navigate(["/"]);
+    }
+  }
 }

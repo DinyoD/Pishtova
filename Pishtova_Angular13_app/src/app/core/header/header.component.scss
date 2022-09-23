@@ -72,10 +72,6 @@
     .icon-container {
       width: 24px;
       height: 24px;
-      a {
-        width: inherit;
-        height: inherit;
-      }
       .icon-menu {
         display: none;
       }
@@ -85,13 +81,26 @@
         height: inherit;
       }
       .icon-avatar {
-        align-items: center;
         .avatar-img {
           vertical-align: middle;
           width: inherit;
           height: inherit;
           border-radius: 50%;
           color: brown;
+        }
+      }
+      .avatar-hide {
+        display: none;
+      }
+      .cancel-btn {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row-reverse;
+        .cancel-text {
+          color: $text;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 28px;
         }
       }
     }
@@ -127,6 +136,12 @@
         .icon-avatar,
         .icon-menu {
           display: inline;
+        }
+        .avatar-hide {
+          display: inline;
+        }
+        .cancel-btn {
+          display: none;
         }
       }
     }
