@@ -44,7 +44,8 @@ export class TestScreenComponent implements OnInit {
 
     ngOnInit(): void {
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe(problems => this.problems = problems);
-      this.points = this.pointsService.gettingPoints();
+      //this.points = this.pointsService.gettingPoints();
+      this.pointsService.clearPoints();
       this.pointsService.pointsChanged.subscribe(p => { 
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
