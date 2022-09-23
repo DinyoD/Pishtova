@@ -1,9 +1,8 @@
 @import "../../utilities/colors/colors.scss";
 
 .progress-bar-container {
-  width: calc(100% - 40px);
-  height: 30px;
-  margin: 10px 20px 20px 20px;
+  width: inherit;
+  height: 8px;
   .bar-container {
     width: 100%;
     height: 100%;
@@ -16,10 +15,10 @@
       .stepper-item {
         width: 100%;
         height: 100%;
-        background-color: rgba($secondary, 0.15);
+        background-color: rgba($secondary, 0.1);
       }
       .stepper-item.completed {
-        background-color: rgba($secondary, 0.5);
+        background-color: rgba($progress-bar, 1);
       }
     }
     .stepper-wrapper:first-child .stepper-item {
