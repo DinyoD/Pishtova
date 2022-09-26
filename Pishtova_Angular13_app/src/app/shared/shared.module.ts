@@ -17,6 +17,7 @@ import { UpdateSchoolInfoDialogComponent } from './update-school-info-dialog/upd
 import { MatIconModule } from '@angular/material/icon';
 import { GreetingDialogComponent } from './greeting-dialog/greeting-dialog.component';
 import { UserInfoDialogComponent } from './user-info-dialog/user-info-dialog.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { UserInfoDialogComponent } from './user-info-dialog/user-info-dialog.com
     UpdateProfileInfoDialogComponent,
     UpdateSchoolInfoDialogComponent,
     GreetingDialogComponent,
-    UserInfoDialogComponent
+    UserInfoDialogComponent,
+    NavigationComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { UserInfoDialogComponent } from './user-info-dialog/user-info-dialog.com
     TimeCounterComponent,
     ConfirmationDialogComponent,
     LoadingIndicatorComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    NavigationComponent
   ]
 })
 export class SharedModule { }
