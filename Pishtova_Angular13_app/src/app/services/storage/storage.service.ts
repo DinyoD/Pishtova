@@ -56,7 +56,7 @@ export class BrowserStorage{
   public removeItem<T>(key: string): boolean {
     let result: boolean = false;
     let item:  T|string|null = this.getItem(key);
-    if (item) {
+    if (item != null) {
       this.localStorage.removeItem(key);
       result = true;
     }

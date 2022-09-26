@@ -24,7 +24,6 @@ export class SubjectScreenComponent implements OnInit {
     private testService: TestService,
     private pointsService: PointsService) {
       
-      this.pointsService.clearPoints();
     }
     
     ngOnInit(): void {

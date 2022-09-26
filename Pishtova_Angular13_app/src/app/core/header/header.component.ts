@@ -32,14 +32,14 @@ export class HeaderComponent implements OnInit{
     private subjectService: SubjectService,
     private testService: TestService) {
 
-    }
+  }
     
     
-    ngOnInit(): void {
-      this.isAuth = this.userService.isUserAuthenticated();
-      this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl;
-      this.inTest = this.testService.isInTest();
-      this.subject = this.subjectService.getCurrentSubject();
+  ngOnInit(): void {
+    this.isAuth = this.userService.isUserAuthenticated();
+    this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl;
+    this.inTest = this.testService.isInTest();
+    this.subject = this.subjectService.getCurrentSubject();
 
     this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
     this.userService.isAvatarChange.subscribe(avatarUrl => this.avatarUrl = avatarUrl)
@@ -79,9 +79,10 @@ export class HeaderComponent implements OnInit{
     this.location.back();
   }
 
-  public exitTest(): void {
-    const sbjId = localStorage.getItem("subjectId");
-    if (sbjId) {
+  public exitTest(): void {    
+    const sbjIdString = localStorage.getItem("subjectId");
+    if (sbjIdString) {
+      const sbjId = + sbjIdString;
       this.router.navigate(["/subject/"+{sbjId}]);
     }
     else {

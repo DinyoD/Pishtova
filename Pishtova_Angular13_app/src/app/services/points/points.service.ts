@@ -49,7 +49,6 @@ export class PointsService {
   }
 
   public clearPoints =(): void => {
-    this._pointsChangeSub.next(0);
     this.storage.removeItem('points');
   }
 }
