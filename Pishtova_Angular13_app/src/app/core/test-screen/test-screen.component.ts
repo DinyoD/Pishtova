@@ -26,6 +26,8 @@ export class TestScreenComponent implements OnInit {
   public selectedAnswerId: string|null = null
   public points: number = 0;
   public maxScore: number = 20;
+  public navigationName: string = 'Тест';
+  public navigationUrl: string = '';
 
   constructor(
     private problemService: ProblemService,
@@ -37,14 +39,13 @@ export class TestScreenComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private router: Router) {
       if (this.actRoute.snapshot.paramMap.get('id') != null) {
-        
         this.subjectId = Number(this.actRoute.snapshot.paramMap.get('id'));
+        this.navigationUrl = 'subject/' + Number(this.actRoute.snapshot.paramMap.get('id')) + '/test';
       }
     }
 
     ngOnInit(): void {
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe(problems => this.problems = problems);
-      //this.points = this.pointsService.gettingPoints();
       this.pointsService.pointsChanged.subscribe(p => { 
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
