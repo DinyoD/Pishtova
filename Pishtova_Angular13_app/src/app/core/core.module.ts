@@ -22,6 +22,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ForAuthenticatedUserGuard } from 'src/app/authentication/guards/auth.guard';
 import { RankingScreenComponent } from './ranking-screen/ranking-screen.component';
 import { MaterialsScreenComponent, SafePipe } from './materials-screen/materials-screen.component';
+import { NotInTestGuard } from './guards/notInTest.guard';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { MaterialsScreenComponent, SafePipe } from './materials-screen/materials
       { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'subject/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'subject/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard, NotInTestGuard] },
       { path: 'subject/:id/ranking', component: RankingScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subject/:id/materials', component: MaterialsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'test-result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
