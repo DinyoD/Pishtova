@@ -14,6 +14,7 @@ import { EmailConfirmationComponent } from './email-confirmation/email-confirmat
 import { RouterModule } from '@angular/router';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForUnauthenticatedUserGuard } from '../guards/unauth.guard';
 
 
 @NgModule({
@@ -35,11 +36,11 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatButtonModule,
     MatSelectModule,
     RouterModule.forChild([
-      { path: 'auth/login', component: LoginComponent },
-      { path: 'auth/register', component: RegisterComponent },
-      { path: 'auth/emailconfirmation', component: EmailConfirmationComponent },
-      { path: 'auth/forgotpassword', component: ForgotPasswordComponent },
-      { path: 'auth/resetpassword', component: ResetPasswordComponent },
+      { path: 'auth/login', component: LoginComponent, canActivate: [ForUnauthenticatedUserGuard] },
+      { path: 'auth/register', component: RegisterComponent, canActivate: [ForUnauthenticatedUserGuard]  },
+      { path: 'auth/emailconfirmation', component: EmailConfirmationComponent, canActivate: [ForUnauthenticatedUserGuard]  },
+      { path: 'auth/forgotpassword', component: ForgotPasswordComponent, canActivate: [ForUnauthenticatedUserGuard]  },
+      { path: 'auth/resetpassword', component: ResetPasswordComponent,  canActivate: [ForUnauthenticatedUserGuard]  },
     ])
   ],
   exports: [ 
