@@ -1,6 +1,6 @@
 <mat-card class="dialog-container">
   <mat-card-title>Нова профилна снимка</mat-card-title>
-  <span *ngIf="file != null" class="content">{{file?.name}}</span>
+  <span *ngIf="file != null" class="content">{{file.name}}</span>
   <div class="dialog-btn-container">
     <button class="btn" (click)="fileInput.click()">Изберете</button>
     <button class="btn" [disabled]="file==null" (click)="Upload()">Качете </button>
