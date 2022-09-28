@@ -1,3 +1,4 @@
+<app-breadcrumb></app-breadcrumb>
 <div *ngIf="authors != null && authors.length > 0" class="container">
   <div class="authors-frame">
     <div class="author" [ngClass]="{'active': selectedAuthorIndex == a.index}" (click)="chooseAuthor(a)"

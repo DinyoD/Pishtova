@@ -18,6 +18,8 @@ export class RankingScreenComponent implements OnInit {
   public users: UserPointsForSubjectModel[]|null = null;
   public logedUser: UserPointsForSubjectModel|null = null;
   public logedUserPlace: number|null = null;
+  public navigationName: string = 'Класиране';
+  public navigationUrl: string = '';
 
   constructor(
     private subjectService: SubjectService,

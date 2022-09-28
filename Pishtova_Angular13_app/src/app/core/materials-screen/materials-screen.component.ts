@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, Pipe, PipeTransform } from '@angu
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AuthorModel } from 'src/app/models/author';
+import { BreadCrumbElement } from 'src/app/models/breadcrumb/breadcrumbElement';
 import { WorkModel } from 'src/app/models/work';
 import { getAuthorPictureLinksCollection } from 'src/app/resource/data';
 import { MaterialsService } from 'src/app/services/materials/materials.service';

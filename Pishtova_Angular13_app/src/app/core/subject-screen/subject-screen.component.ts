@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { PointsService, SubjectService, TestService  } from 'src/app/services';
+import { SubjectService, TestService  } from 'src/app/services';
 import { SubjectModel } from 'src/app/models/subject/subject';
 
 @Component({
@@ -21,17 +21,15 @@ export class SubjectScreenComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private subjectService: SubjectService,
-    private testService: TestService,
-    private pointsService: PointsService) {
-      
-    }
+    private testService: TestService
+    ){}
     
     ngOnInit(): void {
-    this.showTest = this.testService.isInTest();
-    this.testService.inTestChanged.subscribe( inTest => this.showTest = inTest);
-    this.subject = this.subjectService.getCurrentSubject();
-    this.subjectService.subjectChanged.subscribe( sbj => this.subject = sbj); 
-  }
+      this.showTest = this.testService.isInTest();
+      this.testService.inTestChanged.subscribe( inTest => this.showTest = inTest);
+      this.subject = this.subjectService.getCurrentSubject();
+      this.subjectService.subjectChanged.subscribe( sbj => this.subject = sbj);
+    }
 
   handelStartTest(){
     const dialogData = new ConfirmationDialogModel(`Стартирате тест по ${this.subject?.name}.`);
