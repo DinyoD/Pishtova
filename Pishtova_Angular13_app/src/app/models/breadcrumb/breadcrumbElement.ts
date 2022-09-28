@@ -1,4 +1,4 @@
-export interface NavigationElement {
+export interface BreadCrumbElement {
     name: string;
     url: string;
   }
