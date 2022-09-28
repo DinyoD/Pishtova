@@ -12,4 +12,3 @@ export * from './user/user.service';
 export * from './image/image.service';
 export * from './badges/badges.service';
 export * from './membership/membership.service';
-export * from './breadcrumb/breadcrumb.service';

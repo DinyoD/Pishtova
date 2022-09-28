@@ -35,7 +35,7 @@ export class SubjectService {
       this.storage.setItem('subjectId', sbj.id.toString());     
     }else{
       this.storage.removeItem('subjectName');
-      this.storage.removeItem('subjectId');     
+      this.storage.removeItem('subjectId');    
     }
   }
 

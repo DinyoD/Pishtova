@@ -1,0 +1,8 @@
+<div class="nav-container">
+  <div class="links" *ngFor="let item of breadcrumb">
+    <a routerLink="{{item.url}}">
+      <span class="text arrow">&nbsp;>&nbsp;</span>
+      <span class="text">{{item.name}}</span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+@import "../../utilities/devices/breakpoints.scss";
+@import "../../utilities/colors/colors.scss";
+
+.nav-container {
+  margin: 15px 20px;
+  display: flex;
+  flex-direction: row;
+  a {
+    text-decoration: none;
+    .text {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba($text, 0.7);
+    }
+  }
+  .links:first-child .arrow {
+    display: none;
+  }
+}
+@media (min-width: $tablet) {
+  .nav-container {
+    margin: 0 40px;
+    a {
+      text-decoration: none;
+      .text {
+        font-size: 16px;
+        font-weight: 700;
+        color: rgba($text, 0.7);
+      }
+    }
+  }
+}
