@@ -27,7 +27,7 @@
   <div class="header">
 
     <div class="icon-container">
-      <a *ngIf="isAuth" routerLink="/main" (click)="hideModal()" class="icon-menu">
+      <a *ngIf="isAuth" (click)="changeShowModal()" class="icon-menu-left">
         <img src="../../../assets/icons/header/menu.svg" alt="">
       </a>
       <a *ngIf="isAuth && !inTest" (click)="goBack()" class="icon-arrow">
@@ -35,20 +35,24 @@
       </a>
     </div>
 
-    <a *ngIf="isAuth == null || subject == null" routerLink="/main" class="app-name" (click)="hideModal()">
+    <a routerLink="/main" class="app-name" (click)="hideModal()">
       <img src="../../../assets/icons/header/logoText.svg" alt="">
     </a>
 
-    <a *ngIf="subject && isAuth" routerLink="/subject/{{subject.id}}" (click)="hideModal()">
+    <!-- <a *ngIf="subject && isAuth" routerLink="/subject/{{subject.id}}" (click)="hideModal()">
       <span class="sbj-name">
         {{subject.name}}
       </span>
-    </a>
+    </a> -->
 
     <div class="icon-container">
-      <a *ngIf="isAuth" (click)="changeShowModal()" class="icon-avatar" [ngClass]="{'avatar-hide': inTest}">
+      <a *ngIf="isAuth" routerLink="/profile" (click)="hideModal()" class="icon-avatar"
+        [ngClass]="{'icon-hide': inTest}">
         <img *ngIf="avatarUrl != '' " src={{avatarUrl}} alt="" class="avatar-img">
         <img *ngIf="avatarUrl == '' " src="../../../assets/images/avatar.jpg" alt="" class="avatar-img">
+      </a>
+      <a *ngIf="isAuth" (click)="changeShowModal()" class="icon-menu-right" [ngClass]="{'icon-hide': inTest}">
+        <img src="../../../assets/icons/header/menu.svg" alt="">
       </a>
       <a *ngIf="inTest" (click)="exitTest()" class="cancel-btn">
         <span class="cancel-text">Изход</span>
