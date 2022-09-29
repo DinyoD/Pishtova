@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { GreetingDialogComponent } from './greeting-dialog/greeting-dialog.component';
 import { UserInfoDialogComponent } from './user-info-dialog/user-info-dialog.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 
 
 
@@ -32,7 +33,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     UpdateSchoolInfoDialogComponent,
     GreetingDialogComponent,
     UserInfoDialogComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ImageDialogComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     ConfirmationDialogComponent,
     LoadingIndicatorComponent,
     ProgressBarComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent, 
+    ImageDialogComponent
   ]
 })
 export class SharedModule { }
