@@ -20,12 +20,14 @@
     <div *ngIf="problemNumber == i+1" class="test">
 
       <div class="test-content">
-        <div class="question">
-          <span class="question-text">{{p.questionText}}</span>
-        </div>
-        <div *ngIf="p.pictureUrl != null" class="img-container">
-          <img class="img" src="{{p.pictureUrl}}" alt=""
-            onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+        <div class="question-box">
+          <div class="question" [ngClass]="{'q-big': p.pictureUrl == null}">
+            <span class="question-text">{{p.questionText}}</span>
+          </div>
+          <div *ngIf="p.pictureUrl != null" class="img-container" (click)="openImage(p.pictureUrl)">
+            <img class="img" src="{{p.pictureUrl}}" alt=""
+              onerror="this.onerror=null;this.src='../../../assets/icons/favicon.ico';">
+          </div>
         </div>
         <div *ngFor="let a of p.answers" class="answer" [ngClass]="{
             'answer-active': !someAnswerIsClicked, 

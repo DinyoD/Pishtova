@@ -9,6 +9,7 @@ import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting
 import { MatDialog } from '@angular/material/dialog';
 import { getBadgeCodeByPoints } from 'src/app/resource/data';
 import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
+import { ImageDialogComponent } from 'src/app/shared/image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-test-screen',
@@ -46,13 +47,14 @@ export class TestScreenComponent implements OnInit {
 
     ngOnInit(): void {
       this.problemService.generateTestBySubjectId(this.subjectId).subscribe(problems => this.problems = problems);
+      this.pointsService.clearPoints();
       this.pointsService.pointsChanged.subscribe(p => { 
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
       });
     }
     
-    chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number){
+    public chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number): void {
       
       if (this.someAnswerIsClicked) {
         return;
@@ -89,7 +91,7 @@ export class TestScreenComponent implements OnInit {
       this.cd.detectChanges();      
     }
 
-    nextProblem(){
+    public nextProblem(): void {
       if (!this.someAnswerIsClicked) {
         return;
       }
@@ -97,7 +99,7 @@ export class TestScreenComponent implements OnInit {
       this.someAnswerIsClicked = false;    
     }
 
-    finishTest(){
+    public finishTest(): void {
       if (!this.someAnswerIsClicked || !this.subjectId) {
         return;
       }
@@ -112,6 +114,15 @@ export class TestScreenComponent implements OnInit {
         }
       } );
 
+    }
+
+    public openImage(imageUrl: string): void {
+      const dialogData = imageUrl;
+      console.log(dialogData);
+      
+      this.dialog.open(ImageDialogComponent, { 
+          data: dialogData
+      })
     }
   }
 
