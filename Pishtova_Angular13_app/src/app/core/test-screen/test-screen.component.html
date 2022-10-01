@@ -1,11 +1,11 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="test-container">
   <div class="result-info-container">
-    <div class="result-info-sector">
+    <div class="result-info-sector result-info-sector-mobile">
       <span class="number">{{maxScore}}</span>
       <span class="text">&nbsp;макс</span>
     </div>
-    <div class="result-info-sector">
+    <div class="result-info-sector result-info-sector-mobile">
       <span class="number">{{points ? points : 0}}</span>
       <span class="text">&nbsp;точки</span>
     </div>
@@ -20,6 +20,7 @@
     <div *ngIf="problemNumber == i+1" class="test">
 
       <div class="test-content">
+
         <div class="question-box">
           <div class="question" [ngClass]="{'q-big': p.pictureUrl == null}">
             <span class="question-text">{{p.questionText}}</span>
@@ -30,15 +31,33 @@
             <mat-icon class="zoom-img-icon">zoom_in</mat-icon>
           </div>
         </div>
-        <div *ngFor="let a of p.answers" class="answer" [ngClass]="{
-            'answer-active': !someAnswerIsClicked, 
-            'answer-correct': someAnswerIsClicked && a.isCorrect,
-            'answer-selected': a.id == selectedAnswerId
-          }" (click)="chooseAnswer(a, p.subjectCategoryId)">
-          <span class="answer-text">{{a.text}}</span>
-        </div>
-        <div *ngIf="p.hint && someAnswerIsClicked" class="hint">
-          <span class="hint-text"> * {{p.hint}}</span>
+
+        <div class="main-box">
+
+          <div class="result-info-container-desktop">
+            <div class="result-info-sector-desktop">
+              <span class="number">{{points ? points : 0}}</span>
+              <span class="text">точки</span>
+            </div>
+            <div class="result-info-sector-desktop">
+              <span class="number">{{maxScore}}</span>
+              <span class="text">макс. резултат</span>
+            </div>
+          </div>
+
+          <div class="answers-container">
+            <div *ngFor="let a of p.answers" class="answer" [ngClass]="{
+              'answer-active': !someAnswerIsClicked, 
+              'answer-correct': someAnswerIsClicked && a.isCorrect,
+              'answer-selected': a.id == selectedAnswerId
+            }" (click)="chooseAnswer(a, p.subjectCategoryId)">
+              <span class="answer-text">{{a.text}}</span>
+            </div>
+          </div>
+          <div class="hint-container" [ngClass]="{'hint-hide-mobile': p.hint == null || !someAnswerIsClicked }">
+            <span *ngIf="p.hint && someAnswerIsClicked" class="hint-text"> * {{p.hint}}</span>
+          </div>
+
         </div>
       </div>
 
