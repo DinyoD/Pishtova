@@ -58,6 +58,7 @@
           width: 100%;
         }
         .img-container {
+          position: relative;
           width: 100px;
           height: 100px;
           border-radius: 8px;
@@ -68,6 +69,13 @@
             overflow: hidden;
             object-fit: cover;
             cursor: zoom-in;
+          }
+          .zoom-img-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba($black, 0.3);
           }
         }
       }
