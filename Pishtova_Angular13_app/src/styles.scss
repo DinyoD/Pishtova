@@ -58,6 +58,7 @@ body {
   }
   div.cdk-overlay-pane {
     max-width: 98vw !important;
+    max-height: 90vh !important;
   }
 }
 @media (min-width: $phone) {
