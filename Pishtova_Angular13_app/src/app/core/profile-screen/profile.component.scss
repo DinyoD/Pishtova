@@ -1,192 +1,191 @@
 @import "../../utilities/colors/colors.scss";
 
-$badgeSize: calc(25px + 8vw);
-$avatarSize: calc(50px + 8vw);
-
 .container {
-  width: 100vw;
-  height: calc(100vh / 15 * 12);
-  background-color: rgba($red, 0.3);
+  padding: 24px;
   display: flex;
-  justify-content: space-between;
-  .profile-aside {
-    width: 30%;
-    margin: 15px 0 15px 15px;
-    border-radius: 15px;
-    background-color: rgba($green, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    border: 2px solid rgba($green, 0.2);
-    position: relative;
-
-    .profile-picture {
-      width: 100%;
-      height: 35%;
-      margin-top: 10px;
+  flex-direction: column;
+  .profile-box,
+  .badges-box {
+    margin-bottom: 40px;
+  }
+  .profile-box {
+    .profile-header {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      .profile-img-default,
+      margin-bottom: 24px;
       .profile-img {
-        width: $avatarSize;
-        height: $avatarSize;
-        background-color: rgba($secondary, 0.5);
-        border-radius: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         position: relative;
-        span {
-          color: $white;
-          font-size: 100px;
+        width: 100px;
+        height: 100px;
+        .avatar-img {
+          vertical-align: middle;
+          width: inherit;
+          height: inherit;
+          border-radius: 50%;
+        }
+        .icon-box {
+          position: absolute;
+          bottom: 0;
+          left: 76px;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background-color: rgba($white, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .icon-img-update {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            opacity: 70%;
+          }
         }
       }
-      .profile-img {
-        img {
-          width: 100%;
-          height: 100%;
-          border-radius: 100%;
-          overflow: hidden;
+      .header-info-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .info-field {
+          margin: 3px 24px;
+          span {
+            font-size: 14px;
+            line-height: 20px;
+            color: rgba($text, 0.9);
+          }
+          .name {
+            font-size: 17px;
+            line-height: 24px;
+            font-weight: 800;
+            color: rgba($text, 1);
+          }
         }
-      }
-      .mat-icon.profile-img-update {
-        position: absolute;
-        right: 5px;
-        bottom: 50%;
-        width: 50px;
-        height: 50px;
-        font-size: 50px;
-        cursor: pointer;
-        color: rgba($secondary, 0.2);
-      }
-      .mat-icon.profile-img-update:hover {
-        color: rgba($secondary, 0.7);
       }
     }
-    .profile-info {
-      width: 100%;
-      height: 63%;
+    .profile-content {
+      height: 100px;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-
+      justify-content: space-between;
+      margin-bottom: 32px;
       .info-field {
-        width: 100%;
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        span,
-        p {
-          font-size: 32px;
-          font-weight: bold;
-          text-align: center;
+        .icon-box {
+          width: 20px;
+          height: 20px;
+          margin-right: 12px;
         }
         span {
-          color: rgba($black, 0.75);
-        }
-
-        p {
-          color: rgba($secondary, 0.85);
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 20px;
+          color: rgba($text, 0.8);
         }
       }
     }
-    .mat-icon.edit-icon {
-      position: absolute;
-      right: 5px;
-      top: 38%;
-      width: 50px;
-      height: 50px;
-      font-size: 50px;
-      cursor: pointer;
-      color: rgba($secondary, 0.2);
-    }
-    .mat-icon.edit-icon:hover {
-      color: rgba($secondary, 0.7);
+    .btn {
+      box-sizing: border-box;
+      height: 48px;
+      padding: 12px;
+      text-align: center;
+      background-color: transparent;
+      border: 1px solid $primary;
+      border-radius: 8px;
+      color: $primary;
+      font-size: 17px;
+      font-weight: bold;
     }
   }
-  .profile-content {
-    width: calc(70% - 50px);
-    margin: 15px 15px 15px 0;
-    border-radius: 15px;
-    background-color: rgba($icon, 0.1);
+  .badges-box {
+    .badges {
+      display: flex;
+      padding: 16px 0;
+      overflow-x: scroll;
+      .badge {
+        width: 49px;
+        height: 60px;
+        margin: 0 12px;
+      }
+      .badge-container {
+        position: relative;
+        .badge-count {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          bottom: 5px;
+          right: 12px;
+          width: 13px;
+          height: 13px;
+          border-radius: 50%;
+          background-color: rgba($white, 0.5);
+          span {
+            color: rgba($text, 0.8);
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+  .subject-box {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-around;
-    border: 2px solid rgba($icon, 0.2);
-
-    .content-part {
-      height: 30%;
-      width: calc(100% - 40px);
-      border-radius: 15px;
-      background-color: rgba($red, 0.1);
-      border: 2px solid rgba($red, 0.2);
+    box-sizing: border-box;
+    .title {
+      align-self: flex-start;
+    }
+    .subjects {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 24px;
       display: flex;
-      flex-direction: row;
+      flex-flow: wrap;
+      align-content: space-between;
       justify-content: space-around;
-      align-items: center;
-      .badge-container {
-        height: 100%;
+      .sbj {
+        background-color: rgba($white, 0.5);
+        border-radius: 8px;
+        width: 160px;
+        height: 116px;
+        margin-bottom: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-      }
-      .badge {
-        width: $badgeSize;
-        height: $badgeSize;
-        opacity: 0.2;
         align-items: center;
-      }
-      .badge.owned {
-        opacity: 1;
-      }
-      .badge-count {
-        text-align: center;
-        color: rgba($green, 0.8);
-        font-size: 32px;
-        font-weight: bolder;
-        margin: 0;
-      }
-      .info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .subject-info {
-        a {
-          margin: 10px;
-          cursor: pointer;
-          background-color: rgba($green, 0.2);
-          padding: 5px 15px;
+        cursor: pointer;
+        .sbj-icon {
+          width: 48px;
+          height: 36px;
         }
-        p,
-        span {
-          color: rgba($black, 0.75);
-          font-size: 24px;
+        .sbj-name {
+          font-size: 14px;
+          line-height: 24px;
+          font-weight: 700;
+          margin-top: 12px;
         }
-        p {
-          margin: 5px;
-          text-align: center;
+        .bel {
+          color: $sbj-bel;
         }
-      }
-    }
-    .content-part.percent-badge-part {
-      align-items: flex-start;
-      .badge {
-        margin-top: 8px;
+        .bio {
+          color: $sbj-bio;
+        }
+        .geo {
+          color: $sbj-geo;
+        }
+        .chm {
+          color: $sbj-chm;
+        }
       }
     }
   }
-}
-
-a {
-  margin: 5px;
-  cursor: pointer;
-  background-color: rgba($green, 0.2);
-  padding: 5px 15px;
-  text-align: center;
-  border-radius: 8px;
+  .badges-box,
+  .subject-box {
+    .title {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+      color: $primary;
+    }
+  }
 }
