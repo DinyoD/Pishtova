@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { environment as env } from '../../../environments/environment';
-import { StorageService } from '..';
+//import { StorageService } from '..';
 import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class TestService {
   public inTestChanged: Observable<boolean> = this._inTestChangeSub.asObservable();
 
   constructor(
-    private storage: StorageService,
+    //private storage: StorageService,
     private httpClient: HttpClient) { }
 
 
@@ -26,14 +26,14 @@ export class TestService {
   public sendInTestStateChangeNotification = (inTest: boolean): void => {
     this._inTestChangeSub.next(inTest);
     if (inTest) {
-      this.storage.setItem('test', 'in');
+      sessionStorage.setItem('test', 'in');
     }else{
-      this.storage.removeItem('test');
+      sessionStorage.removeItem('test');
     }
   }
 
   public isInTest = (): boolean => {
-    const storageItem = this.storage.getItem("test");
+    const storageItem = sessionStorage.getItem("test");
     return storageItem != null;
   }
 }
