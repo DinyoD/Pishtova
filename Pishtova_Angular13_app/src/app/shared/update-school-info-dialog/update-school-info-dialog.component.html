@@ -1,32 +1,33 @@
-<mat-card class="dialog-container">
-  <mat-card-title>Смени училище</mat-card-title>
-  <mat-card-content>
-    <form [formGroup]="form">
-      <mat-form-field>
+<div class="container">
+  <div class="title">Редакция училище</div>
+  <div class="form-box">
+    <form [formGroup]="form" class="form">
+
+      <div class="field">
         <mat-select placeholder="Изберете община..." formControlName="municipality"
-          (selectionChange)="getTowns($event.value)">
+          (selectionChange)="getTowns($event.value)" class="input">
           <mat-option *ngFor="let m of municipalities" [value]="m.id">{{m.name}}
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </div>
 
-      <mat-form-field>
+      <div class="field">
         <mat-select placeholder="Изберете град/село..." formControlName="town"
-          (selectionChange)="getSchools($event.value)">
+          (selectionChange)="getSchools($event.value)" class="input">
           <mat-option *ngFor="let t of towns" [value]="t.id">{{t.name}}</mat-option>
         </mat-select>
-      </mat-form-field>
+      </div>
 
-      <mat-form-field>
-        <mat-select placeholder="Изберете училище..." formControlName="school">
+      <div class="field">
+        <mat-select placeholder="Изберете училище..." formControlName="school" class="input">
           <mat-option *ngFor="let sch of schools" [value]="{name: sch.name, id: sch.id}">{{sch.name}}</mat-option>
         </mat-select>
-      </mat-form-field>
+      </div>
 
     </form>
-  </mat-card-content>
-  <div class="dialog-btn-container">
+  </div>
+  <div class="btn-box">
     <button class="btn" (click)="cancel()">Отказ</button>
     <button class="btn" [disabled]="!school.value" (click)="confirm()">Потвърди</button>
   </div>
-</mat-card>
+</div>
