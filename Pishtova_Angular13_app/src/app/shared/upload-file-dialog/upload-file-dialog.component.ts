@@ -5,7 +5,7 @@ import { ImageService } from 'src/app/services';
 @Component({
   selector: 'app-upload-file-dialog',
   templateUrl: './upload-file-dialog.component.html',
-  styleUrls: ['../confirmation-dialog/confirmation-dialog.component.css']
+  styleUrls: ['../update-profile-info-dialog/update-profile-info-dialog.component.css']
 })
 export class UploadFileDialogComponent {
   
