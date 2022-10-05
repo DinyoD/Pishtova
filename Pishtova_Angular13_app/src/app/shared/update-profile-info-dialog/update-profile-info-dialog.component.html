@@ -1,31 +1,45 @@
-<mat-card class="dialog-container">
-  <mat-card-title>Редакция</mat-card-title>
-  <mat-card-content>
-    <form [formGroup]="form">
-      <mat-form-field>
-        <input matInput type="text" formControlName="name">
-        <mat-error *ngIf="name.touched && name.hasError('required')">*полето е задължително</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="email" formControlName="email">
-        <mat-error *ngIf="email.touched && email.hasError('required')">*полето е задължително</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" min="4" max="12" formControlName="grade">
-        <mat-error *ngIf="grade.touched && grade.hasError('required')">*полето е задължително</mat-error>
-      </mat-form-field>
-      <div class="school-field" (click)="updateSchool()" title="смени училище">
-        <p>{{editedProfile.school.name}}</p>
+<div class="container">
+  <div class="title">Редакция</div>
+  <div class="form-box">
+    <form [formGroup]="form" class="form">
+      <div class="field">
+        <div class="info">
+          <span class="label">Име</span>
+          <mat-error *ngIf="name.touched && form.hasError('nameNotMatchingRegEx')">
+            *валидно име, от 3 до 30 символа
+          </mat-error>
+        </div>
+        <input type="text" formControlName="name" class="input">
       </div>
-      <mat-error *ngIf="name.touched && form.hasError('nameNotMatchingRegEx')">
-        *името трябва да е между 3 и 30 символа, и с валидна структура.</mat-error>
-      <mat-error *ngIf="email.touched && email.hasError('email')">*имейлът трябва да е валиден такъв</mat-error>
-      <mat-error *ngIf="grade.touched && form.hasError('gradeNotMatching')">*класът трябва да е цифра между 4 и 12.
-      </mat-error>
+
+      <div class="field">
+        <div class="info">
+          <span class="label">Имейл</span>
+          <mat-error *ngIf="email.touched && email.hasError('email')">*имейл адресът не е валиден</mat-error>
+        </div>
+        <input type="email" formControlName="email" class="input">
+      </div>
+
+      <div class="field">
+        <div class="info">
+          <span class="label">Клас</span>
+          <mat-error *ngIf="grade.touched && form.hasError('gradeNotMatching')">*цифра между 4 и 12.
+          </mat-error>
+        </div>
+        <input type="number" min="4" max="12" formControlName="grade" class="input">
+      </div>
+
+      <div class="field" (click)="updateSchool()" title="смени училище">
+        <div class="info">
+          <span class="label">Училище</span>
+        </div>
+        <div class="input input-school"><span class="placeholder">{{editedProfile.school.name}}</span></div>
+      </div>
     </form>
-  </mat-card-content>
-  <div class="dialog-btn-container">
+
+  </div>
+  <div class="btn-box">
     <button class="btn" (click)="cancel()">Отказ</button>
     <button class="btn" [disabled]="!form.valid" (click)="confirm()">Потвърди</button>
   </div>
-</mat-card>
+</div>
