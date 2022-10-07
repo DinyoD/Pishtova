@@ -2,9 +2,9 @@
 {
     public class SubjectPointsModel
     {
-        public int SubjectId { get; set; }
+        public int Id { get; set; }
 
-        public string SubjectName { get; set; }
+        public string Name { get; set; }
 
         public int Problems { get; set; }
 

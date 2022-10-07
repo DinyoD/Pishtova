@@ -111,14 +111,14 @@
             var result = new List<SubjectPointsModel>();
             foreach (var item in scores)
             {
-                var subject = result.FirstOrDefault(x => x.SubjectName == item.SubjectCategory.Subject.Name);
+                var subject = result.FirstOrDefault(x => x.Name == item.SubjectCategory.Subject.Name);
 
                 if (subject == null)
                 {
                     subject = new SubjectPointsModel
                     {
-                        SubjectName = item.SubjectCategory.Subject.Name,
-                        SubjectId = item.SubjectCategory.SubjectId
+                        Name = item.SubjectCategory.Subject.Name,
+                        Id = item.SubjectCategory.SubjectId
                     };
                     result.Add(subject);
                 }
