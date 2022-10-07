@@ -1,9 +1,7 @@
 <div class="container">
 
-  <div class="profile-box">
-
+  <div class="profile-box" [ngClass]="{'mobile-hide': showDetails}">
     <div class="profile-header">
-
       <div class="profile-img">
         <img *ngIf="profile?.pictureUrl != '' && profile?.pictureUrl != null" src={{profile?.pictureUrl}} alt=""
           class="avatar-img">
@@ -14,13 +12,10 @@
           </mat-icon>
         </div>
       </div>
-
       <div class="header-info-box">
-
         <div class="info-field">
           <span class="name">{{profile?.name}}</span>
         </div>
-
         <div class="info-field">
           <span class="grade">{{profile?.grade}}</span>
           <span class="grade" *ngIf="profile?.grade == 7 || profile?.grade == 8">-м</span>
@@ -28,60 +23,58 @@
           <span class="grade">и клас</span>
         </div>
       </div>
-
     </div>
-
-
     <div class="profile-content">
-
       <div class="info-field">
         <div class="icon-box">
           <img src="../../../assets/icons/profile/mail.svg" alt="">
         </div>
         <span class="text">{{profile?.email}}</span>
       </div>
-
       <div class="info-field">
         <div class="icon-box">
           <img src="../../../assets/icons/profile/location.svg" alt="">
         </div>
         <span class="text">{{profile?.townName}}</span>
       </div>
-
       <div class="info-field">
         <div class="icon-box">
           <img src="../../../assets/icons/profile/school.svg" alt="">
         </div>
         <span class="text">{{profile?.school?.name}}</span>
       </div>
-
     </div>
-
     <div class="btn" (click)="updateInfo()">Редактирай профил</div>
-
-  </div>
-
-  <div *ngIf="badges != null && badges.length > 0" class="badges-box">
-    <div class="title">Значки</div>
-    <div class="badges">
-      <div *ngFor="let b of badges" class="badge-container">
-        <img class="badge" src="../../../assets/icons/badges/{{b.code}}.svg" alt="">
-        <div class="badge-count" *ngIf="b.code < 2000"><span>{{badgeCount(b.code)}}</span></div>
+    <div *ngIf="badges != null && badges.length > 0" class="badges-box">
+      <div class="title">Значки</div>
+      <div class="badges">
+        <div *ngFor="let b of badges" class="badge-container">
+          <img class="badge" src="../../../assets/icons/badges/{{b.code}}.svg" alt="">
+          <div class="badge-count" *ngIf="b.code < 2000"><span class="text">{{badgeCount(b.code)}}</span></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="subject-box">
+  <div *ngIf="!showDetails" class="subject-box">
     <div class="title">Предмети</div>
     <div class="subjects">
-      <a class="sbj">
-        <img src="../../../assets/icons/subjects/bel.svg" alt="" class="sbj-icon">
-        <span class="sbj-name bel">Български език</span>
-      </a>
-      <a class="sbj">
-        <img src="../../../assets/icons/subjects/bio.svg" alt="" class="sbj-icon">
-        <span class="sbj-name bio">Биология</span>
-      </a>
+      <div class="sbj" *ngFor="let s of subjectsInfo" (click)="showSubjectDetails(s.id, s.name, s.points, s.problems)">
+        <img src="../../../assets/icons/subjects/{{getSubjectCode(s.name)}}.svg" alt="" class="sbj-icon">
+        <span class="sbj-name" [ngClass]="[getSubjectCode(s.name)]">{{s.name}}</span>
+        <div class="sbj-info">
+          <span class="text">{{s.points}}</span>
+          <span class="text">&nbsp;точки</span>
+        </div>
+        <div class="sbj-info">
+          <span class="text">{{s.problems}}</span>
+          <span class="text">&nbsp;въпроси</span>
+        </div>
+        <div class="sbj-btn">
+          <span class="text">Детайли</span>
+          <img src="../../../assets/icons/arrowRight.svg" alt="">
+        </div>
+      </div>
       <a class="sbj">
         <img src="../../../assets/icons/subjects/geo.svg" alt="" class="sbj-icon">
         <span class="sbj-name geo">География</span>
@@ -90,6 +83,33 @@
         <img src="../../../assets/icons/subjects/chm.svg" alt="" class="sbj-icon">
         <span class="sbj-name chm">Химия</span>
       </a>
+    </div>
+  </div>
+
+  <div *ngIf="showDetails" class="subject-details-box">
+    <div class="sbj">
+      <div class="sbj-name-box">
+        <img src="../../../assets/icons/arrowLeft.svg" alt="" (click)="closeSubjectDetails()" class="arrow">
+        <!-- <span class="sbj-name" [ngClass]="[getSubjectCode(subjectCategories?.name)]">{{subjectCategories?.name}}</span> -->
+      </div>
+      <div class="sbj-info">
+        <span class="info-text-big">{{subjectCategories?.points}}</span>
+        <span class="info-text">точки</span>
+      </div>
+      <div class="sbj-info">
+        <span class="info-text-big">{{subjectCategories?.problems}}</span>
+        <span class="info-text">въпроси</span>
+      </div>
+      <img src="../../../assets/icons/subjects/{{getSubjectCode(subjectCategories?.name)}}.svg" alt="" class="sbj-icon">
+    </div>
+
+    <div class="categories">
+      <div *ngFor="let cat of subjectCategories?.categories" class="category">
+        <div class="score">
+          <span class="score-text-big">{{cat.percentage}} %</span>
+          <span class="score-text">{{cat.name}}</span>
+        </div>
+      </div>
     </div>
   </div>
 

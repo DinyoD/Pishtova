@@ -12,11 +12,12 @@ import { EditProfileModel } from 'src/app/models/profile/editProfile';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
 import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
 import { ProfileModel } from 'src/app/models/profile/profile';
-import { ProfilePointsBySubjectModel } from "src/app/models/profile/profilePointsBySubject";
+import { SubjectInfo } from "src/app/models/subject/subjectInfo";
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
-import { CategoryWithPointsModel } from 'src/app/models/subjectCategory/categoryPoints';
-import { CurrentUserModel } from 'src/app/models/user/currentUser';
+import { HtmlHelper } from "../helpers/subjectHelper";
+import { SubjectWithCategories } from 'src/app/models/subjectCategory/subjectWithcategories';
+//import { CurrentUserModel } from 'src/app/models/user/currentUser';
 
 @Component({
   selector: 'app-profile',
@@ -25,13 +26,13 @@ import { CurrentUserModel } from 'src/app/models/user/currentUser';
 })
 export class ProfileComponent implements OnInit {
 
-  public currentUser: CurrentUserModel|null = null;
+  //public currentUser: CurrentUserModel|null = null;
   public profile: ProfileModel|null = null;
   public profileSchoolId: number|null = null; 
   public showDetails: boolean = false;
-  public subjectCategories: CategoryWithPointsModel[]|null = null;
+  public subjectCategories: SubjectWithCategories|null = null;
   public badges: BadgesCountModel[]|null = null;
-  public pointsBySubjects: ProfilePointsBySubjectModel[]|null = null;
+  public subjectsInfo: SubjectInfo[]|null = null;
 
   constructor(
     private subjectService: SubjectService,
@@ -42,10 +43,8 @@ export class ProfileComponent implements OnInit {
     private membershipService: MembershipService,
     private dialog: MatDialog,
     private router: Router) { 
-      
-    if (this.subjectService.getCurrentSubject() != null) {
+
       this.subjectService.setSubject(null);
-    } 
   }
 
   ngOnInit(): void {
@@ -53,15 +52,24 @@ export class ProfileComponent implements OnInit {
       this.profile = profile;
       this.profileSchoolId = profile.school.id;
      });
-     this.pointsService.getPointsBySubjects().subscribe(res => this.pointsBySubjects = res);
+     this.pointsService.getPointsBySubjects().subscribe(res => this.subjectsInfo = res);
      this.badgeService.getProfileBadges().subscribe(res => this.badges = res.badges);
-     this.currentUser = this.authService.getCurrentUser();
+    //  this.currentUser = this.authService.getCurrentUser();
+    //  console.log(this.currentUser);
+     
   }
 
-  public showSubjectDetails = (subjectId: number): void => { 
+  public showSubjectDetails = (subjectId: number, subjectName: string, subjectPoints: number, subjectProblems: number): void => { 
     this.showDetails= true;
     this.pointsService.getPointsBySubjectCategories(subjectId)
-      .subscribe( res => this.subjectCategories = res.map(x => {return {...x, percentage: Math.round(x.points / x.problems * 100)}}));
+      .subscribe( res => 
+        this.subjectCategories = {
+        id: subjectId,
+        name: subjectName,
+        points: subjectPoints,
+        problems: subjectProblems,
+        categories: res.map(x => {return {...x, percentage: Math.round(x.points / x.problems * 100)}})
+      });
   }
 
   public closeSubjectDetails = (): void => {
@@ -122,6 +130,10 @@ export class ProfileComponent implements OnInit {
 
   public goToBillingPortal():void {
     this.membershipService.redirectToCustomerPortal().subscribe((data) => { window.location.href = data.url });
+  }
+
+  public getSubjectCode(name: string|undefined): string {
+    return HtmlHelper.getCodeBySubjectName(name);
   }
 
   private changeProfileInfo = (name: string, grade: number, schoolId: number): void =>  {
