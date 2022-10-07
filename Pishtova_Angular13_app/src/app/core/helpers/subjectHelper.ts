@@ -1,7 +1,7 @@
 export class HtmlHelper {
 
   // TODO Optimize method!!
-  static getCodeBySubjectName(name: string): string {
+  static getCodeBySubjectName(name: string|undefined ): string {
     let result: string = '';
     switch (name) {
       case "Биология":

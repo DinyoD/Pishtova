@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
-import { SubjectInfo } from 'src/app/models/profile/subjectInfo';
+import { SubjectInfo } from 'src/app/models/subject/subjectInfo';
 import { CategoryWithPointsModel } from 'src/app/models/subjectCategory/categoryPoints';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
