@@ -22,10 +22,10 @@
         </div>
 
         <div class="info-field">
-          <span>{{profile?.grade}}</span>
-          <span *ngIf="profile?.grade == 7 || profile?.grade == 8">-м</span>
-          <span *ngIf="profile?.grade != 7 && profile?.grade != 8">-т</span>
-          <span>и клас</span>
+          <span class="grade">{{profile?.grade}}</span>
+          <span class="grade" *ngIf="profile?.grade == 7 || profile?.grade == 8">-м</span>
+          <span class="grade" *ngIf="profile?.grade != 7 && profile?.grade != 8">-т</span>
+          <span class="grade">и клас</span>
         </div>
       </div>
 
@@ -38,21 +38,21 @@
         <div class="icon-box">
           <img src="../../../assets/icons/profile/mail.svg" alt="">
         </div>
-        <span>{{profile?.email}}</span>
+        <span class="text">{{profile?.email}}</span>
       </div>
 
       <div class="info-field">
         <div class="icon-box">
           <img src="../../../assets/icons/profile/location.svg" alt="">
         </div>
-        <span>{{profile?.townName}}</span>
+        <span class="text">{{profile?.townName}}</span>
       </div>
 
       <div class="info-field">
         <div class="icon-box">
           <img src="../../../assets/icons/profile/school.svg" alt="">
         </div>
-        <span>{{profile?.school?.name}}</span>
+        <span class="text">{{profile?.school?.name}}</span>
       </div>
 
     </div>
