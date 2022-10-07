@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
-import { ProfilePointsBySubjectModel } from 'src/app/models/profile/profilePointsBySubject';
+import { SubjectInfo } from 'src/app/models/profile/subjectInfo';
 import { CategoryWithPointsModel } from 'src/app/models/subjectCategory/categoryPoints';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
@@ -25,8 +25,8 @@ export class PointsService {
     return this.httpClient.post(env.API_URL + '/scores/save', score);
   }
 
-  public getPointsBySubjects = (): Observable<ProfilePointsBySubjectModel[]> => {
-    return this.httpClient.get<ProfilePointsBySubjectModel[]>(env.API_URL + `/scores/userpointsbysubject`)
+  public getPointsBySubjects = (): Observable<SubjectInfo[]> => {
+    return this.httpClient.get<SubjectInfo[]>(env.API_URL + `/scores/userpointsbysubject`)
   }
 
   public getPointsBySubjectCategories = (subjectId: number): Observable<CategoryWithPointsModel[]> => {

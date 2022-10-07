@@ -1,5 +1,5 @@
 
-export interface ProfilePointsBySubjectModel {
+export interface SubjectInfo {
     subjectId: number;
     subjectName: string;
     points: number;

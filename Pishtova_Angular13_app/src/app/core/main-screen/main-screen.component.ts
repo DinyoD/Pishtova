@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { SubjectModel } from 'src/app/models/subject/subject';
 import { SubjectService} from '../../services';
-import { HtmlHelper } from "../helpers/htmlHelper";
+import { HtmlHelper } from "../helpers/subjectHelper";
 
 @Component({
   selector: 'app-main-screen',
@@ -33,7 +33,7 @@ export class MainScreenComponent implements OnInit{
   }
 
   public setClassBySbjName(name: string): string {
-    return HtmlHelper.setHtmlClassBySubjectName(name);
+    return HtmlHelper.getCodeBySubjectName(name);
   }
 
 }
