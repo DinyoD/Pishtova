@@ -198,8 +198,9 @@
     box-sizing: border-box;
     .sbj {
       box-sizing: border-box;
-      width: 100%;
+      width: calc(100% - 10px);
       height: 200px;
+      margin: 0 5px;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -216,6 +217,9 @@
         .arrow {
           width: 16px;
           height: 14px;
+        }
+        .sbj-name {
+          display: none;
         }
       }
       .sbj-info {
@@ -294,35 +298,45 @@
       display: block;
     }
     .profile-box {
-      width: 35%;
+      width: 40%;
+      height: 100%;
       .profile-header {
         .header-info-box {
           .info-field {
             .grade {
-              font-size: 20px;
-              line-height: 24px;
+              font-size: 24px;
+              line-height: 28px;
             }
           }
         }
       }
       .profile-content {
+        height: 25%;
+        justify-content: space-around;
         .info-field {
           .text {
-            font-size: 16px;
-            line-height: 24px;
+            font-size: 20px;
+            line-height: 28px;
           }
         }
       }
       .btn {
-        width: 250px;
+        width: 50%;
       }
       .badges-box {
-        margin-top: 10vh;
+        margin-top: 8vh;
         .badges {
           .badge-container {
             .badge {
-              width: 60px;
-              height: 80px;
+              width: 80px;
+              height: 96px;
+            }
+            .badge-count {
+              width: 20px;
+              .text {
+                font-size: 16px;
+              }
+              height: 20px;
             }
           }
         }
@@ -330,16 +344,21 @@
     }
     .subject-box {
       width: 50%;
+      height: 100%;
       justify-content: flex-start;
       .subjects {
+        width: 100%;
+        height: 100%;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
+        align-content: flex-start;
         margin-top: 0;
         .sbj {
           box-sizing: border-box;
-          width: 40%;
-          height: 220px;
+          width: 44%;
+          height: 44%;
+          max-height: 260px;
           margin: 32px 16px 0 16px;
           padding: 24px;
           justify-content: flex-start;
@@ -349,16 +368,16 @@
             height: 36px;
           }
           .sbj-name {
-            font-size: 20px;
-            line-height: 24px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            line-height: 28px;
+            margin: 15px 0;
           }
           .sbj-info,
           .sbj-btn {
             display: flex;
             width: 100%;
             .text {
-              font-size: 14px;
+              font-size: 16px;
               line-height: 24px;
               font-weight: 600;
             }
@@ -386,6 +405,53 @@
       font-size: 24px;
       line-height: 32px;
       font-weight: bolder;
+    }
+    .subject-details-box {
+      width: 50%;
+      height: 100%;
+      overflow-y: scroll;
+      .sbj {
+        height: 25%;
+        min-height: 200px;
+        padding: 25px;
+        flex-direction: row;
+        flex-flow: wrap;
+        justify-content: space-around;
+        align-content: space-around;
+        .sbj-name-box {
+          width: 100%;
+          height: 36px;
+          margin-bottom: 15px;
+          .sbj-name {
+            display: inline;
+            font-size: 28px;
+            line-height: 36px;
+            font-weight: 800;
+            color: rgba($text, 1);
+            margin-left: 15px;
+          }
+          .arrow {
+            padding-top: 5px;
+            width: 30px;
+            height: 26px;
+          }
+        }
+        .sbj-info {
+          width: 30%;
+          height: 60%;
+        }
+        .sbj-icon {
+          width: 15%;
+          max-width: 100px;
+        }
+      }
+      .categories {
+        height: 80%;
+        align-content: flex-start;
+        .category {
+          width: calc(100% / 4 - 10px);
+        }
+      }
     }
   }
 }
