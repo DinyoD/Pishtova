@@ -14,7 +14,7 @@
     box-sizing: border-box;
   }
   .title-container {
-    margin-top: 20px;
+    margin: 24px 0;
     .title {
       font-size: 16px;
       line-height: 24px;
@@ -23,18 +23,15 @@
     }
   }
   .box-container {
-    margin-top: 24px;
     display: flex;
     flex-flow: wrap;
-    align-content: space-between;
-    justify-content: space-around;
     .box {
       background-color: rgba($white, 0.5);
       backdrop-filter: blur(20px);
       border-radius: 8px;
-      width: 158px;
+      width: calc(100% / 2 - 10px);
       height: 116px;
-      margin-bottom: 10px;
+      margin: 0 5px 10px 5px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -64,11 +61,11 @@
       }
     }
     .box-active-big {
-      width: 186px;
+      width: calc(100% - 10px);
       height: 90px;
     }
     .box-active-small {
-      width: 130px;
+      width: calc(50% - 10px);
       height: 90px;
     }
   }
@@ -81,13 +78,24 @@
     .box-container {
       width: 100%;
     }
+    .title-container {
+      .title {
+        font-size: 20px;
+        line-height: 28px;
+      }
+    }
     .box-container {
       flex-direction: row;
-      justify-content: space-between;
-      align-content: space-around;
+      justify-content: space-around;
+      .box,
+      .box-active-big,
+      .box-active-small {
+        margin: 0 8px 16px 8px;
+        box-sizing: border-box;
+      }
       .box {
-        margin: 0 0;
-        width: 230px;
+        width: calc(25% - 16px);
+        min-width: 220px;
         height: 180px;
         .box-icon {
           width: 72px;
@@ -98,23 +106,30 @@
           line-height: 32px;
         }
       }
+      .box-active-big,
+      .box-active-small {
+        margin: 0 8px 16px 8px;
+        height: 120px;
+      }
       .box-active-big {
-        width: 280px;
-        height: 100px;
+        width: calc(75% - 16px);
       }
       .box-active-small {
-        width: 180px;
-        height: 100px;
+        width: calc(25% - 16px);
       }
     }
   }
 }
-
 @media (min-width: $desktop) {
   .container {
+    .title-container {
+      .title {
+        font-size: 28px;
+        line-height: 36px;
+      }
+    }
     .box-container {
       .box {
-        width: 320px;
         height: 240px;
         .box-icon {
           width: 96px;
@@ -126,12 +141,35 @@
         }
       }
       .box-active-big {
-        width: 380px;
-        height: 152px;
+        width: calc(34% - 16px);
+        height: 150px;
       }
       .box-active-small {
-        width: 216px;
-        height: 152px;
+        width: calc(16% - 16px);
+        min-width: 200px;
+        height: 150px;
+      }
+    }
+  }
+}
+@media (min-width: $desktop-b) {
+  .container {
+    .title-container {
+      .title {
+        font-size: 36px;
+        line-height: 48px;
+      }
+    }
+    .box-container {
+      .box-active-big,
+      .box-active-small {
+        height: 180px;
+      }
+      .box-active-big {
+        width: calc(65% - 16px);
+      }
+      .box-active-small {
+        width: calc(35% - 16px);
       }
     }
   }
