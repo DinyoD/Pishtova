@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserInfoModel } from 'src/app/models/user/userInfo';
 
@@ -11,10 +11,8 @@ export class UserInfoDialogComponent {
 
   public userInfo: UserInfoModel|null = null;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: UserInfoModel,
-    public dialogRef: MatDialogRef<UserInfoDialogComponent>
-  ) {
+  constructor(public dialogRef: MatDialogRef<UserInfoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: UserInfoModel) {
     this.userInfo = data;
    }
 
@@ -28,5 +26,4 @@ export class UserInfoDialogComponent {
                 : badgeModel.count;
   }
 
-  public badgeIsOwned = (code: number): boolean => { return this.badgeCount(code) > 0}
 }

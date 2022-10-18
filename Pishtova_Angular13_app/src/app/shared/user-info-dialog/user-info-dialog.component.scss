@@ -1,119 +1,119 @@
 @import "../../utilities/colors/colors.scss";
+@import "../../utilities/devices/breakpoints.scss";
 
-$fontSize: calc(13px + 0.5vw);
-$badgeSize: calc(20px + 3.5vw);
-
-mat-card.dialog-container {
-  width: 25vw;
-  min-width: 375px;
-  height: 65vh;
-  padding: 25px;
-  background-color: $primary;
+.container {
+  box-sizing: border-box;
+  width: 320px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  .userInfo-picture {
-    width: 100%;
-    height: 120px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    .userInfo-img-default,
-    .userInfo-img {
-      width: 120px;
-      height: 120px;
+  position: relative;
+  cursor: auto;
+  .profile-box {
+    .profile-header {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      span {
-        color: $white;
-        font-size: 30px;
+      margin-bottom: 24px;
+      .profile-img {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        .avatar-img {
+          vertical-align: middle;
+          width: inherit;
+          height: inherit;
+          border-radius: 50%;
+        }
+      }
+      .header-info-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .info-field {
+          margin: 3px 24px;
+          .name {
+            font-size: 17px;
+            line-height: 24px;
+            font-weight: 800;
+            color: $text;
+          }
+          .grade {
+            font-size: 14px;
+            line-height: 20px;
+            color: rgba($text, 0.9);
+          }
+        }
       }
     }
-    .userInfo-img-default {
-      border-radius: 100%;
-      background-color: rgba($secondary, 0.5);
-    }
-    .userInfo-img {
-      img {
-        width: 100%;
-        height: 100%;
-        border-radius: 100%;
-        overflow: hidden;
-      }
-    }
-    .userInfo-name {
-      font-size: $fontSize;
-      font-weight: bold;
-    }
-  }
-  .userInfo-info {
-    width: 100%;
-    height: 35%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    .info-field {
-      width: 100%;
+    .profile-content {
+      min-height: 80px;
       display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      span {
-        font-size: $fontSize;
-        font-weight: bold;
-        text-align: end;
-        color: rgba($black, 0.75);
+      flex-direction: column;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      .info-field {
+        display: flex;
+        .icon-box {
+          width: 20px;
+          height: 20px;
+          margin-right: 12px;
+        }
+        .text {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 20px;
+          color: rgba($text, 0.8);
+        }
+      }
+    }
+    .badges-box {
+      .badges {
+        display: flex;
+        padding: 16px 0;
+        overflow-x: scroll;
+        .badge-container {
+          position: relative;
+          .badge {
+            width: 40px;
+            height: 48px;
+            margin: 0 10px;
+          }
+          .badge-count {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 12px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: $white;
+            .text {
+              color: $black;
+              font-size: 12px;
+            }
+          }
+        }
       }
     }
   }
-  .userInfo-badges {
-    height: 20%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    .badge {
-      width: $badgeSize;
-      height: $badgeSize;
-      opacity: 0.2;
-      align-items: center;
-    }
-    .badge.owned {
-      opacity: 1;
-    }
-    .badge-count {
-      text-align: center;
-      color: rgba($green, 0.8);
-      font-size: 32px;
-      font-weight: bolder;
-      margin: 0;
-    }
+  .close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-weight: bold;
+    cursor: pointer;
   }
-  .userInfo-badges-percent {
-    align-items: flex-start;
-  }
-  .btn-container {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    .btn {
-      margin-top: 10px;
-      width: 120px;
-      height: 30px;
-      cursor: pointer;
-      font-size: 18px;
-      color: $secondary;
-      background-color: $white;
-      border-radius: 4px;
-      box-shadow: 3px 3px 8px rgba($black, 0.5);
-    }
-    .btn:hover {
-      box-shadow: 1px 1px 4px rgba($black, 0.5);
+}
+
+@media (min-width: $desktop) {
+  .container {
+    width: 500px;
+    padding: 16px 24px;
+    .profile-box {
+      .profile-content {
+        min-height: 60px;
+      }
     }
   }
 }

@@ -1,54 +1,47 @@
-<mat-card class="dialog-container">
-  <div class="userInfo-picture">
-    <div *ngIf="userInfo?.pictureUrl != null" class="userInfo-img">
-      <img src="{{userInfo?.pictureUrl}}" alt=""
-        onerror="this.onerror=null;this.src='../../../assets/icons/brighterLogo.svg';">
+<div class="container">
+  <span (click)="close()" class="close">x</span>
+  <div class="profile-box">
+    <div class="profile-header">
+      <div class="profile-img">
+        <img *ngIf="userInfo?.pictureUrl != '' && userInfo?.pictureUrl != null" src={{userInfo?.pictureUrl}} alt=""
+          class="avatar-img">
+        <img *ngIf="userInfo?.pictureUrl == '' || userInfo?.pictureUrl == null" src="../../../assets/images/avatar.jpg"
+          alt="" class="avatar-img">
+      </div>
+      <div class="header-info-box">
+        <div class="info-field">
+          <span class="name">{{userInfo?.name}}</span>
+        </div>
+        <div class="info-field">
+          <span class="grade">{{userInfo?.grade}}</span>
+          <span class="grade" *ngIf="userInfo?.grade == 7 || userInfo?.grade == 8">-м</span>
+          <span class="grade" *ngIf="userInfo?.grade != 7 && userInfo?.grade != 8">-т</span>
+          <span class="grade">и клас</span>
+        </div>
+      </div>
     </div>
-    <div *ngIf="userInfo?.pictureUrl == null" class="userInfo-img-default">
-      <span *ngIf="userInfo?.pictureUrl == null">{{ userInfo == null ? '*' : userInfo.name[0].toUpperCase()}}</span>
-    </div>
-    <span class="userInfo-name">{{userInfo?.name}}</span>
-  </div>
-  <div class="userInfo-info">
-    <div class="info-field">
-      <span>{{userInfo?.grade}}</span>
-      <span *ngIf="userInfo?.grade == 7 || userInfo?.grade == 8">-ми клас</span>
-      <span *ngIf="userInfo?.grade != 7 && userInfo?.grade != 8">-ти клас</span>
+    <div class="profile-content">
 
+      <div class="info-field">
+        <div class="icon-box">
+          <img src="../../../assets/icons/profile/location.svg" alt="">
+        </div>
+        <span class="text">{{userInfo?.townName}}</span>
+      </div>
+      <div class="info-field">
+        <div class="icon-box">
+          <img src="../../../assets/icons/profile/school.svg" alt="">
+        </div>
+        <span class="text">{{userInfo?.schoolName}}</span>
+      </div>
     </div>
-    <div class="info-field">
-      <span>{{userInfo?.schoolName}}</span>
-    </div>
-    <div class="info-field">
-      <span>{{userInfo?.townName}}</span>
+    <div *ngIf="userInfo?.badges != null && userInfo?.badges != []" class="badges-box">
+      <div class="badges">
+        <div *ngFor="let b of userInfo?.badges" class="badge-container">
+          <img class="badge" src="../../../assets/icons/badges/{{b.code}}.svg" alt="">
+          <div class="badge-count" *ngIf="b.code < 2000"><span class="text">{{badgeCount(b.code)}}</span></div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="userInfo-badges">
-    <img class="badge" [ngClass]="{'owned': badgeIsOwned(2010)}" src="../../../assets/icons/badge10Testa.svg" alt="">
-    <img class="badge" [ngClass]="{'owned': badgeIsOwned(2020)}" src="../../../assets/icons/badge20Testa.svg" alt="">
-    <img class="badge" [ngClass]="{'owned': badgeIsOwned(2050)}" src="../../../assets/icons/badge50Testa.svg" alt="">
-    <img class="badge" [ngClass]="{'owned': badgeIsOwned(2100)}" src="../../../assets/icons/badge100Testa.svg" alt="">
-  </div>
-  <div class="userInfo-badges userInfo-badges-percent">
-    <div class="badge-container">
-      <img class="badge" [ngClass]="{'owned': badgeIsOwned(1070)}" src="../../../assets/icons/badge70Perc.svg" alt="">
-      <p class="badge-count" *ngIf="badgeIsOwned(1070)">{{badgeCount(1070)}}</p>
-    </div>
-    <div class="badge-container">
-      <img class="badge" [ngClass]="{'owned': badgeIsOwned(1080)}" src="../../../assets/icons/badge80Perc.svg" alt="">
-      <p class="badge-count" *ngIf="badgeIsOwned(1080)">{{badgeCount(1080)}}</p>
-    </div>
-    <div class="badge-container">
-      <img class="badge" [ngClass]="{'owned': badgeIsOwned(1090)}" src="../../../assets/icons/badge90Perc.svg" alt="">
-      <p class="badge-count" *ngIf="badgeIsOwned(1090)">{{badgeCount(1090)}}</p>
-    </div>
-    <div class="badge-container">
-      <img class="badge" [ngClass]="{'owned': badgeIsOwned(1100)}" src="../../../assets/icons/badge100Perc.svg" alt="">
-      <p class="badge-count" *ngIf="badgeIsOwned(1100)">{{badgeCount(1100)}}</p>
-    </div>
-
-  </div>
-  <div class="btn-container">
-    <button class="btn" (click)="close()">Затвори</button>
-  </div>
-</mat-card>
+</div>
