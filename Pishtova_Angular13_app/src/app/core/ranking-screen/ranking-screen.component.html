@@ -13,23 +13,25 @@
       <mat-icon *ngIf="i == 2" class="star bronz">star</mat-icon>
     </div>
   </div>
-  <p class="title">Вашият резултат:</p>
   <div class="user-result">
-    <div class="info">
-      <span class="info-number">{{logedUserPlace}}</span>
-      <span class="info-text">Място</span>
-    </div>
-    <div class="info">
-      <span class="info-number">{{logedUser?.points}}</span>
-      <span class="info-text">Точки</span>
-    </div>
-    <div class="info">
-      <span class="info-number">{{logedUser?.problemsCount}}</span>
-      <span class="info-text">Въпроси</span>
-    </div>
-    <div class="info">
-      <span class="info-number">{{logedUser?.percentage}}%</span>
-      <span class="info-text">Точност</span>
+    <p class="title">Вашият резултат</p>
+    <div class="info-container">
+      <div class="info">
+        <span class="info-number">{{logedUserPlace}}</span>
+        <span class="info-text">Място</span>
+      </div>
+      <div class="info">
+        <span class="info-number">{{logedUser?.points}}</span>
+        <span class="info-text">Точки</span>
+      </div>
+      <div class="info">
+        <span class="info-number">{{logedUser?.problemsCount}}</span>
+        <span class="info-text">Въпроси</span>
+      </div>
+      <div class="info">
+        <span class="info-number">{{logedUser?.percentage}}%</span>
+        <span class="info-text">Точност</span>
+      </div>
     </div>
   </div>
 </div>
