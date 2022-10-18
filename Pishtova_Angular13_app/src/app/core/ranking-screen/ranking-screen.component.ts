@@ -40,15 +40,27 @@ export class RankingScreenComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();     
     this.subjectService.getSubjectRanking(urlId)
       .subscribe(x => {
+        // this.users = ([
+        //   {userName: 'Д Димитров', userId: '66676649-6ec5-483c-82ea-36a1c0599e56', points: 300, problemsCount: 1620, percentage: 50},          
+        //   {userName: 'Валентин Андреев', userId: '038340b2-567e-4f7f-8194-df1ea09d0bfa', points: 6, problemsCount: 20, percentage: 10},
+        //   {userName: 'Д Димитров', userId: '66676649-6ec5-483c-82ea-36a1c0599e56', points: 709, problemsCount: 1620, percentage: 20},          
+        //   {userName: 'Валентин Андреев', userId: '038340b2-567e-4f7f-8194-df1ea09d0bfa', points: 10, problemsCount: 20, percentage: 35},
+        //   {userName: 'Д Димитров', userId: '66676649-6ec5-483c-82ea-36a1c0599e56', points: 400, problemsCount: 1620, percentage: 82},          
+        //   {userName: 'Валентин Андреев', userId: '038340b2-567e-4f7f-8194-df1ea09d0bfa', points: 2, problemsCount: 20, percentage: 84},
+        //   {userName: 'Д Димитров', userId: '66676649-6ec5-483c-82ea-36a1c0599e56', points: 500, problemsCount: 1620, percentage: 76},          
+        //   {userName: 'Валентин Андреев', userId: '038340b2-567e-4f7f-8194-df1ea09d0bfa', points: 20, problemsCount: 20, percentage: 75},
+        //   {userName: 'Д Димитров', userId: '66676649-6ec5-483c-82ea-36a1c0599e56', points: 379, problemsCount: 1620, percentage: 11},          
+        //   {userName: 'Валентин Андреев', userId: '038340b2-567e-4f7f-8194-df1ea09d0bfa', points: 15, problemsCount: 20, percentage: 44},
+        // ])
         this.users = x.usersPointsForSubject
           .map(u => this.calculatePercentageUsersProperty(u))
-          .sort((a,b) => b.points - a.points);
+          .sort((a,b) => b.percentage - a.percentage);
 
         this.logedUser = this.calculatePercentageUsersProperty(x.usersPointsForSubject.filter(x => x.userId == this.currentUser?.id)[0]);
 
         this.logedUserPlace = x.usersPointsForSubject
           .map(u => this.calculatePercentageUsersProperty(u))
-          .sort((a,b) => b.points - a.points)
+          .sort((a,b) => b.percentage - a.percentage)
           .findIndex(u => u.userId == this.currentUser?.id) + 1;
       });
     

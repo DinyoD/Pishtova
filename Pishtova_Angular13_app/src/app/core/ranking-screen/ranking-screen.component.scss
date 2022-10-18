@@ -1,110 +1,98 @@
 @import "../../utilities/colors/colors.scss";
+@import "../../utilities/devices/breakpoints.scss";
 
 .container {
   width: 100vw;
-  height: 70vh;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  .ranking,
+  .user-result .info {
+    background-color: rgba($white, 0.5);
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+  }
   .ranking,
   .user-result {
-    box-sizing: border-box;
-    border-radius: 8px;
-    height: 100%;
+    width: calc(100% - 48px);
   }
   .ranking {
-    width: 72%;
-    padding: 0 15px;
-    background-color: rgba($green, 0.2);
-    .title {
-      padding: 0 15px;
-      font-weight: bold;
-      font-size: 18px;
-      color: rgba($black, 0.75);
-    }
+    box-sizing: border-box;
+    height: 390px;
+    padding: 12px;
     overflow-y: auto;
-    .user-info {
-      font-weight: bold;
-      font-size: 24px;
-      color: rgba($black, 0.75);
-    }
-    .users {
+    .user {
+      width: 100%;
+      margin-bottom: 16px;
       display: flex;
-      flex-direction: row;
-      padding: 0 15px;
-      cursor: pointer;
-      .rank-container {
-        width: 15%;
-        max-width: 92px;
+      .rank,
+      .user-info .name {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 800;
+      }
+      .user-info {
+        margin-left: 12px;
         display: flex;
-
-        mat-icon {
-          margin: 10px 10px;
-          width: 52px;
-          height: 52px;
-          font-size: 52px;
-        }
-        mat-icon.gold {
-          color: gold;
-        }
-        mat-icon.silver {
-          color: silver;
-        }
-        mat-icon.bronz {
-          color: rgb(85, 74, 60);
+        flex-direction: column;
+        .score {
+          font-size: 12px;
+          line-height: 20px;
+          font-weight: 600;
+          color: rgba($text, 0.7);
         }
       }
-      .name {
-        width: 40%;
-        max-width: 600px;
-      }
-      .points {
-        display: flex;
-        p {
-          text-align: end;
-        }
-        .number {
-          width: 60px;
-        }
-        .text {
-          width: 70px;
-          font-weight: normal;
-        }
-      }
-      .perc {
+      .star {
         margin-left: auto;
+        font-size: 32px;
       }
-    }
-    .users:hover {
-      background-color: rgba($white, 0.2);
-      border-radius: 8px;
+      .gold {
+        color: $gold;
+      }
+      .silver {
+        color: $silver;
+      }
+      .bronz {
+        color: $bronz;
+      }
     }
   }
+  .title {
+    margin-left: 20px;
+    align-self: flex-start;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 800;
+  }
   .user-result {
-    padding: 0 30px;
-    width: 27%;
-    background-color: rgba($red, 0.2);
-    .title {
-      font-weight: bold;
-      font-size: 18px;
-      color: rgba($black, 0.75);
-    }
+    display: flex;
+    flex-wrap: wrap;
     .info {
-      margin-top: 40px;
+      width: calc((100vw - 48px) / 2 - 16px);
+      height: calc((100vw - 48px) / 2 - 16px);
+      margin: 0 8px 16px 8px;
       display: flex;
-      justify-content: space-between;
-      .info-text {
-        width: 70%;
-        font-weight: bold;
-        font-size: 24px;
-        color: rgba($black, 0.75);
-      }
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       .info-number {
-        width: 30%;
-        margin-left: auto;
-        width: 100px;
-        text-align: end;
+        font-weight: 900;
+        font-size: 40px;
+        line-height: 40px;
+        color: $text;
+      }
+      .info-text {
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 600;
+        color: rgba($text, 0.7);
       }
     }
+  }
+}
+@media (min-width: $desktop) {
+  .users:hover {
+    background-color: rgba($white, 0.2);
+    border-radius: 8px;
   }
 }
