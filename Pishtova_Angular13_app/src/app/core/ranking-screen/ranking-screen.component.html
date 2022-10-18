@@ -2,6 +2,7 @@
 <div class="container">
   <div class="ranking">
     <div class="user" *ngFor="let u of users, let i = index " (click)="getUserInfo(u.userId)">
+      <hr *ngIf="i == 3" class="line" />
       <span class="rank">{{i + 1}}.</span>
       <div class="user-info">
         <span class="name">{{u.userName}}</span>

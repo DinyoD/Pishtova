@@ -25,6 +25,7 @@
       width: 100%;
       margin-bottom: 16px;
       display: flex;
+      flex-wrap: wrap;
       .rank,
       .user-info .name {
         font-size: 16px;
@@ -54,6 +55,11 @@
       }
       .bronz {
         color: $bronz;
+      }
+      .line {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 16px;
       }
     }
   }
