@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pishtova.Data;
 
@@ -11,9 +12,10 @@ using Pishtova.Data;
 namespace Pishtova.Data.Migrations
 {
     [DbContext(typeof(PishtovaDbContext))]
-    partial class PishtovaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221020123934_UpdateTestsTable")]
+    partial class UpdateTestsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

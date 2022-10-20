@@ -16,6 +16,8 @@
 
         public int SubjectId { get; set; }
 
+        public int? Score { get; set; }
+
         public virtual Subject Subject { get; set; }
 
         public virtual ICollection<UserBadge> Badges { get; set; }
