@@ -1,13 +1,15 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Pishtova.Services.Data;
-    using Pishtova_ASP.NET_web_api.Model.Results;
-    using Pishtova_ASP.NET_web_api.Model.User;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using System.Linq;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Microsoft.AspNetCore.Mvc;
+
     using Pishtova.Data.Model;
+    using Pishtova.Services.Data;
+    using Pishtova_ASP.NET_web_api.Model.User;
+    using Pishtova_ASP.NET_web_api.Model.Results;
     using Pishtova_ASP.NET_web_api.Model.UserBadge;
 
     public class UserBadgesController : ApiController
@@ -28,19 +30,20 @@
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Save ([FromBody] UserBadgeDTO data)
+        public async Task<IActionResult> Create ([FromBody] UserBadgeInputModel inputModel)
         {
             try
             {
-                var userId = await this.userService.GetUserIdAsync(User);
-                var badgeId = await this.badgeService.GetBadgeIdByCodeAsync(data.BadgeCode);
-                var model = new UserBadgeModel
+                var badgeId = await this.badgeService.GetBadgeIdByCodeAsync(inputModel.BadgeCode);
+
+                //TODO Mapper!!
+                var model = new UserBadge
                 {
-                    UserId = userId,
+                    UserId = inputModel.UserId,
+                    TestId = inputModel.TestId,
                     BadgeId = badgeId,
-                    TestId = data.TestId
                 };
-                await this.usersBadgesService.CreateUserBadgeAsync(model);
+                await this.usersBadgesService.CreatAsync(model);
                 return StatusCode(201);
             }
             catch (System.Exception)
@@ -51,8 +54,8 @@
         }
 
         [HttpGet]
-        [Route("{id}/[action]")]
-        public async Task<UserBadgesCountDTO> All(string id)
+        [Route("[action]/{id}")]
+        public async Task<UserBadgesCountDTO> GetAll(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -66,7 +69,7 @@
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<UserBadgesCountDTO> All()
+        public async Task<UserBadgesCountDTO> GetAll()
         {
             var  userId = await this.userService.GetUserIdAsync(User);
 
@@ -75,15 +78,15 @@
             return result;
         }
 
-        private static UserBadgesCountDTO CreateUserBadgesModel(ICollection<UserBadgeWithCodeModel> badges)
+        private static UserBadgesCountDTO CreateUserBadgesModel(ICollection<UserBadge> badges)
         {
             var result = new UserBadgesCountDTO();
             foreach (var item in badges)
             {
-                var badgeModel = result.Badges.FirstOrDefault(x => x.Code == item.Code);
+                var badgeModel = result.Badges.FirstOrDefault(x => x.Code == item.Badge.Code);
                 if (badgeModel == null)
                 {
-                    badgeModel = new BadgeCountModel { Code = item.Code, Count = 0 };
+                    badgeModel = new BadgeCountModel { Code = item.Badge.Code, Count = 0 };
                     result.Badges.Add(badgeModel);
                 }
                 badgeModel.Count += 1;

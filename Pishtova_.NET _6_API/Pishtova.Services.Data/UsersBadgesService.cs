@@ -1,12 +1,13 @@
 ﻿namespace Pishtova.Services.Data
 {
+    using System.Linq;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using Pishtova.Data;
     using Pishtova.Data.Model;
-    using Pishtova_ASP.NET_web_api.Model.UserBadge;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class UsersBadgesService : IUsersBadgesService
     {
@@ -18,24 +19,17 @@
         }
 
 
-        public async Task CreateUserBadgeAsync(UserBadgeModel model)
+        public async Task CreatAsync(UserBadge userBadge)
         {
-            await this.db.UsersBadges.AddAsync(new UserBadge { UserId = model.UserId, BadgeId = model.BadgeId, TestId = model.TestId });
+            await this.db.UsersBadges.AddAsync(userBadge);
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<ICollection<UserBadgeWithCodeModel>> GetUserAllBadgesAsync (string userId)
+        public async Task<ICollection<UserBadge>> GetUserAllBadgesAsync (string userId)
         {
             return await this.db.UsersBadges
                 .Include(x=>x.Badge)
                 .Where(x => x.UserId == userId)
-                .Select(x => new UserBadgeWithCodeModel
-                { 
-                    UserId = x.UserId,
-                    BadgeId = x.BadgeId,
-                    TestId = x.TestId,
-                    Code = x.Badge.Code
-                })
                 .ToListAsync();
         } 
     }

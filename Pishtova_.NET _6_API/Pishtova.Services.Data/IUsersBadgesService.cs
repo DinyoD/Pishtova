@@ -7,9 +7,11 @@ namespace Pishtova.Services.Data
 {
     public interface IUsersBadgesService
     {
-        Task CreateUserBadgeAsync(UserBadgeModel model);
+        Task CreatAsync(UserBadge userBadge);
 
-        Task<ICollection<UserBadgeWithCodeModel>> GetUserAllBadgesAsync(string userId);
+
+        //TODO GetAll method with filter
+        Task<ICollection<UserBadge>> GetUserAllBadgesAsync(string userId);
     }
 
 }

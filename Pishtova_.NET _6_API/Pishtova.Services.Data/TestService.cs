@@ -14,14 +14,14 @@
             this.db = db;
         }
 
-        public async Task<int> CreateTestAsync(string userId, int subjectId)
+        public async Task<int> CreateAsync(Test test)
         {
-            var result = await this.db.Tests.AddAsync(new Test { UserId = userId, SubjectId = subjectId});
+            var result = await this.db.Tests.AddAsync(test);
             await this.db.SaveChangesAsync();
             return result.Entity.Id;
         }
 
-        public int GetUserTestCount(string userId)
+        public int GetUserTestsCount(string userId)
         {
             return this.db.Tests.Where(x => x.UserId == userId).Count();
         }

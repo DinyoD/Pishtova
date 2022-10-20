@@ -1,45 +1,49 @@
 ﻿
 namespace Pishtova_ASP.NET_web_api.Controllers
 {
-    using System.Threading.Tasks;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
+    using Pishtova.Data.Model;
     using Pishtova.Services.Data;
+    using Pishtova_ASP.NET_web_api.Model.Test;
     using Pishtova_ASP.NET_web_api.Model.Results;
-    using Pishtova_ASP.NET_web_api.Model.UserBadge;
     using Pishtova_ASP.NET_web_api.Model.OperationResults;
 
     public class TestsController : ApiController
     {
         private readonly ITestService testService;
-        private readonly IUserService userService;
         private readonly IBadgeService badgeService;
         private readonly IUsersBadgesService usersBadgesService;
 
         public TestsController(
             ITestService testService, 
-            IUserService userService,
             IBadgeService badgeService,
             IUsersBadgesService usersBadgesService)
         {
             this.testService = testService;
-            this.userService = userService;
             this.badgeService = badgeService;
             this.usersBadgesService = usersBadgesService;
         }
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Save([FromBody] int subjectId)
+        public async Task<IActionResult> Create([FromBody] TestInputModel inputModel)
         {
             try
             {
-                var userId =await this.userService.GetUserIdAsync(User);
-                var testId = await this.testService.CreateTestAsync(userId, subjectId);
-                await this.SaveBadgeForTestCount(userId, testId);
-                return StatusCode(200, new SaveTestResult { TestId = testId });
+                
+                var test = new Test { 
+                    UserId = inputModel.UserId,
+                    SubjectId = inputModel.SubjectId,
+                    Score = inputModel.Score,
+                };
+
+                var testId = await this.testService.CreateAsync(test);
+                await this.SaveBadgeForTestCount(inputModel.UserId, testId);
+                return StatusCode(201, new SaveTestResult { TestId = testId });
             }
             catch (System.Exception)
             {
@@ -47,23 +51,25 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             }
         }
 
+
+        // TODO Optimaze method!!!
         private async Task SaveBadgeForTestCount(string userId, int testId)
         {
-            var userTest = this.testService.GetUserTestCount(userId);
+            var userTests = this.testService.GetUserTestsCount(userId);
             var testCountForBadge = new int[] { 10, 20, 50, 100 };
-            if (!testCountForBadge.Contains(userTest))
+            if (!testCountForBadge.Contains(userTests))
             {
                 return;
             }
-            var badgeCode = 2000 + userTest;
+            var badgeCode = 2000 + userTests;
             var badgeId = await this.badgeService.GetBadgeIdByCodeAsync(badgeCode);
-            var model = new UserBadgeModel
+            var model = new UserBadge
             {
                 UserId = userId,
                 TestId = testId,
                 BadgeId = badgeId
             };
-            await this.usersBadgesService.CreateUserBadgeAsync(model);
+            await this.usersBadgesService.CreatAsync(model);
 
         }
     }
