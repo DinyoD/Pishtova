@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from '../../../environments/environment';
 import { UserBadgesModel } from 'src/app/models/user/userBadges';
-import { BadgeModel } from 'src/app/models/badge/badge';
+import { BadgeToSaveModel } from 'src/app/models/badge/badgeToSave';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +13,12 @@ export class BadgesService {
 
   constructor( private httpClient: HttpClient ) { }
     
-  public saveBadge = (code: number, testId: number): Observable<Object> => {
-    const model: BadgeModel = {badgeCode: code, testId: testId}
-    return this.httpClient.post(env.API_URL + `/userbadges/save`, model)
+  public saveBadge = (model: BadgeToSaveModel): Observable<Object> => {
+    return this.httpClient.post(env.API_URL + `/userbadges/create`, model)
   }
 
   public getUserBadges = (userId?: string): Observable<UserBadgesModel> => {
-    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/${userId}/all`)
-  }
-
-  public getProfileBadges = (): Observable<UserBadgesModel> => {
-    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/all`)
+    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/getall/${userId}`)
   }
 
   public getUserBadgesByTestId = (testId: number): Observable<number[]> => {

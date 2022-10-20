@@ -4,12 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProblemModel } from 'src/app/models/problem/problem';
 import { AnswerModel } from 'src/app/models/answer';
 import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
-import { ProblemService, PointsService, TestService, BadgesService } from 'src/app/services'
+import { ProblemService, PointsService, TestService, BadgesService, UserService, AuthService } from 'src/app/services'
 import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { getBadgeCodeByPoints } from 'src/app/resource/data';
 import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
 import { ImageDialogComponent } from 'src/app/shared/image-dialog/image-dialog.component';
+import { BadgeToSaveModel } from 'src/app/models/badge/badgeToSave';
+import { Observable } from 'rxjs';
+import { TestToSaveModel } from 'src/app/models/test/testToSave';
 
 @Component({
   selector: 'app-test-screen',
@@ -35,6 +38,7 @@ export class TestScreenComponent implements OnInit {
     private pointsService: PointsService,
     private testService: TestService,
     private badgeService: BadgesService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
     private actRoute: ActivatedRoute,
@@ -56,9 +60,7 @@ export class TestScreenComponent implements OnInit {
     
     public chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number): void {
       
-      if (this.someAnswerIsClicked) {
-        return;
-      }
+      if (this.someAnswerIsClicked) return;
       this.someAnswerIsClicked = true;
       this.selectedAnswerId = selectedAnswer.id;
       const problemPointModel: ProblemScoreModel = {
@@ -92,27 +94,23 @@ export class TestScreenComponent implements OnInit {
     }
 
     public nextProblem(): void {
-      if (!this.someAnswerIsClicked) {
-        return;
-      }
+      if (!this.nextStepIsValid) return;
       this.problemNumber += 1;
       this.someAnswerIsClicked = false;    
     }
 
     public finishTest(): void {
-      if (!this.someAnswerIsClicked || !this.subjectId) {
-        return;
-      }
-      this.testService.saveTest(this.subjectId).subscribe( (res: ISaveTestResult) => {          
-        const code = getBadgeCodeByPoints().get(this.points);
-        if (code) {
-          this.badgeService.saveBadge(code, res.testId).subscribe(
-            () => this.router.navigate(['/test-result'], {state: {testId: res.testId}})
-          );
-        }else{
-          this.router.navigate(['/test-result'], {state: {testId: res.testId}});
-        }
-      } );
+
+      if (!this.nextStepIsValid)  return;
+
+      const testToSave = this.getTestToSave();
+      if (!testToSave) return;
+
+      this.testService.saveTest(testToSave).subscribe( (res: ISaveTestResult) => {          
+        const winnedBadge = this.getWinnedBadge(res.testId);
+        if (winnedBadge) this.saveWinnedBadge(winnedBadge);
+        this.router.navigate(['/test-result'], {state: {testId: res.testId}});
+      });
 
     }
 
@@ -123,8 +121,36 @@ export class TestScreenComponent implements OnInit {
       this.dialog.open(ImageDialogComponent, { 
           data: dialogData
       })
-    }
-  }
+    };
 
+    private getWinnedBadge(testId: number): BadgeToSaveModel|null {
+      const code = getBadgeCodeByPoints().get(this.points);
+      if(!code) return null;
+      const userId = this.authService.getCurrentUser()?.id;
+      if (!userId) return null;
+      const badge: BadgeToSaveModel = {
+        userId: userId,
+        testId: testId,
+        badgeCode: code,
+      };
+      return badge;
+    }
+    private saveWinnedBadge(badge: BadgeToSaveModel): void {
+      this.badgeService.saveBadge(badge).subscribe();
+    }
+    private getTestToSave(): TestToSaveModel|null {
+      const userId = this.authService.getCurrentUser()?.id;
+      if (!userId || this.subjectId == null) return null;
+      const score = Math.trunc(this.points / 20 * 100);
+
+      return {
+        userId: userId,
+        subjectId: this.subjectId,
+        score: score
+      }
+    }
+    private nextStepIsValid = (): boolean => this.someAnswerIsClicked && this.subjectId != null;
+  }
+  
 
 

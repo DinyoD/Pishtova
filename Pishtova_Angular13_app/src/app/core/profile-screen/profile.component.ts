@@ -17,7 +17,7 @@ import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/conf
 import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 import { HtmlHelper } from "../helpers/subjectHelper";
 import { SubjectWithCategories } from 'src/app/models/subjectCategory/subjectWithcategories';
-//import { CurrentUserModel } from 'src/app/models/user/currentUser';
+import { CurrentUserModel } from 'src/app/models/user/currentUser';
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +26,7 @@ import { SubjectWithCategories } from 'src/app/models/subjectCategory/subjectWit
 })
 export class ProfileComponent implements OnInit {
 
-  //public currentUser: CurrentUserModel|null = null;
+  public currentUser: CurrentUserModel|null = null;
   public profile: ProfileModel|null = null;
   public profileSchoolId: number|null = null; 
   public showDetails: boolean = false;
@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit {
     private router: Router) { 
 
       this.subjectService.setSubject(null);
+      this.currentUser = this.authService.getCurrentUser();
   }
 
   ngOnInit(): void {
@@ -53,10 +54,8 @@ export class ProfileComponent implements OnInit {
       this.profileSchoolId = profile.school.id;
      });
      this.pointsService.getPointsBySubjects().subscribe(res => this.subjectsInfo = res);
-     this.badgeService.getProfileBadges().subscribe(res => this.badges = res.badges);
-    //  this.currentUser = this.authService.getCurrentUser();
-    //  console.log(this.currentUser);
-     
+     this.badgeService.getUserBadges(this.currentUser?.id).subscribe(res => this.badges = res.badges);
+
   }
 
   public showSubjectDetails = (subjectId: number, subjectName: string, subjectPoints: number, subjectProblems: number): void => { 
@@ -126,11 +125,6 @@ export class ProfileComponent implements OnInit {
                 : badgeModel.count;
   }
 
-  public badgeIsOwned = (code: number): boolean => { return this.badgeCount(code) > 0}
-
-  public goToBillingPortal():void {
-    this.membershipService.redirectToCustomerPortal().subscribe((data) => { window.location.href = data.url });
-  }
 
   public getSubjectCode(name: string|undefined): string {
     return HtmlHelper.getCodeBySubjectName(name);

@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { environment as env } from '../../../environments/environment';
-//import { StorageService } from '..';
 import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
+import { TestToSaveModel } from 'src/app/models/test/testToSave';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +15,11 @@ export class TestService {
   public inTestChanged: Observable<boolean> = this._inTestChangeSub.asObservable();
 
   constructor(
-    //private storage: StorageService,
     private httpClient: HttpClient) { }
 
 
-  public saveTest = (subjectId: number): Observable<ISaveTestResult> => {
-    return this.httpClient.post<ISaveTestResult>(env.API_URL + `/tests/save`, subjectId);
+  public saveTest = (model: TestToSaveModel): Observable<ISaveTestResult> => {
+    return this.httpClient.post<ISaveTestResult>(env.API_URL + `/tests/create`, model);
   }
 
   public sendInTestStateChangeNotification = (inTest: boolean): void => {
