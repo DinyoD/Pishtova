@@ -25,7 +25,15 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<ICollection<UserBadge>> GetUserAllBadgesAsync (string userId)
+        public async Task<ICollection<UserBadge>> GetAllByTestAsync(int testId)
+        {
+            return await this.db.UsersBadges
+                .Include(x => x.Badge)
+                .Where(x => x.TestId == testId)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<UserBadge>> GetAllByUserAsync (string userId)
         {
             return await this.db.UsersBadges
                 .Include(x=>x.Badge)

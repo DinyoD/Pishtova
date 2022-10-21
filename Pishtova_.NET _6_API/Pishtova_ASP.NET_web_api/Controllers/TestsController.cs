@@ -62,7 +62,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
                 return;
             }
             var badgeCode = 2000 + userTests;
-            var badge = await this.badgeService.GetByCodeAsync(badgeCode);
+            var badge = await this.badgeService.GetAllByCodeAsync(badgeCode);
             var model = new UserBadge
             {
                 UserId = userId,

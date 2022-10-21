@@ -32,7 +32,7 @@
         {
             try
             {
-                var badge = await this.badgeService.GetByCodeAsync(inputModel.BadgeCode);
+                var badge = await this.badgeService.GetAllByCodeAsync(inputModel.BadgeCode);
                 if (badge == null) throw new System.Exception("Uncorrect badge code in input model!");
 
                 //TODO Mapper!!
@@ -53,29 +53,25 @@
         }
 
         [HttpGet]
-        [Route("[action]/{id}")]
-        public async Task<UserBadgesCountDTO> GetAll(string id)
+        [Route("[action]/{userId}")]
+        public async Task<UserBadgesCountDTO> GetAll(string userId)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                id = await this.userService.GetUserIdAsync(User);
-            }
-
-            var badges = await this.usersBadgesService.GetUserAllBadgesAsync(id);
+            //TODO Validate param
+            var badges = await this.usersBadgesService.GetAllByUserAsync(userId);
             var result = CreateUserBadgesModel(badges);
             return result;
         }
 
         [HttpGet]
-        [Route("[action]")]
-        public async Task<UserBadgesCountDTO> GetAll()
+        [Route("[action]/{testId}")]
+        public async Task<UserBadgesCountDTO> GetTestAll(int testId)
         {
-            var  userId = await this.userService.GetUserIdAsync(User);
-
-            var badges = await this.usersBadgesService.GetUserAllBadgesAsync(userId);
+            //TODO Validate param
+            var badges = await this.usersBadgesService.GetAllByTestAsync(testId);
             var result = CreateUserBadgesModel(badges);
             return result;
         }
+
 
         private static UserBadgesCountDTO CreateUserBadgesModel(ICollection<UserBadge> badges)
         {
