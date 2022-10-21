@@ -52,9 +52,9 @@ import { NotInTestGuard } from './guards/notInTest.guard';
       { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'subject/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'subject/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard, NotInTestGuard] },
+      { path: 'subject/:id/result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subject/:id/ranking', component: RankingScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subject/:id/materials', component: MaterialsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'test-result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
     ]),
   ],
   exports: [

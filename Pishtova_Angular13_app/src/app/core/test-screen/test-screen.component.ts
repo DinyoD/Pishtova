@@ -4,14 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProblemModel } from 'src/app/models/problem/problem';
 import { AnswerModel } from 'src/app/models/answer';
 import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
-import { ProblemService, PointsService, TestService, BadgesService, UserService, AuthService } from 'src/app/services'
+import { ProblemService, PointsService, TestService, BadgesService, AuthService } from 'src/app/services'
 import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { getBadgeCodeByPoints } from 'src/app/resource/data';
 import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
 import { ImageDialogComponent } from 'src/app/shared/image-dialog/image-dialog.component';
 import { BadgeToSaveModel } from 'src/app/models/badge/badgeToSave';
-import { Observable } from 'rxjs';
 import { TestToSaveModel } from 'src/app/models/test/testToSave';
 
 @Component({
@@ -108,8 +107,8 @@ export class TestScreenComponent implements OnInit {
 
       this.testService.saveTest(testToSave).subscribe( (res: ISaveTestResult) => {          
         const winnedBadge = this.getWinnedBadge(res.testId);
-        if (winnedBadge) this.saveWinnedBadge(winnedBadge);
-        this.router.navigate(['/test-result'], {state: {testId: res.testId}});
+        winnedBadge !== null ? this.badgeService.saveBadge(winnedBadge).subscribe(() => this.router.navigate(['/subject/' + this.subjectId +'/result'], {state: {testId: res.testId}}))
+                             : this.router.navigate(['/subject/' + this.subjectId +'/result'], {state: {testId: res.testId}});
       });
 
     }
