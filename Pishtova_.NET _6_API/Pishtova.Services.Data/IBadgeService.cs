@@ -8,6 +8,6 @@
     {
 
         // TODO Get method with filter
-        Task<Badge> GetByCodeAsync(int badgeCode);
+        Task<Badge> GetAllByCodeAsync(int badgeCode);
     }
 }
