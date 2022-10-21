@@ -54,35 +54,35 @@
 
         [HttpGet]
         [Route("[action]/{userId}")]
-        public async Task<UserBadgesCountDTO> GetAll(string userId)
+        public async Task<ICollection<BadgeCountModel>> GetAll(string userId)
         {
             //TODO Validate param
             var badges = await this.usersBadgesService.GetAllByUserAsync(userId);
-            var result = CreateUserBadgesModel(badges);
+            var result = CreateBadgeCountModelCollection(badges);
             return result;
         }
 
         [HttpGet]
         [Route("[action]/{testId}")]
-        public async Task<UserBadgesCountDTO> GetTestAll(int testId)
+        public async Task<ICollection<BadgeCountModel>> GetTestAll(int testId)
         {
             //TODO Validate param
             var badges = await this.usersBadgesService.GetAllByTestAsync(testId);
-            var result = CreateUserBadgesModel(badges);
+            var result = CreateBadgeCountModelCollection(badges);
             return result;
         }
 
 
-        private static UserBadgesCountDTO CreateUserBadgesModel(ICollection<UserBadge> badges)
+        private static ICollection<BadgeCountModel> CreateBadgeCountModelCollection(ICollection<UserBadge> badges)
         {
-            var result = new UserBadgesCountDTO();
+            var result = new List<BadgeCountModel>();
             foreach (var item in badges)
             {
-                var badgeModel = result.Badges.FirstOrDefault(x => x.Code == item.Badge.Code);
+                var badgeModel = result.FirstOrDefault(x => x.Code == item.Badge.Code);
                 if (badgeModel == null)
                 {
                     badgeModel = new BadgeCountModel { Code = item.Badge.Code, Count = 0 };
-                    result.Badges.Add(badgeModel);
+                    result.Add(badgeModel);
                 }
                 badgeModel.Count += 1;
             }
