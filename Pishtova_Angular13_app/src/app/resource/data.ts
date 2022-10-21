@@ -7,7 +7,7 @@ export function getBadgeCodeByPoints(): Map<number,number> {
         [17, 1080],
         [18, 1090],
         [19, 1090],
-        [20, 1020],
+        [20, 1100],
     ])
 }
 

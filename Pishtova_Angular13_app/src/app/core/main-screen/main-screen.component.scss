@@ -79,6 +79,7 @@
       width: 100%;
     }
     .title-container {
+      margin-top: 8px;
       .title {
         font-size: 20px;
         line-height: 28px;
@@ -140,14 +141,16 @@
           line-height: 44px;
         }
       }
+      .box-active-big,
+      .box-active-small {
+        height: 150px;
+      }
       .box-active-big {
         width: calc(34% - 16px);
-        height: 150px;
       }
       .box-active-small {
         width: calc(16% - 16px);
         min-width: 200px;
-        height: 150px;
       }
     }
   }
@@ -161,10 +164,6 @@
       }
     }
     .box-container {
-      .box-active-big,
-      .box-active-small {
-        height: 180px;
-      }
       .box-active-big {
         width: calc(65% - 16px);
       }
