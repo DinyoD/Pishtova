@@ -42,6 +42,9 @@ export class BreadcrumbComponent implements OnInit {
         case 'ranking':
           sbjAreaBg = 'Класиране'
           break;
+        case 'result':
+          sbjAreaBg = 'Тест резултат'
+          break;
       }
 
       this.breadcrumb = [...this.breadcrumb, {name: sbjAreaBg, url: '/subject/' + this.storageService.getItem('subjectId') + '/' + sbjArea}]
