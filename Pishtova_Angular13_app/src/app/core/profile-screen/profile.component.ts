@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
       this.profileSchoolId = profile.school.id;
      });
      this.pointsService.getPointsBySubjects().subscribe(res => this.subjectsInfo = res);
-     this.badgeService.getUserBadges(this.currentUser?.id).subscribe(res => this.badges = res.badges);
+     this.badgeService.getUserBadges(this.currentUser?.id).subscribe(res => this.badges = res);
 
   }
 

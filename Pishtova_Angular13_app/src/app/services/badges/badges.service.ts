@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment as env } from '../../../environments/environment';
-import { UserBadgesModel } from 'src/app/models/user/userBadges';
 import { BadgeToSaveModel } from 'src/app/models/badge/badgeToSave';
+import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +17,11 @@ export class BadgesService {
     return this.httpClient.post(env.API_URL + `/userbadges/create`, model)
   }
 
-  public getUserBadges = (userId?: string): Observable<UserBadgesModel> => {
-    return this.httpClient.get<UserBadgesModel>(env.API_URL + `/userbadges/getall/${userId}`)
+  public getUserBadges = (userId?: string): Observable<BadgesCountModel[]> => {
+    return this.httpClient.get<BadgesCountModel[]>(env.API_URL + `/userbadges/getall/${userId}`)
   }
 
-  public getUserBadgesByTestId = (testId: number): Observable<number[]> => {
-    return this.httpClient.get<number[]>(env.API_URL + `/userbadges/test/${testId}`)
+  public getUserBadgesByTestId = (testId: number): Observable<BadgesCountModel[]> => {
+    return this.httpClient.get<BadgesCountModel[]>(env.API_URL + `/userbadges/gettestall/${testId}`)
   }
 }

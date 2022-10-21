@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 
 import { BadgesService, PointsService, SubjectService, TestService } from 'src/app/services';
 
@@ -10,9 +11,9 @@ import { BadgesService, PointsService, SubjectService, TestService } from 'src/a
 })
 export class ResultScreenComponent implements OnInit {
 
-  public points: number|null = null
+  public points: number|null = null;
   public subjectId: number|undefined = undefined;
-  public newBadgesCode: number[] = [];
+  public newBadgesCode: BadgesCountModel[] = [];
 
   constructor(
     private testService: TestService,
@@ -38,5 +39,5 @@ export class ResultScreenComponent implements OnInit {
     this.router.navigate(['/main']);
   }
 
-  public badgeIsOwned = (code: number): boolean => { return this.newBadgesCode?.indexOf(code) != -1}
+  public badgeIsOwned = (code: number): boolean => { return this.newBadgesCode?.map(x => x.code).includes(code)}
 }
