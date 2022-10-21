@@ -16,39 +16,38 @@
     {
         private readonly IBadgeService badgeService;
         private readonly IUsersBadgesService usersBadgesService;
-        private readonly IUserService userService;
 
         public UserBadgesController(
             IBadgeService badgeService,
-            IUsersBadgesService usersBadgesService,
-            IUserService userService)
+            IUsersBadgesService usersBadgesService
+            )
         {
             this.badgeService = badgeService;
             this.usersBadgesService = usersBadgesService;
-            this.userService = userService;
         }
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Create ([FromBody] UserBadgeInputModel inputModel)
+        public async Task<IActionResult> Create([FromBody] UserBadgeInputModel inputModel)
         {
             try
             {
-                var badgeId = await this.badgeService.GetBadgeIdByCodeAsync(inputModel.BadgeCode);
+                var badge = await this.badgeService.GetByCodeAsync(inputModel.BadgeCode);
+                if (badge == null) throw new System.Exception("Uncorrect badge code in input model!");
 
                 //TODO Mapper!!
                 var model = new UserBadge
                 {
                     UserId = inputModel.UserId,
                     TestId = inputModel.TestId,
-                    BadgeId = badgeId,
+                    BadgeId = badge.Id,
                 };
                 await this.usersBadgesService.CreatAsync(model);
                 return StatusCode(201);
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-                return StatusCode(400, new ErrorResult { Message = "Server error" });
+                return StatusCode(400, new ErrorResult { Message = e.Message });
             }
 
         }
