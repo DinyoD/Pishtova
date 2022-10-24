@@ -25,8 +25,8 @@ export class ResultScreenComponent implements OnInit {
   ngOnInit(): void {
     this.testService.sendInTestStateChangeNotification(false);
     this.points = this.pointsService.gettingPoints();
-    this.subjectId = this.subjectService.getCurrentSubject()?.id ;
-    this.badgesService.getUserBadgesByTestId(history.state.testId).subscribe(res => this.newBadgesCode = res);   
+    this.subjectId = this.subjectService.getCurrentSubject()?.id;
+    if(history.state.testId) this.badgesService.getUserBadgesByTestId(history.state.testId).subscribe(res => this.newBadgesCode = res);   
   }
 
   generateNewTest(): void{

@@ -28,6 +28,7 @@ export class InTestGuard implements CanActivate {
       this.openDialog(state.url)
       return false;     
     }
+    this.pointsService.clearPoints();
     return true;
   }
   
