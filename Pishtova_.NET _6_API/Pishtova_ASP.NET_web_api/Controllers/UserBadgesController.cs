@@ -32,7 +32,7 @@
         {
             try
             {
-                var badge = await this.badgeService.GetAllByCodeAsync(inputModel.BadgeCode);
+                var badge = await this.badgeService.GetByCodeAsync(inputModel.BadgeCode);
                 if (badge == null) throw new System.Exception("Uncorrect badge code in input model!");
 
                 //TODO Mapper!!

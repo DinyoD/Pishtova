@@ -15,7 +15,7 @@
             this.db = db;
         }
 
-        public async Task<Badge> GetAllByCodeAsync(int badgeCode)
+        public async Task<Badge> GetByCodeAsync(int badgeCode)
         {
             var badge = await this.db.Badges.Where(x => x.Code == badgeCode).FirstOrDefaultAsync();
             return badge;
