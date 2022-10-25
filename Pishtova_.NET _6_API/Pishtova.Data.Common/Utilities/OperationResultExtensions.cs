@@ -4,6 +4,8 @@
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.CompilerServices;
 
+    using Pishtova.Data.Common.Extensions;
+
     public static class OperationResultExtensions
     {
 #nullable enable
@@ -28,6 +30,24 @@
             operationResult.AddError(error);
 
         }
+
+        public static TOperationResult AppendErrors<TOperationResult>(this TOperationResult principal, OperationResult other)
+            where TOperationResult : OperationResult
+        {
+            if (principal is null) throw new ArgumentNullException(nameof(principal));
+
+            foreach (var error in (other?.Errors).OrEmptyIfNull().IgnoreNullValues()) principal.AddError(error);
+            return principal;
+        }
+
+        public static OperationResult<TData> WithData<TData>(this OperationResult<TData> operationResult, TData data)
+        {
+            if (operationResult is null) throw new ArgumentNullException(nameof(operationResult));
+
+            operationResult.Data = data;
+            return operationResult;
+        }
+
         private static string FormatErrorMessage(string filePath, string memberName, int line, string argumentExpression) => $"{filePath} ({memberName};{line}) - Expression [{argumentExpression}]";
 
     }
