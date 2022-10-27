@@ -107,7 +107,8 @@ export class TestScreenComponent implements OnInit {
 
       this.testService.saveTest(testToSave).subscribe( (res: ISaveTestResult) => {          
         const winnedBadge = this.getWinnedBadge(res.testId);
-        winnedBadge !== null ? this.badgeService.saveBadge(winnedBadge).subscribe(() => this.router.navigate(['/subject/' + this.subjectId +'/result'], {state: {testId: res.testId}}))
+        winnedBadge !== null ? this.badgeService.saveBadge(winnedBadge)
+                                                .subscribe(() => this.router.navigate(['/subject/' + this.subjectId +'/result'], {state: {testId: res.testId}}))
                              : this.router.navigate(['/subject/' + this.subjectId +'/result'], {state: {testId: res.testId}});
       });
 
@@ -134,9 +135,7 @@ export class TestScreenComponent implements OnInit {
       };
       return badge;
     }
-    private saveWinnedBadge(badge: BadgeToSaveModel): void {
-      this.badgeService.saveBadge(badge).subscribe();
-    }
+
     private getTestToSave(): TestToSaveModel|null {
       const userId = this.authService.getCurrentUser()?.id;
       if (!userId || this.subjectId == null) return null;
@@ -148,6 +147,7 @@ export class TestScreenComponent implements OnInit {
         score: score
       }
     }
+
     private nextStepIsValid = (): boolean => this.someAnswerIsClicked && this.subjectId != null;
   }
   

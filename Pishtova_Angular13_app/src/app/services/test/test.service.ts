@@ -19,7 +19,7 @@ export class TestService {
 
 
   public saveTest = (model: TestToSaveModel): Observable<ISaveTestResult> => {
-    return this.httpClient.post<ISaveTestResult>(env.API_URL + `/tests/create`, model);
+    return this.httpClient.post<ISaveTestResult>(env.API_URL + `/tests`, model);
   }
 
   public sendInTestStateChangeNotification = (inTest: boolean): void => {

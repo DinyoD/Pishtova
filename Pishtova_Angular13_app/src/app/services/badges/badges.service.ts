@@ -14,14 +14,14 @@ export class BadgesService {
   constructor( private httpClient: HttpClient ) { }
     
   public saveBadge = (model: BadgeToSaveModel): Observable<Object> => {
-    return this.httpClient.post(env.API_URL + `/userbadges/create`, model)
+    return this.httpClient.post(env.API_URL + `/userbadges`, model)
   }
 
   public getUserBadges = (userId?: string): Observable<BadgesCountModel[]> => {
-    return this.httpClient.get<BadgesCountModel[]>(env.API_URL + `/userbadges/getall/${userId}`)
+    return this.httpClient.get<BadgesCountModel[]>(env.API_URL + `/userbadges/users/${userId}`)
   }
 
-  public getUserBadgesByTestId = (testId: number): Observable<BadgesCountModel[]> => {
-    return this.httpClient.get<BadgesCountModel[]>(env.API_URL + `/userbadges/gettestall/${testId}`)
+  public getTestBadges = (testId: number): Observable<BadgesCountModel[]> => {
+    return this.httpClient.get<BadgesCountModel[]>(env.API_URL + `/userbadges/tests/${testId}`)
   }
 }

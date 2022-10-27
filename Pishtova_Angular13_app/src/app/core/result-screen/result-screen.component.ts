@@ -26,7 +26,7 @@ export class ResultScreenComponent implements OnInit {
     this.testService.sendInTestStateChangeNotification(false);
     this.points = this.pointsService.gettingPoints();
     this.subjectId = this.subjectService.getCurrentSubject()?.id;
-    if(history.state.testId) this.badgesService.getUserBadgesByTestId(history.state.testId).subscribe(res => this.newBadgesCode = res);   
+    if(history.state.testId) this.badgesService.getTestBadges(history.state.testId).subscribe(res => this.newBadgesCode = res);   
   }
 
   generateNewTest(): void{
