@@ -71,24 +71,36 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 
 
         // TODO Optimaze method!!!
-        private async Task SaveBadgeForTestCount(string userId, int testId)
+        private async Task<OperationResult<bool>> SaveBadgeForTestCount(string userId, int testId)
         {
+            var operationResult = new OperationResult<bool>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+            if (!operationResult.ValidateNotNull(testId)) return operationResult;
+
             var result = await this.testService.GetUserTestsCountAsync(userId);
+            if (!result.IsSuccessful) return operationResult.AppendErrors(result);
+
             var userTestCount = result.Data;
             var testCountForBadge = new int[] { 10, 20, 50, 100 };
             if (!testCountForBadge.Contains(userTestCount))
             {
-                return;
+                return operationResult.WithData(false);
             }
             var badgeCode = 2000 + userTestCount;
+
             var badgeIdResult = await this.badgeService.GetIdByCodeAsync(badgeCode);
+            if (!badgeIdResult.IsSuccessful) return operationResult.AppendErrors(badgeIdResult);
+
             var model = new UserBadge
             {
-                UserId = userId ?? throw new ArgumentNullException(nameof(userId)),
+                UserId = userId,
                 TestId = testId,
                 BadgeId = badgeIdResult.Data
             };
-            await this.usersBadgesService.CreateAsync(model);
+            var createBadgeResult = await this.usersBadgesService.CreateAsync(model);
+            if (!createBadgeResult.IsSuccessful) return operationResult.AppendErrors(createBadgeResult);
+            
+            return operationResult.WithData(true)
         }
     }
 }
