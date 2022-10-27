@@ -27,7 +27,7 @@
             try
             {
                 var result = await this.db.Tests.Where(x => x.Id == testId).FirstOrDefaultAsync();
-                operationResult.Data = result ?? throw new Exception("Test does not exist.");
+                operationResult.Data = result;
             }
             catch (Exception e)
             {

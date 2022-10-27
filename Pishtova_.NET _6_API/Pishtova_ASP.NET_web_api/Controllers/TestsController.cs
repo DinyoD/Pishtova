@@ -24,9 +24,9 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             IBadgeService badgeService,
             IUsersBadgesService usersBadgesService)
         {
-            this.testService = testService;
-            this.badgeService = badgeService;
-            this.usersBadgesService = usersBadgesService;
+            this.testService = testService ?? throw new ArgumentNullException(nameof(testService));
+            this.badgeService = badgeService ?? throw new ArgumentNullException(nameof(badgeService));
+            this.usersBadgesService = usersBadgesService ?? throw new ArgumentNullException(nameof(usersBadgesService));
         }
 
 
@@ -34,17 +34,17 @@ namespace Pishtova_ASP.NET_web_api.Controllers
         [HttpHead("{testId:int}")]
         public async Task<IActionResult> GetById([FromRoute] int testId)
         {
-            var getTestResult = await this.testService.GetAsync(testId);
-            if (!getTestResult.IsSuccessful) return this.Error(getTestResult);
+            var result = await this.testService.GetAsync(testId);
+            if (!result.IsSuccessful) return this.Error(result);
 
-            var test = getTestResult.Data;
+            var test = result.Data;
             if (test is null) return this.NotFound();
 
+            //TODO implement and return ViewModel
             return this.Ok(test);
         }
 
         [HttpPost]
-        [Route("[action]")]
         public async Task<IActionResult> Create([FromBody] TestInputModel inputModel)
         {
             var operationResult = new OperationResult();
@@ -65,7 +65,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             var createdTestId = createdTestResult.Data;
             await this.SaveBadgeForTestCount(inputModel.UserId, createdTestId);
 
-            return this.CreatedAtAction("GetById", new { testId = createdTestId}, new { testId = createdTestId});
+            return this.CreatedAtAction("GetById", new { testId = createdTestId}, new TestBasicVewModel{ TestId = createdTestId});
 
         }
 
