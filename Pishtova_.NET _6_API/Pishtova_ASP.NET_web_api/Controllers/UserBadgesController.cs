@@ -1,5 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
@@ -9,8 +10,9 @@
     using Pishtova.Data.Model;
     using Pishtova.Services.Data;
     using Pishtova_ASP.NET_web_api.Model.User;
-    using Pishtova_ASP.NET_web_api.Model.Results;
     using Pishtova_ASP.NET_web_api.Model.UserBadge;
+    using Pishtova.Data.Common.Utilities;
+    using Pishtova_ASP.NET_web_api.Extensions;
 
     public class UserBadgesController : ApiController
     {
@@ -22,54 +24,72 @@
             IUsersBadgesService usersBadgesService
             )
         {
-            this.badgeService = badgeService;
-            this.usersBadgesService = usersBadgesService;
+            this.badgeService = badgeService ?? throw new ArgumentNullException(nameof(badgeService));
+            this.usersBadgesService = usersBadgesService ?? throw new ArgumentNullException(nameof(usersBadgesService));
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById([FromRoute]int Id)
+        {
+            var result = await this.usersBadgesService.GetById(Id);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var userBadge = result.Data;
+            if (userBadge is null) return this.NotFound();
+
+            //TODO implement and return ViewModel
+            return this.Ok(userBadge);
         }
 
         [HttpPost]
-        [Route("[action]")]
         public async Task<IActionResult> Create([FromBody] UserBadgeInputModel inputModel)
         {
-            try
-            {
-                var badge = await this.badgeService.GetByCodeAsync(inputModel.BadgeCode);
-                if (badge == null) throw new System.Exception("Uncorrect badge code in input model!");
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(inputModel)) return this.Error(operationResult);
 
-                //TODO Mapper!!
-                var model = new UserBadge
-                {
-                    UserId = inputModel.UserId,
-                    TestId = inputModel.TestId,
-                    BadgeId = badge.Id,
-                };
-                await this.usersBadgesService.CreatAsync(model);
-                return StatusCode(201);
-            }
-            catch (System.Exception e)
-            {
-                return StatusCode(400, new ErrorResult { Message = e.Message });
-            }
+            var result = await this.badgeService.GetIdByCodeAsync(inputModel.BadgeCode);
+            if (!result.IsSuccessful) return this.Error(result);
 
+            //TODO Mapper!!
+            var userBadge = new UserBadge
+            {
+                UserId = inputModel.UserId,
+                TestId = inputModel.TestId,
+                BadgeId = result.Data,
+            };
+
+            var createResult = await this.usersBadgesService.CreateAsync(userBadge);
+            if (!createResult.IsSuccessful) return this.Error(createResult);
+
+            return this.CreatedAtAction("GetById", new { Id = createResult.Data}, new UserBadgeBasicVewModel { UserBadgeId = createResult.Data});
         }
 
         [HttpGet]
-        [Route("[action]/{userId}")]
-        public async Task<ICollection<BadgeCountModel>> GetAll(string userId)
+        [Route("users/{userId}")]
+        public async Task<IActionResult> GetUserAll([FromRoute]string userId)
         {
-            //TODO Validate param
-            var badges = await this.usersBadgesService.GetAllByUserAsync(userId);
-            var result = CreateBadgeCountModelCollection(badges);
-            return result;
+            var operationResult = new OperationResult<ICollection<UserBadge>>();
+            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
+
+            var result = await this.usersBadgesService.GetAllByUserAsync(userId);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var badges = CreateBadgeCountModelCollection(result.Data);
+            return Ok(badges);
         }
 
         [HttpGet]
-        [Route("[action]/{testId}")]
-        public async Task<ICollection<BadgeCountModel>> GetTestAll(int testId)
+        [Route("tests/{testId}")]
+        public async Task<IActionResult> GetTestAll([FromRoute]int testId)
         {
-            //TODO Validate param
-            var badges = await this.usersBadgesService.GetAllByTestAsync(testId);
-            var result = CreateBadgeCountModelCollection(badges);
-            return result;
+            var operationResult = new OperationResult<ICollection<UserBadge>>();
+            if (!operationResult.ValidateNotNull(testId)) return this.Error(operationResult);
+
+            var result = await this.usersBadgesService.GetAllByTestAsync(testId);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var badges = CreateBadgeCountModelCollection(result.Data);
+            return Ok(badges);
         }
 
 

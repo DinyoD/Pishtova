@@ -4,17 +4,17 @@
     using System.Collections.Generic;
 
     using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public interface IUsersBadgesService
     {
-        Task CreatAsync(UserBadge userBadge);
+        Task<OperationResult<UserBadge>> GetById(int userBadgeId);
 
+        Task<OperationResult<int>> CreateAsync(UserBadge userBadge);
 
-        //TODO GetAll method with filter
-        Task<ICollection<UserBadge>> GetAllByUserAsync(string userId);
+        Task<OperationResult<ICollection<UserBadge>>> GetAllByUserAsync(string userId);
 
-        //TODO GetAll method with filter
-        Task<ICollection<UserBadge>> GetAllByTestAsync(int testId);
+        Task<OperationResult<ICollection<UserBadge>>> GetAllByTestAsync(int testId);
     }
 
 }
