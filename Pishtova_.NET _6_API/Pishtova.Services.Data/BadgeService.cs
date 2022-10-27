@@ -1,10 +1,13 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Microsoft.EntityFrameworkCore;
-    using Pishtova.Data;
-    using Pishtova.Data.Model;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+
+    using Pishtova.Data;
+    using Pishtova.Data.Common.Utilities;
 
     public class BadgeService : IBadgeService
     {
@@ -12,13 +15,25 @@
 
         public BadgeService(PishtovaDbContext db)
         {
-            this.db = db;
+            this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<Badge> GetByCodeAsync(int badgeCode)
+        public async Task<OperationResult<string>> GetIdByCodeAsync(int badgeCode)
         {
-            var badge = await this.db.Badges.Where(x => x.Code == badgeCode).FirstOrDefaultAsync();
-            return badge;
+            var operationResult = new OperationResult<string>();
+            if (!operationResult.ValidateNotNull(badgeCode)) return operationResult;
+
+            try
+            {
+                var badge = await this.db.Badges.Where(x => x.Code == badgeCode).FirstOrDefaultAsync();
+                operationResult.Data = badge.Id;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+
+            return operationResult;
         }
     }
 }

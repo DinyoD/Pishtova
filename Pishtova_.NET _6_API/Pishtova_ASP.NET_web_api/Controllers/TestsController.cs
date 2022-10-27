@@ -81,15 +81,14 @@ namespace Pishtova_ASP.NET_web_api.Controllers
                 return;
             }
             var badgeCode = 2000 + userTestCount;
-            var badge = await this.badgeService.GetByCodeAsync(badgeCode);
+            var badgeIdResult = await this.badgeService.GetIdByCodeAsync(badgeCode);
             var model = new UserBadge
             {
-                UserId = userId,
+                UserId = userId ?? throw new ArgumentNullException(nameof(userId)),
                 TestId = testId,
-                BadgeId = badge.Id
+                BadgeId = badgeIdResult.Data
             };
-            await this.usersBadgesService.CreatAsync(model);
-
+            await this.usersBadgesService.CreateAsync(model);
         }
     }
 }

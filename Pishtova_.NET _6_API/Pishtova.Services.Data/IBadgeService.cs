@@ -2,12 +2,10 @@
 {
     using System.Threading.Tasks;
 
-    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public interface IBadgeService
     {
-
-        // TODO Get method with filter
-        Task<Badge> GetByCodeAsync(int badgeCode);
+        Task<OperationResult<string>> GetIdByCodeAsync(int badgeCode);
     }
 }
