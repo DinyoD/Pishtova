@@ -63,10 +63,25 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             if (!createdTestResult.IsSuccessful) return this.Error(createdTestResult);
 
             var createdTestId = createdTestResult.Data;
-            await this.SaveBadgeForTestCount(inputModel.UserId, createdTestId);
+
+            var saveBadgeResult = await this.SaveBadgeForTestCount(inputModel.UserId, createdTestId);
+            if (!saveBadgeResult.IsSuccessful) return this.Error(saveBadgeResult);
 
             return this.CreatedAtAction("GetById", new { testId = createdTestId}, new TestBasicVewModel{ TestId = createdTestId});
 
+        }
+
+        [HttpGet]
+        [Route("users/{userId}/count")]
+        public async Task<IActionResult> GetCountByUser(string userId)
+        {
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
+
+            var result = await this.testService.GetUserTestsCountAsync(userId);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            return Ok(result.Data);
         }
 
 
@@ -99,8 +114,8 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             };
             var createBadgeResult = await this.usersBadgesService.CreateAsync(model);
             if (!createBadgeResult.IsSuccessful) return operationResult.AppendErrors(createBadgeResult);
-            
-            return operationResult.WithData(true)
+
+            return operationResult.WithData(true);
         }
     }
 }
