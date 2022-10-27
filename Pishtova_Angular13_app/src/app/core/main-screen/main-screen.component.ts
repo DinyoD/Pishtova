@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { SubjectModel } from 'src/app/models/subject/subject';
-import { SubjectService} from '../../services';
+import { AuthService, SubjectService, TestService } from '../../services';
 import { HtmlHelper } from "../helpers/subjectHelper";
 
 @Component({
@@ -14,20 +14,25 @@ import { HtmlHelper } from "../helpers/subjectHelper";
 export class MainScreenComponent implements OnInit{
 
   public subjects: Observable<SubjectModel[]> = this.subjectService.getAllSubjects();
+  public userTestCount: number|null = null;
+  public userId: string|null = null;
 
   constructor(
     private subjectService: SubjectService, 
+    private testService: TestService,
+    private authService: AuthService,
     private router : Router 
-    ) {
-      this.subjectService.setSubject(null);
+  ) {
+    this.subjectService.setSubject(null);
   }
+
   ngOnInit(): void {
-    this.subjectService.subjectChanged.subscribe(s =>{ 
-      if (s) {   
-        this.router.navigate([`subject/${s?.id}`]);
-      }
-    });;
+    this.subjectService.subjectChanged.subscribe(sbjModel => { if(sbjModel) this.router.navigate([`subject/${sbjModel?.id}`])});
+    const user = this.authService.getCurrentUser();
+    if (user) this.userId = user.id;
+    if(this.userId) this.testService.getUserTestsCount(this.userId).subscribe(x => this.userTestCount = x)
   }
+
   public chooseSubject(sbj: SubjectModel): void{
     this.subjectService.setSubject(sbj);
   }

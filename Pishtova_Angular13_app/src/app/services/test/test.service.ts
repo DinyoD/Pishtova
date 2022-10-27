@@ -22,7 +22,7 @@ export class TestService {
     return this.httpClient.post<ISaveTestResult>(env.API_URL + `/tests`, model);
   }
 
-  public getUserTestCount = (userId: string): Observable<number> => {
+  public getUserTestsCount = (userId: string): Observable<number> => {
     return this.httpClient.get<number>(env.API_URL + `/tests/users/${userId}/count`);
   }
 
