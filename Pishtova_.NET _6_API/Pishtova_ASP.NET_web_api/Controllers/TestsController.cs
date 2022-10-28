@@ -12,6 +12,8 @@ namespace Pishtova_ASP.NET_web_api.Controllers
     using Pishtova.Data.Common.Utilities;
     using Pishtova_ASP.NET_web_api.Extensions;
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     public class TestsController : ApiController
     {
@@ -20,7 +22,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
         private readonly IUsersBadgesService usersBadgesService;
 
         public TestsController(
-            ITestService testService, 
+            ITestService testService,
             IBadgeService badgeService,
             IUsersBadgesService usersBadgesService)
         {
@@ -53,7 +55,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             //TODO Validate inputModel (FluentValidation)
 
             //TODO Implement Mapper (AutoMapper)
-            var test = new Test { 
+            var test = new Test {
                 UserId = inputModel.UserId,
                 SubjectId = inputModel.SubjectId,
                 Score = inputModel.Score,
@@ -67,7 +69,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             var saveBadgeResult = await this.SaveBadgeForTestCount(inputModel.UserId, createdTestId);
             if (!saveBadgeResult.IsSuccessful) return this.Error(saveBadgeResult);
 
-            return this.CreatedAtAction("GetById", new { testId = createdTestId}, new TestBasicVewModel{ TestId = createdTestId});
+            return this.CreatedAtAction("GetById", new { testId = createdTestId }, new TestBasicViewModel { TestId = createdTestId });
 
         }
 
@@ -84,6 +86,14 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             return Ok(result.Data);
         }
 
+        [HttpGet]
+        [Route("users/{userId}")]
+        public async Task<IActionResult> GetLastByUser([FromRoute]string userId, [FromQuery]int testsCount, [FromQuery] int daysCount)
+        {
+            if (testsCount != 0) return await this.GetLastByTestsCount(userId, testsCount);
+            if (daysCount != 0) return await this.GetLastByDaysCount(userId, daysCount);
+            return Ok();
+        }
 
         // TODO Optimaze method!!!
         private async Task<OperationResult<bool>> SaveBadgeForTestCount(string userId, int testId)
@@ -110,12 +120,67 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             {
                 UserId = userId,
                 TestId = testId,
-                BadgeId = badgeIdResult.Data
+                BadgeId = badgeIdResult.Data.Id
             };
             var createBadgeResult = await this.usersBadgesService.CreateAsync(model);
             if (!createBadgeResult.IsSuccessful) return operationResult.AppendErrors(createBadgeResult);
 
             return operationResult.WithData(true);
+        }
+
+        private async Task<IActionResult> GetLastByTestsCount(string userId, int testsCount)
+        {
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
+            if (!operationResult.ValidateNotNull(testsCount)) return this.Error(operationResult);
+
+            var result = await this.testService.GetUserLastByCount(userId, testsCount);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var returnedValue = result.Data
+                .Select(x => new TestScoreViewModel
+                {
+                    SubjectName = x.Subject.Name,
+                    Score = (int)(x.Score != null ? x.Score : 0),
+                    CreatedOn = x.CreatedOn.ToShortDateString()
+                }
+                )
+                .ToList();
+
+            return Ok(returnedValue);
+        }
+
+        private async Task<IActionResult> GetLastByDaysCount(string userId, int daysCount)
+        {
+            var operationresult = new OperationResult();
+            if (!operationresult.ValidateNotNull(userId)) return this.Error(operationresult);
+            if (!operationresult.ValidateNotNull(daysCount)) return this.Error(operationresult);
+
+            var result = await this.testService.GetUserLastByDays(userId, daysCount);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var returnedValue = this.GetDayTestsVeiewModelCollection(result.Data);
+            return Ok(returnedValue);
+        }
+
+        private ICollection<DayTestsViewModel> GetDayTestsVeiewModelCollection(ICollection<Test> tests)
+        {
+            var result = new List<DayTestsViewModel>();
+            foreach (var test in tests)
+            {
+                var day = result.FirstOrDefault(x => x.Date == test.CreatedOn.ToString("dd.MM.yy"));
+                if (day == null)
+                {
+                    day = new DayTestsViewModel
+                    {
+                        Date = test.CreatedOn.ToString("dd.MM.yy"),
+                        TestCount = 0
+                    };
+                    result.Add(day);    
+                }
+                day.TestCount++;
+            }
+            return result;
         }
     }
 }

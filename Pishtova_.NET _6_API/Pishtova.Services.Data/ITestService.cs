@@ -2,6 +2,7 @@
 {
     using Pishtova.Data.Common.Utilities;
     using Pishtova.Data.Model;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface ITestService
@@ -22,8 +23,12 @@
         /// <summary>
         /// Asynchronously get count of completed test for a user.
         /// </summary>
-        /// <param name="id">The unique user Id.</param>
+        /// <param name="userId">The unique user Id.</param>
         /// <returns>A task whose result contains OperationResult object with Data property - count of all completed tests for a user.</returns>
         Task<OperationResult<int>> GetUserTestsCountAsync(string id);
+
+        public Task<OperationResult<ICollection<Test>>> GetUserLastByCount(string id, int testCount);
+
+        public Task<OperationResult<ICollection<Test>>> GetUserLastByDays(string id, int daysCount);
     }
 }

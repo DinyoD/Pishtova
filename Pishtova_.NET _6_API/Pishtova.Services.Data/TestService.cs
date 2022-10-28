@@ -9,6 +9,7 @@
     using Pishtova.Data;
     using Pishtova.Data.Model;
     using Pishtova.Data.Common.Utilities;
+    using System.Collections.Generic;
 
     public class TestService : ITestService
     {
@@ -64,6 +65,41 @@
             {
                 var tests = await this.db.Tests.Where(x => x.UserId == userId).CountAsync();
                 operationResult.Data = tests;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
+        }
+
+        public async Task<OperationResult<ICollection<Test>>> GetUserLastByCount(string userId, int testCount)
+        {
+            var operationResult = new OperationResult<ICollection<Test>>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+
+            try
+            {
+                var result = await this.db.Tests.OrderByDescending(x => x.CreatedOn).Include(x => x.Subject).Take(testCount).ToListAsync();
+                operationResult.Data = result;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
+        }
+
+        public async Task<OperationResult<ICollection<Test>>> GetUserLastByDays(string userId, int daysCount)
+        {
+            var operationResult = new OperationResult<ICollection<Test>>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+
+            try
+            {
+                var dayBeforeEightDays = DateTime.Now.Date.AddDays( - daysCount);
+                var result = await this.db.Tests.Where(x => x.CreatedOn.Date > dayBeforeEightDays.Date).ToListAsync();
+                operationResult.Data = result;
             }
             catch (Exception e)
             {
