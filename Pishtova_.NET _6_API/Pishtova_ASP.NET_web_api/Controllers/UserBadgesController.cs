@@ -31,7 +31,7 @@
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute]int Id)
         {
-            var result = await this.usersBadgesService.GetById(Id);
+            var result = await this.usersBadgesService.GetByIdAsync(Id);
             if (!result.IsSuccessful) return this.Error(result);
 
             var userBadge = result.Data;
@@ -47,7 +47,7 @@
             var operationResult = new OperationResult();
             if (!operationResult.ValidateNotNull(inputModel)) return this.Error(operationResult);
 
-            var result = await this.badgeService.GetIdByCodeAsync(inputModel.BadgeCode);
+            var result = await this.badgeService.GetByCodeAsync(inputModel.BadgeCode);
             if (!result.IsSuccessful) return this.Error(result);
 
             //TODO Mapper!!
@@ -55,7 +55,7 @@
             {
                 UserId = inputModel.UserId,
                 TestId = inputModel.TestId,
-                BadgeId = result.Data,
+                BadgeId = result.Data.Id,
             };
 
             var createResult = await this.usersBadgesService.CreateAsync(userBadge);

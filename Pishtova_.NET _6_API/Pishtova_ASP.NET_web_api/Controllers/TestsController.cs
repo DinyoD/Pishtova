@@ -34,7 +34,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
         [HttpHead("{testId:int}")]
         public async Task<IActionResult> GetById([FromRoute] int testId)
         {
-            var result = await this.testService.GetAsync(testId);
+            var result = await this.testService.GetBtIdAsync(testId);
             if (!result.IsSuccessful) return this.Error(result);
 
             var test = result.Data;
@@ -103,7 +103,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             }
             var badgeCode = 2000 + userTestCount;
 
-            var badgeIdResult = await this.badgeService.GetIdByCodeAsync(badgeCode);
+            var badgeIdResult = await this.badgeService.GetByCodeAsync(badgeCode);
             if (!badgeIdResult.IsSuccessful) return operationResult.AppendErrors(badgeIdResult);
 
             var model = new UserBadge
