@@ -19,7 +19,7 @@
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<OperationResult<Test>> GetAsync(int testId)
+        public async Task<OperationResult<Test>> GetBtIdAsync(int testId)
         {
             var operationResult = new OperationResult<Test>();
             if (!operationResult.ValidateNotNull(testId)) return operationResult;
@@ -35,7 +35,7 @@
             }
             return operationResult;
         }
-
+        
         public async Task<OperationResult<int>> CreateAsync(Test test)
         {
             var operationResult = new OperationResult<int>();

@@ -12,6 +12,7 @@
         /// <param name="id">The values of the primary key(Id) for the entity to be found.</param>
         /// <returns>A task whose result contains OperationResult object with Data property - founded entity(Test). If no entity is found, then
         ///     Data is null</returns>
+        Task<OperationResult<Test>> GetBtIdAsync(int id);
         /// <summary>
         /// Asynchronously save entity(Test) in Db.
         /// </summary>

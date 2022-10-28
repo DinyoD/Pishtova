@@ -8,6 +8,7 @@
 
     using Pishtova.Data;
     using Pishtova.Data.Common.Utilities;
+    using Pishtova.Data.Model;
 
     public class BadgeService : IBadgeService
     {
@@ -18,15 +19,15 @@
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<OperationResult<string>> GetIdByCodeAsync(int badgeCode)
+        public async Task<OperationResult<Badge>> GetByCodeAsync(int badgeCode)
         {
-            var operationResult = new OperationResult<string>();
+            var operationResult = new OperationResult<Badge>();
             if (!operationResult.ValidateNotNull(badgeCode)) return operationResult;
 
             try
             {
                 var badge = await this.db.Badges.Where(x => x.Code == badgeCode).FirstOrDefaultAsync();
-                operationResult.Data = badge.Id;
+                operationResult.Data = badge;
             }
             catch (Exception e)
             {

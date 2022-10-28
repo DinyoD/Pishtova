@@ -20,7 +20,7 @@
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<OperationResult<UserBadge>> GetById(int userBadgeId)
+        public async Task<OperationResult<UserBadge>> GetByIdAsync(int userBadgeId)
         {
             var operationResult = new OperationResult<UserBadge>();
             if (!operationResult.ValidateNotNull(userBadgeId)) return operationResult;

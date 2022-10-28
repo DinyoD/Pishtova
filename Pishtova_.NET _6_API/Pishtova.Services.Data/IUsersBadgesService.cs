@@ -14,6 +14,7 @@
         /// <param name="id">The values of the primary key(Id) for the entity to be found.</param>
         /// <returns>A task witch result contains OperationResult object with Data property - founded entity(UserBadge). If no entity is found, then
         ///     Data is null</returns>
+        Task<OperationResult<UserBadge>> GetByIdAsync(int id);
         /// <summary>
         /// Asynchronously save entity(UserBadge) in Db.
         /// </summary>
