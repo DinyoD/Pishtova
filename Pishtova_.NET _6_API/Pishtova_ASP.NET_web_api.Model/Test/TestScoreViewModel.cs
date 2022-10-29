@@ -6,6 +6,6 @@
 
         public int Score { get; set; }
 
-        public string CreatedOn { get; set; }
+        public string Date { get; set; }
     }
 }

@@ -4,6 +4,6 @@
     {
         public string Date { get; set; }
 
-        public int TestCount { get; set; }
+        public int TestsCount { get; set; }
     }
 }
