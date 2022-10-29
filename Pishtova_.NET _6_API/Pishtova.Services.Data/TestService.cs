@@ -80,7 +80,7 @@
 
             try
             {
-                var result = await this.db.Tests.OrderByDescending(x => x.CreatedOn).Include(x => x.Subject).Take(testCount).ToListAsync();
+                var result = await this.db.Tests.OrderByDescending(x => x.CreatedOn).Include(x => x.Subject).Take(testCount).OrderBy(x => x.CreatedOn).ToListAsync();
                 operationResult.Data = result;
             }
             catch (Exception e)
