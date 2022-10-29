@@ -22,10 +22,6 @@ export class TestService {
     return this.httpClient.post<ISaveTestResult>(env.API_URL + `/tests`, model);
   }
 
-  public getUserTestsCount = (userId: string): Observable<number> => {
-    return this.httpClient.get<number>(env.API_URL + `/tests/users/${userId}/count`);
-  }
-
   public sendInTestStateChangeNotification = (inTest: boolean): void => {
     this._inTestChangeSub.next(inTest);
     if (inTest) {
