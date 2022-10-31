@@ -1,6 +1,12 @@
 @import "../../utilities/colors/colors.scss";
 @import "../../utilities/devices/breakpoints.scss";
 
+$big-box-width: calc((100vw - 80px) * 0.38 - 16px);
+$big-box-hight: calc(((100vw - 80px) * 0.38 - 16px) / 2);
+
+$big-box-width-desk: calc((100vw - 80px) * 0.28 - 16px);
+$big-box-hight-desk: calc(((100vw - 80px) * 0.28 - 16px) / 2);
+
 .container {
   width: 100vw;
   display: flex;
@@ -60,13 +66,39 @@
         color: $sbj-chm;
       }
     }
-    .box-active-big {
+    .box-big {
+      display: block;
       width: calc(100% - 10px);
-      height: 90px;
+      height: 180px;
+      padding: 5px;
+      #daysChart {
+        width: 100%;
+        height: 100%;
+      }
     }
-    .box-active-small {
-      width: calc(50% - 10px);
-      height: 90px;
+    .small-boxes-container {
+      width: calc(100% - 10px);
+      display: flex;
+      justify-content: space-between;
+      .box-small {
+        margin-right: 0;
+        width: calc(50% -5px);
+        height: 90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .box-value {
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 700;
+          color: rgba($text, 1);
+        }
+        .box-text {
+          font-size: 12px;
+          line-height: 24px;
+          color: rgba($text, 0.7);
+        }
+      }
     }
   }
 }
@@ -88,9 +120,7 @@
     .box-container {
       flex-direction: row;
       justify-content: space-around;
-      .box,
-      .box-active-big,
-      .box-active-small {
+      .box {
         margin: 0 8px 16px 8px;
         box-sizing: border-box;
       }
@@ -107,16 +137,29 @@
           line-height: 32px;
         }
       }
-      .box-active-big,
-      .box-active-small {
-        margin: 0 8px 16px 8px;
-        height: 120px;
+      .box-big {
+        width: $big-box-width;
+        height: $big-box-hight;
       }
-      .box-active-big {
-        width: calc(75% - 16px);
-      }
-      .box-active-small {
-        width: calc(25% - 16px);
+      .small-boxes-container {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: calc(24% - 16px);
+        height: $big-box-hight;
+        .box-small {
+          margin: 0;
+          min-width: calc(100% - 16px);
+          height: calc(50% - 8px);
+          .box-value {
+            font-size: 22px;
+            line-height: 28px;
+          }
+          .box-text {
+            font-size: 14px;
+            line-height: 28px;
+          }
+        }
       }
     }
   }
@@ -141,16 +184,26 @@
           line-height: 44px;
         }
       }
-      .box-active-big,
-      .box-active-small {
-        height: 150px;
+      .box-big {
+        width: $big-box-width-desk;
+        height: $big-box-hight-desk;
       }
-      .box-active-big {
-        width: calc(34% - 16px);
-      }
-      .box-active-small {
-        width: calc(16% - 16px);
-        min-width: 200px;
+      .small-boxes-container {
+        height: $big-box-hight-desk;
+        width: calc(44% - 16px);
+        flex-direction: row;
+        .box-small {
+          min-width: calc(50% - 16px);
+          height: 100%;
+          .box-value {
+            font-size: 36px;
+            line-height: 48px;
+          }
+          .box-text {
+            font-size: 22px;
+            line-height: 48px;
+          }
+        }
       }
     }
   }
@@ -164,11 +217,26 @@
       }
     }
     .box-container {
-      .box-active-big {
-        width: calc(65% - 16px);
+      .box-big {
+        width: $big-box-width;
+        height: $big-box-hight;
       }
-      .box-active-small {
-        width: calc(35% - 16px);
+      .small-boxes-container {
+        height: $big-box-hight;
+        width: calc(24% - 16px);
+        flex-direction: column;
+        .box-small {
+          min-width: calc(100% - 16px);
+          height: calc(50% - 8px);
+          .box-value {
+            font-size: 36px;
+            line-height: 48px;
+          }
+          .box-text {
+            font-size: 22px;
+            line-height: 48px;
+          }
+        }
       }
     }
   }

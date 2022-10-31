@@ -24,24 +24,20 @@
     <span class="title">Статистика</span>
   </div>
   <div class="box-container">
-    <a class="box box-active-big">
-      <div *ngFor="let d of userLastDays" class="days-box">
-        <span class="title">{{d.date}}</span>
-        <span class="title">-{{d.testsCount}}</span>
-      </div>
+    <a class="box box-big">
+      <canvas id="daysChart">{{userLastDaysChart}}</canvas>
     </a>
-    <a class="box box-active-small">
-      <span class="box-name">{{userTestCount}}</span>
-    </a>
-    <a class="box box-active-small">
-      <span class="box-name">Активност 3</span>
-    </a>
-    <a class="box box-active-big">
-      <div *ngFor="let t of userLastTests" class="days-box">
-        <span class="title">{{t.date}}</span>
-        <span class="title">-{{t.score}}</span>
-        <span class="title">{{t.subjectName}}</span>
-      </div>
+    <div class="small-boxes-container">
+      <a class="box box-small">
+        <span class="box-value">{{userTestCount}}</span>
+        <span class="box-text">завършени тестa</span>
+      </a>
+      <a class="box box-small">
+        <span class="box-name">Активност 3</span>
+      </a>
+    </div>
+    <a class="box box-big">
+      <canvas id="testsChart">{{userLastTestsChart}}</canvas>
     </a>
   </div>
 </div>
