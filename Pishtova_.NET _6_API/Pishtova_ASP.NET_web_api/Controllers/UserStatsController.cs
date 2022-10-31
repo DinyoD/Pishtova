@@ -71,26 +71,25 @@
             var result = await this.testService.GetUserLastByDays(userId, daysCount);
             if (!result.IsSuccessful) return this.Error(result);
 
-            var returnedValue = this.GetDayTestsVeiewModelCollection(result.Data);
+            var returnedValue = this.GetDayTestsVeiewModelCollection(result.Data, daysCount);
             return Ok(returnedValue);
         }
 
-        private ICollection<DayTestsViewModel> GetDayTestsVeiewModelCollection(ICollection<Test> tests)
+        private ICollection<DayTestsViewModel> GetDayTestsVeiewModelCollection(ICollection<Test> tests, int daysCount)
         {
             var result = new List<DayTestsViewModel>();
+            for (int i = daysCount - 1; i >= 0; i--)
+            {
+                result.Add(new DayTestsViewModel
+                {
+                    Date = DateTime.Now.Date.AddDays(-i).ToString("dd.MM.yy"),
+                    TestsCount = 0
+                });
+            }
             foreach (var test in tests)
             {
                 var day = result.FirstOrDefault(x => x.Date == test.CreatedOn.ToString("dd.MM.yy"));
-                if (day == null)
-                {
-                    day = new DayTestsViewModel
-                    {
-                        Date = test.CreatedOn.ToString("dd.MM.yy"),
-                        TestsCount = 0
-                    };
-                    result.Add(day);
-                }
-                day.TestsCount++;
+                if (day != null) day.TestsCount++;
             }
             return result;
         }
