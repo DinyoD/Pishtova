@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Chart, registerables } from 'chart.js';
 import { Observable } from 'rxjs';
 
 import { SubjectModel } from 'src/app/models/subject/subject';
@@ -18,16 +19,17 @@ export class MainScreenComponent implements OnInit{
   public subjects: Observable<SubjectModel[]> = this.subjectService.getAllSubjects();
   public userTestCount: number|null = null;
   public userId: string|null = null;
-  public userLastTests: TestScoreModel[]|null = null;
-  public userLastDays: TestByDaysModel[]|null = null;
+  public userLastTestsChart: Chart|null = null;
+  public userLastDaysChart: Chart|null = null;
 
   constructor(
     private subjectService: SubjectService, 
     private statsService: StatsService,
     private authService: AuthService,
-    private router : Router 
+    private router: Router
   ) {
     this.subjectService.setSubject(null);
+    Chart.register(...registerables);
   }
 
   ngOnInit(): void {
@@ -36,8 +38,8 @@ export class MainScreenComponent implements OnInit{
     if( user == null ) return;
     this.userId = user.id;
     this.statsService.getTestCount(this.userId).subscribe(x => this.userTestCount = x);
-    this.statsService.getLastTests(this.userId, 10).subscribe(x => this.userLastTests = x);
-    this.statsService.getTestsByDays(this.userId, 7).subscribe(x => this.userLastDays = x);
+    this.statsService.getLastTests(this.userId, 10).subscribe(x => this.generateTestsChart(x));
+    this.statsService.getTestsByDays(this.userId, 7).subscribe(x => this.generateDaysChart(x));
   }
 
   public chooseSubject(sbj: SubjectModel): void{
@@ -46,6 +48,36 @@ export class MainScreenComponent implements OnInit{
 
   public setClassBySbjName(name: string): string {
     return HtmlHelper.getCodeBySubjectName(name);
+  }
+
+  private generateTestsChart(data:TestScoreModel[] ): void {
+    this.userLastTestsChart = new Chart('testsChart', {
+      type: 'line',
+      data: {
+          labels: data.map(x => x.subjectName).map(x => HtmlHelper.getCodeBySubjectName(x)),
+          datasets: [{
+              label: 'успеваемост в процент',
+              data: data.map(x => x.score),
+              backgroundColor: 'rgba(51,51,51,0.8)',
+              borderWidth: 1
+          }]
+      }
+    })
+  }
+
+  private generateDaysChart(data:TestByDaysModel[] ): void {
+    this.userLastDaysChart = new Chart('daysChart', {
+      type: 'bar',
+      data: {
+          labels: data.map(x => x.date),
+          datasets: [{
+              label: 'брой тестове',
+              data: data.map(x => x.testsCount),
+              backgroundColor: 'rgba(51,51,51,0.6)',
+              borderWidth: 1
+          }]
+      }
+    })
   }
 
 }
