@@ -11,6 +11,11 @@ import { StorageService } from '..';
 @Injectable({
   providedIn: 'root'
 })
+////
+//
+// TODO RENAME TO SCORE SERVICE !!!!
+//
+////
 export class PointsService {
 
   private _pointsChangeSub: Subject<number> = new Subject<number>();
@@ -22,15 +27,15 @@ export class PointsService {
 
   public saveScore = (score: ProblemScoreModel): Observable<Object> => {
     this.addPoints(score.points)
-    return this.httpClient.post(env.API_URL + '/scores/save', score);
+    return this.httpClient.post(env.API_URL + '/scores', score);
   }
 
-  public getPointsBySubjects = (): Observable<SubjectInfo[]> => {
-    return this.httpClient.get<SubjectInfo[]>(env.API_URL + `/scores/userpointsbysubject`)
+  public getPointsBySubjects = (userId: string): Observable<SubjectInfo[]> => {
+    return this.httpClient.get<SubjectInfo[]>(env.API_URL + `/scores/subjects?userId=${userId}`)
   }
 
-  public getPointsBySubjectCategories = (subjectId: number): Observable<CategoryWithPointsModel[]> => {
-    return this.httpClient.get<CategoryWithPointsModel[]>(env.API_URL + `/scores/subjectpointsbycategories/${subjectId}`);
+  public getPointsBySubjectCategories = (userId: string, subjectId: number): Observable<CategoryWithPointsModel[]> => {
+    return this.httpClient.get<CategoryWithPointsModel[]>(env.API_URL + `/scores/categories?userId=${userId}&subjectId=${subjectId}`);
   }
 
   private addPoints = (pointValue: number): void => {
