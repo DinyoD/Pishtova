@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { SubjectModel } from 'src/app/models/subject/subject';
-import { SubjectWithUsersPointsModel } from 'src/app/models/subject/subjectWithUserPoints';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
 
@@ -21,11 +20,11 @@ export class SubjectService {
     ) { }
 
   public getAllSubjects = () : Observable<SubjectModel[]> => {
-    return this.httpClient.get<SubjectModel[]>(env.API_URL + `/subject/all`)
+    return this.httpClient.get<SubjectModel[]>(env.API_URL + `/subjects`)
   }
 
   public getSubjectById = (id: number): Observable<SubjectModel> => {
-    return this.httpClient.get<SubjectModel>(env.API_URL + `/subject/${id}`);
+    return this.httpClient.get<SubjectModel>(env.API_URL + `/subjects/${id}`);
   }
 
   public setSubject = (sbj: SubjectModel|null): void=> {
@@ -51,7 +50,5 @@ export class SubjectService {
     }
   }
 
-  public getSubjectRanking = (id: number|null): Observable<SubjectWithUsersPointsModel> => {
-    return this.httpClient.get<SubjectWithUsersPointsModel>(env.API_URL + `/subject/${id}/ranking`)
-  }
+
 }
