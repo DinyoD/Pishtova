@@ -1,21 +1,22 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Pishtova_ASP.NET_web_api.Model.Score;
-    using Pishtova_ASP.NET_web_api.Model.Subject;
-    using Pishtova_ASP.NET_web_api.Model.User;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public interface IScoreService 
-    { 
-  
-        Task SaveScoreInDbAsync(ScoreModel model);
+    {
+        Task<OperationResult<Score>> GetByIdAsync(int scoreId);
 
-        Task<SubjectRankingByScoresModel> GetUsersScoreBySubjectIdAsync (int subjectId);
+        Task<OperationResult<int>> CreateAsync(Score score);
 
-        Task<ICollection<SubjectPointsModel>> GetUserSubjectScoresAsync(string userId);
+        Task<OperationResult<ICollection<Score>>> GetSubjectScoresAsync (int subjectId);
 
-        Task<ICollection<CategoryWithPointsModel>> GetSubjectCategoriesScoresAsync(string userId, int subjectId);
+        Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectsAsync(string userId);
+
+        Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectCategoriesAsync(string userId, int subjectId);
     }
 
 }
