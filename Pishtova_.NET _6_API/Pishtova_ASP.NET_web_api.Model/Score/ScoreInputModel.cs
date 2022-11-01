@@ -1,7 +1,9 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.Score
 {
-    public class ScoreDTO
+    public class ScoreInputModel
     {
+        public string UserId { get; set; }
+
         public int SubjectCategoryId { get; set; }
 
         public int Points { get; set; }

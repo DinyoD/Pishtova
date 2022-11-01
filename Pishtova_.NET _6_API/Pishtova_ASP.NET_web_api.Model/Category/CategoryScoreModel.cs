@@ -1,6 +1,6 @@
-﻿namespace Pishtova_ASP.NET_web_api.Model.User
+﻿namespace Pishtova_ASP.NET_web_api.Model.Category
 {
-    public class CategoryWithPointsModel
+    public class CategoryScoreModel
     {
         public string Name { get; set; }
 

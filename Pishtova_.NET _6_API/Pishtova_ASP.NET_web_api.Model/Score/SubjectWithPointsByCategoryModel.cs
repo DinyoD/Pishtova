@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Pishtova_ASP.NET_web_api.Model.Category;
 
 namespace Pishtova_ASP.NET_web_api.Model.User
 {
@@ -7,9 +7,9 @@ namespace Pishtova_ASP.NET_web_api.Model.User
     {
         public SubjectWithPointsByCategoryModel()
         {
-            this.SubjectCategories = new HashSet<CategoryWithPointsModel>();
+            this.SubjectCategories = new HashSet<CategoryScoreModel>();
         }
 
-        public ICollection<CategoryWithPointsModel> SubjectCategories { get; set; }
+        public ICollection<CategoryScoreModel> SubjectCategories { get; set; }
     }
 }

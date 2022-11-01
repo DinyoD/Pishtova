@@ -1,6 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.Subject
 {
-    public class SubjectDTO
+    public class SubjectBaseModel
     {
         public int Id { get; set; }
 
