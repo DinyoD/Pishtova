@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CurrentUserModel } from 'src/app/models/user/currentUser';
 import { UserInfoModel } from 'src/app/models/user/userInfo';
 import { UserPointsForSubjectModel } from 'src/app/models/user/userPointBySubject';
-import { AuthService, BadgesService, SubjectService, UserService } from 'src/app/services';
+import { AuthService, BadgesService, StatsService, SubjectService, UserService } from 'src/app/services';
 import { UserInfoDialogComponent } from 'src/app/shared/user-info-dialog/user-info-dialog.component';
 
 @Component({
@@ -27,6 +27,7 @@ export class RankingScreenComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private badgesService: BadgesService,
+    private statsService: StatsService,
     private router: Router,
     private dialog: MatDialog,
   ) {}
@@ -38,7 +39,7 @@ export class RankingScreenComponent implements OnInit {
       return;
     }
     this.currentUser = this.authService.getCurrentUser();     
-    this.subjectService.getSubjectRanking(urlId)
+    this.statsService.getSubjectRanking(urlId)
       .subscribe(x => {
         // this.users = ([
         //   {userName: 'Д Димитров', userId: '66676649-6ec5-483c-82ea-36a1c0599e56', points: 300, problemsCount: 1620, percentage: 50},          
@@ -52,16 +53,16 @@ export class RankingScreenComponent implements OnInit {
         //   {userName: 'Д Димитров', userId: '66676649-6ec5-483c-82ea-36a1c0599e56', points: 379, problemsCount: 1620, percentage: 11},          
         //   {userName: 'Валентин Андреев', userId: '038340b2-567e-4f7f-8194-df1ea09d0bfa', points: 15, problemsCount: 20, percentage: 44},
         // ])
-        this.users = x.usersPointsForSubject
-          .map(u => this.calculatePercentageUsersProperty(u))
-          .sort((a,b) => b.percentage - a.percentage);
+        console.log(x);
+        
+        this.users = x.map(u => this.calculatePercentageUsersProperty(u))
+                      .sort((a,b) => b.percentage - a.percentage);
 
-        this.logedUser = this.calculatePercentageUsersProperty(x.usersPointsForSubject.filter(x => x.userId == this.currentUser?.id)[0]);
+        this.logedUser = this.calculatePercentageUsersProperty(x.filter(x => x.userId == this.currentUser?.id)[0]);
 
-        this.logedUserPlace = x.usersPointsForSubject
-          .map(u => this.calculatePercentageUsersProperty(u))
-          .sort((a,b) => b.percentage - a.percentage)
-          .findIndex(u => u.userId == this.currentUser?.id) + 1;
+        this.logedUserPlace = x.map(u => this.calculatePercentageUsersProperty(u))
+                              .sort((a,b) => b.percentage - a.percentage)
+                              .findIndex(u => u.userId == this.currentUser?.id) + 1;
       });
     
   }
