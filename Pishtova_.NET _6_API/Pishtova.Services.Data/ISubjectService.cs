@@ -1,13 +1,15 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Pishtova_ASP.NET_web_api.Model.Subject;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Pishtova.Data.Common.Utilities;
+    using Pishtova.Data.Model;
 
     public interface ISubjectService
     {
-        Task<ICollection<SubjectDTO>> GetAll();
+        Task<OperationResult<ICollection<Subject>>> GetAllAsync();
 
-        Task<SubjectDTO> GetOneById(int id);
+        Task<OperationResult<Subject>> GetByIdAsync(int id);
     }
 }
