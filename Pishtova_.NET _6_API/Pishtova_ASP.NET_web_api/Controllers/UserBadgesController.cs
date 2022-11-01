@@ -29,9 +29,9 @@
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute]int Id)
+        public async Task<IActionResult> GetById([FromRoute]int id)
         {
-            var result = await this.usersBadgesService.GetByIdAsync(Id);
+            var result = await this.usersBadgesService.GetByIdAsync(id);
             if (!result.IsSuccessful) return this.Error(result);
 
             var userBadge = result.Data;

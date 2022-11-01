@@ -44,9 +44,9 @@
 
             try
             {
-                var createdEntity = await this.db.UsersBadges.AddAsync(userBadge);
+                var saved = await this.db.UsersBadges.AddAsync(userBadge);
                 await this.db.SaveChangesAsync();
-                operationResult.Data = createdEntity.Entity.Id;
+                operationResult.Data = saved.Entity.Id;
             }
             catch (Exception e)
             {
