@@ -24,6 +24,7 @@ export class TestScreenComponent implements OnInit {
 
   public problems: ProblemModel[] = [];
   public problemNumber: number = 1;
+  public userId: string|undefined;
 
   public someAnswerIsClicked: boolean = false;
   public selectedAnswerId: string|null = null
@@ -55,6 +56,7 @@ export class TestScreenComponent implements OnInit {
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
       });
+      this.userId = this.authService.getCurrentUser()?.id;
     }
     
     public chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number): void {
@@ -62,12 +64,14 @@ export class TestScreenComponent implements OnInit {
       if (this.someAnswerIsClicked) return;
       this.someAnswerIsClicked = true;
       this.selectedAnswerId = selectedAnswer.id;
-      const problemPointModel: ProblemScoreModel = {
+      if (!this.userId) return;
+      const problemScoreModel: ProblemScoreModel = {
+        userId: this.userId,
         subjectCategoryId: subjectCategoryId,
         points: selectedAnswer.isCorrect ? 1 : 0
       }
-      this.pointsService.saveScore(problemPointModel).subscribe(() => {
-          if (problemPointModel.points == 0 ) {
+      this.pointsService.saveScore(problemScoreModel).subscribe(() => {
+          if (problemScoreModel.points == 0 ) {
             return;
           }
           const points = this.pointsService.gettingPoints();
@@ -136,13 +140,12 @@ export class TestScreenComponent implements OnInit {
       return badge;
     }
 
-    private getTestToSave(): TestToSaveModel|null {
-      const userId = this.authService.getCurrentUser()?.id;
-      if (!userId || this.subjectId == null) return null;
+    private getTestToSave(): TestToSaveModel|null {;
+      if (!this.userId || this.subjectId == null) return null;
       const score = Math.trunc(this.points / 20 * 100);
 
       return {
-        userId: userId,
+        userId: this.userId,
         subjectId: this.subjectId,
         score: score
       }
