@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { SubjectModel } from 'src/app/models/subject/subject';
 import { TestByDaysModel } from 'src/app/models/test/testsByDays';
 import { TestScoreModel } from 'src/app/models/test/testScore';
+import { UserRankModel } from 'src/app/models/user/userRank';
 import { AuthService, StatsService, SubjectService } from '../../services';
 import { HtmlHelper } from "../helpers/subjectHelper";
 
@@ -16,9 +17,10 @@ import { HtmlHelper } from "../helpers/subjectHelper";
 })
 export class MainScreenComponent implements OnInit{
 
+  public userId: string|null = null;
   public subjects: Observable<SubjectModel[]> = this.subjectService.getAllSubjects();
   public userTestCount: number|null = null;
-  public userId: string|null = null;
+  public userBestRank: UserRankModel|null = null;
   public userLastTestsChart: Chart|null = null;
   public userLastDaysChart: Chart|null = null;
 
@@ -38,6 +40,7 @@ export class MainScreenComponent implements OnInit{
     if( user == null ) return;
     this.userId = user.id;
     this.statsService.getTestCount(this.userId).subscribe(x => this.userTestCount = x);
+    this.statsService.getUserBestRank(this.userId).subscribe(x => this.userBestRank = x);
     this.statsService.getLastTests(this.userId, 10).subscribe(x => this.generateTestsChart(x));
     this.statsService.getTestsByDays(this.userId, 7).subscribe(x => this.generateDaysChart(x));
   }
