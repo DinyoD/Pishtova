@@ -80,7 +80,7 @@
 
             try
             {
-                var result = await this.db.Tests.OrderByDescending(x => x.CreatedOn).Include(x => x.Subject).Take(testCount).OrderBy(x => x.CreatedOn).ToListAsync();
+                var result = await this.db.Tests.Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedOn).Include(x => x.Subject).Take(testCount).OrderBy(x => x.CreatedOn).ToListAsync();
                 operationResult.Data = result;
             }
             catch (Exception e)
@@ -98,7 +98,7 @@
             try
             {
                 var dayBeforeEightDays = DateTime.Now.Date.AddDays( - daysCount);
-                var result = await this.db.Tests.Where(x => x.CreatedOn.Date > dayBeforeEightDays.Date).ToListAsync();
+                var result = await this.db.Tests.Where(x => x.UserId == userId).Where(x => x.CreatedOn.Date > dayBeforeEightDays.Date).ToListAsync();
                 operationResult.Data = result;
             }
             catch (Exception e)
