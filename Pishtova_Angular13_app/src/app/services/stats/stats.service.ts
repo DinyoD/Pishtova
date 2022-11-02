@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { TestByDaysModel } from 'src/app/models/test/testsByDays';
 import { TestScoreModel } from 'src/app/models/test/testScore';
 import { UserPointsForSubjectModel } from 'src/app/models/user/userPointBySubject';
+import { UserRankModel } from 'src/app/models/user/userRank';
 import { environment as env } from '../../../environments/environment';
 
 @Injectable({
@@ -31,7 +32,7 @@ export class StatsService {
       return this.httpClient.get<UserPointsForSubjectModel[]>(env.API_URL + `/userstats/subjectrank?subjectId=${subjectId}`)
     }
 
-    public getUserBestRank = (userId: string): Observable<Object> => {
-      return this.httpClient.get<Object>(env.API_URL + `/userstats/bestrank?userId=${userId}`)
+    public getUserBestRank = (userId: string): Observable<UserRankModel> => {
+      return this.httpClient.get<UserRankModel>(env.API_URL + `/userstats/bestrank?userId=${userId}`)
     }
   }
