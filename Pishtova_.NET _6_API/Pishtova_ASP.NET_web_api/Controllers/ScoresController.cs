@@ -5,13 +5,11 @@
     using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Cors.Infrastructure;
 
     using Pishtova.Data.Model;
     using Pishtova.Services.Data;
     using Pishtova.Data.Common.Utilities;
     using Pishtova_ASP.NET_web_api.Extensions;
-    using Pishtova_ASP.NET_web_api.Model.User;
     using Pishtova_ASP.NET_web_api.Model.Score;
     using Pishtova_ASP.NET_web_api.Model.Subject;
     using Pishtova_ASP.NET_web_api.Model.Category;
@@ -46,7 +44,7 @@
         public async Task<IActionResult> Create([FromBody]ScoreInputModel inputModel)
         {
             var operationResult = new OperationResult();
-            if (operationResult.ValidateNotNull(inputModel)) return this.Error(operationResult);
+            if (!operationResult.ValidateNotNull(inputModel)) return this.Error(operationResult);
 
             var score = new Score
             {
@@ -58,7 +56,7 @@
             if (!result.IsSuccessful) return this.Error(result);
 
 
-            return CreatedAtAction("GetById", new {Id = result.Data});
+            return CreatedAtAction("GetById", new {Id = result.Data}, new { Id = result.Data });
         }
 
         [HttpGet]
