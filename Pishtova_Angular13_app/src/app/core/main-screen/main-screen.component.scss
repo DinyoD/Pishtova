@@ -1,8 +1,8 @@
 @import "../../utilities/colors/colors.scss";
 @import "../../utilities/devices/breakpoints.scss";
 
-$big-box-width: calc((100vw - 80px) * 0.4 - 16px);
-$big-box-hight: calc(((100vw - 80px) * 0.4 - 16px) / 2);
+$big-box-width: calc((100vw - 80px) * 0.38 - 16px);
+$big-box-hight: calc(((100vw - 80px) * 0.38 - 16px) / 2);
 
 $big-box-width-desk: calc((100vw - 80px) * 0.32 - 16px);
 $big-box-hight-desk: calc(((100vw - 80px) * 0.32 - 16px) / 2);
@@ -145,7 +145,7 @@ $big-box-hight-desk: calc(((100vw - 80px) * 0.32 - 16px) / 2);
         height: $big-box-hight;
       }
       .small-boxes-container {
-        width: calc(20% - 16px);
+        width: calc(24% - 16px);
         height: $big-box-hight;
         margin: 0 8px 16px 8px;
         flex-direction: column;
@@ -231,7 +231,7 @@ $big-box-hight-desk: calc(((100vw - 80px) * 0.32 - 16px) / 2);
       }
       .small-boxes-container {
         height: $big-box-hight;
-        width: calc(20% - 16px);
+        width: calc(24% - 16px);
         flex-direction: column;
         .box-small {
           min-width: calc(100% - 16px);
