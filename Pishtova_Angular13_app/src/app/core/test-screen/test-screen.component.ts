@@ -97,14 +97,14 @@ export class TestScreenComponent implements OnInit {
     }
 
     public nextProblem(): void {
-      if (!this.nextStepIsValid) return;
+      if (!this.nextStepIsValid()) return;
       this.problemNumber += 1;
       this.someAnswerIsClicked = false;    
     }
 
     public finishTest(): void {
 
-      if (!this.nextStepIsValid)  return;
+      if (!this.nextStepIsValid())  return;
 
       const testToSave = this.getTestToSave();
       if (!testToSave) return;
@@ -151,7 +151,7 @@ export class TestScreenComponent implements OnInit {
       }
     }
 
-    private nextStepIsValid = (): boolean => this.someAnswerIsClicked && this.subjectId != null;
+    private nextStepIsValid = (): boolean => this.someAnswerIsClicked && (this.subjectId != null);
   }
   
 
