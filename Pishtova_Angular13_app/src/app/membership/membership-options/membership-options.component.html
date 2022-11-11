@@ -1,16 +1,26 @@
 <div class="container">
-
-  <h2>{{product?.name}}</h2>
-  <h5>{{product?.description}}</h5>
+  <p class="product-name">{{product?.name}}</p>
+  <p class="product-desc">{{product?.description}}</p>
   <div class="prices-container">
-    <div class="price" *ngFor="let pr of prices">
-      <h3>{{pr.description}}</h3>
-      <h5 *ngIf="pr.subscription == null">interval: n/a</h5>
-      <p *ngIf="pr.subscription == null">recurring: no</p>
-      <h5 *ngIf="pr.subscription">interval: {{pr.subscription}}</h5>
-      <p *ngIf="pr.subscription">recurring: yes</p>
-      <h5>price: {{pr.price}} BGN</h5>
-      <h4>Free cancelation</h4>
+    <div *ngFor="let pr of prices" (click)="setClickedPrice(pr.id)" class="price"
+      [ngClass]="{'clicked': pr.id == clickedPriceId}">
+      <p class="title">{{pr.subscription}}</p>
+      <p class="desc">{{pr.description}}</p>
+      <p class="value">{{pr.price}} BGN <span *ngIf="pr.subscription"
+          class="text">/{{pr.subscription.toLowerCase()}}</span></p>
+
+      <div *ngIf="pr.subscription" class="text-container">
+        <img src="../../../assets/icons/check.svg" alt="">
+        <span class="text">{{pr.subscription}}ly access</span>
+      </div>
+      <div *ngIf="pr.subscription" class="text-container">
+        <img src="../../../assets/icons/check.svg" alt="">
+        <span class="text">Recurring</span>
+      </div>
+      <div *ngIf="pr.subscription" class="text-container">
+        <img src="../../../assets/icons/check.svg" alt="">
+        <span class="text">Free cancelation</span>
+      </div>
       <a class="btn" (click)="Checkout(pr.id)">Checkout</a>
     </div>
   </div>
