@@ -39,12 +39,6 @@
       <img src="../../../assets/icons/header/logoText.svg" alt="">
     </a>
 
-    <!-- <a *ngIf="subject && isAuth" routerLink="/subject/{{subject.id}}" (click)="hideModal()">
-      <span class="sbj-name">
-        {{subject.name}}
-      </span>
-    </a> -->
-
     <div class="icon-container">
       <a *ngIf="isAuth" routerLink="/profile" (click)="hideModal()" class="icon-avatar"
         [ngClass]="{'icon-hide': inTest}">
