@@ -30,9 +30,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     box-sizing: inherit;
-    app-header {
-      margin-top: 44px;
-    }
+
     app-footer {
       margin-top: auto;
     }
@@ -80,14 +78,4 @@ body {
 }
 ::-webkit-scrollbar-corner {
   background-color: transparent;
-}
-
-@media (min-width: $phone) {
-  body {
-    app-root {
-      app-header {
-        margin-top: 0;
-      }
-    }
-  }
 }
