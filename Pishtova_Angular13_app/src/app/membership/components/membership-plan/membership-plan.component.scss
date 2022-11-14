@@ -1,0 +1,25 @@
+@import "../../../utilities/colors/colors.scss";
+
+.container {
+  width: 100vw;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .text {
+    font-size: 32px;
+    line-height: 50px;
+    font-weight: 800;
+    color: $text;
+  }
+  .link {
+    text-decoration: underline;
+    font-size: 28px;
+    line-height: 50px;
+    font-style: italic;
+    font-weight: 600;
+    color: rgba($text, 0.6);
+    cursor: pointer;
+  }
+}

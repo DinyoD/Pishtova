@@ -8,6 +8,9 @@ import { ForAuthenticatedUserGuard } from '../../authentication/guards/auth.guar
 import { InTestGuard } from '../../core/guards/inTest.guard';
 import { MembershipFailureComponent } from './membership-failure/membership-failure.component';
 import { MembershipSuccessComponent } from './membership-success/membership-success.component';
+import { MembershipPlanComponent } from './membership-plan/membership-plan.component';
+import { ForSubscribersGuard } from '../guards/subscriber.guard';
+
 
 
 @NgModule({
@@ -15,13 +18,15 @@ import { MembershipSuccessComponent } from './membership-success/membership-succ
     MembershipOptionsComponent,
     MembershipFailureComponent,
     MembershipSuccessComponent,
+    MembershipPlanComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard, ForSubscribersGuard] },
+      { path: 'memberships/plan', component: MembershipPlanComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'memberships/failure', component: MembershipFailureComponent, canActivate: [InTestGuard] },
       { path: 'memberships/success', component: MembershipSuccessComponent, canActivate: [InTestGuard] },
     ]),
@@ -30,6 +35,7 @@ import { MembershipSuccessComponent } from './membership-success/membership-succ
     MembershipOptionsComponent,
     MembershipFailureComponent,
     MembershipSuccessComponent,
+    MembershipPlanComponent,
   ],
 })
 export class MembershipModule { }
