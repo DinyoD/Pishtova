@@ -23,8 +23,8 @@ import { MembershipSuccessComponent } from './membership-success/membership-succ
     FormsModule,
     RouterModule.forChild([
       { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'failure', component: MembershipFailureComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'success', component: MembershipSuccessComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'memberships/failure', component: MembershipFailureComponent, canActivate: [InTestGuard] },
+      { path: 'memberships/success', component: MembershipSuccessComponent, canActivate: [InTestGuard] },
     ]),
   ],
   exports: [
