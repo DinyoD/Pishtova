@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.WebUtilities;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
 
@@ -73,7 +74,7 @@
         [Route("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginUserDTO data)
         {
-            var user = await this.userManager.FindByEmailAsync(data.Email);
+            var user = await this.userManager.Users.Include(x => x.Subsriber).FirstOrDefaultAsync(x => x.Email == data.Email); ;
 
             if (user == null)
             {
@@ -92,9 +93,9 @@
                 return StatusCode(401, new ErrorResult { Message = "Sorry, your username and / or password do not match" });
             }
 
-            var subscription = await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
+            var subscription = user.Subsriber != null ? await this.subscriptionService.GetByCustomerIdAsync(user.Subsriber.CustomerId): null;
             DateTime expDate = DateTime.Now.AddDays(7);
-            var isSubscriber = subscription != null && subscription.CurrentPeriodEnd > DateTime.Now;
+            var isSubscriber = subscription != null && subscription.Status == "active";
 
             string token = this.GenerateToken(user, expDate, isSubscriber);
             return StatusCode(200, new LoginResult { Token = token });

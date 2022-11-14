@@ -3,24 +3,25 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 {
 	using System;
     using System.IO;
+    using System.Linq;
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
 
 	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Options;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Authorization;
 
 	using Stripe;
 	using Stripe.Checkout;
 
-	using Pishtova_ASP.NET_web_api.Model.Payment;
-	using Pishtova_ASP.NET_web_api.Model.Results;
-    using Microsoft.Extensions.Options;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
     using Pishtova.Data.Model;
     using Pishtova.Services.Data;
-    using System.Linq;
+	using Pishtova_ASP.NET_web_api.Model.Payment;
+	using Pishtova_ASP.NET_web_api.Model.Results;
+	using Microsoft.EntityFrameworkCore;
 
-    public class PaymentsController: ApiController
+	public class PaymentsController: ApiController
     {
         private readonly StripeSettings stripeSettings;
         private readonly UserManager<User> userManager;
@@ -118,7 +119,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 		public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
 		{
 			var userId = await this.userService.GetUserIdAsync(User);
-			var userFromDb = await this.userManager.FindByIdAsync(userId);
+			var userFromDb = await this.userManager.Users.Include(x => x.Subsriber).FirstOrDefaultAsync(x =>x.Id == userId);
             if (userFromDb == null)
             {
 				return BadRequest(new ErrorResult { Message = "Unauthorized or no user" });
@@ -127,7 +128,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			{
 				var options = new Stripe.BillingPortal.SessionCreateOptions
 				{
-					Customer = userFromDb.CustomerId,
+					Customer = userFromDb.Subsriber.CustomerId,
 					ReturnUrl = req.ReturnUrl,
 				};
 				var service = new Stripe.BillingPortal.SessionService();
@@ -162,17 +163,17 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				if (stripeEvent.Type == Events.CustomerSubscriptionCreated)
 				{
 					var subscription = stripeEvent.Data.Object as Subscription;
-					await AddSubscriptionToDb(subscription);
+					await AddSubscriptionToDbAsync(subscription);
 				}
 				else if (stripeEvent.Type == Events.CustomerSubscriptionUpdated)
 				{
-					var session = stripeEvent.Data.Object as Stripe.Subscription;
-					await UpdateSubscription(session);
+					var session = stripeEvent.Data.Object as Subscription;
+					await UpdateSubscriptionAsync(session);
 				}
 				else if (stripeEvent.Type == Events.CustomerCreated)
 				{
 					var customer = stripeEvent.Data.Object as Customer;
-					await AddCustomerIdToUser(customer);
+					await AddCustomerIdToUserAsync(customer);
 				}
 				// ... handle other event types
 				else
@@ -189,7 +190,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			}
 		}
 
-		private async Task AddCustomerIdToUser(Customer customer)
+		private async Task AddCustomerIdToUserAsync(Customer customer)
 		{
 			try
 			{
@@ -197,19 +198,19 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 
 				if (userFromDb != null)
 				{
-					userFromDb.CustomerId = customer.Id;
+					userFromDb.Subsriber.CustomerId = customer.Id;
 					await this.userManager.UpdateAsync(userFromDb);
 				}
 
 			}
-			catch (System.Exception ex)
+			catch (Exception ex)
 			{
 				Console.WriteLine("Unable to add customer id to user");
 				Console.WriteLine(ex);
 			}
 		}
 
-		private async Task AddSubscriptionToDb(Subscription subscription)
+		private async Task AddSubscriptionToDbAsync(Subscription subscription)
 		{
 			try
 			{
@@ -231,7 +232,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			}
 		}
 
-		private async Task UpdateSubscription(Subscription subscription)
+		private async Task UpdateSubscriptionAsync(Subscription subscription)
 		{
 			try
 			{
