@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MembershipService } from 'src/app/services';import { PriceModel } from '../models/Price';
+import { MembershipService } from 'src/app/services';import { PriceModel } from '../../models/Price';
 ;
-import { ProductModel } from '../models/Product';
+import { ProductModel } from '../../models/Product';
 
 @Component({
   selector: 'app-membership-options',

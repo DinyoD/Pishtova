@@ -14,7 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { storageServiceProvider } from './services';
 import { LoadingIndicatorInterceptor } from './interceptor/loading-indicator-interceptor.service';
 import { SharedModule } from './shared/shared.module';
-import { MembershipModule } from './membership/membership.module';
+import { MembershipModule } from './membership/components/membership.module';
 //import { NotFoundComponent } from './error/error-screens/not-found/not-found.component';
 
 
