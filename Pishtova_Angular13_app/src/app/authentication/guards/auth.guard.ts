@@ -16,7 +16,7 @@ export class ForAuthenticatedUserGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-    ) {
+    ): boolean {
       
     if (this.userService.isUserAuthenticated()) {
       return true;

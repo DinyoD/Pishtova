@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { environment as env} from 'src/environments/environment';
-import { MembershipPlanModel } from 'src/app/membership/models/MembershipPlan';
 import { SessionModel } from 'src/app/membership/models/Session';
 import { RequestMemberSessionModel } from 'src/app/membership/models/RequestMemberSession';
 import { CustomerPortalModel } from 'src/app/membership/models/CustomerPortal';
@@ -33,12 +32,12 @@ export class MembershipService {
               .subscribe((session) => {this.redirectToCheckout(session)});
   }
 
-  public redirectToCheckout = (session: SessionModel): void => {
+  private redirectToCheckout = (session: SessionModel): void => {
     const stripe = Stripe(session.publicKey);
     stripe.redirectToCheckout({ sessionId: session.sessionId });
   }
 
-  public redirectToCustomerPortal():Observable<CustomerPortalModel> {
+  public redirectToCustomerPortal(): Observable<CustomerPortalModel> {
      return this.http.post<CustomerPortalModel>( env.API_URL + '/payments/customer-portal', { returnUrl: env.API_HOME_URL } );
   }
 
