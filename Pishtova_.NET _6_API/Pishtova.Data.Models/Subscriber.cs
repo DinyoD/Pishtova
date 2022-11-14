@@ -1,7 +1,7 @@
 ﻿namespace Pishtova.Data.Model
 {
-    using Pishtova.Data.Common.Model;
     using System;
+    using Pishtova.Data.Common.Model;
 
     public class Subscriber: BaseDeletableModel<string>
     {
