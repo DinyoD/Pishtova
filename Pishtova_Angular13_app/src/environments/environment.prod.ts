@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
   API_URL : 'https://pishtova-api.azurewebsites.net',
-  API_HOME_URL: '',
-  API_PAY_SUCCESS_URL: '',
-  API_PAY_CANCEL_URL: '',
+  API_HOME_URL: 'https://pishtova-55f26.web.app/profile',
+  API_PAY_SUCCESS_URL: 'https://pishtova-55f26.web.app/memberships/success',
+  API_PAY_CANCEL_URL: 'https://pishtova-55f26.web.app/memberships/failure',
   CLIENT_URI: 'https://pishtova-55f26.web.app',
   firebaseConfig: {
     apiKey: "AIzaSyBMt5WFOQ8yRDwY8apZXUIVESp8y6TkDpk",
