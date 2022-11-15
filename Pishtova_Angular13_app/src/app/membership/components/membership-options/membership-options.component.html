@@ -1,6 +1,6 @@
 <div class="container">
+  <p *ngIf="!isSubscriber" class="product-desc">{{product?.description}}</p>
   <p class="product-name">{{product?.name}}</p>
-  <p class="product-desc">{{product?.description}}</p>
   <div class="prices-container">
     <div *ngFor="let pr of prices" (click)="setClickedPrice(pr.id)" class="price"
       [ngClass]="{'clicked': pr.id == clickedPriceId}">

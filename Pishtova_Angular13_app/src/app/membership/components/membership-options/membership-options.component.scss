@@ -1,5 +1,5 @@
-@import "../../utilities/colors/colors.scss";
-@import "../../utilities/devices/breakpoints.scss";
+@import "../../../utilities/colors/colors.scss";
+@import "../../../utilities/devices/breakpoints.scss";
 
 .container {
   display: flex;
@@ -19,8 +19,9 @@
     text-align: center;
   }
   .product-desc {
-    padding: 0 25%;
-    font-size: 16px;
+    margin: 10px 0;
+    padding: 0 20%;
+    font-size: 20px;
     line-height: 24px;
     text-align: center;
   }
@@ -88,7 +89,7 @@
 
 @media (min-width: $tablet) {
   .container {
-    .product-name {
+    .product-desc {
       margin-top: 0;
     }
     .prices-container {
@@ -97,6 +98,7 @@
       justify-content: space-around;
       .price {
         width: 45%;
+        cursor: pointer;
       }
     }
   }
@@ -108,7 +110,7 @@
       line-height: 38px;
     }
     .product-desc {
-      font-size: 20px;
+      font-size: 24px;
       line-height: 28px;
     }
     .prices-container {
@@ -123,7 +125,6 @@
     }
   }
 }
-
 @media (min-width: $desktop-b) {
   .container {
     .product-name {
