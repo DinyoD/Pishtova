@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { MembershipService } from 'src/app/services';
 
 @Component({
@@ -9,7 +10,8 @@ import { MembershipService } from 'src/app/services';
 export class MembershipPlanComponent {
 
   constructor(
-    private membershipService: MembershipService
+    private membershipService: MembershipService,
+    private route: Router
   ) { }
 
 
@@ -17,4 +19,7 @@ export class MembershipPlanComponent {
     this.membershipService.redirectToCustomerPortal().subscribe((data) => { window.location.href = data.url });
   }
   
+  public toMembershipOptions() {
+    this.route.navigate(['/memberships'])
+  }
 }

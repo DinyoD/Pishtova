@@ -1,25 +1,36 @@
 @import "../../../utilities/colors/colors.scss";
 
 .container {
+  box-sizing: border-box;
   width: 100vw;
-  height: 30vh;
+  height: 45vh;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .link-small {
+    text-decoration: underline;
+    font-size: 24px;
+    font-style: italic;
+    color: rgba($secondary, 0.5);
+    cursor: pointer;
+  }
   .text {
     font-size: 32px;
     line-height: 50px;
     font-weight: 800;
     color: $text;
+    text-align: center;
   }
   .link {
+    text-align: center;
     text-decoration: underline;
     font-size: 28px;
     line-height: 50px;
     font-style: italic;
     font-weight: 600;
-    color: rgba($text, 0.6);
+    color: rgba($secondary, 0.6);
     cursor: pointer;
   }
 }
