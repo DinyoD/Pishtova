@@ -25,8 +25,8 @@ import { ForSubscribersGuard } from '../guards/subscriber.guard';
     HttpClientModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard, ForSubscribersGuard] },
-      { path: 'memberships/plan', component: MembershipPlanComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard ] },
+      { path: 'memberships/plan', component: MembershipPlanComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard, ForSubscribersGuard] },
       { path: 'memberships/failure', component: MembershipFailureComponent, canActivate: [InTestGuard] },
       { path: 'memberships/success', component: MembershipSuccessComponent, canActivate: [InTestGuard] },
     ]),
