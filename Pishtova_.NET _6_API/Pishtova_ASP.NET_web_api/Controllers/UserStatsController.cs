@@ -177,7 +177,7 @@
                 var a = await this.GetUserSubjectRank(userId, sbj.Id);
                 if (!a.IsSuccessful) operationResult.AppendErrors(a);
 
-                if (result.Rank > a.Data)
+                if (result.Rank > a.Data && a.Data > 0)
                 {
                     result.Rank = a.Data;
                     result.SubjectName = sbj.Name;
@@ -198,6 +198,7 @@
             var usersScore = this.GetSubjectRanking(getScoresOperation.Data);
             var usersScoreOrderedDesc = usersScore.OrderByDescending(x => (double)((double)x.Points /(double)x.ProblemsCount)).ToList();
             var result = usersScoreOrderedDesc.FindIndex(x => x.UserId == userId);
+            if (result == -1) result = usersScore.Count;
             result++;
             return operationResult.WithData(result);
         }
