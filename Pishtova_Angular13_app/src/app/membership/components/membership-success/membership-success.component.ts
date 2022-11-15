@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-membership-success',
   templateUrl: './membership-success.component.html',
-  styleUrls: ['./membership-success.component.css']
+  styleUrls: ['../membership-failure/membership-failure.component.css']
 })
-export class MembershipSuccessComponent implements OnInit {
-
+export class MembershipSuccessComponent {
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

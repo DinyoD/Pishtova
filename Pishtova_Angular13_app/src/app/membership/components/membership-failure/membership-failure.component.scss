@@ -1,15 +1,60 @@
-@import "../../utilities/colors/colors.scss";
+@import "../../../utilities/colors/colors.scss";
+@import "../../../utilities/devices/breakpoints.scss";
 
-.support-out-icon span {
-  display: inline-block;
-  font-size: 30px;
-  border: solid $icon 2px;
-  border-radius: 100%;
-  width: 60px;
-  height: 60px;
-  padding-top: 5px;
-  text-align: center;
-  background-color: $red;
-  color: $primary;
-  text-align: center;
+.container {
+  box-sizing: border-box;
+  width: 320px;
+  height: 180px;
+  margin: 100px auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba($white, 0.5);
+  border-radius: 8px;
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    color: $text;
+  }
+  .text {
+    text-align: center;
+    font-size: 18px;
+    color: rgba($text, 0.8);
+  }
+  .action-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    .btn {
+      text-decoration: none;
+      width: 130px;
+      height: 30px;
+      background-color: $primary;
+      border: none;
+      border-radius: 8px;
+      color: $white;
+    }
+  }
+}
+
+@media (min-width: $desktop-b) {
+  .container {
+    width: 500px;
+    height: 250px;
+    .title {
+      font-size: 34px;
+    }
+    .text {
+      font-size: 28px;
+    }
+    .action-container {
+      .btn {
+        width: 180px;
+        height: 42px;
+        font-size: 20px;
+      }
+    }
+  }
 }

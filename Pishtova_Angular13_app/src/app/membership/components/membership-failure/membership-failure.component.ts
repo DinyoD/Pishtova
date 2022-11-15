@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-membership-failure',
   templateUrl: './membership-failure.component.html',
   styleUrls: ['./membership-failure.component.css']
 })
-export class MembershipFailureComponent implements OnInit {
-
+export class MembershipFailureComponent {
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }
