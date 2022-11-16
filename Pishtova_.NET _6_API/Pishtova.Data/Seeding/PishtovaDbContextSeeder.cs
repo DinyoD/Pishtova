@@ -20,10 +20,10 @@
 
             var seeders = new List<ISeeder>
                           {
-                              new SchoolsSeeder(),
-                              new SubjectsSeeder(),
-                              new AuthorsSeeder(),
-                              new BadgesSeeder(),
+                              //new SchoolsSeeder(),
+                              //new SubjectsSeeder(),
+                              //new AuthorsSeeder(),
+                              //new BadgesSeeder(),
                               //new UsersBadgesSeeder()
                           };
 
