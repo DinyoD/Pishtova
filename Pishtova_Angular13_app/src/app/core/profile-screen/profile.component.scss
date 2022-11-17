@@ -122,6 +122,7 @@
     }
   }
   .subject-box {
+    width: calc(100vw - 48px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -137,15 +138,14 @@
       margin-top: 24px;
       display: flex;
       flex-flow: wrap;
-      align-content: center;
-      justify-content: center;
+      justify-content: space-between;
       .sbj {
         background-color: rgba($white, 0.5);
         backdrop-filter: blur(20px);
         border-radius: 8px;
-        width: 160px;
+        width: calc(100% / 2 - 5px);
         height: 116px;
-        margin: 10px 5px 0 5px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -192,17 +192,16 @@
     display: none;
   }
   .subject-details-box {
-    width: calc(100vw - 40px);
+    box-sizing: border-box;
+    width: calc(100vw - 48px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
     .sbj {
       box-sizing: border-box;
-      width: calc(100% - 10px);
+      width: 100%;
       height: 200px;
-      margin: 0 5px;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -239,19 +238,18 @@
       }
     }
     .categories {
-      width: 100%;
+      width: calc(100vw - 48px);
       box-sizing: border-box;
       display: flex;
       flex-flow: wrap;
-      align-content: center;
-      justify-content: center;
+      justify-content: space-between;
       .category {
         background-color: rgba($white, 0.5);
         backdrop-filter: blur(20px);
         border-radius: 8px;
-        width: calc(100% / 2 - 10px);
+        width: calc(100% / 2 - 5px);
         height: 155px;
-        margin: 10px 5px 0 5px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
         .score {
@@ -350,15 +348,13 @@
         height: 100%;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        //justify-content: flex-start;
         align-content: flex-start;
         margin-top: 0;
         .sbj {
           box-sizing: border-box;
-          width: 44%;
           height: 44%;
           max-height: 260px;
-          margin: 20px 10px 0 10px;
           padding: 24px;
           justify-content: flex-start;
           align-items: flex-start;
@@ -408,7 +404,6 @@
     .subject-details-box {
       width: 55%;
       height: 100%;
-      overflow-y: scroll;
       justify-content: flex-start;
       .sbj {
         height: 25%;
@@ -447,14 +442,20 @@
         }
       }
       .categories {
+        width: calc(100% + 15px);
+        margin-left: 15px;
         height: 80%;
-        align-content: flex-start;
+        overflow-y: scroll;
         .category {
           box-sizing: border-box;
           width: calc(100% / 4 - 10px);
-          min-width: 155px;
           height: 180px;
           padding: 0 8px;
+          .score{
+            .score-text {
+              overflow-wrap: break-word;
+            }
+          }
         }
       }
     }
