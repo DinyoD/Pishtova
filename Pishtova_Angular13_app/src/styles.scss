@@ -79,3 +79,10 @@ body {
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
+@media (max-height: 700px) and (orientation: landscape) {
+    body {
+      app-root{
+        display: none;
+      }
+    }
+}
