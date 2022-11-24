@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class RegisterUserDTO
+    public class UserRegisterModel
     {
         [Required]
         [RegularExpression("^[A-za-z\\p{L}]{1}[A-za-z\\p{L} -]{1,28}[A-za-z\\p{L}]{1}$")]

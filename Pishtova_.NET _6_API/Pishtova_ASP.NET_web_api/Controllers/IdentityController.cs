@@ -14,10 +14,10 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
-
+    using Pishtova.Data.Common.Utilities;
     using Pishtova.Data.Model;
     using Pishtova.Services.Data;
-    using Pishtova.Services.Messaging;
+    using Pishtova_ASP.NET_web_api.Extensions;
     using Pishtova_ASP.NET_web_api.Model.Identity;
     using Pishtova_ASP.NET_web_api.Model.Results;
 
@@ -34,40 +34,54 @@
             IUserService userService,
             IPishtovaSubscriptionService subscriptionService)          
         {
-            this.userManager = userManager;
-            this.userService = userService;
-            this.subscriptionService = subscriptionService;
+            if (applicationSettings is null) throw new ArgumentNullException(nameof(applicationSettings));
+
+            this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.subscriptionService = subscriptionService ?? throw new ArgumentNullException(nameof(subscriptionService));
             this.applicationSettings = applicationSettings.Value;
         }
 
         // TODO Implement Pishtova status-code
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDTO data)
+        public async Task<IActionResult> Register([FromBody]UserRegisterModel model)
         {
-            if (data == null)
-            {
-                return StatusCode(400, new ErrorResult { Message = "The form is not fulfilled correctly!" });
-            }
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(model)) return this.Error(operationResult);
+
+            //TODO Validate data with OperationErrorValidation
+
+            // TODO Mapper
             var user = new User
             {
-                Name = data.Name,
-                Email = data.Email,
-                UserName = data.Email,
-                Grade = data.Grade,
-                SchoolId = data.SchoolId
+                Name = model.Name,
+                Email = model.Email,
+                UserName = model.Email,
+                Grade = model.Grade,
+                SchoolId = model.SchoolId
             };
 
-            var result = await this.userManager.CreateAsync(user, data.Password);
+            var result = await this.userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                var errors = result.Errors.Select(x => x.Description).ToList();
-                return StatusCode(400, new ErrorResult { Message = errors[1] });
+                var errors = result.Errors.Select(x => new Error { Message = x.Description }).ToList();
+                operationResult.AddError(errors[1]);
+                return this.Error(operationResult);               
             }
-            var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-            await this.userService.SendEmailConfirmationTokenAsync(data.ClientURI, data.Email, token);
 
-            return StatusCode(201);
+            try
+            {
+                var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+                await this.userService.SendEmailConfirmationTokenAsync(model.ClientURI, model.Email, token);
+                return StatusCode(201);
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+                return this.Error(operationResult);
+            }
+
         }
 
         [HttpPost]
