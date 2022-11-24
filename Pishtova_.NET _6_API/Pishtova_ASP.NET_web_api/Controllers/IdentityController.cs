@@ -86,35 +86,37 @@
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDTO data)
+        public async Task<IActionResult> Login([FromBody] UserLoginModel model)
         {
-            var user = await this.userManager.Users.Include(x => x.Subsriber).FirstOrDefaultAsync(x => x.Email == data.Email); ;
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(model)) return this.Error(operationResult);
 
-            if (user == null)
+            //TODO Validate data with OperationErrorValidation
+
+            // TODO Mapper
+            var user = await this.userManager.Users.Include(x => x.Subsriber).FirstOrDefaultAsync(x => x.Email == model.Email);
+            var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
+
+            if (user == null && !passwordValid) operationResult.AddError(new Error { Message = "Sorry, your username and/or password do not match" });
+            if (!await userManager.IsEmailConfirmedAsync(user)) operationResult.AddError(new Error { Message = "Sorry, your email is not confirmed" });
+
+            if (!operationResult.IsSuccessful) return this.Error(operationResult);
+
+            try
             {
-                return StatusCode(401, new ErrorResult { Message = "Sorry, your username and/or password do not match" });
-            }
+                var subscription = user.Subsriber != null ? await this.subscriptionService.GetByCustomerIdAsync(user.Subsriber.CustomerId): null;
+                DateTime expDate = DateTime.Now.AddDays(7);
+                var isSubscriber = subscription != null && subscription.Status == "active";
 
-            if (!await userManager.IsEmailConfirmedAsync(user))
+                string token = this.GenerateToken(user, expDate, isSubscriber);
+                return this.Ok(token);
+
+            }
+            catch (Exception e)
             {
-                return StatusCode(401, new ErrorResult { Message = "Sorry, your email is not confirmed" });
+                operationResult.AddException(e);
+                return this.Error(operationResult);
             }
-
-            var passwordValid = await this.userManager.CheckPasswordAsync(user, data.Password);
-
-            if (!passwordValid)
-            {
-                return StatusCode(401, new ErrorResult { Message = "Sorry, your username and / or password do not match" });
-            }
-
-            var subscription = user.Subsriber != null ? await this.subscriptionService.GetByCustomerIdAsync(user.Subsriber.CustomerId): null;
-            DateTime expDate = DateTime.Now.AddDays(7);
-            var isSubscriber = subscription != null && subscription.Status == "active";
-
-            string token = this.GenerateToken(user, expDate, isSubscriber);
-            return StatusCode(200, new LoginResult { Token = token });
-
-
         }
 
         [HttpGet]
