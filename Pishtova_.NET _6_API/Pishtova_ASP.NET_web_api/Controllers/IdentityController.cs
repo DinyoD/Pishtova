@@ -108,9 +108,8 @@
                 DateTime expDate = DateTime.Now.AddDays(7);
                 var isSubscriber = subscription != null && subscription.Status == "active";
 
-                string token = this.GenerateToken(user, expDate, isSubscriber);
-                return this.Ok(token);
-
+                string generatedToken = this.GenerateToken(user, expDate, isSubscriber);
+                return this.Ok(new { token = generatedToken });
             }
             catch (Exception e)
             {
