@@ -136,18 +136,26 @@
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO data)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
-            var user = await userManager.FindByEmailAsync(data.Email);
-            if (user == null)
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(model)) return this.Error(operationResult);
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null) operationResult.AddError( new Error { Message = "Your email is not correct!" });
+            if (!operationResult.IsSuccessful) return this.Error(operationResult);
+
+            try
             {
-                return StatusCode(400, new ErrorResult { Message = "Your email is not correct!" });
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                await this.userService.SendResetPaswordTokenAsync(model.ClientURI, model.Email, token);
+                return this.Ok();
             }
-
-            var token = await userManager.GeneratePasswordResetTokenAsync(user);
-            await this.userService.SendResetPaswordTokenAsync(data.ClientURI, data.Email, token);
-
-            return StatusCode(200);
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+                return this.Error(operationResult);
+            }
         }
 
         [HttpPost]
