@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { UserForLoginModel } from '../../models/userForLogin';
 import { AuthService, StorageService } from 'src/app/services';
+import ILoginResult from '../../models/results/LoginResult';
 
 @Component({
   selector: 'app-login',
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
       password: formValues.password
     }
    this.userService.login(user)
-    .subscribe((res: { token: string; }) => {
+    .subscribe((res: ILoginResult) => {
       this.route.navigateByUrl(this.returnUrl);
       this.storage.setItem('token', res.token)
       this.userService.sendAuthStateChangeNotification(res.token != null)
