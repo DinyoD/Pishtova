@@ -160,21 +160,22 @@
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO data)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
         {
-            var user = await userManager.FindByEmailAsync(data.Email);
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(model)) return this.Error(operationResult);
 
-            if (user == null)
-            {
-                return StatusCode(400, new ErrorResult { Message = "Your email is not correct!" });
-            }
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null) operationResult.AddError(new Error { Message = "Your email is not correct!" });
+            if (!operationResult.IsSuccessful) return this.Error(operationResult);
 
-            var resetPassResult = await userManager.ResetPasswordAsync(user, data.Token, data.Password);
+            var resetPassResult = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
+
             if (!resetPassResult.Succeeded)
             {
-                var errors = resetPassResult.Errors.Select(e => e.Description).ToList();
-
-                return StatusCode(400, new ErrorResult { Message = errors[0] });
+                var errors = resetPassResult.Errors.Select(x => new Error { Message = x.Description }).ToList();
+                operationResult.AddError(errors[1]);
+                return this.Error(operationResult);
             }
 
             return Ok();
