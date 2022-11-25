@@ -1,7 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Security.Claims;
@@ -10,7 +9,6 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
@@ -19,7 +17,6 @@
     using Pishtova.Services.Data;
     using Pishtova_ASP.NET_web_api.Extensions;
     using Pishtova_ASP.NET_web_api.Model.Identity;
-    using Pishtova_ASP.NET_web_api.Model.Results;
 
     public class IdentityController : ApiController
     {
@@ -122,19 +119,19 @@
         [Route("[action]")]
         public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
         {
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(email)) return this.Error(operationResult);
+            if (!operationResult.ValidateNotNull(token)) return this.Error(operationResult);
+
             var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return StatusCode(400, new ErrorResult { Message = "Invalid Email Confirmation Request" });
-            }
-
+            if (user == null) operationResult.AddError(new Error { Message = "Sorry, your username and/or password do not match" });
+ 
             var confirmResult = await userManager.ConfirmEmailAsync(user, token);
-            if (!confirmResult.Succeeded)
-            {
-                return StatusCode(400, new ErrorResult { Message = "The form is not fulfilled correctly!" });
-            }
+            if (!confirmResult.Succeeded) operationResult.AddError(new Error { Message = "The form is not fulfilled correctly!" });
 
-            return StatusCode(200);
+            if (!operationResult.IsSuccessful) return this.Error(operationResult);
+
+            return this.Ok();
         }
 
         [HttpPost]
