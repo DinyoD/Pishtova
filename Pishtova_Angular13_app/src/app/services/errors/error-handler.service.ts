@@ -27,6 +27,8 @@ export class ErrorHandlerService implements HttpInterceptor {
   private handleError = (error: HttpErrorResponse) : string => {
     if(error.status === 404) {
       return this.handleNotFound(error);
+      console.log(123);
+      
     }
     else if(error.status === 400) {
       return this.handleBadRequest(error);
