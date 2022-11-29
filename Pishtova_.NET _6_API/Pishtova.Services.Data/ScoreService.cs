@@ -104,6 +104,7 @@
         {
             
             var operationresult = new OperationResult<ICollection<Score>>();
+            if (!operationresult.ValidateNotNull(userId)) return operationresult;
             if (!operationresult.ValidateNotNull(subjectId)) return operationresult;
 
             try
