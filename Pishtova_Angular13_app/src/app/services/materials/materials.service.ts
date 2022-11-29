@@ -14,7 +14,6 @@ export class MaterialsService {
     private httpClient : HttpClient) { }
 
   public getAuthorsWithWorks = (subjectId: number): Observable<AuthorModel[]> => {
-    return this.httpClient.get<AuthorModel[]>(env.API_URL + `/authors/all/${subjectId}`)
+    return this.httpClient.get<AuthorModel[]>(env.API_URL + `/authors?subjectId=${subjectId}`)
   }
-
 }
