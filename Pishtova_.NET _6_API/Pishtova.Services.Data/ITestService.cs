@@ -27,8 +27,8 @@
         /// <returns>A task whose result contains OperationResult object with Data property - count of all completed tests for a user.</returns>
         Task<OperationResult<int>> GetUserTestsCountAsync(string id);
 
-        public Task<OperationResult<ICollection<Test>>> GetUserLastByCount(string id, int testCount);
+        public Task<OperationResult<ICollection<Test>>> GetUserLastByCountAsync(string id, int testCount);
 
-        public Task<OperationResult<ICollection<Test>>> GetUserLastByDays(string id, int daysCount);
+        public Task<OperationResult<ICollection<Test>>> GetUserLastByDaysAsync(string id, int daysCount);
     }
 }

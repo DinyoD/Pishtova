@@ -73,10 +73,11 @@
             return operationResult;
         }
 
-        public async Task<OperationResult<ICollection<Test>>> GetUserLastByCount(string userId, int testCount)
+        public async Task<OperationResult<ICollection<Test>>> GetUserLastByCountAsync(string userId, int testCount)
         {
             var operationResult = new OperationResult<ICollection<Test>>();
             if (!operationResult.ValidateNotNull(userId)) return operationResult;
+            if (!operationResult.ValidateNotNull(testCount)) return operationResult;
 
             try
             {
@@ -90,10 +91,11 @@
             return operationResult;
         }
 
-        public async Task<OperationResult<ICollection<Test>>> GetUserLastByDays(string userId, int daysCount)
+        public async Task<OperationResult<ICollection<Test>>> GetUserLastByDaysAsync(string userId, int daysCount)
         {
             var operationResult = new OperationResult<ICollection<Test>>();
             if (!operationResult.ValidateNotNull(userId)) return operationResult;
+            if (!operationResult.ValidateNotNull(daysCount)) return operationResult;
 
             try
             {
