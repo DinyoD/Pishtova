@@ -9,13 +9,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/components/authentication.module';
 import { CoreModule } from './core/core.module';
-import { ErrorHandlerService } from './error/error-handler.service';
+import { ErrorHandlerService } from './services/errors/error-handler.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { storageServiceProvider } from './services';
 import { LoadingIndicatorInterceptor } from './interceptor/loading-indicator-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { MembershipModule } from './membership/components/membership.module';
-//import { NotFoundComponent } from './error/error-screens/not-found/not-found.component';
+import { ErrorScreensModule } from './error-screens/error-screens.module';
 
 
 // TODO This work only in Browser!!!!
@@ -45,6 +45,7 @@ export function tokenGetter() {
     SharedModule,
     MembershipModule,
     AuthenticationModule,
+    ErrorScreensModule,
   ],
   providers: [
     {

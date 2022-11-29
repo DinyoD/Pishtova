@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ForAuthenticatedUserGuard } from './authentication/guards/auth.guard';
 import { MainScreenComponent } from './core/main-screen/main-screen.component';
+
 const routes: Routes = [
   {
     path: '',
