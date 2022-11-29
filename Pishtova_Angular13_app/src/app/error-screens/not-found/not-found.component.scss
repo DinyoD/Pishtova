@@ -1,0 +1,11 @@
+.container {
+    width: 100vw;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+        text-align: center;
+        font-size: 42px;
+    }
+}
