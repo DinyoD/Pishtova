@@ -1,10 +1,16 @@
 ﻿namespace Pishtova.Services.Data
 {
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+
     using Pishtova.Data;
+    using Pishtova.Data.Common.Utilities;
     using Pishtova_ASP.NET_web_api.Model.Author;
     using Pishtova_ASP.NET_web_api.Model.Work;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class AuthorService : IAuthorService
     {
@@ -15,11 +21,16 @@
             this.db = db ?? throw new System.ArgumentNullException(nameof(db));
         }
 
-        public List<AuthorDTO> GetAuthorsWithWorks(int subjectId)
+        public async Task<OperationResult<ICollection<AuthorModel>>> GetAuthorsWithWorksAsync(int subjectId)
         {
-            return this.db.Authors
-                .Where(x => x.Works.Any(w => w.SubjectId == subjectId))
-                .Select(x => new AuthorDTO
+            var operationResult = new OperationResult<ICollection<AuthorModel>>();
+            if (!operationResult.ValidateNotNull(subjectId)) return operationResult;
+
+            try
+            {
+                var authorModels = await this.db.Authors
+                .Include(x => x.Works)
+                .Select(x => new AuthorModel
                 {
                     Name = x.Name,
                     Index = x.Index,
@@ -32,7 +43,15 @@
                         })
                         .ToList()
                 })
-                .ToList();
+                .Where(x => x.Works.Count > 0)
+                .ToListAsync();
+                operationResult.Data = authorModels;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
         }
     }
 }
