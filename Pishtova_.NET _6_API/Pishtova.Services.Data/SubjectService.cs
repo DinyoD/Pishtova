@@ -38,18 +38,19 @@
 
         public async Task<OperationResult<Subject>> GetByIdAsync(int id)
         {
-            var operationresult = new OperationResult<Subject>();
+            var operationResult = new OperationResult<Subject>();
+            if (!operationResult.ValidateNotNull(id)) return operationResult;
 
             try
             {
                 var result = await this.db.Subjects.Where(x => x.Id == id).FirstOrDefaultAsync();
-                operationresult.Data = result;
+                operationResult.Data = result;
             }
             catch (Exception e)
             {
-                operationresult.AddException(e);
+                operationResult.AddException(e);
             }
-            return operationresult;
+            return operationResult;
         }
     }
 }
