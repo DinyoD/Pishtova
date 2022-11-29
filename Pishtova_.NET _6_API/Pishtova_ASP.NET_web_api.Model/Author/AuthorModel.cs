@@ -1,9 +1,9 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.Author
 {
-    using Pishtova_ASP.NET_web_api.Model.Work;
     using System.Collections.Generic;
+    using Pishtova_ASP.NET_web_api.Model.Work;
 
-    public class AuthorDTO
+    public class AuthorModel
     {
         public string Name { get; set; }
 
