@@ -9,10 +9,9 @@
 
     using Pishtova.Data.Model;
     using Pishtova.Services.Data;
+    using Pishtova_ASP.NET_web_api.Extensions;
     using Pishtova_ASP.NET_web_api.Model.User;
     using Pishtova_ASP.NET_web_api.Model.UserBadge;
-    using Pishtova.Data.Common.Utilities;
-    using Pishtova_ASP.NET_web_api.Extensions;
 
     public class UserBadgesController : ApiController
     {
@@ -44,9 +43,6 @@
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserBadgeInputModel inputModel)
         {
-            var operationResult = new OperationResult();
-            if (!operationResult.ValidateNotNull(inputModel)) return this.Error(operationResult);
-
             var result = await this.badgeService.GetByCodeAsync(inputModel.BadgeCode);
             if (!result.IsSuccessful) return this.Error(result);
 
@@ -68,11 +64,10 @@
         [Route("users/{userId}")]
         public async Task<IActionResult> GetUserAll([FromRoute]string userId)
         {
-            var operationResult = new OperationResult<ICollection<UserBadge>>();
-            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
-
             var result = await this.usersBadgesService.GetAllByUserAsync(userId);
             if (!result.IsSuccessful) return this.Error(result);
+
+            if (result.Data is null) return this.NotFound();
 
             var badges = CreateBadgeCountModelCollection(result.Data);
             return Ok(badges);
@@ -82,11 +77,10 @@
         [Route("tests/{testId}")]
         public async Task<IActionResult> GetTestAll([FromRoute]int testId)
         {
-            var operationResult = new OperationResult<ICollection<UserBadge>>();
-            if (!operationResult.ValidateNotNull(testId)) return this.Error(operationResult);
-
             var result = await this.usersBadgesService.GetAllByTestAsync(testId);
             if (!result.IsSuccessful) return this.Error(result);
+
+            if (result.Data is null) return this.NotFound();
 
             var badges = CreateBadgeCountModelCollection(result.Data);
             return Ok(badges);

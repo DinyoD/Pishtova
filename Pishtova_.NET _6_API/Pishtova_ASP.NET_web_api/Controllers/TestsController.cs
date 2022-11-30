@@ -74,9 +74,6 @@
         [Route("users/{userId}/count")]
         public async Task<IActionResult> GetCountByUser(string userId)
         {
-            var operationResult = new OperationResult();
-            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
-
             var result = await this.testService.GetUserTestsCountAsync(userId);
             if (!result.IsSuccessful) return this.Error(result);
 

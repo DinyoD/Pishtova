@@ -17,14 +17,12 @@
     public class ScoresController: ApiController
     {
         private readonly IScoreService scoreService;
-        private readonly IUserService userService;
 
         public ScoresController(
-            IScoreService scoreService,
-            IUserService userService)
+            IScoreService scoreService
+            )
         {
             this.scoreService = scoreService;
-            this.userService = userService;
         }
 
         [HttpGet("{id:int}")]
@@ -63,9 +61,6 @@
         [Route("subjects")]
         public async Task<IActionResult> UserPointsBySubject([FromQuery]string userId)
         {
-            var operationResult = new OperationResult<ICollection<SubjectScoreModel>>();
-            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
-
             var scoresResult =  await this.scoreService.GetUserScoresBySubjectsAsync(userId);
             if (!scoresResult.IsSuccessful) return this.Error(scoresResult);
 
@@ -77,10 +72,6 @@
         [Route("categories")]
         public async Task<IActionResult> SubjectPointsByCategories([FromQuery]string userId, [FromQuery]int subjectId)
         {
-            var operationResult = new OperationResult<ICollection<CategoryScoreModel>>();
-            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
-            if (!operationResult.ValidateNotNull(subjectId)) return this.Error(operationResult);
-
             var scoresResult =  await this.scoreService.GetUserScoresBySubjectCategoriesAsync(userId, subjectId);
             if (!scoresResult.IsSuccessful) return this.Error(scoresResult);
 

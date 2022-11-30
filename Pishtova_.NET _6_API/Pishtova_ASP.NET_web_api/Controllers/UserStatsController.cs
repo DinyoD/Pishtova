@@ -35,9 +35,6 @@
         [Route("tests")]
         public async Task<IActionResult> GetTestCount([FromQuery]string userId)
         {
-            var operationResult = new OperationResult();
-            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
-
             var result = await this.testService.GetUserTestsCountAsync(userId);
             if (!result.IsSuccessful) return this.Error(result);
 
@@ -48,11 +45,7 @@
         [Route("lasttests")]
         public async Task<IActionResult> GetLastTests([FromQuery]string userId, [FromQuery]int testsCount)
         {
-            var operationResult = new OperationResult();
-            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
-            if (!operationResult.ValidateNotNull(testsCount)) return this.Error(operationResult);
-
-            var result = await this.testService.GetUserLastByCount(userId, testsCount);
+            var result = await this.testService.GetUserLastByCountAsync(userId, testsCount);
             if (!result.IsSuccessful) return this.Error(result);
 
             var returnedValue = result.Data
@@ -72,11 +65,7 @@
         [Route("lastdays")]
         public async Task<IActionResult> GetTestsByDays([FromQuery]string userId, [FromQuery]int daysCount)
         {
-            var operationresult = new OperationResult();
-            if (!operationresult.ValidateNotNull(userId)) return this.Error(operationresult);
-            if (!operationresult.ValidateNotNull(daysCount)) return this.Error(operationresult);
-
-            var result = await this.testService.GetUserLastByDays(userId, daysCount);
+            var result = await this.testService.GetUserLastByDaysAsync(userId, daysCount);
             if (!result.IsSuccessful) return this.Error(result);
 
             var returnedValue = this.GetDayTestsVeiewModelCollection(result.Data, daysCount);
@@ -87,9 +76,6 @@
         [Route("bestrank")]
         public async Task<IActionResult> GetUserBestRank([FromQuery]string userId)
         {
-            var operationResult = new OperationResult();
-            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
-
             var result = await this.subjectService.GetAllAsync();
             if (!result.IsSuccessful) return this.Error(result);
 
@@ -105,9 +91,6 @@
         [Route("subjectrank")]
         public async Task<IActionResult> Ranking([FromQuery]int subjectId)
         {
-            var operationresult = new OperationResult();
-            if (!operationresult.ValidateNotNull(subjectId)) return this.Error(operationresult);
-
             var getScoresOperation = await this.scoreService.GetSubjectScoresAsync(subjectId);
             if (!getScoresOperation.IsSuccessful) return this.Error(getScoresOperation);
 
