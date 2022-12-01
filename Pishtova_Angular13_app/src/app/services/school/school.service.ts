@@ -13,6 +13,6 @@ export class SchoolService {
   constructor(private httpClient : HttpClient) { }
 
   public getSchoolsByTownId = (townId: number): Observable<SchoolForRegisterModel[]> => {
-    return this.httpClient.get<SchoolForRegisterModel[]>(env.API_URL + `/schools/bytown/${townId}`)
+    return this.httpClient.get<SchoolForRegisterModel[]>(env.API_URL + `/schools/town/${townId}`)
   }
 }
