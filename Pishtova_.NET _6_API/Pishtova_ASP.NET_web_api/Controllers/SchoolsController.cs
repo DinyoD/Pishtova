@@ -2,12 +2,13 @@
 namespace Pishtova_ASP.NET_web_api.Controllers
 {
     using System;
-    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-
+    using Pishtova.Data.Model;
     using Pishtova.Services.Data;
+    using Pishtova_ASP.NET_web_api.Extensions;
     using Pishtova_ASP.NET_web_api.Model.School;
 
     public class SchoolsController : ApiController
@@ -20,12 +21,28 @@ namespace Pishtova_ASP.NET_web_api.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/{townId}")]
-        public async Task<ICollection<SchoolForRegistrationDTO>> ByTown(int townId)
+        [Route("town/{townId}")]
+        public async Task<IActionResult> GatAllByTownId([FromRoute]int townId)
         {
-            if (townId == 0) throw new ArgumentNullException(nameof(townId));
+            var result = await this.schoolService.GetAllByTownIdAsync(townId);
+            if (!result.IsSuccessful) return this.Error(result);
 
-            return await this.schoolService.GetAllByTownId(townId);
+            if (result.Data == null) return this.NotFound();
+            var schools = result.Data;
+            var schoolsModels = schools.Select(this.ToSchoolModel).ToList();
+
+            return this.Ok(schoolsModels);
+        }
+
+        private SchoolModel ToSchoolModel(School school)
+        {
+            return new SchoolModel 
+            {
+                Id= school.Id,
+                Name= school.Name,
+                TownId= school.TownId,
+            };
+
         }
     }
 }

@@ -1,13 +1,17 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Microsoft.EntityFrameworkCore;
-    using Pishtova.Data;
-    using Pishtova.Data.Model;
-    using Pishtova_ASP.NET_web_api.Model.School;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Microsoft.EntityFrameworkCore;
+
+    using Pishtova.Data;
+    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
+    using Pishtova_ASP.NET_web_api.Model.School;
+
     public class SchoolService : ISchoolService
     {
         private readonly PishtovaDbContext db;
@@ -16,28 +20,24 @@
         {
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
-        public async Task CreateAsync(string name, int townId)
+
+        public async Task<OperationResult<ICollection<School>>> GetAllByTownIdAsync(int townId)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-            if (townId == 0) throw new ArgumentNullException(nameof(townId));
+            var operationResult = new OperationResult<ICollection<School>>();
+            if (!operationResult.ValidateNotNull(townId)) return operationResult;
 
-            var school = new School{ Name = name, TownId = townId};
-
-            await this.db.Schools.AddAsync(school);
-            await this.db.SaveChangesAsync();
-        }
-
-        public async Task<ICollection<SchoolForRegistrationDTO>> GetAllByTownId(int townId)
-        {
-            return await this.db.Schools
-                .Where(x => x.TownId == townId)
-                .Select(x => new SchoolForRegistrationDTO
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    TownId = x.TownId
-                })
-                .ToListAsync();
+            try
+            {
+                var schools =  await this.db.Schools
+                    .Where(x => x.TownId == townId)
+                    .ToListAsync();
+                operationResult.Data = schools;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
         }
     }
 }

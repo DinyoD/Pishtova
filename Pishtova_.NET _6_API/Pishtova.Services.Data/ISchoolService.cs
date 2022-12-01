@@ -1,14 +1,15 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Pishtova_ASP.NET_web_api.Model.School;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
+    using Pishtova_ASP.NET_web_api.Model.School;
 
     public interface ISchoolService
     {
-        Task CreateAsync(string name, int townId);
-
-        Task<ICollection<SchoolForRegistrationDTO>> GetAllByTownId(int townId);
+        Task<OperationResult<ICollection<School>>> GetAllByTownIdAsync(int townId);
     }
 
 }
