@@ -22,7 +22,7 @@ export class UploadFileDialogComponent {
   
   public Upload = (): void => {
     if (this.file != null) {
-      this.imageService.uploadImageAsync(this.file).then( success => this.dialogRef.close(success));
+      this.imageService.uploadImageAsync(this.file).then( imageLink => this.dialogRef.close(imageLink));
     }
   }
 
