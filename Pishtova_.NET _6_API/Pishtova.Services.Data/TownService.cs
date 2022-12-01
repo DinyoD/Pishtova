@@ -4,10 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
+
     using Pishtova.Data;
+    using Pishtova.Data.Common.Utilities;
     using Pishtova.Data.Model;
-    using Pishtova_ASP.NET_web_api.Model.Town;
 
     public class TownService : ITownService
     {
@@ -18,31 +20,24 @@
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<int> CreateAsync(string name, int municipalityId )
+        public async Task<OperationResult<ICollection<Town>>> GetAllByMunicipalityId(int municipalityId)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-            if (municipalityId == 0) throw new ArgumentNullException(nameof(municipalityId));
+            var operationResult = new OperationResult<ICollection<Town>>();
+            if (!operationResult.ValidateNotNull(municipalityId)) return operationResult;
 
-            var town = new Town {Name = name, MunicipalityId = municipalityId};
+            try
+            {
+                var towns = await this.db.Towns
+                                            .Where(x => x.MunicipalityId == municipalityId)
+                                            .ToListAsync();
+                operationResult.Data = towns;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
 
-            await db.Towns.AddAsync(town);
-            await db.SaveChangesAsync();
-
-            return town.Id;
-        }
-
-        public async Task<ICollection<TownDTO>> GetAllByMunicipalityId(int municipalityId)
-        {
-            if (municipalityId == 0) throw new ArgumentNullException(nameof(municipalityId));
-
-            return await this.db.Towns
-                .Where(x => x.MunicipalityId == municipalityId)
-                .Select(x => new TownDTO{ 
-                    Id = x.Id,
-                    Name = x.Name,
-                    MunicipalityId = x.MunicipalityId
-                })
-                .ToListAsync();
+            return operationResult;
         }
     }
 }
