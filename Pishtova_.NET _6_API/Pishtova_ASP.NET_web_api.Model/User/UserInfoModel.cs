@@ -1,6 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.User
 {
-    public class UserInfoDTO: UserBaseModel
+    public class UserInfoModel: UserBaseModel
     {
         public string SchoolName { get; set; }
 

@@ -1,104 +1,130 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
-    using Microsoft.AspNetCore.Identity;
+    using System;
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Identity;
+
     using Pishtova.Data.Model;
     using Pishtova.Services.Data;
-    using Pishtova_ASP.NET_web_api.Model.Results;
+    using Pishtova.Data.Common.Utilities;
+    using Pishtova_ASP.NET_web_api.Extensions;
     using Pishtova_ASP.NET_web_api.Model.User;
-    using System.Threading.Tasks;
+    using Pishtova_ASP.NET_web_api.Model.School;
 
     public class UsersController : ApiController
     {
-        private readonly UserManager<User> userManager;
         private readonly IUserService userService;
+        private readonly UserManager<User> userManager;
 
-        public UsersController(UserManager<User> userManager, IUserService userservice)
+        public UsersController(
+            IUserService userservice,
+            UserManager<User> userManager)
         {
-            this.userManager = userManager;
-            this.userService = userservice;
+            this.userService = userservice ?? throw new System.ArgumentNullException(nameof(userservice));
+            this.userManager = userManager ?? throw new System.ArgumentNullException(nameof(userManager));
         }
 
         [HttpGet]
-        [Route("[action]")]
-        public async Task<UserProfileDTO> Profile()
+        [Route("{id}")]
+        public async Task<IActionResult> GetById([FromRoute]string id)
         {
-            var userId =await this.userService.GetUserIdAsync(User);
-            return await this.userService.GetProfileInfoAsync(userId);
+            var result = await this.userService.GetByIdAsync(id);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var user = result.Data;
+            if (user == null) return this.NotFound();
+
+            var profileModel = this.ToUserProfileModel(user);
+
+            return this.Ok(profileModel);
         }
 
         [HttpGet]
-        [Route("[action]/{id}")]
-        public async Task<UserInfoDTO> Info(string id)
+        [Route("{id}/[action]")]
+        public async Task<IActionResult> Info([FromRoute]string id)
         {
-            return await this.userService.GetUserInfoAsync(id);
+            var result = await this.userService.GetByIdAsync(id);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var user = result.Data;
+            if (user == null) return this.NotFound();
+
+            var infoModel = this.ToUserInfoModel(user);
+
+            return this.Ok(infoModel);
         }
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdatePictureUrl([FromBody] UserPictureDTO data)
+        public async Task<IActionResult> UpdatePictureUrl([FromRoute] UserToUpdatePictireUrlModel model)
         {
+            var result = await this.userService.UpdateUserAvatar(model);
+            if (!result.IsSuccessful) return this.Error(result);
 
-            if (string.IsNullOrEmpty(data.PictureUrl))
-            {
-                return StatusCode(400, new ErrorResult { Message = "Uncorrect pictureUrl" });
-            }
-
-            try
-            {
-                var userId = await this.userService.GetUserIdAsync(User);
-                await this.userService.UpdateUserAvatar(userId, data.PictureUrl);
-                return StatusCode(204);
-            }
-            catch
-            {
-                return StatusCode(400, new ErrorResult { Message = "Uncorrect request" });
-            }
+            return this.Ok();
         }
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdateUserInfo([FromBody] UserInfoToUpdateDTO data)
+        public async Task<IActionResult> UpdateInfo([FromBody] UserToUpdateModel data)
         {
+            var result = await this.userService.UpdateUserInfo(data);
+            if (!result.IsSuccessful) return this.Error(result);
 
-            if (data == null)
-            {
-                return StatusCode(400, new ErrorResult { Message = "Uncorrect model" });
-            }
-
-            try
-            {
-                var userId = await this.userService.GetUserIdAsync(User);
-                await this.userService.UpdateUserInfo(userId, data);
-                return StatusCode(204);
-            }
-            catch
-            {
-                return StatusCode(400, new ErrorResult { Message = "Uncorrect request" });
-            }
+            return this.Ok();
         }
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdateUserEmail([FromBody] UserChangeEmailDTO data)
+        public async Task<IActionResult> UpdateEmail([FromBody] UserToUpdateEmailModel data)
         {
-            if (data == null)
-            {
-                return StatusCode(400, new ErrorResult { Message = "Uncorrect model" });
-            }
+            var result = await this.userService.UpdateUserEmail(data);
+            if (!result.IsSuccessful) return this.Error(result);
 
+            var user = result.Data;
+            if (user == null) return this.NotFound();
             try
             {
-                var userId = await this.userService.GetUserIdAsync(User);
-                var user = await this.userService.UpdateUserEmail(userId, data);
                 var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-                await this.userService.SendEmailConfirmationTokenAsync(data.ClientURI, user.Email, token);
-                return StatusCode(204);
+                var sendMailResult = await this.userService.SendEmailConfirmationTokenAsync(data.ClientURI, user.Email, token);
+                if (!sendMailResult.IsSuccessful) return this.Error(sendMailResult);
             }
-            catch
+            catch (Exception e)
             {
-                return StatusCode(400, new ErrorResult { Message = "Uncorrect request" });
+                var operationResult = new OperationResult();
+                operationResult.AddException(e);
+                return this.Error(operationResult);
             }
+
+            return this.Ok();
+        }
+
+        private UserProfileModel ToUserProfileModel(User user)
+        {
+            return new UserProfileModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+                Grade = user.Grade,
+                PictureUrl = user.PictureUrl,
+                TownName = user.School.Town.Name,
+                School = new SchoolBasicModel { Id = user.SchoolId, Name = user.School.Name }
+            };
+        }
+
+        private UserInfoModel ToUserInfoModel(User user)
+        {
+            return new UserInfoModel
+            {
+                Name = user.Name,
+                Grade = user.Grade,
+                SchoolName = user.School.Name,
+                TownName = user.School.Town.Name,
+                PictureUrl = user.PictureUrl,
+            };
         }
 
     }

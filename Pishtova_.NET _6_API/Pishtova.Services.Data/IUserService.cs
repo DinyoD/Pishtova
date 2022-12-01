@@ -2,26 +2,25 @@
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using Pishtova.Data.Common.Utilities;
     using Pishtova.Data.Model;
     using Pishtova_ASP.NET_web_api.Model.User;
 
     public interface IUserService
     {
+        // TODO Remove method
         Task<string> GetUserIdAsync(ClaimsPrincipal user);
 
-        Task<UserProfileDTO> GetProfileInfoAsync(string userId);
+        Task<OperationResult<User>> GetByIdAsync(string userId);
 
-        Task<UserInfoDTO> GetUserInfoAsync(string userId);
+        Task<OperationResult> UpdateUserAvatar(UserToUpdatePictireUrlModel model);
 
-        Task UpdateUserAvatar(string userId, string pictureUrl);
+        Task<OperationResult> UpdateUserInfo(UserToUpdateModel model);
 
-        Task UpdateUserInfo(string userId, UserInfoToUpdateDTO model);
-
-        Task<User> UpdateUserEmail(string userId, UserChangeEmailDTO model);
+        Task<OperationResult<User>> UpdateUserEmail(UserToUpdateEmailModel model);
         
-        Task SendEmailConfirmationTokenAsync(string clientURI, string email, string token);
+        Task<OperationResult> SendEmailConfirmationTokenAsync(string clientURI, string email, string token);
 
-        Task SendResetPaswordTokenAsync(string clientURI, string email, string token);
+        Task<OperationResult> SendResetPaswordTokenAsync(string clientURI, string email, string token);
     }
 }

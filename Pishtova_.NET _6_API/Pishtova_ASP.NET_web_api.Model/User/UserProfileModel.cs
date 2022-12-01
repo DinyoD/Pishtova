@@ -2,7 +2,7 @@
 {
     using Pishtova_ASP.NET_web_api.Model.School;
 
-    public class UserProfileDTO: UserBaseModel
+    public class UserProfileModel: UserBaseModel
     {
         public string Id { get; set; }
 
@@ -10,7 +10,7 @@
 
         public string PictureUrl { get; set; }
 
-        public SchoolForUserModel School { get; set; }
+        public SchoolBasicModel School { get; set; }
 
         public string TownName { get; set; }
     }

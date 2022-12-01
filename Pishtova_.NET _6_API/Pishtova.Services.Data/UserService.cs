@@ -1,5 +1,6 @@
 ﻿namespace Pishtova.Services.Data
 {
+    using System;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -12,8 +13,8 @@
     using Pishtova.Data.Model;
     using Pishtova.Services.Messaging;
     using Pishtova_ASP.NET_web_api.Model.User;
-    using Pishtova_ASP.NET_web_api.Model.School;
     using Microsoft.AspNetCore.Identity;
+    using Pishtova.Data.Common.Utilities;
 
     public class UserService : IUserService
     {
@@ -22,119 +23,167 @@
         private readonly UserManager<User> userManager;
 
         public UserService(
-                PishtovaDbContext db,
-                IEmailSender emailSender,
-                UserManager<User> userManager)
+            PishtovaDbContext db,
+            IEmailSender emailSender,
+            UserManager<User> userManager)
         { 
             this.db = db;
             this.emailSender = emailSender;
             this.userManager = userManager;
         }
 
-        public async Task<UserProfileDTO> GetProfileInfoAsync(string userId)
+        public async Task<OperationResult<User>> GetByIdAsync(string userId)
         {
-            var profile = await this.db.Users
-                .Where(x => x.Id == userId)
-                .Select(u => new UserProfileDTO
-                {
-                    Id = u.Id,
-                    Email = u.Email,
-                    Name = u.Name,
-                    PictureUrl = u.PictureUrl,
-                    Grade = u.Grade,
-                    TownName = u.School.Town.Name,
-                    School = new SchoolForUserModel
-                    {
-                        Name = u.School.Name,
-                        Id = u.School.Id
-                    }
-                })
-                .FirstOrDefaultAsync();
-            return profile;
-        }
+            var operationResult = new OperationResult<User>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
 
-        public async Task<string> GetUserIdAsync(ClaimsPrincipal principal)
-        {
-            var userEmail = principal.FindFirstValue(ClaimTypes.Email);
-            var user = await this.userManager.FindByNameAsync(userEmail);
-            return user.Id;
-        }
-
-        public async Task UpdateUserAvatar(string userId, string pictureUrl)
-        {
-            var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
-            dbUser.PictureUrl = pictureUrl;
-            await this.db.SaveChangesAsync();
-        }
-
-        public async Task UpdateUserInfo(string userId, UserInfoToUpdateDTO model)
-        {
-            var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
-
-            this.db.Update(dbUser);
-            dbUser.Name = model.Name;
-            dbUser.Grade = model.Grade;
-            dbUser.SchoolId = model.SchoolId;
-            await this.db.SaveChangesAsync();
-        }
-
-        public async Task<User> UpdateUserEmail(string userId, UserChangeEmailDTO model)
-        {
-            var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id.Equals(userId));
-            if (dbUser.NormalizedEmail != model.Email.ToUpper())
+            try
             {
-                this.db.Update(dbUser);
+                var user = await this.db.Users
+                    .Where(x => x.Id == userId)                    
+                    .Include(x => x.School)
+                    .Include(x => x.School.Town)
+                    .FirstOrDefaultAsync();
+
+                operationResult.Data = user;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
+        }
+
+        public async Task<OperationResult> UpdateUserAvatar(UserToUpdatePictireUrlModel model)
+        {
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(model)) return operationResult;
+
+            try
+            {
+                var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == model.Id);
+                dbUser.PictureUrl = model.PictureUrl;
+                await this.db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
+        }
+
+        public async Task<OperationResult> UpdateUserInfo(UserToUpdateModel model)
+        {
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(model)) return operationResult;
+
+            try
+            {
+                var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == model.Id);
+                dbUser.Name = model.Name;
+                dbUser.Grade = model.Grade;
+                dbUser.SchoolId = model.SchoolId;
+                await this.db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+
+            return operationResult;           
+        }
+
+        public async Task<OperationResult<User>> UpdateUserEmail(UserToUpdateEmailModel model)
+        {
+            var operationResult = new OperationResult<User>();
+            if (!operationResult.ValidateNotNull(model)) return operationResult;
+
+            try
+            {
+                var dbUser = await this.db.Users.FirstOrDefaultAsync(x => x.Id == model.Id);
+
+                if (dbUser.NormalizedEmail == model.Email.ToUpper()) operationResult.AddError( new Error() { Message = "Email is the same" });
+                if (!operationResult.IsSuccessful) return operationResult;
+
                 dbUser.Email = model.Email;
                 dbUser.NormalizedEmail = model.Email.ToUpper();
                 dbUser.UserName = model.Email;
                 dbUser.NormalizedUserName = model.Email.ToUpper();
                 dbUser.EmailConfirmed = false;
                 await this.db.SaveChangesAsync();
+
+                operationResult.Data = dbUser;
             }
-            return dbUser;
-        }
-
-        public async Task SendEmailConfirmationTokenAsync(string clientURI, string email, string token)
-        {
-            var param = new Dictionary<string, string>
-                            {
-                                {"token", token },
-                                {"email", email }
-                            };
-            var callback = QueryHelpers.AddQueryString(clientURI, param);
-            var message = new Message(new string[] { email }, "Email Confirmation token", callback, null);
-            await this.emailSender.SendEmailAsync(message);
-        }
-
-        public async Task SendResetPaswordTokenAsync(string clientURI, string email, string token)
-        {
-            var param = new Dictionary<string, string>
+            catch (Exception e)
             {
-                {"token", token },
-                {"email", email }
-            };
+                operationResult.AddException(e);
+            }
 
-            var callback = QueryHelpers.AddQueryString(clientURI, param);
-
-            var message = new Message(new string[] { email }, "Reset password token", callback, null);
-            await emailSender.SendEmailAsync(message);
+            return operationResult;
         }
 
-        public async Task<UserInfoDTO> GetUserInfoAsync(string userId)
+        public async Task<OperationResult> SendEmailConfirmationTokenAsync(string clientURI, string email, string token)
         {
-            var info = await this.db.Users
-                .Where(x => x.Id == userId)
-                .Select(u => new UserInfoDTO
-                {
-                    Name = u.Name,
-                    PictureUrl = u.PictureUrl,
-                    Grade = u.Grade,
-                    TownName = u.School.Town.Name,
-                    SchoolName = u.School.Name
-                })
-                .FirstOrDefaultAsync();
-            return info;
+            var operationResult = new OperationResult<User>();
+            if (!operationResult.ValidateNotNull(clientURI)) return operationResult;
+            if (!operationResult.ValidateNotNull(email)) return operationResult;
+            if (!operationResult.ValidateNotNull(token)) return operationResult;
+
+            try
+            {
+                var param = new Dictionary<string, string>
+                                {
+                                    {"token", token },
+                                    {"email", email }
+                                };
+                var callback = QueryHelpers.AddQueryString(clientURI, param);
+                var message = new Message(new string[] { email }, "Email Confirmation token", callback, null);
+                await this.emailSender.SendEmailAsync(message);
+
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);    
+            }
+
+            return operationResult;
         }
 
+        public async Task<OperationResult> SendResetPaswordTokenAsync(string clientURI, string email, string token)
+        {
+            var operationResult = new OperationResult<User>();
+            if (!operationResult.ValidateNotNull(clientURI)) return operationResult;
+            if (!operationResult.ValidateNotNull(email)) return operationResult;
+            if (!operationResult.ValidateNotNull(token)) return operationResult;
+
+            try
+            {
+                var param = new Dictionary<string, string>
+                {
+                    {"token", token },
+                    {"email", email }
+                };
+
+                var callback = QueryHelpers.AddQueryString(clientURI, param);
+
+                var message = new Message(new string[] { email }, "Reset password token", callback, null);
+                await this.emailSender.SendEmailAsync(message);
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+
+            return operationResult;
+        }
+
+
+        // TODO Remove method
+        public async Task<string> GetUserIdAsync(ClaimsPrincipal principal)
+        {
+            var userEmail = principal.FindFirstValue(ClaimTypes.Email);
+            var user = await this.userManager.FindByNameAsync(userEmail);
+            return user.Id;
+        }
     }
 }

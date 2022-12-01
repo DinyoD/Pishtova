@@ -70,11 +70,18 @@
             try
             {
                 var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-                await this.userService.SendEmailConfirmationTokenAsync(model.ClientURI, model.Email, token);
+                var sendMailResult = await this.userService.SendEmailConfirmationTokenAsync(model.ClientURI, model.Email, token);
+                if (!sendMailResult.IsSuccessful) 
+                {
+                    this.DeleteUserByEmail(user.Email);
+                    return this.Error(sendMailResult);
+                }
                 return StatusCode(201);
             }
             catch (Exception e)
             {
+                this.DeleteUserByEmail(user.Email);
+
                 operationResult.AddException(e);
                 return this.Error(operationResult);
             }
@@ -94,9 +101,10 @@
             var user = await this.userManager.Users.Include(x => x.Subsriber).FirstOrDefaultAsync(x => x.Email == model.Email);
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
-            if (user == null && !passwordValid) operationResult.AddError(new Error { Message = "Sorry, your username and/or password do not match" });
-            if (!await userManager.IsEmailConfirmedAsync(user)) operationResult.AddError(new Error { Message = "Sorry, your email is not confirmed" });
+            if (user == null || !passwordValid) operationResult.AddError(new Error { Message = "Sorry, your username and/or password do not match" });
+            if (!operationResult.IsSuccessful) return this.Error(operationResult);
 
+            if (!await this.userManager.IsEmailConfirmedAsync(user)) operationResult.AddError(new Error { Message = "Sorry, your email is not confirmed" });
             if (!operationResult.IsSuccessful) return this.Error(operationResult);
 
             try
@@ -123,10 +131,10 @@
             if (!operationResult.ValidateNotNull(email)) return this.Error(operationResult);
             if (!operationResult.ValidateNotNull(token)) return this.Error(operationResult);
 
-            var user = await userManager.FindByEmailAsync(email);
+            var user = await this.userManager.FindByEmailAsync(email);
             if (user == null) operationResult.AddError(new Error { Message = "Sorry, your username and/or password do not match" });
  
-            var confirmResult = await userManager.ConfirmEmailAsync(user, token);
+            var confirmResult = await this.userManager.ConfirmEmailAsync(user, token);
             if (!confirmResult.Succeeded) operationResult.AddError(new Error { Message = "The form is not fulfilled correctly!" });
 
             if (!operationResult.IsSuccessful) return this.Error(operationResult);
@@ -141,14 +149,15 @@
             var operationResult = new OperationResult();
             if (!operationResult.ValidateNotNull(model)) return this.Error(operationResult);
 
-            var user = await userManager.FindByEmailAsync(model.Email);
+            var user = await this.userManager.FindByEmailAsync(model.Email);
             if (user == null) operationResult.AddError( new Error { Message = "Your email is not correct!" });
             if (!operationResult.IsSuccessful) return this.Error(operationResult);
 
             try
             {
-                var token = await userManager.GeneratePasswordResetTokenAsync(user);
-                await this.userService.SendResetPaswordTokenAsync(model.ClientURI, model.Email, token);
+                var token = await this.userManager.GeneratePasswordResetTokenAsync(user);
+                var sendMailResult = await this.userService.SendResetPaswordTokenAsync(model.ClientURI, model.Email, token);
+                if (!sendMailResult.IsSuccessful) return this.Error(sendMailResult);
                 return this.Ok();
             }
             catch (Exception e)
@@ -165,11 +174,11 @@
             var operationResult = new OperationResult();
             if (!operationResult.ValidateNotNull(model)) return this.Error(operationResult);
 
-            var user = await userManager.FindByEmailAsync(model.Email);
+            var user = await this.userManager.FindByEmailAsync(model.Email);
             if (user == null) operationResult.AddError(new Error { Message = "Your email is not correct!" });
             if (!operationResult.IsSuccessful) return this.Error(operationResult);
 
-            var resetPassResult = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            var resetPassResult = await this.userManager.ResetPasswordAsync(user, model.Token, model.Password);
 
             if (!resetPassResult.Succeeded)
             {
@@ -204,6 +213,12 @@
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        private async void DeleteUserByEmail(string email)
+        {
+            var createdUser = await this.userManager.FindByEmailAsync(email);
+            await this.userManager.DeleteAsync(createdUser);
         }
     }
 }
