@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import { ProfileModel } from 'src/app/models/profile/profile';
-import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
+import { UpdateEmailModel } from 'src/app/models/profile/updateEmail';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
 import { UserInfoModel } from 'src/app/models/user/userInfo';
+import { UpdatePictureModel } from 'src/app/models/profile/updatePicture';
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +16,24 @@ export class UserService {;
 
   constructor(private httpClient: HttpClient) { }
 
-  public getUserProfile = (): Observable<ProfileModel> => {
-    return this.httpClient.get<ProfileModel>(env.API_URL + '/users/profile');
+  public getUserProfile = (userId: string): Observable<ProfileModel> => {
+    return this.httpClient.get<ProfileModel>(env.API_URL + `/users/${userId}`);
   }
 
   public getUserInfo = (userId: string): Observable<UserInfoModel> => {
-    return this.httpClient.get<UserInfoModel>(env.API_URL + `/users/info/${userId}`);
+    return this.httpClient.get<UserInfoModel>(env.API_URL + `/users/${userId}/info`);
   }
 
-  public setUserPictureUrl = (url: string): Observable<object> => {
-    return this.httpClient.put(env.API_URL + '/users/updatepictureurl', {pictureUrl: url})
+  public updatePictureUrl = (dataModel: UpdatePictureModel): Observable<object> => {
+    return this.httpClient.put(env.API_URL + '/users/updatepictureurl', dataModel)
   }
 
-  public updateUserInfo = (dataModel: ChangeProfileInfoModel): Observable<object> => {
-    return this.httpClient.put(env.API_URL + '/users/updateuserinfo', dataModel)
+  public updateInfo = (dataModel: ChangeProfileInfoModel): Observable<object> => {
+    return this.httpClient.put(env.API_URL + '/users/updateinfo', dataModel)
   }
 
-  public updateUserEmail = (dataModel: ChangeProfileEmailModel): Observable<object> => {
-    return this.httpClient.put(env.API_URL + '/users/updateuseremail', dataModel)
+  public updateEmail = (dataModel: UpdateEmailModel): Observable<object> => {
+    return this.httpClient.put(env.API_URL + '/users/updateemail', dataModel)
   }
 }
+

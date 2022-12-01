@@ -8,7 +8,7 @@
         <img *ngIf="profile?.pictureUrl == '' || profile?.pictureUrl == null" src="../../../assets/images/avatar.jpg"
           alt="" class="avatar-img">
         <div class="icon-box">
-          <mat-icon (click)="updatePicture()" title="смени профилната снимка" class="icon-img-update">photo_camera
+          <mat-icon (click)="changePicture()" title="смени профилната снимка" class="icon-img-update">photo_camera
           </mat-icon>
         </div>
       </div>
@@ -44,7 +44,7 @@
         <span class="text">{{profile?.school?.name}}</span>
       </div>
     </div>
-    <div class="btn" (click)="updateInfo()">Редактирай профил</div>
+    <div class="btn" (click)="changeInfo()">Редактирай профил</div>
     <div *ngIf="badges != null && badges.length > 0" class="badges-box">
       <div class="title">Значки</div>
       <div class="badges">

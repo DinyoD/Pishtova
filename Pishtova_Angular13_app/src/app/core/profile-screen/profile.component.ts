@@ -10,7 +10,7 @@ import { UpdateProfileInfoDialogComponent } from 'src/app/shared/update-profile-
 import { AuthService, SubjectService, UserService, BadgesService, PointsService, MembershipService } from 'src/app/services';
 import { EditProfileModel } from 'src/app/models/profile/editProfile';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
-import { ChangeProfileEmailModel } from 'src/app/models/profile/changeProfileEmail';
+import { UpdateEmailModel } from 'src/app/models/profile/updateEmail';
 import { ProfileModel } from 'src/app/models/profile/profile';
 import { SubjectInfo } from "src/app/models/subject/subjectInfo";
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
@@ -18,6 +18,7 @@ import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 import { HtmlHelper } from "../helpers/subjectHelper";
 import { SubjectWithCategories } from 'src/app/models/subjectCategory/subjectWithcategories';
 import { CurrentUserModel } from 'src/app/models/user/currentUser';
+import { UpdatePictureModel } from 'src/app/models/profile/updatePicture';
 
 @Component({
   selector: 'app-profile',
@@ -49,13 +50,20 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserProfile().subscribe( profile => {
+    if(this.currentUser == null) return;
+    this.userService.getUserProfile(this.currentUser.id).subscribe( profile => {
       this.profile = profile;
       this.profileSchoolId = profile.school.id;
       this.pointsService.getPointsBySubjects(profile.id).subscribe(res => this.subjectsInfo = res);
      });
-     this.badgeService.getUserBadges(this.currentUser?.id).subscribe(res => this.badges = res);
+     this.badgeService.getUserBadges(this.currentUser.id).subscribe(res => this.badges = res);
+  }
 
+  public badgeCount = (code: number): number => {
+    const badgeModel =this.badges?.find(x => x.code == code);
+    return  badgeModel == undefined 
+                ? 0 
+                : badgeModel.count;
   }
 
   public showSubjectDetails = (subjectId: number, subjectName: string, subjectPoints: number, subjectProblems: number): void => { 
@@ -77,11 +85,15 @@ export class ProfileComponent implements OnInit {
     this.showDetails = false;
   }
 
-  public updatePicture = (): void => {
-    this.dialog.open(UploadFileDialogComponent).afterClosed().subscribe( res => this.reload(res));
+  public getSubjectCode(name: string|undefined): string {
+    return HtmlHelper.getCodeBySubjectName(name);
   }
 
-  public updateInfo = (): void => {
+  public changePicture = (): void => {
+    this.dialog.open(UploadFileDialogComponent).afterClosed().subscribe( imageUrl => this.updatePicture(imageUrl));
+  }
+
+  public changeInfo = (): void => {
     if (this.profile == null) {
       return;
     }
@@ -108,7 +120,7 @@ export class ProfileComponent implements OnInit {
           
           if(infoChanged)
           {
-            this.changeProfileInfo(updatedProfile.name, updatedProfile.grade, updatedProfile.schoolId);
+            this.updateInfo(updatedProfile.name, updatedProfile.grade, updatedProfile.schoolId);
           };
 
           if(emailChanged)
@@ -119,28 +131,29 @@ export class ProfileComponent implements OnInit {
         });
   }
 
-  public badgeCount = (code: number): number => {
-    const badgeModel =this.badges?.find(x => x.code == code);
-    return  badgeModel == undefined 
-                ? 0 
-                : badgeModel.count;
+  private updatePicture = (imageUrl: string|null) => {
+
+    if(this.currentUser == null || imageUrl == null) return;
+
+    const dataModel: UpdatePictureModel  ={
+      id: this.currentUser.id,
+      pictureUrl : imageUrl
+    }
+    this.userService.updatePictureUrl(dataModel).subscribe(() => this.reload())
   }
 
-
-  public getSubjectCode(name: string|undefined): string {
-    return HtmlHelper.getCodeBySubjectName(name);
-  }
-
-  private changeProfileInfo = (name: string, grade: number, schoolId: number): void =>  {
-    
+  private updateInfo = (name: string, grade: number, schoolId: number): void =>  {
+    if(this.currentUser == null){
+      return;
+    }
     const dataModel: ChangeProfileInfoModel = {
+      id: this.currentUser.id,
       name: name,
       grade: grade,
       schoolId: schoolId
     };
 
-    this.userService.updateUserInfo(dataModel)
-    .subscribe( () => this.reload(true));
+    this.userService.updateInfo(dataModel).subscribe( () => this.reload());
   }
 
   private changeUserEmail = (email: string): void =>  {
@@ -161,20 +174,21 @@ export class ProfileComponent implements OnInit {
   }
 
   private updateEmail = (email: string): void => {
-    const dataModel: ChangeProfileEmailModel = {
+    if(this.currentUser == null){
+      return;
+    }
+    const dataModel: UpdateEmailModel = {
+      id: this.currentUser.id,
       email: email,
       clientURI: env.CLIENT_URI + `/auth/emailconfirmation`
     };
-    this.userService.updateUserEmail(dataModel)
+    this.userService.updateEmail(dataModel)
     .subscribe(() => {
       this.authService.logout();
       this.router.navigate(['/']);
     });
   }
 
-  private reload = (reload: boolean) => {
-    if (reload){
-      this.router.navigate(['/']).then(() => this.router.navigate(['/profile']));
-    };
-  } 
+  private reload = () => this.router.navigate(['/']).then(() => this.router.navigate(['/profile']));
+
 }
