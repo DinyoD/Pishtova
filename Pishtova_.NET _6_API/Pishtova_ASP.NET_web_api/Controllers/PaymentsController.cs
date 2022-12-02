@@ -119,7 +119,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 		public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
 		{
 			var userId = await this.userService.GetUserIdAsync(User);
-			var userFromDb = await this.userManager.Users.Include(x => x.Subsriber).FirstOrDefaultAsync(x =>x.Id == userId);
+			var userFromDb = await this.userManager.Users.Where(x => x.Id == userId).Include(x => x.Subsriber).FirstOrDefaultAsync(x =>x.Id == userId);
             if (userFromDb == null)
             {
 				return BadRequest(new ErrorResult { Message = "Unauthorized or no user" });

@@ -10,7 +10,6 @@
     using Pishtova.Data;
     using Pishtova.Data.Model;
     using Pishtova.Data.Common.Utilities;
-    using Pishtova_ASP.NET_web_api.Model.School;
 
     public class SchoolService : ISchoolService
     {

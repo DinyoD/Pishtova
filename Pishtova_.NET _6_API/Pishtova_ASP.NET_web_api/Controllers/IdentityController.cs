@@ -98,7 +98,7 @@
             //TODO Validate data with OperationErrorValidation
 
             // TODO Mapper
-            var user = await this.userManager.Users.Include(x => x.Subsriber).FirstOrDefaultAsync(x => x.Email == model.Email);
+            var user = await this.userManager.Users.Where(x => x.Email == model.Email).Include(x => x.Subsriber).FirstOrDefaultAsync();
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
             if (user == null || !passwordValid) operationResult.AddError(new Error { Message = "Sorry, your username and/or password do not match" });

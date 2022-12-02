@@ -1,7 +1,6 @@
 ﻿namespace Pishtova.Services.Data
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -26,7 +25,7 @@
 
             try
             {
-                var badge = await this.db.Badges.Where(x => x.Code == badgeCode).FirstOrDefaultAsync();
+                var badge = await this.db.Badges.FirstOrDefaultAsync(x => x.Code == badgeCode);
                 operationResult.Data = badge;
             }
             catch (Exception e)

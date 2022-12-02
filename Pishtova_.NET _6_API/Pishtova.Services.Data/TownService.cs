@@ -1,15 +1,15 @@
 ﻿namespace Pishtova.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
     using Pishtova.Data;
-    using Pishtova.Data.Common.Utilities;
     using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public class TownService : ITownService
     {

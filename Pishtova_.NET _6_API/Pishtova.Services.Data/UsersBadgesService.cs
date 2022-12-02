@@ -2,8 +2,8 @@
 {
     using System;
     using System.Linq;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +27,7 @@
 
             try
             {
-                var result = await this.db.UsersBadges.Where(x => x.Id == userBadgeId).FirstOrDefaultAsync();
+                var result = await this.db.UsersBadges.FirstOrDefaultAsync(x => x.Id == userBadgeId);
                 operationResult.Data = result;
             }
             catch (Exception e)
@@ -50,7 +50,6 @@
             }
             catch (Exception e)
             {
-
                 operationResult.AddException(e);
             }
             return operationResult;
@@ -64,8 +63,8 @@
             try
             {
                 var badges = await this.db.UsersBadges
-                            .Include(x => x.Badge)
                             .Where(x => x.TestId == testId)
+                            .Include(x => x.Badge)
                             .ToListAsync();
                 operationResult.Data = badges;
             }
@@ -84,8 +83,8 @@
             try
             {
                 var badges = await this.db.UsersBadges
-                            .Include(x => x.Badge)
                             .Where(x => x.UserId == userId)
+                            .Include(x => x.Badge)
                             .ToListAsync();
                 operationResult.Data = badges;
             }

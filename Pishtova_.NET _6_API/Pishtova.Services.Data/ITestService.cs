@@ -1,9 +1,10 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Pishtova.Data.Common.Utilities;
-    using Pishtova.Data.Model;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public interface ITestService
     {

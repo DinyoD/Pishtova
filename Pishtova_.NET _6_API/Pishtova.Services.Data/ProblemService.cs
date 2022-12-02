@@ -58,7 +58,7 @@
                 .Where(x => x.SubjectCategoryId == catId)
                 .Include(x => x.Answers)
                 .Skip(randomIndex)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -6,15 +6,15 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.WebUtilities;
 
     using Pishtova.Data;
     using Pishtova.Data.Model;
     using Pishtova.Services.Messaging;
-    using Pishtova_ASP.NET_web_api.Model.User;
-    using Microsoft.AspNetCore.Identity;
     using Pishtova.Data.Common.Utilities;
+    using Pishtova_ASP.NET_web_api.Model.User;
 
     public class UserService : IUserService
     {
@@ -42,7 +42,7 @@
                 var user = await this.db.Users
                     .Where(x => x.Id == userId)                    
                     .Include(x => x.School)
-                    .Include(x => x.School.Town)
+                    .ThenInclude(sc => sc.Town)
                     .FirstOrDefaultAsync();
 
                 operationResult.Data = user;

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Linq;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -43,7 +43,7 @@
 
             try
             {
-                var result = await this.db.Subjects.Where(x => x.Id == id).FirstOrDefaultAsync();
+                var result = await this.db.Subjects.FirstOrDefaultAsync(x => x.Id == id);
                 operationResult.Data = result;
             }
             catch (Exception e)

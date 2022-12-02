@@ -3,8 +3,8 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
 
-    using Pishtova.Data.Common.Utilities;
     using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public interface ISubjectService
     {

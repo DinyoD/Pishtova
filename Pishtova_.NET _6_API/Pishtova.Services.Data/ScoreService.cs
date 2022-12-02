@@ -27,7 +27,7 @@
 
             try
             {
-                var result = await this.db.Scores.Where(x => x.Id == scoreId).FirstOrDefaultAsync();
+                var result = await this.db.Scores.FirstOrDefaultAsync(x => x.Id == scoreId);
                 operationResult.Data = result;
             }
             catch (Exception e)
@@ -110,9 +110,9 @@
             try
             {
                 var scores = await this.db.Scores
+                .Where(x => x.UserId == userId && x.SubjectCategory.SubjectId == subjectId)
                 .Include(x => x.SubjectCategory)
                 .ThenInclude(x => x.Subject)
-                .Where(x => x.UserId == userId && x.SubjectCategory.SubjectId == subjectId)
                 .ToListAsync();
                 operationresult.Data = scores;
 

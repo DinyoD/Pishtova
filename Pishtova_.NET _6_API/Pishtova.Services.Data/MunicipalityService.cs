@@ -26,7 +26,7 @@
 
             try
             {
-                var municipality = await  this.db.Municipalities
+                var municipality = await this.db.Municipalities
                     .ToListAsync();
 
                 operationResult.Data = municipality;
@@ -46,9 +46,7 @@
 
             try
             {
-                var municipality =  await this.db.Municipalities
-                    .Where(x => x.Id == id)
-                    .FirstOrDefaultAsync();
+                var municipality = await this.db.Municipalities.FirstOrDefaultAsync(x => x.Id == id);
 
                 operationResult.Data = municipality;
             }

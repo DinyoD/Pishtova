@@ -3,13 +3,13 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     using Microsoft.EntityFrameworkCore;
 
     using Pishtova.Data;
     using Pishtova.Data.Model;
     using Pishtova.Data.Common.Utilities;
-    using System.Collections.Generic;
 
     public class TestService : ITestService
     {
@@ -27,7 +27,7 @@
 
             try
             {
-                var result = await this.db.Tests.Where(x => x.Id == testId).FirstOrDefaultAsync();
+                var result = await this.db.Tests.FirstOrDefaultAsync(x => x.Id == testId);
                 operationResult.Data = result;
             }
             catch (Exception e)
@@ -81,7 +81,7 @@
 
             try
             {
-                var result = await this.db.Tests.Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedOn).Include(x => x.Subject).Take(testCount).OrderBy(x => x.CreatedOn).ToListAsync();
+                var result = await this.db.Tests.Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedOn).Take(testCount).OrderBy(x => x.CreatedOn).Include(x => x.Subject).ToListAsync();
                 operationResult.Data = result;
             }
             catch (Exception e)
@@ -100,7 +100,7 @@
             try
             {
                 var dayBeforeEightDays = DateTime.Now.Date.AddDays( - daysCount);
-                var result = await this.db.Tests.Where(x => x.UserId == userId).Where(x => x.CreatedOn.Date > dayBeforeEightDays.Date).ToListAsync();
+                var result = await this.db.Tests.Where(x => x.UserId == userId && x.CreatedOn.Date > dayBeforeEightDays.Date).ToListAsync();
                 operationResult.Data = result;
             }
             catch (Exception e)

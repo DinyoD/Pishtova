@@ -36,12 +36,12 @@
 
 		public async Task<Subscriber> GetByCustomerIdAsync(string id)
 		{
-			return await this.db.Subscribers.SingleOrDefaultAsync(x => x.CustomerId == id);
+			return await this.db.Subscribers.FirstOrDefaultAsync(x => x.CustomerId == id);
 		}
 
 		public async Task<Subscriber> GetByIdAsync(string id)
 		{
-			return await this.db.Subscribers.SingleOrDefaultAsync(x => x.Id == id);
+			return await this.db.Subscribers.FirstOrDefaultAsync(x => x.Id == id);
 		}
 
 		public async Task<Subscriber> UpdateAsync(Subscriber subscription)
