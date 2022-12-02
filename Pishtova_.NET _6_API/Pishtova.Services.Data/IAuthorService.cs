@@ -4,10 +4,10 @@
     using System.Threading.Tasks;
 
     using Pishtova.Data.Common.Utilities;
-    using Pishtova_ASP.NET_web_api.Model.Author;
+    using Pishtova.Data.Model;
 
     public interface IAuthorService
     {
-        Task<OperationResult<ICollection<AuthorModel>>> GetAuthorsWithWorksAsync(int subjectId);
+        Task<OperationResult<ICollection<Author>>> GetAuthorsWithWorksBySubjectIdAsync(int subjectId);
     }
 }

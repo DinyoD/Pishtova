@@ -8,9 +8,8 @@
     using Microsoft.EntityFrameworkCore;
 
     using Pishtova.Data;
+    using Pishtova.Data.Model;
     using Pishtova.Data.Common.Utilities;
-    using Pishtova_ASP.NET_web_api.Model.Author;
-    using Pishtova_ASP.NET_web_api.Model.Work;
 
     public class AuthorService : IAuthorService
     {
@@ -21,31 +20,22 @@
             this.db = db ?? throw new System.ArgumentNullException(nameof(db));
         }
 
-        public async Task<OperationResult<ICollection<AuthorModel>>> GetAuthorsWithWorksAsync(int subjectId)
+        public async Task<OperationResult<ICollection<Author>>> GetAuthorsWithWorksBySubjectIdAsync(int subjectId)
         {
-            var operationResult = new OperationResult<ICollection<AuthorModel>>();
+            var operationResult = new OperationResult<ICollection<Author>>();
             if (!operationResult.ValidateNotNull(subjectId)) return operationResult;
 
             try
             {
-                var authorModels = await this.db.Authors
-                .Include(x => x.Works)
-                .Select(x => new AuthorModel
+                var authors = await this.db.Authors
+                    .Where(x => x.Works.Any(x => x.SubjectId == subjectId))
+                    .Include(x => x.Works)
+                    .ToListAsync();
+                foreach (var author in authors)
                 {
-                    Name = x.Name,
-                    Index = x.Index,
-                    Works = x.Works
-                        .Where(w => w.SubjectId == subjectId)
-                        .Select(w => new WorkModel
-                        {
-                            Name = w.Name,
-                            Index = w.Index
-                        })
-                        .ToList()
-                })
-                .Where(x => x.Works.Count > 0)
-                .ToListAsync();
-                operationResult.Data = authorModels;
+                    author.Works = author.Works.Where(x => x.SubjectId == subjectId).ToList();
+                }
+                operationResult.Data = authors;
             }
             catch (Exception e)
             {
