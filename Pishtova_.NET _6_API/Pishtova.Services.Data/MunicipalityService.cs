@@ -1,13 +1,15 @@
 ﻿namespace Pishtova.Services.Data
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
     using Microsoft.EntityFrameworkCore;
+
     using Pishtova.Data;
     using Pishtova.Data.Model;
-    using Pishtova_ASP.NET_web_api.Model.Municipality;
+    using Pishtova.Data.Common.Utilities;
 
     public class MunicipalityService : IMunicipalityService
     {
@@ -15,40 +17,47 @@
 
         public MunicipalityService(PishtovaDbContext db)
         {
-            if (db is null)
-            {
-                throw new ArgumentNullException(nameof(db));
-            };
-
-            this.db = db;
+            this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public async Task<int> CreateAsync(string name)
+        public async Task<OperationResult<ICollection<Municipality>>> GetAllAsync()
         {
-            if (name == null)
+            var operationResult = new OperationResult<ICollection<Municipality>>();
+
+            try
             {
-                throw new ArgumentNullException(nameof(name));
+                var municipality = await  this.db.Municipalities
+                    .ToListAsync();
+
+                operationResult.Data = municipality;
             }
-            var municipality = new Municipality { Name = name };
-            await this.db.Municipalities.AddAsync(municipality);
-            await this.db.SaveChangesAsync();
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
 
-            return municipality.Id;
+            return operationResult;
         }
 
-        public async Task<ICollection<MunicipalityDTO>> GetAllAsync()
+        public async Task<OperationResult<Municipality>> GetByIdAsync(int id)
         {
-            return await  this.db.Municipalities
-                .Where<Municipality>(x => x.IsDeleted == false)
-                .Select(x => new MunicipalityDTO { Id = x.Id, Name = x.Name })
-                .ToListAsync();
-        }
+            var operationResult = new OperationResult<Municipality>();
+            if (!operationResult.ValidateNotNull(id)) return operationResult;
 
-        public async Task<MunicipalityDTO> GetOneByIdAsync(int id)
-        {
-            var m =  await this.db.Municipalities
-                .FindAsync(id);
-            return new MunicipalityDTO { Id = m.Id, Name = m.Name };
+            try
+            {
+                var municipality =  await this.db.Municipalities
+                    .Where(x => x.Id == id)
+                    .FirstOrDefaultAsync();
+
+                operationResult.Data = municipality;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+
+            return operationResult;
         }
     }
 }

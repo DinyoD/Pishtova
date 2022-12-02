@@ -1,6 +1,6 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.Municipality
 {
-    public class MunicipalityDTO
+    public class MunicipalityModel
     {
         public int Id { get; set; }
 

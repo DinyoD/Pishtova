@@ -1,15 +1,15 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Pishtova_ASP.NET_web_api.Model.Municipality;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public interface IMunicipalityService
     {
-        Task<int> CreateAsync(string name);
+        Task<OperationResult<Municipality>> GetByIdAsync(int id);
 
-        Task<ICollection<MunicipalityDTO>> GetAllAsync();
-
-        Task<MunicipalityDTO> GetOneByIdAsync(int id);
+        Task<OperationResult<ICollection<Municipality>>> GetAllAsync();
     }
 }
