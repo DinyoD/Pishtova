@@ -163,8 +163,8 @@ export class ProfileComponent implements OnInit {
   }
 
   private confirmEmailChange = (email: string): Observable<boolean> => {
-    const dialogData = new ConfirmationDialogModel(`Имейлът ви ще се промени на ${email}`,
-    '*след промяната трябва го активирате за да достъпите профила си');
+    const dialogData = new ConfirmationDialogModel(`Променяте мейлът си на ${email}`,
+    '*ще получите линк за потвърждение');
 
    const dialogObs =   this.dialog
     .open(ConfirmationDialogComponent, { data: dialogData })
