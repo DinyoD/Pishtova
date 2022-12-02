@@ -14,6 +14,6 @@ export class ProblemService {
 
   public generateTestBySubjectId = (subjectId: number| null): Observable<ProblemModel[]> => {
     
-    return this.httpClient.get<ProblemModel[]>(env.API_URL + `/problems/generateTest/${subjectId}`)
+    return this.httpClient.get<ProblemModel[]>(env.API_URL + `/problems/subject/${subjectId}`)
   }
 }
