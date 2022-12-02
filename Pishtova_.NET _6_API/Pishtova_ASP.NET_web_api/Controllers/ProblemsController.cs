@@ -1,13 +1,19 @@
-﻿
-namespace Pishtova_ASP.NET_web_api.Controllers
+﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Pishtova.Services.Data;
-    using Pishtova_ASP.NET_web_api.Model.Problem;
-    using Pishtova_ASP.NET_web_api.Model.Results;
-    using Pishtova_ASP.NET_web_api.Model.Test;
-    using System.Collections.Generic;
+    using System;
     using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    using System.Linq;
+    using Pishtova.Data.Model;
+    using Pishtova.Services.Data;
+    using Pishtova.Data.Common.Utilities;
+    using Pishtova_ASP.NET_web_api.Extensions;
+    using Pishtova_ASP.NET_web_api.Model.Test;
+    using Pishtova_ASP.NET_web_api.Model.Answer;
+    using Pishtova_ASP.NET_web_api.Model.Problem;
+
     public class ProblemsController: ApiController
     {
         private readonly IProblemService problemService;
@@ -17,18 +23,53 @@ namespace Pishtova_ASP.NET_web_api.Controllers
             this.problemService = problemService;
         }
 
-
         [HttpGet]
-        [Route("[action]/{id}")]
-        public async Task<ICollection<ProblemDTO>> generateTest(int id)
+        [Route("subject/{id}")]
+        public async Task<IActionResult> generateTest(int id)
         {
-            var testPattern = new Pattern().ProblemsSubjectIDs[id];
-            var result = await this.problemService.GenerateTest(testPattern);
-            if (result == null)
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(id)) return this.Error(operationResult);
+
+            try
             {
-                return (ICollection<ProblemDTO>)BadRequest(new ErrorResult { Message = "Uncorrect Subject ID!" });
+                var testPattern = new Pattern().ProblemsSubjectIDs[id];
+                if (testPattern == null || testPattern.Count == 0) return this.NotFound();
+
+                var result = await this.problemService.GenerateTest(testPattern);
+                if (!result.IsSuccessful) return this.Error(result);
+
+                var problems = result.Data;
+                if (problems == null) return this.NotFound();
+
+                var test = problems.Select(this.ToProblemModel).ToList();
+                return this.Ok(test);
             }
-            return result;
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+                return this.Error(operationResult); 
+            }
+
+        }
+
+        private ProblemModel ToProblemModel(Problem problem)
+        {
+            return new ProblemModel
+            {
+                Id = problem.Id,
+                PictureUrl = problem.PictureUrl == "empty" ? null : problem.PictureUrl,
+                Hint = problem.Hint,
+                SubjectCategoryId = problem.SubjectCategoryId,
+                QuestionText = problem.QuestionText,
+                Answers = problem.Answers
+                                    .Select( x => new AnswerModel 
+                                        { 
+                                            Id = x.Id,
+                                            IsCorrect = x.IsCorrect,
+                                            Text = x.Text,
+                                        })
+                                    .ToList()
+            };
         }
     }
 }

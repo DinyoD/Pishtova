@@ -1,13 +1,15 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Microsoft.EntityFrameworkCore;
-    using Pishtova.Data;
-    using Pishtova_ASP.NET_web_api.Model.Answer;
-    using Pishtova_ASP.NET_web_api.Model.Problem;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Microsoft.EntityFrameworkCore;
+
+    using Pishtova.Data;
+    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public class ProblemService : IProblemService
     {
@@ -15,45 +17,47 @@
 
         public ProblemService(PishtovaDbContext db)
         {
-            this.db = db;
+            this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
-        public async Task<ICollection<ProblemDTO>> GenerateTest(List<int> testPattern)
+
+        public async Task<OperationResult<ICollection<Problem>>> GenerateTest(List<int> testPattern)
         {
-            var result = new List<ProblemDTO>();
+            var operationResult = new OperationResult<ICollection<Problem>>();
+            if (!operationResult.ValidateNotNull(testPattern)) return operationResult;
 
-            foreach (var catId in testPattern)
+            try
             {
-                var problemsCount = this.db.Problems.Where(x => x.SubjectCategoryId == catId).Count();
-                var problem = await getRandomProblem(catId, new Random().Next(1, problemsCount));
-                while(result.Select(x => x.Id).ToList().Contains(problem.Id))
-                {
-                    problem = await getRandomProblem(catId, new Random().Next(1, problemsCount));
-                }
-                result.Add(problem);
-            }
+                var result = new List<Problem>();
 
-            return result;
+                foreach (var catId in testPattern)
+                {
+                    var problemsCount = this.db.Problems.Where(x => x.SubjectCategoryId == catId).Count();
+
+                    var randomIndex = new Random().Next(1, problemsCount);
+                    var problem = await getRandomProblem(catId, randomIndex);
+
+                    while (result.Select(x => x.Id).ToList().Contains(problem.Id))
+                    {
+                        randomIndex = new Random().Next(1, problemsCount);
+                        problem = await getRandomProblem(catId, randomIndex);
+                    }
+                    result.Add(problem);
+                }
+                operationResult.Data = result;
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
         }
 
-        private async Task<ProblemDTO> getRandomProblem(int catId, int randomIndex)
+        private async Task<Problem> getRandomProblem(int catId, int randomIndex)
         {
             return await this.db.Problems
                 .Where(x => x.SubjectCategoryId == catId)
+                .Include(x => x.Answers)
                 .Skip(randomIndex)
-                .Select(x => new ProblemDTO
-                {
-                    Id = x.Id,
-                    PictureUrl = x.PictureUrl == "empty" ? null : x.PictureUrl,
-                    Hint = x.Hint,
-                    QuestionText = x.QuestionText,
-                    SubjectCategoryId = x.SubjectCategoryId,
-                    Answers = x.Answers.Select(a => new AnswerModel
-                    {
-                        Id = a.Id,
-                        Text = a.Text,
-                        IsCorrect = a.IsCorrect
-                    }).ToList(),
-                })
                 .FirstAsync();
         }
     }

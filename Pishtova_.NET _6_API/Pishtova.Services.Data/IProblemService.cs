@@ -1,11 +1,13 @@
 ﻿namespace Pishtova.Services.Data
 {
-    using Pishtova_ASP.NET_web_api.Model.Problem;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Pishtova.Data.Model;
+    using Pishtova.Data.Common.Utilities;
 
     public interface IProblemService
     {
-        Task<ICollection<ProblemDTO>> GenerateTest(List<int> testPattern);
+        Task<OperationResult<ICollection<Problem>>> GenerateTest(List<int> testPattern);
     }
 }

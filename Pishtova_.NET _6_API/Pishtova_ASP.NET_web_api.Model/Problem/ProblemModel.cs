@@ -1,8 +1,9 @@
 ﻿namespace Pishtova_ASP.NET_web_api.Model.Problem
 {
-    using Pishtova_ASP.NET_web_api.Model.Answer;
     using System.Collections.Generic;
-    public class ProblemDTO
+    using Pishtova_ASP.NET_web_api.Model.Answer;
+
+    public class ProblemModel
     {
         public string Id { get; set; }
 
