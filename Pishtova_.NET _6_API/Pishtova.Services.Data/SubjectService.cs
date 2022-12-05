@@ -36,7 +36,7 @@
             return operationresult;
         }
 
-        public async Task<OperationResult<Subject>> GetByIdAsync(int id)
+        public async Task<OperationResult<Subject>> GetByIdAsync(string id)
         {
             var operationResult = new OperationResult<Subject>();
             if (!operationResult.ValidateNotNull(id)) return operationResult;

@@ -55,7 +55,7 @@
             return operationresult;
         }
 
-        public async Task<OperationResult<ICollection<Score>>> GetSubjectScoresAsync(int subjectId)
+        public async Task<OperationResult<ICollection<Score>>> GetSubjectScoresAsync(string subjectId)
         {
             var operationresult = new OperationResult<ICollection<Score>>();
             if (!operationresult.ValidateNotNull(subjectId)) return operationresult;
@@ -100,7 +100,7 @@
             return operationresult;
         }
 
-        public async Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectCategoriesAsync(string userId, int subjectId)
+        public async Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectCategoriesAsync(string userId, string subjectId)
         {
             
             var operationresult = new OperationResult<ICollection<Score>>();

@@ -12,11 +12,11 @@
 
         Task<OperationResult<int>> CreateAsync(Score score);
 
-        Task<OperationResult<ICollection<Score>>> GetSubjectScoresAsync (int subjectId);
+        Task<OperationResult<ICollection<Score>>> GetSubjectScoresAsync (string subjectId);
 
         Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectsAsync(string userId);
 
-        Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectCategoriesAsync(string userId, int subjectId);
+        Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectCategoriesAsync(string userId, string subjectId);
     }
 
 }

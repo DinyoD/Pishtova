@@ -10,6 +10,6 @@
     {
         Task<OperationResult<ICollection<Subject>>> GetAllAsync();
 
-        Task<OperationResult<Subject>> GetByIdAsync(int id);
+        Task<OperationResult<Subject>> GetByIdAsync(string id);
     }
 }

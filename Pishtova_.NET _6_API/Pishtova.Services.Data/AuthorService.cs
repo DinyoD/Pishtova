@@ -20,7 +20,7 @@
             this.db = db ?? throw new System.ArgumentNullException(nameof(db));
         }
 
-        public async Task<OperationResult<ICollection<Author>>> GetAuthorsWithWorksBySubjectIdAsync(int subjectId)
+        public async Task<OperationResult<ICollection<Author>>> GetAuthorsWithWorksBySubjectIdAsync(string subjectId)
         {
             var operationResult = new OperationResult<ICollection<Author>>();
             if (!operationResult.ValidateNotNull(subjectId)) return operationResult;

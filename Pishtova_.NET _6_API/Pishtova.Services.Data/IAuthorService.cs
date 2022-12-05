@@ -8,6 +8,6 @@
 
     public interface IAuthorService
     {
-        Task<OperationResult<ICollection<Author>>> GetAuthorsWithWorksBySubjectIdAsync(int subjectId);
+        Task<OperationResult<ICollection<Author>>> GetAuthorsWithWorksBySubjectIdAsync(string subjectId);
     }
 }
