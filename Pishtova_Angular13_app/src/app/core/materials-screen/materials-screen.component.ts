@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorModel } from 'src/app/models/author';
 import { BreadCrumbElement } from 'src/app/models/breadcrumb/breadcrumbElement';
 import { WorkModel } from 'src/app/models/work';
@@ -41,11 +41,16 @@ export class MaterialsScreenComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private materialsService: MaterialsService,
-    private actRoute: ActivatedRoute,) { }
+    private actRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {;
-    const urlId = Number(this.actRoute.snapshot.paramMap.get('id'));
-    this.materialsService.getAuthorsWithWorks(urlId).subscribe( a => this.authors = a.sort((x,y) => x.index - y.index));
+    const subjetcId = this.actRoute.snapshot.paramMap.get('id');
+    if(subjetcId == null) {
+      this.router.navigate(['/']);
+      return;
+    };
+    this.materialsService.getAuthorsWithWorks(subjetcId).subscribe( a => this.authors = a.sort((x,y) => x.index - y.index));
     this.authorPicLinks = getAuthorPictureLinksCollection();
   }
 

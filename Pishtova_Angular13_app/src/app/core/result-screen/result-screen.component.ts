@@ -12,7 +12,7 @@ import { BadgesService, PointsService, SubjectService, TestService } from 'src/a
 export class ResultScreenComponent implements OnInit {
 
   public points: number|null = null;
-  public subjectId: number|undefined = undefined;
+  public subjectId: string|undefined = undefined;
   public newBadgesCode: BadgesCountModel[] = [];
 
   constructor(

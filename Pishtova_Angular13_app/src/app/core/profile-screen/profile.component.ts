@@ -66,7 +66,7 @@ export class ProfileComponent implements OnInit {
                 : badgeModel.count;
   }
 
-  public showSubjectDetails = (subjectId: number, subjectName: string, subjectPoints: number, subjectProblems: number): void => { 
+  public showSubjectDetails = (subjectId: string, subjectName: string, subjectPoints: number, subjectProblems: number): void => { 
     if (!this.profile) return;
     this.showDetails= true;
     this.pointsService.getPointsBySubjectCategories(this.profile?.id, subjectId)

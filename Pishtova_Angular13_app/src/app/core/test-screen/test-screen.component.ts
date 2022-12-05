@@ -20,7 +20,7 @@ import { TestToSaveModel } from 'src/app/models/test/testToSave';
 })
 export class TestScreenComponent implements OnInit {
 
-  public subjectId: number | null = null;
+  public subjectId: string | null = null;
 
   public problems: ProblemModel[] = [];
   public problemNumber: number = 1;
@@ -44,7 +44,7 @@ export class TestScreenComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private router: Router) {
       if (this.actRoute.snapshot.paramMap.get('id') != null) {
-        this.subjectId = Number(this.actRoute.snapshot.paramMap.get('id'));
+        this.subjectId = this.actRoute.snapshot.paramMap.get('id');
         this.navigationUrl = 'subject/' + Number(this.actRoute.snapshot.paramMap.get('id')) + '/test';
       }
     }
