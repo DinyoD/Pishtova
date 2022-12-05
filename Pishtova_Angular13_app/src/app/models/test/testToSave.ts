@@ -1,5 +1,5 @@
 export interface TestToSaveModel {
     userId: string;
-    subjectId: number;
+    subjectId: string;
     score: number;
 }
