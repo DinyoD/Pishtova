@@ -4,7 +4,7 @@
     {
         public string UserId { get; set; }
 
-        public int SubjectId { get; set; }
+        public string SubjectId { get; set; }
 
         public int Score { get; set; }
     }

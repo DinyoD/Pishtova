@@ -4,10 +4,10 @@ namespace Pishtova_ASP.NET_web_api.Model.Test
 {
     public class Pattern
     {
-        public Dictionary<int, List<int>> ProblemsSubjectIDs = new()
+        public Dictionary<string, List<int>> ProblemsSubjectIDs = new()
         {
-            { 4, new List<int>{47,47,47,47,47,46,46,46,45,45,48,48,48,48,48,48,48,48,48,48} },
-            { 3, new List<int>{33,33,34,35,35,36,37,37,38,39,39,40,41,41,42,42,43,43,44,44} },
+            //{ "bel", new List<int>{47,47,47,47,47,46,46,46,45,45,48,48,48,48,48,48,48,48,48,48} },
+            { "bio", new List<int>{1,1,2,3,3,4,5,5,6,7,7,8,9,9,10,10,11,11,12,12} },
         };
     }
 }
