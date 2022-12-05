@@ -33,7 +33,7 @@
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetOneById([FromRoute]int id)
+        public async Task<IActionResult> GetOneById([FromRoute]string id)
         {
             var result = await this.subjectService.GetByIdAsync(id);
             if (!result.IsSuccessful) return this.Error(result);

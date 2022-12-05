@@ -23,7 +23,7 @@
 
         [HttpGet]
         [Route("subject/{subjectId}")]
-        public async Task<IActionResult> GetAll ([FromRoute]int subjectId)
+        public async Task<IActionResult> GetAll ([FromRoute]string subjectId)
         {
             var result = await this.authorService.GetAuthorsWithWorksBySubjectIdAsync(subjectId);
             if (!result.IsSuccessful) return this.Error(result);

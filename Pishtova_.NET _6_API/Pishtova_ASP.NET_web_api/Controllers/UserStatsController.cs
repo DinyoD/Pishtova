@@ -89,7 +89,7 @@
 
         [HttpGet]
         [Route("subjectrank")]
-        public async Task<IActionResult> Ranking([FromQuery]int subjectId)
+        public async Task<IActionResult> Ranking([FromQuery]string subjectId)
         {
             var getScoresOperation = await this.scoreService.GetSubjectScoresAsync(subjectId);
             if (!getScoresOperation.IsSuccessful) return this.Error(getScoresOperation);
@@ -169,7 +169,7 @@
             return operationResult.WithData(result); 
         }
 
-        private async Task<OperationResult<int>> GetUserSubjectRank(string userId, int subjectId)
+        private async Task<OperationResult<int>> GetUserSubjectRank(string userId, string subjectId)
         {
             var operationResult = new OperationResult<int>();
             if (!operationResult.ValidateNotNull(userId)) return operationResult;

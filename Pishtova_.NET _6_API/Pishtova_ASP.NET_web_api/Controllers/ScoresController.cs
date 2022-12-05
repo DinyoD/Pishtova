@@ -70,7 +70,7 @@
 
         [HttpGet]
         [Route("categories")]
-        public async Task<IActionResult> SubjectPointsByCategories([FromQuery]string userId, [FromQuery]int subjectId)
+        public async Task<IActionResult> SubjectPointsByCategories([FromQuery]string userId, [FromQuery]string subjectId)
         {
             var scoresResult =  await this.scoreService.GetUserScoresBySubjectCategoriesAsync(userId, subjectId);
             if (!scoresResult.IsSuccessful) return this.Error(scoresResult);

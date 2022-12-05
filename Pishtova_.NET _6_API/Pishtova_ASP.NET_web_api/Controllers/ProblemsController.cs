@@ -25,7 +25,7 @@
 
         [HttpGet]
         [Route("subject/{id}")]
-        public async Task<IActionResult> generateTest(int id)
+        public async Task<IActionResult> generateTest(string id)
         {
             var operationResult = new OperationResult();
             if (!operationResult.ValidateNotNull(id)) return this.Error(operationResult);
