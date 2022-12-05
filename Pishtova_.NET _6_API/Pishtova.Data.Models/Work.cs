@@ -18,7 +18,7 @@
 
         public Author Author { get; set; }
 
-        public int SubjectId { get; set; }
+        public string SubjectId { get; set; }
 
         public Subject Subject { get; set; }
     }

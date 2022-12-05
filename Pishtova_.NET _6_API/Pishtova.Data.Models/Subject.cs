@@ -4,7 +4,7 @@
 
     using Pishtova.Data.Common.Model;
 
-    public class Subject : BaseDeletableModel<int>
+    public class Subject : BaseDeletableModel<string>
     {
         public Subject()
         {
