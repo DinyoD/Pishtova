@@ -13,7 +13,7 @@ export class MaterialsService {
   constructor(
     private httpClient : HttpClient) { }
 
-  public getAuthorsWithWorks = (subjectId: number): Observable<AuthorModel[]> => {
+  public getAuthorsWithWorks = (subjectId: string): Observable<AuthorModel[]> => {
     return this.httpClient.get<AuthorModel[]>(env.API_URL + `/authors/subject/${subjectId}`)
   }
 }

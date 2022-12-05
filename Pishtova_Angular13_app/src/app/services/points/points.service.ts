@@ -34,7 +34,7 @@ export class PointsService {
     return this.httpClient.get<SubjectInfo[]>(env.API_URL + `/scores/subjects?userId=${userId}`)
   }
 
-  public getPointsBySubjectCategories = (userId: string, subjectId: number): Observable<CategoryWithPointsModel[]> => {
+  public getPointsBySubjectCategories = (userId: string, subjectId: string): Observable<CategoryWithPointsModel[]> => {
     return this.httpClient.get<CategoryWithPointsModel[]>(env.API_URL + `/scores/categories?userId=${userId}&subjectId=${subjectId}`);
   }
 

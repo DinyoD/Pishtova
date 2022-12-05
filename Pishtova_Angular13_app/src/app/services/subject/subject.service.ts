@@ -31,7 +31,7 @@ export class SubjectService {
     this._subjectChangeSub.next(sbj);
     if (sbj != null) {
       this.storage.setItem('subjectName', sbj.name);
-      this.storage.setItem('subjectId', sbj.id.toString());     
+      this.storage.setItem('subjectId', sbj.id);     
     }else{
       this.storage.removeItem('subjectName');
       this.storage.removeItem('subjectId');    
@@ -46,7 +46,7 @@ export class SubjectService {
     }
     return {
        name: name, 
-       id: +id
+       id: id
     }
   }
 

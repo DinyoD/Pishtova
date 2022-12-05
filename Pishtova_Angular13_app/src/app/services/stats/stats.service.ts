@@ -28,7 +28,7 @@ export class StatsService {
       return this.httpClient.get<TestByDaysModel[]>(env.API_URL + `/userstats/lastdays?userId=${userId}&daysCount=${daysCount}`);
     }
 
-    public getSubjectRanking = (subjectId: number|null): Observable<UserPointsForSubjectModel[]> => {
+    public getSubjectRanking = (subjectId: string): Observable<UserPointsForSubjectModel[]> => {
       return this.httpClient.get<UserPointsForSubjectModel[]>(env.API_URL + `/userstats/subjectrank?subjectId=${subjectId}`)
     }
 
