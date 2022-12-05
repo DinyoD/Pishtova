@@ -1,6 +1,6 @@
 ﻿namespace Pishtova.Data.Seeding
 {
-
+	using Pishtova.Common;
 	using Pishtova.Data.Model;
 	using System;
 	using System.Collections.Generic;
@@ -77,7 +77,7 @@
 				{
 					Name = worksName[i],
 					Index = i,
-					SubjectId = 4
+					SubjectId = GlobalConstants.BulgarianId
 				};
 				works.Add(work);
             }

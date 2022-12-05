@@ -21,7 +21,7 @@
             {
                 return;
             }
-            var helpers = serviceProvider.GetRequiredService<IHellpers>();
+            var helpers = serviceProvider.GetRequiredService<IHelpers>();
             var schoolString = File.ReadAllText(@"C:\Users\Dinyo\Desktop\Pishtova-docs\schools.txt");
             var allSchoolsByTownAndMunicipality = helpers.ExtractAllSchoolsbyTownsAndMunicipality(schoolString);
             await SeedSchoolAsync(dbContext, allSchoolsByTownAndMunicipality);
