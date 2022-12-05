@@ -79,7 +79,7 @@ namespace Pishtova_ASP.NET_web_api
             services.AddSingleton(emailConfiguration);
             services.AddScoped<IEmailSender, EmailSender>();
 
-			services.AddTransient<IHellpers, Helpers>();
+			services.AddTransient<IHelpers, Helpers>();
             services.AddTransient<ITownService, TownService>();
             services.AddTransient<IMunicipalityService, MunicipalityService>();
             services.AddTransient<ISchoolService, SchoolService>();
