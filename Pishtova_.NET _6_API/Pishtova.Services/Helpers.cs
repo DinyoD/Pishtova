@@ -8,7 +8,7 @@
     using ProjectHelper;
     using Sandbox;
 
-    public class Helpers : IHellpers
+    public class Helpers : IHelpers
     {
         public ICollection<SchoolDTO> ExtractAllSchoolsbyTownsAndMunicipality(string schoolInfoText)
         {
@@ -42,10 +42,61 @@
             return schoolsCollection;
         }
 
-        public SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName)
+        public SubjectDTO CreateSubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
         {
             var subjectInfo = ExtractSubjectProblems(firebaseCollectionName);
-            var subjectName = GlobalConstants.BiologyBgName;
+
+            ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
+            for (int i = 0; i < subjectInfo.Count; i++)
+            {
+                var categoryInfo = subjectInfo[i];
+                if (categoryInfo == null)
+                {
+                    continue;
+                }
+                ICollection<ProblemDTO> problems = new List<ProblemDTO>();
+                for (int j = 0; j < categoryInfo.Count; j++)
+                {
+                    var problemInfo = categoryInfo[j];
+                    if (problemInfo == null)
+                    {
+                        continue;
+                    }
+                    var problem = new ProblemDTO
+                    {
+                        QuestionText = problemInfo[0],
+                        Answers = new List<AnswerDTO>{
+                            new AnswerDTO { Text = problemInfo[1], IsCorrect = problemInfo[1] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[2], IsCorrect = problemInfo[2] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[3], IsCorrect = problemInfo[3] == problemInfo[5] },
+                            new AnswerDTO { Text = problemInfo[4], IsCorrect = problemInfo[4] == problemInfo[5] }
+                        },
+                        Hint = problemInfo.Count > 6 && !string.IsNullOrWhiteSpace(problemInfo[6]) ? problemInfo[6] : null,
+                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) ? problemInfo[7] : null,
+                    };
+                    problems.Add(problem);
+                }
+                //var categoryName = GlobalConstants.BiologyCategoriesName[i];
+
+                var category = new SubjectCategoryDTO
+                {
+                    Name = "someCategory",
+                    Problems = problems
+                };
+                categories.Add(category);
+            }
+
+            return new SubjectDTO
+            {
+                Id = subjectId,
+                Name = subjectName,
+                Categories = categories
+            };
+        }
+
+        public SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
+        {
+            var subjectInfo = ExtractSubjectProblems(firebaseCollectionName);
 
             ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
             for (int i = 0; i < subjectInfo.Count; i++)
@@ -89,15 +140,15 @@
 
             return new SubjectDTO
             {
+                Id = subjectId,
                 Name = subjectName,
                 Categories = categories
             };
         }
 
-        public SubjectDTO Create_Bg_SubjectDTO(string firebaseCollectionName)
+        public SubjectDTO Create_Bg_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
         {
             var subjectInfo = Extract_Bg_SubjectProblems(firebaseCollectionName);
-            var subjectName = GlobalConstants.BulgarianBgName;
 
             ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
             foreach (var kvp in subjectInfo)
@@ -153,6 +204,7 @@
 
             return new SubjectDTO
             {
+                Id = subjectId,
                 Name = subjectName,
                 Categories = categories
             };
