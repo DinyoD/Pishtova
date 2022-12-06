@@ -119,7 +119,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 		public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
 		{
 			var userId = await this.userService.GetUserIdAsync(User);
-			var userFromDb = await this.userManager.Users.Where(x => x.Id == userId).Include(x => x.Subsriber).FirstOrDefaultAsync(x =>x.Id == userId);
+			var userFromDb = await this.userManager.Users.Where(x => x.Id == userId).Include(x => x.Subsription).FirstOrDefaultAsync(x =>x.Id == userId);
             if (userFromDb == null)
             {
 				return BadRequest(new ErrorResult { Message = "Unauthorized or no user" });
@@ -128,7 +128,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			{
 				var options = new Stripe.BillingPortal.SessionCreateOptions
 				{
-					Customer = userFromDb.Subsriber.CustomerId,
+					Customer = userFromDb.Subsription.CustomerId,
 					ReturnUrl = req.ReturnUrl,
 				};
 				var service = new Stripe.BillingPortal.SessionService();
@@ -195,10 +195,10 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			try
 			{
 				var userFromDb = await this.userManager.FindByEmailAsync(customer.Email);
-
-				if (userFromDb != null)
+				var subscriptionFromDb = await this.subscriptionService.GetByCustomerIdAsync(customer.Id);
+				if (userFromDb != null && subscriptionFromDb != null)
 				{
-					userFromDb.Subsriber.CustomerId = customer.Id;
+					userFromDb.SubsriptionId = subscriptionFromDb.Id;
 					await this.userManager.UpdateAsync(userFromDb);
 				}
 
@@ -214,16 +214,16 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 		{
 			try
 			{
-				var subscriber = new Subscriber
+				var subscriptoin = new Subsription
 				{
 					Id = subscription.Id,
 					CustomerId = subscription.CustomerId,
 					Status = "active",
 					CurrentPeriodEnd = subscription.CurrentPeriodEnd
 				};
-				await this.subscriptionService.CreateAsync(subscriber);
+				await this.subscriptionService.CreateAsync(subscriptoin);
 
-				//Can send an email welcoming the new subscriber
+				//TODO Can send an email welcoming the new subscriber
 			}
 			catch (System.Exception ex)
 			{
@@ -243,7 +243,6 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 					subscriptionFromDb.CurrentPeriodEnd = subscription.CurrentPeriodEnd;
 					await this.subscriptionService.UpdateAsync(subscriptionFromDb);
 				}
-
 			}
 			catch (System.Exception ex)
 			{
