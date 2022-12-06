@@ -18,5 +18,7 @@
         public string ProblemId { get; set; }
 
         public Problem Problem { get; set; }
+
+        public string Row { get; set; }
     }
 }

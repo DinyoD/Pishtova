@@ -3,10 +3,10 @@
     using System;
     using Pishtova.Data.Common.Model;
 
-    public class Subscriber: BaseDeletableModel<string>
+    public class Subsription: BaseDeletableModel<string>
     {
 
-        public Subscriber()
+        public Subsription()
         {
             this.Id = Guid.NewGuid().ToString();
         }

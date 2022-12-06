@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using System.Xml.Serialization;
     using Microsoft.AspNetCore.Identity;
 
     using Pishtova.Data.Common.Model;
@@ -35,9 +35,9 @@
 
         public School School { get; set; }
 
-        public string SubscriberId { get; set; }
+        public string SubsriptionId { get; set; }
 
-        public Subscriber Subsriber { get; set; }
+        public Subsription Subsription { get; set; }
 
         public virtual ICollection<Score> UserScores { get; set; }
 
