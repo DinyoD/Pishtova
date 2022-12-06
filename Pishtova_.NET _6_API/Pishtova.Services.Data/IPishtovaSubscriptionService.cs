@@ -7,16 +7,16 @@
 
     public interface IPishtovaSubscriptionService
     {
-		Task<Subscriber> UpdateAsync(Subscriber subscription);
+		Task<Subsription> UpdateAsync(Subsription subscription);
 
-		Task<ICollection<Subscriber>> GetAsync();
+		Task<ICollection<Subsription>> GetAsync();
 
-		Task<Subscriber> GetByIdAsync(string id);
+		Task<Subsription> GetByIdAsync(string id);
 
-		Task<Subscriber> GetByCustomerIdAsync(string id);
+		Task<Subsription> GetByCustomerIdAsync(string id);
 
-		Task<Subscriber> CreateAsync(Subscriber subscription);
+		Task<Subsription> CreateAsync(Subsription subscription);
 
-		Task DeleteAsync(Subscriber subscription);
+		Task DeleteAsync(Subsription subscription);
 	}
 }

@@ -16,37 +16,37 @@
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-		public async Task<Subscriber> CreateAsync(Subscriber subscription)
+		public async Task<Subsription> CreateAsync(Subsription subscription)
 		{
-			await this.db.Subscribers.AddAsync(subscription);
+			await this.db.Subsriptions.AddAsync(subscription);
 			await this.db.SaveChangesAsync();
 			return subscription;
 		}
 
-		public async Task DeleteAsync(Subscriber subscription)
+		public async Task DeleteAsync(Subsription subscription)
 		{
-			this.db.Subscribers.Remove(subscription);
+			this.db.Subsriptions.Remove(subscription);
 			await this.db.SaveChangesAsync();
 		}
 
-		public async Task<ICollection<Subscriber>> GetAsync()
+		public async Task<ICollection<Subsription>> GetAsync()
 		{
-			return await this.db.Subscribers.ToListAsync();
+			return await this.db.Subsriptions.ToListAsync();
 		}
 
-		public async Task<Subscriber> GetByCustomerIdAsync(string id)
+		public async Task<Subsription> GetByCustomerIdAsync(string id)
 		{
-			return await this.db.Subscribers.FirstOrDefaultAsync(x => x.CustomerId == id);
+			return await this.db.Subsriptions.FirstOrDefaultAsync(x => x.CustomerId == id);
 		}
 
-		public async Task<Subscriber> GetByIdAsync(string id)
+		public async Task<Subsription> GetByIdAsync(string id)
 		{
-			return await this.db.Subscribers.FirstOrDefaultAsync(x => x.Id == id);
+			return await this.db.Subsriptions.FirstOrDefaultAsync(x => x.Id == id);
 		}
 
-		public async Task<Subscriber> UpdateAsync(Subscriber subscription)
+		public async Task<Subsription> UpdateAsync(Subsription subscription)
 		{
-			this.db.Subscribers.UpdateRange(subscription);
+			this.db.Subsriptions.UpdateRange(subscription);
 			await this.db.SaveChangesAsync();
 			return subscription;
 		}
