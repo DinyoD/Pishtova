@@ -151,6 +151,9 @@ namespace Pishtova.Data.Migrations
                     b.Property<string>("ProblemId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Row")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
@@ -438,11 +441,8 @@ namespace Pishtova.Data.Migrations
 
             modelBuilder.Entity("Pishtova.Data.Model.Subject", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -489,8 +489,8 @@ namespace Pishtova.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -501,7 +501,7 @@ namespace Pishtova.Data.Migrations
                     b.ToTable("SubjectCategories");
                 });
 
-            modelBuilder.Entity("Pishtova.Data.Model.Subscriber", b =>
+            modelBuilder.Entity("Pishtova.Data.Model.Subsription", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -531,7 +531,7 @@ namespace Pishtova.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Subscribers");
+                    b.ToTable("Subsriptions");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.Test", b =>
@@ -557,8 +557,8 @@ namespace Pishtova.Data.Migrations
                     b.Property<int?>("Score")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -679,7 +679,7 @@ namespace Pishtova.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SubscriberId")
+                    b.Property<string>("SubsriptionId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -703,7 +703,7 @@ namespace Pishtova.Data.Migrations
 
                     b.HasIndex("SchoolId");
 
-                    b.HasIndex("SubscriberId");
+                    b.HasIndex("SubsriptionId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -799,8 +799,8 @@ namespace Pishtova.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -916,9 +916,7 @@ namespace Pishtova.Data.Migrations
                 {
                     b.HasOne("Pishtova.Data.Model.Subject", "Subject")
                         .WithMany("Categories")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("SubjectId");
 
                     b.Navigation("Subject");
                 });
@@ -927,9 +925,7 @@ namespace Pishtova.Data.Migrations
                 {
                     b.HasOne("Pishtova.Data.Model.Subject", "Subject")
                         .WithMany("Tests")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("SubjectId");
 
                     b.HasOne("Pishtova.Data.Model.User", "User")
                         .WithMany("UserTest")
@@ -959,13 +955,13 @@ namespace Pishtova.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Pishtova.Data.Model.Subscriber", "Subsriber")
+                    b.HasOne("Pishtova.Data.Model.Subsription", "Subsription")
                         .WithMany()
-                        .HasForeignKey("SubscriberId");
+                        .HasForeignKey("SubsriptionId");
 
                     b.Navigation("School");
 
-                    b.Navigation("Subsriber");
+                    b.Navigation("Subsription");
                 });
 
             modelBuilder.Entity("Pishtova.Data.Model.UserBadge", b =>
@@ -1014,9 +1010,7 @@ namespace Pishtova.Data.Migrations
 
                     b.HasOne("Pishtova.Data.Model.Subject", "Subject")
                         .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("SubjectId");
 
                     b.Navigation("Author");
 
