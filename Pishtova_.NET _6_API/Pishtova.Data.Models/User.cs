@@ -35,9 +35,7 @@
 
         public School School { get; set; }
 
-        public string SubsriptionId { get; set; }
-
-        public Subsription Subsription { get; set; }
+        public string CustomerId { get; set; }
 
         public virtual ICollection<Score> UserScores { get; set; }
 
