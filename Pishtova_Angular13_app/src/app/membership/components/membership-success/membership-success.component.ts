@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'app-membership-success',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['../membership-failure/membership-failure.component.css']
 })
 export class MembershipSuccessComponent {
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { 
+    this.authService.logout();
+  }
 }
