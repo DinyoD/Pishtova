@@ -1,7 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-src/environments
-
 # compiled output
 /dist
 /tmp
@@ -51,7 +49,11 @@ Thumbs.db
 # scss compiled
 *.css
 *.css.map
+
 # Firebase
 .firebase
 *-debug.log
 .runtimeconfig.json
+
+# custom
+src/environments

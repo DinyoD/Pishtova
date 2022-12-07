@@ -25,8 +25,8 @@ export class MembershipService {
   public requestMemberSession = (priceId: string): void => {
       const model: RequestMemberSessionModel = {
         priceId: priceId,
-        successUrl: env.API_PAY_SUCCESS_URL,
-        failureUrl: env.API_PAY_CANCEL_URL
+        successUrl: env.PAY_SUCCESS_URL,
+        failureUrl: env.PAY_CANCEL_URL
       }
       this.http.post<SessionModel>(env.API_URL+ '/payments/create-checkout-session', model)
               .subscribe((session) => {this.redirectToCheckout(session)});
@@ -38,7 +38,7 @@ export class MembershipService {
   }
 
   public redirectToCustomerPortal(): Observable<CustomerPortalModel> {
-     return this.http.post<CustomerPortalModel>( env.API_URL + '/payments/customer-portal', { returnUrl: env.API_HOME_URL } );
+     return this.http.post<CustomerPortalModel>( env.API_URL + '/payments/customer-portal', { returnUrl: env.HOME_URL } );
   }
 
 }
