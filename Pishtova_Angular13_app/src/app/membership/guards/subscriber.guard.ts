@@ -21,7 +21,7 @@ export class ForSubscribersGuard implements CanActivate{
         return true;
     }
     this.router.navigate(['/memberships']);
-    return false;
+        return false;
     };
 
 }

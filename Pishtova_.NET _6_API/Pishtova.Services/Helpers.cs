@@ -1,11 +1,13 @@
 ﻿namespace Pishtova.Services
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Collections.Generic;
+
+    using ProjectHelper;
     using Pishtova.Common;
     using Pishtova.Services.Models;
-    using ProjectHelper;
+
     using Sandbox;
 
     public class Helpers : IHelpers
@@ -97,6 +99,7 @@
         public SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
         {
             var subjectInfo = ExtractSubjectProblems(firebaseCollectionName);
+            //var bioErrors = subjectInfo.SelectMany( x => x).Where( x => x[1] != x[5] && x[2] != x[5] && x[3] != x[5] && x[4] != x[5]).ToList();
 
             ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
             for (int i = 0; i < subjectInfo.Count; i++)
