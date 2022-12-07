@@ -98,7 +98,8 @@
             //TODO Validate data with OperationErrorValidation
 
             // TODO Mapper
-            var user = await this.userManager.Users.Where(x => x.Email == model.Email).Include(x => x.Subsription).FirstOrDefaultAsync();
+            var user = await this.userManager.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
+
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
 
             if (user == null || !passwordValid) operationResult.AddError(new Error { Message = "Sorry, your username and/or password do not match" });
@@ -109,8 +110,8 @@
 
             try
             {
-                var subscription = user.Subsription != null ? await this.subscriptionService.GetByCustomerIdAsync(user.Subsription.CustomerId): null;
-                DateTime expDate = DateTime.Now.AddDays(7);
+                var expDate = DateTime.Now.AddDays(7);
+                var subscription =  await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
                 var isSubscriber = subscription != null && subscription.Status == "active";
 
                 string generatedToken = this.GenerateToken(user, expDate, isSubscriber);

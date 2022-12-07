@@ -119,16 +119,14 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 		public async Task<IActionResult> CustomerPortal([FromBody] CustomerPortalRequest req)
 		{
 			var userId = await this.userService.GetUserIdAsync(User);
-			var userFromDb = await this.userManager.Users.Where(x => x.Id == userId).Include(x => x.Subsription).FirstOrDefaultAsync(x =>x.Id == userId);
-            if (userFromDb == null)
-            {
-				return BadRequest(new ErrorResult { Message = "Unauthorized or no user" });
-			}
+			var userFromDb = await this.userManager.Users.FirstOrDefaultAsync(x =>x.Id == userId);
+            if (userFromDb == null) return BadRequest(new ErrorResult { Message = "Unauthorized or no user" });
+
 			try
 			{
 				var options = new Stripe.BillingPortal.SessionCreateOptions
 				{
-					Customer = userFromDb.Subsription.CustomerId,
+					Customer = userFromDb.CustomerId,
 					ReturnUrl = req.ReturnUrl,
 				};
 				var service = new Stripe.BillingPortal.SessionService();
@@ -195,10 +193,10 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 			try
 			{
 				var userFromDb = await this.userManager.FindByEmailAsync(customer.Email);
-				var subscriptionFromDb = await this.subscriptionService.GetByCustomerIdAsync(customer.Id);
-				if (userFromDb != null && subscriptionFromDb != null)
+
+				if (userFromDb != null)
 				{
-					userFromDb.SubsriptionId = subscriptionFromDb.Id;
+					userFromDb.CustomerId = customer.Id;
 					await this.userManager.UpdateAsync(userFromDb);
 				}
 
