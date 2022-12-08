@@ -58,7 +58,7 @@
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> UpdatePictureUrl([FromRoute] UserToUpdatePictireUrlModel model)
+        public async Task<IActionResult> UpdatePictureUrl([FromBody] UserToUpdatePictireUrlModel model)
         {
             var result = await this.userService.UpdateUserAvatar(model);
             if (!result.IsSuccessful) return this.Error(result);
