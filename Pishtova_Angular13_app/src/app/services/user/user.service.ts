@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable, Subject } from 'rxjs';
 
 import { environment as env } from 'src/environments/environment';
 import { ProfileModel } from 'src/app/models/profile/profile';
@@ -8,13 +9,21 @@ import { UpdateEmailModel } from 'src/app/models/profile/updateEmail';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
 import { UserInfoModel } from 'src/app/models/user/userInfo';
 import { UpdatePictureModel } from 'src/app/models/profile/updatePicture';
+import { CurrentUserModel } from 'src/app/models/user/currentUser';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {; 
 
-  constructor(private httpClient: HttpClient) { }
+  private _avatarChangeSub: Subject<string> = new Subject<string>();
+  public isAvatarChange: Observable<string> = this._avatarChangeSub.asObservable();
+
+  constructor(
+    private httpClient: HttpClient,
+    private storage: StorageService,
+    private jwtHelper: JwtHelperService) { }
 
   public getUserProfile = (userId: string): Observable<ProfileModel> => {
     return this.httpClient.get<ProfileModel>(env.API_URL + `/users/${userId}`);
@@ -34,6 +43,45 @@ export class UserService {;
 
   public updateEmail = (dataModel: UpdateEmailModel): Observable<object> => {
     return this.httpClient.put(env.API_URL + '/users/updateemail', dataModel)
+  }
+
+  public getCurrentUser = (): CurrentUserModel|null => {
+    let user: CurrentUserModel|null = null;
+    const token: string|null = this.storage.getItem<string>("token");
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      user = {
+         id: decodedToken.userId,
+         email: decodedToken.email,
+         isSubscriber: decodedToken.isSubscriber == 'True',
+      }
+    }
+    return user;
+  }
+
+  public getAvatarUrl = (): string|null => {
+    return this.storage.getItem<string>("avatarUrl");
+  }
+
+  public setAvatarState = (token: string): void => {
+    const avatarUrl = this.getAvatarUrlByToken(token);
+    this.updateAvatar(avatarUrl);
+  }
+
+  public updateAvatar = (avatarUrl: string|null): void => {
+    if(avatarUrl == null) return;
+    this.storage.setItem('avatarUrl', avatarUrl);
+    this.sendAvatarChangeNotification(avatarUrl); 
+  }
+
+  private getAvatarUrlByToken = (token: string): string|null => {
+    if(token == null) return null;
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken.avatarUrl;
+  }
+
+  private sendAvatarChangeNotification = (avatarUrl: string): void => {
+    this._avatarChangeSub.next(avatarUrl);
   }
 }
 

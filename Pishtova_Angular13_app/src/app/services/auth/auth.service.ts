@@ -11,7 +11,6 @@ import { ResetPasswordModel } from '../../authentication/models/resetPassword';
 import  ILoginResult  from '../../authentication/models/results/LoginResult';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
-import { CurrentUserModel } from 'src/app/models/user/currentUser';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +19,6 @@ export class AuthService {
 
   private _authChangeSub: Subject<boolean> = new Subject<boolean>()
   public isAuthChange: Observable<boolean> = this._authChangeSub.asObservable();
-
-  private _avatarChangeSub: Subject<string> = new Subject<string>();
-  public isAvatarChange: Observable<string> = this._avatarChangeSub.asObservable();
 
   constructor(
     private httpClient: HttpClient, 
@@ -59,32 +55,17 @@ export class AuthService {
     return this.httpClient.post(env.API_URL + '/identity/resetpassword', body)
   }
 
-  public sendAuthStateChangeNotification = (isAuthenticated: boolean): void => {
-    this._authChangeSub.next(isAuthenticated);
-    if (isAuthenticated) {
-      const url = this.getCurrentUser()?.avatarUrl;
-      this._avatarChangeSub.next(url)
-    }
-  }
-
   public isUserAuthenticated = (): boolean => {
     const token = this.storage.getItem<string>("token");
     return token != null && !this.jwtHelper.isTokenExpired(token);
   }
-
-  public getCurrentUser = (): CurrentUserModel|null => {
-    let user: CurrentUserModel|null = null;
-    const token: string|null = this.storage.getItem<string>("token");
-    if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token)
-      user = {
-         id: decodedToken.userId,
-         email: decodedToken.email,
-         isSubscriber: decodedToken.isSubscriber == 'True',
-         avatarUrl: decodedToken.avatarUrl
-      }
-    }
-    return user;
+  
+  public setAuthState = (token: string): void => {
+    if(token) this.storage.setItem('token', token);
+    this.sendAuthStateChangeNotification(token != null);
   }
-
+  
+  private sendAuthStateChangeNotification = (isAuthenticated: boolean): void => {
+    this._authChangeSub.next(isAuthenticated);
+  }
 }

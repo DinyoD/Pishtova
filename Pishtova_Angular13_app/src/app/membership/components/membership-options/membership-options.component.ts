@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, MembershipService } from 'src/app/services';import { PriceModel } from '../../models/Price';
+import { AuthService, MembershipService, UserService } from 'src/app/services';import { PriceModel } from '../../models/Price';
 ;
 import { ProductModel } from '../../models/Product';
 
@@ -17,7 +17,7 @@ export class MembershipOptionsComponent implements OnInit{
 
   constructor(
     private membershipService: MembershipService,
-    private authService: AuthService
+    private userService: UserService
     ) { 
   }
 
@@ -27,7 +27,7 @@ export class MembershipOptionsComponent implements OnInit{
       this.prices = product.prices;
       this.prices.forEach( x => x.subscription = x.subscription[0].toUpperCase() + x.subscription.slice(1))
     })
-    this.isSubscriber = this.authService.getCurrentUser()?.isSubscriber; 
+    this.isSubscriber = this.userService.getCurrentUser()?.isSubscriber; 
   }
 
   public Checkout = (priceId: string): void =>  {

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 import { ModalAnimation } from 'src/app/core/header/header.animations';
 import { SubjectModel } from 'src/app/models/subject/subject';
-import { AuthService, SubjectService, TestService  } from 'src/app/services';
+import { AuthService, StorageService, SubjectService, TestService, UserService  } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
@@ -21,27 +21,29 @@ export class HeaderComponent implements OnInit{
   public isAuth: boolean = false;
   public inTest: boolean = false;
   public subject : SubjectModel|null = null;
-  public avatarUrl : string|undefined = undefined;
+  public avatarUrl : string|null = null;
 
   constructor(
     private cd: ChangeDetectorRef, 
     private router: Router,
     private location: Location,
     private dialog: MatDialog,
-    private userService : AuthService,
+    private authService : AuthService,
+    private userService : UserService,
     private subjectService: SubjectService,
-    private testService: TestService) {
+    private testService: TestService,
+    private storage: StorageService) {
 
   }
     
     
   ngOnInit(): void {
-    this.isAuth = this.userService.isUserAuthenticated();
-    this.avatarUrl = this.userService.getCurrentUser()?.avatarUrl;
+    this.isAuth = this.authService.isUserAuthenticated();
+    this.avatarUrl = this.userService.getAvatarUrl();
     this.inTest = this.testService.isInTest();
     this.subject = this.subjectService.getCurrentSubject();
 
-    this.userService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
+    this.authService.isAuthChange.subscribe(isAuth => this.isAuth = isAuth);
     this.userService.isAvatarChange.subscribe(avatarUrl => this.avatarUrl = avatarUrl)
     this.testService.inTestChanged.subscribe(inTest => this.inTest = inTest);
     this.subjectService.subjectChanged.subscribe(sbj => this.subject = sbj);
@@ -62,7 +64,7 @@ export class HeaderComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(dialogResult => {
         if (dialogResult) {
-            this.userService.logout();
+            this.authService.logout();
             this.hideModal();
             this.router.navigate(["/auth/login"]);
         }

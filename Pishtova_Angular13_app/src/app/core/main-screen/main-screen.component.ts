@@ -7,7 +7,7 @@ import { SubjectModel } from 'src/app/models/subject/subject';
 import { TestByDaysModel } from 'src/app/models/test/testsByDays';
 import { TestScoreModel } from 'src/app/models/test/testScore';
 import { UserRankModel } from 'src/app/models/user/userRank';
-import { AuthService, StatsService, SubjectService } from '../../services';
+import { StatsService, SubjectService, UserService } from '../../services';
 import { HtmlHelper } from "../helpers/subjectHelper";
 
 @Component({
@@ -27,7 +27,7 @@ export class MainScreenComponent implements OnInit{
   constructor(
     private subjectService: SubjectService, 
     private statsService: StatsService,
-    private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {
     this.subjectService.setSubject(null);
@@ -36,7 +36,7 @@ export class MainScreenComponent implements OnInit{
 
   ngOnInit(): void {
     this.subjectService.subjectChanged.subscribe(sbjModel => { if(sbjModel) this.router.navigate([`subject/${sbjModel?.id}`])});
-    const user = this.authService.getCurrentUser();
+    const user = this.userService.getCurrentUser();
     if( user == null ) return;
     this.userId = user.id;
     this.statsService.getTestCount(this.userId).subscribe(x => this.userTestCount = x);

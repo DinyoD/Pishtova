@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CurrentUserModel } from 'src/app/models/user/currentUser';
 import { UserInfoModel } from 'src/app/models/user/userInfo';
 import { UserPointsForSubjectModel } from 'src/app/models/user/userPointBySubject';
-import { AuthService, BadgesService, StatsService, SubjectService, UserService } from 'src/app/services';
+import { BadgesService, StatsService, UserService } from 'src/app/services';
 import { UserInfoDialogComponent } from 'src/app/shared/user-info-dialog/user-info-dialog.component';
 
 @Component({
@@ -22,9 +22,7 @@ export class RankingScreenComponent implements OnInit {
   public navigationUrl: string = '';
 
   constructor(
-    private subjectService: SubjectService,
     private actRoute: ActivatedRoute,
-    private authService: AuthService,
     private userService: UserService,
     private badgesService: BadgesService,
     private statsService: StatsService,
@@ -38,7 +36,7 @@ export class RankingScreenComponent implements OnInit {
       this.router.navigate(['/main']);
       return;
     }
-    this.currentUser = this.authService.getCurrentUser();     
+    this.currentUser = this.userService.getCurrentUser();     
     this.statsService.getSubjectRanking(subjectId)
       .subscribe(x => {
         this.users = x.map(u => this.calculatePercentageUsersProperty(u))

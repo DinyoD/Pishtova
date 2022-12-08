@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
-import { AuthService } from "src/app/services";
+import { UserService } from "src/app/services";
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +8,7 @@ import { AuthService } from "src/app/services";
 
 export class ForSubscribersGuard implements CanActivate{
     constructor(
-        private authService: AuthService,
+        private userService: UserService,
         private router: Router
     ){}
     
@@ -16,7 +16,7 @@ export class ForSubscribersGuard implements CanActivate{
     next: ActivatedRouteSnapshot, 
     stte: RouterStateSnapshot
     ): boolean {
-        let suscriber = this.authService.getCurrentUser()?.isSubscriber;
+        let suscriber = this.userService.getCurrentUser()?.isSubscriber;
     if (suscriber) {    
         return true;
     }

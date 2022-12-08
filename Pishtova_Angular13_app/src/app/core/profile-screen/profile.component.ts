@@ -36,17 +36,17 @@ export class ProfileComponent implements OnInit {
   public subjectsInfo: SubjectInfo[]|null = null;
 
   constructor(
+    private authService: AuthService,
     private subjectService: SubjectService,
     private userService: UserService,
-    private authService: AuthService,
     private badgeService: BadgesService,
     private pointsService: PointsService,
-    private membershipService: MembershipService,
+    //private membershipService: MembershipService,
     private dialog: MatDialog,
     private router: Router) { 
 
       this.subjectService.setSubject(null);
-      this.currentUser = this.authService.getCurrentUser();
+      this.currentUser = this.userService.getCurrentUser();
   }
 
   ngOnInit(): void {
@@ -139,7 +139,10 @@ export class ProfileComponent implements OnInit {
       id: this.currentUser.id,
       pictureUrl : imageUrl
     }
-    this.userService.updatePictureUrl(dataModel).subscribe(() => this.reload())
+    this.userService.updatePictureUrl(dataModel).subscribe(() => {
+      this.userService.updateAvatar(imageUrl);
+      this.reload();
+    })
   }
 
   private updateInfo = (name: string, grade: number, schoolId: number): void =>  {

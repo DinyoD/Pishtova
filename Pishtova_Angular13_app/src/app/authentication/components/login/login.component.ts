@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { UserForLoginModel } from '../../models/userForLogin';
-import { AuthService, StorageService } from 'src/app/services';
+import { AuthService, StorageService, UserService } from 'src/app/services';
 import ILoginResult from '../../models/results/LoginResult';
 
 @Component({
@@ -23,9 +23,10 @@ export class LoginComponent implements OnInit {
   })
 
   constructor(
-    private userService: AuthService,
     private route: Router,
     private actRouter: ActivatedRoute,
+    private authService: AuthService,
+    private userService: UserService,
     private storage: StorageService
   ) { }
     
@@ -41,11 +42,11 @@ export class LoginComponent implements OnInit {
       email: formValues.email,
       password: formValues.password
     }
-   this.userService.login(user)
+   this.authService.login(user)
     .subscribe((res: ILoginResult) => {
+      this.authService.setAuthState(res.token);
+      this.userService.setAvatarState(res.token);
       this.route.navigateByUrl(this.returnUrl);
-      this.storage.setItem('token', res.token)
-      this.userService.sendAuthStateChangeNotification(res.token != null)
     }, (err) => {
       this.showError = true;
       this.errorMessage = err;
@@ -60,4 +61,5 @@ export class LoginComponent implements OnInit {
   get password(): FormControl {
     return this.form.get('password') as FormControl;
   }
+
 }

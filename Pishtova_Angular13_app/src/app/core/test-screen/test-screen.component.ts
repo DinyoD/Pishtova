@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProblemModel } from 'src/app/models/problem/problem';
 import { AnswerModel } from 'src/app/models/answer';
 import { ProblemScoreModel } from 'src/app/models/problem/problemScore';
-import { ProblemService, PointsService, TestService, BadgesService, AuthService } from 'src/app/services'
+import { ProblemService, PointsService, TestService, BadgesService, UserService } from 'src/app/services'
 import { GreetingDialogComponent } from 'src/app/shared/greeting-dialog/greeting-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { getBadgeCodeByPoints } from 'src/app/resource/data';
@@ -38,7 +38,7 @@ export class TestScreenComponent implements OnInit {
     private pointsService: PointsService,
     private testService: TestService,
     private badgeService: BadgesService,
-    private authService: AuthService,
+    private userService: UserService,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
     private actRoute: ActivatedRoute,
@@ -56,7 +56,7 @@ export class TestScreenComponent implements OnInit {
         this.points = p;
         this.maxScore = p + 20 - this.problemNumber;
       });
-      this.userId = this.authService.getCurrentUser()?.id;
+      this.userId = this.userService.getCurrentUser()?.id;
     }
     
     public chooseAnswer(selectedAnswer: AnswerModel, subjectCategoryId: number): void {
@@ -130,7 +130,7 @@ export class TestScreenComponent implements OnInit {
     private getWinnedBadge(testId: number): BadgeToSaveModel|null {
       const code = getBadgeCodeByPoints().get(this.points);
       if(!code) return null;
-      const userId = this.authService.getCurrentUser()?.id;
+      const userId = this.userService.getCurrentUser()?.id;
       if (!userId) return null;
       const badge: BadgeToSaveModel = {
         userId: userId,
