@@ -10,6 +10,7 @@ import { ForgotPasswordModel } from '../../authentication/models/forgotPassword'
 import { ResetPasswordModel } from '../../authentication/models/resetPassword';
 import  ILoginResult  from '../../authentication/models/results/LoginResult';
 import { environment as env } from 'src/environments/environment';
+import { Storage} from '../../utilities/constants/storage';
 import { StorageService } from '..';
 
 @Injectable({
@@ -56,12 +57,12 @@ export class AuthService {
   }
 
   public isUserAuthenticated = (): boolean => {
-    const token = this.storage.getItem<string>("token");
+    const token = this.storage.getItem<string>(Storage.TOKEN);
     return token != null && !this.jwtHelper.isTokenExpired(token);
   }
   
   public setAuthState = (token: string): void => {
-    if(token) this.storage.setItem('token', token);
+    if(token) this.storage.setItem(Storage.TOKEN, token);
     this.sendAuthStateChangeNotification(token != null);
   }
   

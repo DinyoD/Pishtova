@@ -11,6 +11,7 @@ import { UserInfoModel } from 'src/app/models/user/userInfo';
 import { UpdatePictureModel } from 'src/app/models/profile/updatePicture';
 import { CurrentUserModel } from 'src/app/models/user/currentUser';
 import { StorageService } from '../storage/storage.service';
+import { Storage} from '../../utilities/constants/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,7 @@ export class UserService {;
 
   public getCurrentUser = (): CurrentUserModel|null => {
     let user: CurrentUserModel|null = null;
-    const token: string|null = this.storage.getItem<string>("token");
+    const token: string|null = this.storage.getItem<string>(Storage.TOKEN);
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
       user = {
@@ -60,7 +61,7 @@ export class UserService {;
   }
 
   public getAvatarUrl = (): string|null => {
-    return this.storage.getItem<string>("avatarUrl");
+    return this.storage.getItem<string>(Storage.AVATAR_URL);
   }
 
   public setAvatarState = (token: string): void => {
@@ -70,7 +71,7 @@ export class UserService {;
 
   public updateAvatar = (avatarUrl: string|null): void => {
     if(avatarUrl == null) return;
-    this.storage.setItem('avatarUrl', avatarUrl);
+    this.storage.setItem(Storage.AVATAR_URL, avatarUrl);
     this.sendAvatarChangeNotification(avatarUrl); 
   }
 

@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, Provider, PLATFORM_ID } from '@angular/core';
+import { Storage} from '../../utilities/constants/storage';
 
 export interface IStorageService{
   setItem<T>(key: string, item: T): T;
@@ -32,7 +33,7 @@ export class BrowserStorage{
   private localStorage = localStorage;
 
   public setItem<T>(key: string, item: T): T|null {
-    if(this.localStorage.getItem('token') == null && key != 'token'){
+    if(this.localStorage.getItem(Storage.TOKEN) == null && key != Storage.TOKEN){
       return null;
     }
     const itemAsString = typeof item === 'string' ? item : JSON.stringify(item);

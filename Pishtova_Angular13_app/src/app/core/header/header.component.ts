@@ -8,6 +8,7 @@ import { SubjectModel } from 'src/app/models/subject/subject';
 import { AuthService, StorageService, SubjectService, TestService, UserService  } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Storage} from '../../utilities/constants/storage';
 
 @Component({
   selector: 'app-header',
@@ -82,7 +83,7 @@ export class HeaderComponent implements OnInit{
   }
 
   public exitTest(): void {    
-    const sbjIdString = localStorage.getItem("subjectId");
+    const sbjIdString = localStorage.getItem(Storage.SUBJECT_ID);
     if (sbjIdString) {
       const sbjId = + sbjIdString;
       this.router.navigate(["/subject/"+{sbjId}]);

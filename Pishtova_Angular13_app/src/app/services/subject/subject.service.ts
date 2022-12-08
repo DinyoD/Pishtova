@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { SubjectModel } from 'src/app/models/subject/subject';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
+import { Storage} from '../../utilities/constants/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +31,17 @@ export class SubjectService {
   public setSubject = (sbj: SubjectModel|null): void=> {
     this._subjectChangeSub.next(sbj);
     if (sbj != null) {
-      this.storage.setItem('subjectName', sbj.name);
-      this.storage.setItem('subjectId', sbj.id);     
+      this.storage.setItem(Storage.SUBJECT_NAME, sbj.name);
+      this.storage.setItem(Storage.SUBJECT_ID, sbj.id);     
     }else{
-      this.storage.removeItem('subjectName');
-      this.storage.removeItem('subjectId');    
+      this.storage.removeItem(Storage.SUBJECT_NAME);
+      this.storage.removeItem(Storage.SUBJECT_ID);    
     }
   }
 
   public getCurrentSubject = (): SubjectModel|null => {
-    const name= this.storage.getItem<string>('subjectName');
-    const  id =this.storage.getItem<string>('subjectId')
+    const name= this.storage.getItem<string>(Storage.SUBJECT_NAME);
+    const  id =this.storage.getItem<string>(Storage.SUBJECT_ID)
     if (name == null || id == null) {
       return null;
     }

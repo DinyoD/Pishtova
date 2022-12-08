@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment as env } from '../../../environments/environment';
 import { ISaveTestResult } from 'src/app/models/operation.result/saveTest';
 import { TestToSaveModel } from 'src/app/models/test/testToSave';
+import { Storage} from '../../utilities/constants/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +26,14 @@ export class TestService {
   public sendInTestStateChangeNotification = (inTest: boolean): void => {
     this._inTestChangeSub.next(inTest);
     if (inTest) {
-      sessionStorage.setItem('test', 'in');
+      sessionStorage.setItem(Storage.TEST, 'in');
     }else{
-      sessionStorage.removeItem('test');
+      sessionStorage.removeItem(Storage.TEST);
     }
   }
 
   public isInTest = (): boolean => {
-    const storageItem = sessionStorage.getItem("test");
+    const storageItem = sessionStorage.getItem(Storage.TEST);
     return storageItem != null;
   }
 }

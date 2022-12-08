@@ -16,11 +16,12 @@ import { LoadingIndicatorInterceptor } from './interceptor/loading-indicator-int
 import { SharedModule } from './shared/shared.module';
 import { MembershipModule } from './membership/components/membership.module';
 import { ErrorScreensModule } from './error-screens/error-screens.module';
+import { Storage} from './utilities/constants/storage';
 
 
 // TODO This work only in Browser!!!!
 export function tokenGetter() {
-  return localStorage.getItem("token");
+  return localStorage.getItem(Storage.TOKEN);
 }
 
 @NgModule({

@@ -7,6 +7,7 @@ import { SubjectInfo } from 'src/app/models/subject/subjectInfo';
 import { CategoryWithPointsModel } from 'src/app/models/subjectCategory/categoryPoints';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '..';
+import { Storage} from '../../utilities/constants/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +42,12 @@ export class PointsService {
   private addPoints = (pointValue: number): void => {
     const points = this.gettingPoints() + pointValue;
     this._pointsChangeSub.next(points);
-    this.storage.setItem('points', points.toString());
+    this.storage.setItem(Storage.POINTS, points.toString());
   }
 
   public gettingPoints = (): number => {
     try {
-      const prevPoints = this.storage.getItem<string>('points');
+      const prevPoints = this.storage.getItem<string>(Storage.POINTS);
       return prevPoints != null ? +prevPoints : 0;
     } catch (error) {
       return 0;
@@ -54,6 +55,6 @@ export class PointsService {
   }
 
   public clearPoints =(): void => {
-    this.storage.removeItem('points');
+    this.storage.removeItem(Storage.POINTS);
   }
 }
