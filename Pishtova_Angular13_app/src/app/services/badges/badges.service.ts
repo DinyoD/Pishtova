@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment as env } from '../../../environments/environment';
-import { BadgeToSaveModel } from 'src/app/models/badge/badgeToSave';
 import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 
 @Injectable({
@@ -12,10 +11,6 @@ import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
 export class BadgesService {
 
   constructor( private httpClient: HttpClient ) { }
-    
-  public saveBadge = (model: BadgeToSaveModel): Observable<Object> => {
-    return this.httpClient.post(env.API_URL + `/userbadges`, model)
-  }
 
   public getUserBadges = (userId?: string): Observable<BadgesCountModel[]> => {
     return this.httpClient.get<BadgesCountModel[]>(env.API_URL + `/userbadges/users/${userId}`)
