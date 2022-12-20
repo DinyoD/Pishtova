@@ -9,6 +9,8 @@
     using Pishtova.Services.Models;
 
     using Sandbox;
+    using Newtonsoft.Json;
+    using System.IO;
 
     public class Helpers : IHelpers
     {
@@ -44,48 +46,40 @@
             return schoolsCollection;
         }
 
-        public SubjectDTO CreateSubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
+        public SubjectDTO CreateSubjectDTO(string fileName, string subjectName, string subjectId)
         {
-            var subjectInfo = ExtractSubjectProblems(firebaseCollectionName);
-
-            ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
-            for (int i = 0; i < subjectInfo.Count; i++)
+            List<ProblemFromJsonDTO> problems = new List<ProblemFromJsonDTO>();
+            using (StreamReader r = new StreamReader($"C:\\Users\\Dinyo\\Desktop\\Pishtova-docs\\{fileName}.json"))
             {
-                var categoryInfo = subjectInfo[i];
-                if (categoryInfo == null)
-                {
-                    continue;
-                }
-                ICollection<ProblemDTO> problems = new List<ProblemDTO>();
-                for (int j = 0; j < categoryInfo.Count; j++)
-                {
-                    var problemInfo = categoryInfo[j];
-                    if (problemInfo == null)
-                    {
-                        continue;
-                    }
-                    var problem = new ProblemDTO
-                    {
-                        QuestionText = problemInfo[0],
-                        Answers = new List<AnswerDTO>{
-                            new AnswerDTO { Text = problemInfo[1], IsCorrect = problemInfo[1] == problemInfo[5] },
-                            new AnswerDTO { Text = problemInfo[2], IsCorrect = problemInfo[2] == problemInfo[5] },
-                            new AnswerDTO { Text = problemInfo[3], IsCorrect = problemInfo[3] == problemInfo[5] },
-                            new AnswerDTO { Text = problemInfo[4], IsCorrect = problemInfo[4] == problemInfo[5] }
-                        },
-                        Hint = problemInfo.Count > 6 && !string.IsNullOrWhiteSpace(problemInfo[6]) ? problemInfo[6] : null,
-                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) ? problemInfo[7] : null,
-                    };
-                    problems.Add(problem);
-                }
-                //var categoryName = GlobalConstants.BiologyCategoriesName[i];
+                string json = r.ReadToEnd();
+                problems = JsonConvert.DeserializeObject<List<ProblemFromJsonDTO>>(json);
+            }
 
-                var category = new SubjectCategoryDTO
+           List<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();    
+            foreach (var problem in problems)
+            {
+ 
+                var currentProblem = new ProblemDTO
                 {
-                    Name = "someCategory",
-                    Problems = problems
+                    QuestionText = problem.QuestionText,
+                    Hint = problem.Hint,
+                    PictureUrl = problem.PictureUrl,
+                    Answers = new List<AnswerDTO> {
+                    new AnswerDTO { Text = problem.A, IsCorrect = problem.A == problem.CorrectAnswer},
+                    new AnswerDTO { Text = problem.B, IsCorrect = problem.B == problem.CorrectAnswer},
+                    new AnswerDTO { Text = problem.C, IsCorrect = problem.C == problem.CorrectAnswer},
+                    new AnswerDTO { Text = problem.D, IsCorrect = problem.D == problem.CorrectAnswer}
+                    }
                 };
-                categories.Add(category);
+           
+                var categorie = categories.FirstOrDefault(x => x.Name == problem.CategorieName);
+                if (categorie == null)
+                {
+                    categorie = new SubjectCategoryDTO { Name = problem.CategorieName, Problems = new List<ProblemDTO>() };
+                    categories.Add(categorie);
+                }
+
+                categorie.Problems.Add(currentProblem);
             }
 
             return new SubjectDTO
@@ -98,7 +92,7 @@
 
         public SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
         {
-            var subjectInfo = ExtractSubjectProblems(firebaseCollectionName);
+            var subjectInfo = ExtractSubjectProblemsFromFirebase(firebaseCollectionName);
             //var bioErrors = subjectInfo.SelectMany( x => x).Where( x => x[1] != x[5] && x[2] != x[5] && x[3] != x[5] && x[4] != x[5]).ToList();
 
             ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
@@ -213,7 +207,7 @@
             };
         }
 
-        private static List<List<List<string>>> ExtractSubjectProblems(string firebaseCollectionName)
+        private static List<List<List<string>>> ExtractSubjectProblemsFromFirebase(string firebaseCollectionName)
         {
             var fbHelper = new FirebaseHelper(SandBoxConstants.AuthSecret, SandBoxConstants.BasePath);
 
