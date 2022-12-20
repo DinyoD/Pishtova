@@ -1,5 +1,5 @@
 export interface TestScoreModel {
-    subjectName: string;
+    subjectId: string;
     score: number;
     date: string;
 }
