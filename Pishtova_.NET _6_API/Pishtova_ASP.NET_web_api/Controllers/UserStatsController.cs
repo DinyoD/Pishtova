@@ -51,7 +51,7 @@
             var returnedValue = result.Data
                 .Select(x => new TestScoreViewModel
                 {
-                    SubjectName = x.Subject.Name,
+                    SubjectId = x.Subject.Id,
                     Score = (int)(x.Score != null ? x.Score : 0),
                     Date = x.CreatedOn.ToShortDateString()
                 }
