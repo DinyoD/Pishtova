@@ -27,7 +27,6 @@ export class PointsService {
     private storage: StorageService) { }
 
   public saveScore = (score: ProblemScoreModel): Observable<Object> => {
-    this.addPoints(score.points)
     return this.httpClient.post(env.API_URL + '/scores', score);
   }
 
@@ -39,7 +38,7 @@ export class PointsService {
     return this.httpClient.get<CategoryWithPointsModel[]>(env.API_URL + `/scores/categories?userId=${userId}&subjectId=${subjectId}`);
   }
 
-  private addPoints = (pointValue: number): void => {
+  public addPoints = (pointValue: number): void => {
     const points = this.gettingPoints() + pointValue;
     this._pointsChangeSub.next(points);
     this.storage.setItem(Storage.POINTS, points.toString());
