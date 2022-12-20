@@ -8,7 +8,6 @@ import { TestByDaysModel } from 'src/app/models/test/testsByDays';
 import { TestScoreModel } from 'src/app/models/test/testScore';
 import { UserRankModel } from 'src/app/models/user/userRank';
 import { StatsService, SubjectService, UserService } from '../../services';
-import { HtmlHelper } from "../helpers/subjectHelper";
 
 @Component({
   selector: 'app-main-screen',
@@ -49,15 +48,11 @@ export class MainScreenComponent implements OnInit{
     this.subjectService.setSubject(sbj);
   }
 
-  public setClassBySbjName(name: string): string {
-    return HtmlHelper.getCodeBySubjectName(name);
-  }
-
-  private generateTestsChart(data:TestScoreModel[] ): void {
+  private generateTestsChart(data: TestScoreModel[] ): void {
     this.userLastTestsChart = new Chart('testsChart', {
       type: 'line',
       data: {
-          labels: data.map(x => x.subjectName).map(x => HtmlHelper.getCodeBySubjectName(x)),
+          labels: data.map(x => x.subjectId),
           datasets: [{
               label: 'успеваемост в процент',
               data: data.map(x => x.score),

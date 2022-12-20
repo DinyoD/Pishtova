@@ -60,8 +60,8 @@
     <div class="title">Предмети</div>
     <div class="subjects">
       <div class="sbj" *ngFor="let s of subjectsInfo" (click)="showSubjectDetails(s.id, s.name, s.points, s.problems)">
-        <img src="../../../assets/icons/subjects/{{getSubjectCode(s.name)}}.svg" alt="" class="sbj-icon">
-        <span class="sbj-name" [ngClass]="[getSubjectCode(s.name)]">{{s.name}}</span>
+        <img src="../../../assets/icons/subjects/{{s.id}}.svg" alt="" class="sbj-icon">
+        <span class="sbj-name" [ngClass]="s.id">{{s.name}}</span>
         <div class="sbj-info">
           <span class="text">{{s.points}}</span>
           <span class="text">&nbsp;точки</span>
@@ -75,14 +75,7 @@
           <img src="../../../assets/icons/arrowRight.svg" alt="">
         </div>
       </div>
-      <a class="sbj">
-        <img src="../../../assets/icons/subjects/geo.svg" alt="" class="sbj-icon">
-        <span class="sbj-name geo">География</span>
-      </a>
-      <a class="sbj">
-        <img src="../../../assets/icons/subjects/chm.svg" alt="" class="sbj-icon">
-        <span class="sbj-name chm">Химия</span>
-      </a>
+
     </div>
   </div>
 
@@ -90,21 +83,21 @@
     <div class="sbj">
       <div class="sbj-name-box">
         <img src="../../../assets/icons/arrowLeft.svg" alt="" (click)="closeSubjectDetails()" class="arrow">
-        <span class="sbj-name" [ngClass]="[getSubjectCode(subjectCategories?.name)]">{{subjectCategories?.name}}</span>
+        <span class="sbj-name">{{subjectWithCategories?.name}}</span>
       </div>
       <div class="sbj-info">
-        <span class="info-text-big">{{subjectCategories?.points}}</span>
+        <span class="info-text-big">{{subjectWithCategories?.points}}</span>
         <span class="info-text">точки</span>
       </div>
       <div class="sbj-info">
-        <span class="info-text-big">{{subjectCategories?.problems}}</span>
+        <span class="info-text-big">{{subjectWithCategories?.problems}}</span>
         <span class="info-text">въпроси</span>
       </div>
-      <img src="../../../assets/icons/subjects/{{getSubjectCode(subjectCategories?.name)}}.svg" alt="" class="sbj-icon">
+      <img src="../../../assets/icons/subjects/{{subjectWithCategories?.id}}.svg" alt="" class="sbj-icon">
     </div>
 
     <div class="categories">
-      <div *ngFor="let cat of subjectCategories?.categories" class="category">
+      <div *ngFor="let cat of subjectWithCategories?.categories" class="category">
         <div class="score">
           <span class="score-text-big">{{cat.percentage}} %</span>
           <span class="score-text">{{cat.name}}</span>

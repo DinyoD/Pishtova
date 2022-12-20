@@ -7,7 +7,7 @@ import { environment as env } from 'src/environments/environment';
 import { UploadFileDialogComponent } from 'src/app/shared/upload-file-dialog/upload-file-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { UpdateProfileInfoDialogComponent } from 'src/app/shared/update-profile-info-dialog/update-profile-info-dialog.component';
-import { AuthService, SubjectService, UserService, BadgesService, PointsService, MembershipService } from 'src/app/services';
+import { AuthService, SubjectService, UserService, BadgesService, PointsService } from 'src/app/services';
 import { EditProfileModel } from 'src/app/models/profile/editProfile';
 import { ChangeProfileInfoModel } from 'src/app/models/profile/changeProfileInfo';
 import { UpdateEmailModel } from 'src/app/models/profile/updateEmail';
@@ -15,7 +15,6 @@ import { ProfileModel } from 'src/app/models/profile/profile';
 import { SubjectInfo } from "src/app/models/subject/subjectInfo";
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { BadgesCountModel } from 'src/app/models/badge/badgesCount';
-import { HtmlHelper } from "../helpers/subjectHelper";
 import { SubjectWithCategories } from 'src/app/models/subjectCategory/subjectWithcategories';
 import { CurrentUserModel } from 'src/app/models/user/currentUser';
 import { UpdatePictureModel } from 'src/app/models/profile/updatePicture';
@@ -31,7 +30,7 @@ export class ProfileComponent implements OnInit {
   public profile: ProfileModel|null = null;
   public profileSchoolId: number|null = null; 
   public showDetails: boolean = false;
-  public subjectCategories: SubjectWithCategories|null = null;
+  public subjectWithCategories: SubjectWithCategories|null = null;
   public badges: BadgesCountModel[]|null = null;
   public subjectsInfo: SubjectInfo[]|null = null;
 
@@ -41,7 +40,6 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private badgeService: BadgesService,
     private pointsService: PointsService,
-    //private membershipService: MembershipService,
     private dialog: MatDialog,
     private router: Router) { 
 
@@ -56,7 +54,7 @@ export class ProfileComponent implements OnInit {
       this.profileSchoolId = profile.school.id;
       this.pointsService.getPointsBySubjects(profile.id).subscribe(res => this.subjectsInfo = res);
      });
-     this.badgeService.getUserBadges(this.currentUser.id).subscribe(res => this.badges = res);
+    this.badgeService.getUserBadges(this.currentUser.id).subscribe(res => this.badges = res);
   }
 
   public badgeCount = (code: number): number => {
@@ -71,7 +69,7 @@ export class ProfileComponent implements OnInit {
     this.showDetails= true;
     this.pointsService.getPointsBySubjectCategories(this.profile?.id, subjectId)
       .subscribe( res => 
-        this.subjectCategories = {
+        this.subjectWithCategories = {
         id: subjectId,
         name: subjectName,
         points: subjectPoints,
@@ -81,12 +79,8 @@ export class ProfileComponent implements OnInit {
   }
 
   public closeSubjectDetails = (): void => {
-    this.subjectCategories = null;
+    this.subjectWithCategories = null;
     this.showDetails = false;
-  }
-
-  public getSubjectCode(name: string|undefined): string {
-    return HtmlHelper.getCodeBySubjectName(name);
   }
 
   public changePicture = (): void => {
