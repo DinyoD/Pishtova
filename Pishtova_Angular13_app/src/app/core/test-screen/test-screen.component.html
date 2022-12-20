@@ -11,10 +11,10 @@
     </div>
     <div class="result-info-sector">
       <span class="text">въпрос&nbsp;</span>
-      <span class="number">{{problemNumber}}/20</span>
+      <span class="number">{{problemNumber}}/{{problemsCount}}</span>
     </div>
   </div>
-  <app-progress-bar [count]="20" [problemNumber]="problemNumber"></app-progress-bar>
+  <app-progress-bar [count]="problemsCount" [problemNumber]="problemNumber"></app-progress-bar>
 
   <div *ngFor="let p of problems, let i = index">
     <div *ngIf="problemNumber == i+1" class="test">
@@ -61,11 +61,11 @@
         </div>
       </div>
 
-      <a *ngIf="problemNumber<20" class="btn" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
+      <a *ngIf="problemNumber < problemsCount" class="btn" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
         (click)="nextProblem()">
         <span class="btn-text">Продължи</span>
       </a>
-      <a *ngIf="problemNumber==20" class="btn-finish" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
+      <a *ngIf="problemNumber == problemsCount" class="btn-finish" [ngClass]="{'btn-active': someAnswerIsClicked == true}"
         (click)="finishTest()">
         <span class="btn-text">Предай</span>
       </a>
