@@ -63,8 +63,11 @@
 
             var createdTestId = createdTestResult.Data;
 
-            var saveBadgeResult = await this.SaveBadgeForTestCount(inputModel.UserId, createdTestId);
-            if (!saveBadgeResult.IsSuccessful) return this.Error(saveBadgeResult);
+            var saveBadgeForScoreResult = await this.SaveBadgeForTestScore(inputModel.UserId, createdTestId, inputModel.Score);
+            if (!saveBadgeForScoreResult.IsSuccessful) return this.Error(saveBadgeForScoreResult);
+
+            var saveBadgeForTestsCountResult = await this.SaveBadgeForTestCount(inputModel.UserId, createdTestId);
+            if (!saveBadgeForTestsCountResult.IsSuccessful) return this.Error(saveBadgeForTestsCountResult);
 
             return this.CreatedAtAction("GetById", new { testId = createdTestId }, new TestBasicViewModel { TestId = createdTestId });
 
@@ -87,16 +90,41 @@
             if (!operationResult.ValidateNotNull(userId)) return operationResult;
             if (!operationResult.ValidateNotNull(testId)) return operationResult;
 
-            var result = await this.testService.GetUserTestsCountAsync(userId);
-            if (!result.IsSuccessful) return operationResult.AppendErrors(result);
+            var getBadgeCodeResult = await this.GetBadgeCodeByUserTestCount(userId);
+            if (!getBadgeCodeResult.IsSuccessful) return operationResult.AppendErrors(getBadgeCodeResult);
 
-            var userTestCount = result.Data;
-            var testCountForBadge = new int[] { 10, 20, 50, 100 };
-            if (!testCountForBadge.Contains(userTestCount))
-            {
-                return operationResult.WithData(false);
-            }
-            var badgeCode = 2000 + userTestCount;
+            var badgeCode = getBadgeCodeResult.Data;
+
+            var saveResult = await this.SaveBadge(userId, testId, badgeCode);
+            if (!saveResult.IsSuccessful) return operationResult.AppendErrors(saveResult);
+
+            return operationResult.WithData(true);
+        }
+
+        private async Task<OperationResult<bool>> SaveBadgeForTestScore(string userId, int testId, int score)
+        {
+            var operationResult = new OperationResult<bool>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+            if (!operationResult.ValidateNotNull(testId)) return operationResult;
+            if (!operationResult.ValidateNotNull(score)) return operationResult;
+
+            if (score < 70) return operationResult.WithData(false);
+
+            var badgeCode = this.GetBadgeCodeByScore(score);
+            if (badgeCode == 0) return operationResult.WithData(false);
+
+            var saveResult = await this.SaveBadge(userId, testId, badgeCode);
+            if (!saveResult.IsSuccessful) return operationResult.AppendErrors(saveResult);
+            
+            return operationResult.WithData(true); 
+        }
+
+        private async Task<OperationResult<bool>> SaveBadge(string userId, int testId, int badgeCode) {
+
+            var operationResult = new OperationResult<bool>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+            if (!operationResult.ValidateNotNull(testId)) return operationResult;
+            if (!operationResult.ValidateNotNull(badgeCode)) return operationResult;
 
             var badgeIdResult = await this.badgeService.GetByCodeAsync(badgeCode);
             if (!badgeIdResult.IsSuccessful) return operationResult.AppendErrors(badgeIdResult);
@@ -113,5 +141,31 @@
             return operationResult.WithData(true);
         }
 
+        private async Task<OperationResult<int>> GetBadgeCodeByUserTestCount(string userId)
+        {
+            var operationResult = new OperationResult<int>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+
+            var result = await this.testService.GetUserTestsCountAsync(userId);
+            if (!result.IsSuccessful) return operationResult.AppendErrors(result);
+
+            var userTestCount = result.Data;
+            var testCountForBadge = new int[] { 10, 20, 50, 100 };
+            if (!testCountForBadge.Contains(userTestCount))
+            {
+                return operationResult.WithData(0);
+            }
+            var badgeCode = 2000 + userTestCount;
+            return operationResult.WithData(badgeCode);
+        }
+
+        private int GetBadgeCodeByScore(int score)
+        {
+            if (score == 100) return 1100;
+            else if (score >= 90) return 1090;
+            else if (score >= 80) return 1080;
+            else if (score >= 70) return 1070;
+            return 0;
+        }
     }
 }
