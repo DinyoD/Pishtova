@@ -14,24 +14,37 @@
         public async Task SeedAsync(PishtovaDbContext dbContext, IServiceProvider serviceProvider)
         {
             var helpers = serviceProvider.GetRequiredService<IHelpers>();
+
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.BiologyBgName) == false)
             //{
             //    var subjectDTO = helpers.Create_Bio_SubjectDTO(SandBoxConstants.Biology, GlobalConstants.BiologyBgName, GlobalConstants.BiologyId);
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
-            //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.BulgarianBgName) == false)
+
+            if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_7_BgName) == false)
+            {
+                var subjectDTO = helpers.Create_FromFile_SubjectDTO(SandBoxConstants.Bulgarian7, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_7_Id);
+                await SeedSubjectProblemsAsync(dbContext, subjectDTO);
+            }
+
+            //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_12_BgName) == false)
             //{
-            //    var subjectDTO = helpers.Create_Bg_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.BulgarianBgName, GlobalConstants.BulgarianId);
+            //    var subjectDTO = helpers.Create_Bg12FromFB_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_12_Id);
+            //    var categoryDTO = helpers.Create_Bg12FromFile_CategoryDTO(SandBoxConstants.Bulgarian12);
+            //    subjectDTO.Categories.Add(categoryDTO);
+
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
+
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.EnglishBgName) == false)
             //{
-            //    var subjectDTO = helpers.CreateSubjectDTO(SandBoxConstants.English, GlobalConstants.EnglishBgName, GlobalConstants.EnglishId);
+            //    var subjectDTO = helpers.Create_FromFile_SubjectDTO(SandBoxConstants.English, GlobalConstants.EnglishBgName, GlobalConstants.EnglishId);
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
+
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.GeographyBgName) == false)
             //{
-            //    var subjectDTO = helpers.CreateSubjectDTO(SandBoxConstants.Geography, GlobalConstants.GeographyBgName, GlobalConstants.GeographyId);
+            //    var subjectDTO = helpers.Create_Geo_SubjectDTO(SandBoxConstants.Geography, GlobalConstants.GeographyBgName, GlobalConstants.GeographyId);
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
         }

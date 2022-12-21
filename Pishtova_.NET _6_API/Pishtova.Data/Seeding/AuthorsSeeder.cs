@@ -77,7 +77,7 @@
 				{
 					Name = worksName[i],
 					Index = i,
-					SubjectId = GlobalConstants.BulgarianId
+					SubjectId = GlobalConstants.Bulgarian_12_Id
 				};
 				works.Add(work);
             }

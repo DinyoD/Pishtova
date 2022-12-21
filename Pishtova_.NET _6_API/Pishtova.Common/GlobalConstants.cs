@@ -10,7 +10,9 @@
 
         public const string BiologyBgName = "Биология";
 
-        public const string BulgarianBgName = "Български език";
+        public const string Bulgarian_12_BgName = "Български език 12-ти клас";
+
+        public const string Bulgarian_7_BgName = "Български език 7-ми клас";
 
         public const string GeographyBgName = "География";
 
@@ -18,7 +20,9 @@
 
         public const string BiologyId = "bio";
 
-        public const string BulgarianId = "bel";
+        public const string Bulgarian_12_Id = "bel_12";
+
+        public const string Bulgarian_7_Id = "bel_7";
 
         public const string GeographyId = "geo";
 

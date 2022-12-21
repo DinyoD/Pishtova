@@ -11,6 +11,7 @@
     using Sandbox;
     using Newtonsoft.Json;
     using System.IO;
+    using Pishtova.Data.Model;
 
     public class Helpers : IHelpers
     {
@@ -46,7 +47,7 @@
             return schoolsCollection;
         }
 
-        public SubjectDTO CreateSubjectDTO(string fileName, string subjectName, string subjectId)
+        public SubjectDTO Create_FromFile_SubjectDTO(string fileName, string subjectName, string subjectId)
         {
             List<ProblemFromJsonDTO> problems = new List<ProblemFromJsonDTO>();
             using (StreamReader r = new StreamReader($"C:\\Users\\Dinyo\\Desktop\\Pishtova-docs\\{fileName}.json"))
@@ -55,8 +56,14 @@
                 problems = JsonConvert.DeserializeObject<List<ProblemFromJsonDTO>>(json);
             }
 
-           List<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();    
-            foreach (var problem in problems)
+            var a = problems
+                .Where(x => x.C != null)
+                .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim()
+                         && x.C.Trim() != x.CorrectAnswer.Trim() && x.D.Trim() != x.CorrectAnswer.Trim())
+                .ToList();
+
+            List<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();    
+            foreach (var problem in problems.Where(x => x.C != null))
             {
  
                 var currentProblem = new ProblemDTO
@@ -65,21 +72,21 @@
                     Hint = problem.Hint,
                     PictureUrl = problem.PictureUrl,
                     Answers = new List<AnswerDTO> {
-                    new AnswerDTO { Text = problem.A, IsCorrect = problem.A == problem.CorrectAnswer},
-                    new AnswerDTO { Text = problem.B, IsCorrect = problem.B == problem.CorrectAnswer},
-                    new AnswerDTO { Text = problem.C, IsCorrect = problem.C == problem.CorrectAnswer},
-                    new AnswerDTO { Text = problem.D, IsCorrect = problem.D == problem.CorrectAnswer}
+                    new AnswerDTO { Text = problem.A.Trim(), IsCorrect = problem.A.Trim() == problem.CorrectAnswer.Trim()},
+                    new AnswerDTO { Text = problem.B.Trim(), IsCorrect = problem.B.Trim() == problem.CorrectAnswer.Trim()},
+                    new AnswerDTO { Text = problem.C.Trim(), IsCorrect = problem.C.Trim() == problem.CorrectAnswer.Trim()},
+                    new AnswerDTO { Text = problem.D.Trim(), IsCorrect = problem.D.Trim() == problem.CorrectAnswer.Trim()}
                     }
                 };
            
-                var categorie = categories.FirstOrDefault(x => x.Name == problem.CategorieName);
-                if (categorie == null)
+                var category = categories.FirstOrDefault(x => x.Name == problem.CategorieName);
+                if (category == null)
                 {
-                    categorie = new SubjectCategoryDTO { Name = problem.CategorieName, Problems = new List<ProblemDTO>() };
-                    categories.Add(categorie);
+                    category = new SubjectCategoryDTO { Name = problem.CategorieName, Problems = new List<ProblemDTO>() };
+                    categories.Add(category);
                 }
 
-                categorie.Problems.Add(currentProblem);
+                category.Problems.Add(currentProblem);
             }
 
             return new SubjectDTO
@@ -93,7 +100,6 @@
         public SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
         {
             var subjectInfo = ExtractSubjectProblemsFromFirebase(firebaseCollectionName);
-            //var bioErrors = subjectInfo.SelectMany( x => x).Where( x => x[1] != x[5] && x[2] != x[5] && x[3] != x[5] && x[4] != x[5]).ToList();
 
             ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
             for (int i = 0; i < subjectInfo.Count; i++)
@@ -121,7 +127,7 @@
                             new AnswerDTO { Text = problemInfo[4], IsCorrect = problemInfo[4] == problemInfo[5] }
                         },
                         Hint = problemInfo.Count > 6 && !string.IsNullOrWhiteSpace(problemInfo[6]) ? problemInfo[6] : null,
-                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) ? problemInfo[7] : null,
+                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) && problemInfo[7] != "empty" ? problemInfo[7] : null,
                     };
                     problems.Add(problem);
                 }
@@ -143,13 +149,17 @@
             };
         }
 
-        public SubjectDTO Create_Bg_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
+        public SubjectDTO Create_Bg12FromFB_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
         {
             var subjectInfo = Extract_Bg_SubjectProblems(firebaseCollectionName);
 
             ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
             foreach (var kvp in subjectInfo)
             {
+                if (int.Parse(kvp.Key) >= 10)
+                {
+                    continue;
+                }
                 var categoryInfo = kvp.Value;
                 if (categoryInfo == null)
                 {
@@ -167,13 +177,13 @@
                     {
                         QuestionText = problemInfo[0],
                         Answers = new List<AnswerDTO>{
-                            new AnswerDTO { Text = problemInfo[1], IsCorrect = problemInfo[1] == problemInfo[5] },
-                            new AnswerDTO { Text = problemInfo[2], IsCorrect = problemInfo[2] == problemInfo[5] },
-                            new AnswerDTO { Text = problemInfo[3], IsCorrect = problemInfo[3] == problemInfo[5] },
-                            new AnswerDTO { Text = problemInfo[4], IsCorrect = problemInfo[4] == problemInfo[5] }
+                            new AnswerDTO { Text = problemInfo[1], IsCorrect = problemInfo[1].Trim() == problemInfo[5].Trim() },
+                            new AnswerDTO { Text = problemInfo[2], IsCorrect = problemInfo[2].Trim() == problemInfo[5].Trim() },
+                            new AnswerDTO { Text = problemInfo[3], IsCorrect = problemInfo[3].Trim() == problemInfo[5].Trim() },
+                            new AnswerDTO { Text = problemInfo[4], IsCorrect = problemInfo[4].Trim() == problemInfo[5].Trim() }
                         },
                         Hint = problemInfo.Count > 6 && !string.IsNullOrWhiteSpace(problemInfo[6]) ? problemInfo[6] : null,
-                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) ? problemInfo[7] : null,
+                        PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) && problemInfo[7] != "empty" ? problemInfo[7] : null,
                     };
                     problems.Add(problem);
                 }
@@ -199,12 +209,56 @@
                 }
             }
 
+            //var uncorrectProblems = categories.SelectMany(x => x.Problems).Where( x => x.Answers.Any( x =>x.IsCorrect == true) == false).ToList();
+
             return new SubjectDTO
             {
                 Id = subjectId,
                 Name = subjectName,
                 Categories = categories
             };
+        }
+
+        public SubjectCategoryDTO Create_Bg12FromFile_CategoryDTO(string fileName)
+        {
+            List<ProblemFromJsonDTO> problems = new List<ProblemFromJsonDTO>();
+            using (StreamReader r = new StreamReader($"C:\\Users\\Dinyo\\Desktop\\Pishtova-docs\\{fileName}.json"))
+            {
+                string json = r.ReadToEnd();
+                problems = JsonConvert.DeserializeObject<List<ProblemFromJsonDTO>>(json);
+            }
+            //var a = problems
+            //    .Where(x => x.CorrectAnswer != null && x.D != null)
+            //    .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim() 
+            //             && x.C.Trim() != x.CorrectAnswer.Trim() && x.D.Trim() != x.CorrectAnswer.Trim())
+            //    .ToList();
+
+            SubjectCategoryDTO category = new SubjectCategoryDTO
+            {
+                Name = problems[1].CategorieName,
+                Problems = new List<ProblemDTO>()
+            };
+
+            foreach (var problem in problems.Where(x => x.CorrectAnswer != null && x.D != null))
+            {
+
+                var currentProblem = new ProblemDTO
+                {
+                    QuestionText = problem.QuestionText,
+                    Hint = problem.Hint,
+                    PictureUrl = problem.PictureUrl,
+                    Answers = new List<AnswerDTO> {
+                    new AnswerDTO { Text = problem.A.Trim(), IsCorrect = problem.A.Trim() == problem.CorrectAnswer.Trim()},
+                    new AnswerDTO { Text = problem.B.Trim(), IsCorrect = problem.B.Trim() == problem.CorrectAnswer.Trim()},
+                    new AnswerDTO { Text = problem.C.Trim(), IsCorrect = problem.C.Trim() == problem.CorrectAnswer.Trim()},
+                    new AnswerDTO { Text = problem.D.Trim(), IsCorrect = problem.D.Trim() == problem.CorrectAnswer.Trim()}
+                    }
+                };
+
+                category.Problems.Add(currentProblem);
+            }
+
+            return category;
         }
 
         private static List<List<List<string>>> ExtractSubjectProblemsFromFirebase(string firebaseCollectionName)
