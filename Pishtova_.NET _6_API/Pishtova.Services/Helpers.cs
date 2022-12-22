@@ -11,7 +11,6 @@
     using Sandbox;
     using Newtonsoft.Json;
     using System.IO;
-    using Pishtova.Data.Model;
 
     public class Helpers : IHelpers
     {
@@ -56,11 +55,11 @@
                 problems = JsonConvert.DeserializeObject<List<ProblemFromJsonDTO>>(json);
             }
 
-            var a = problems
-                .Where(x => x.C != null)
-                .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim()
-                         && x.C.Trim() != x.CorrectAnswer.Trim() && x.D.Trim() != x.CorrectAnswer.Trim())
-                .ToList();
+            //var a = problems
+            //    .Where(x => x.C != null)
+            //    .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim()
+            //             && x.C.Trim() != x.CorrectAnswer.Trim() && x.D.Trim() != x.CorrectAnswer.Trim())
+            //    .ToList();
 
             List<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();    
             foreach (var problem in problems.Where(x => x.C != null))
@@ -97,7 +96,7 @@
             };
         }
 
-        public SubjectDTO Create_Bio_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
+        public SubjectDTO Create_BioFromFB_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId)
         {
             var subjectInfo = ExtractSubjectProblemsFromFirebase(firebaseCollectionName);
 
@@ -219,7 +218,7 @@
             };
         }
 
-        public SubjectCategoryDTO Create_Bg12FromFile_CategoryDTO(string fileName)
+        public SubjectCategoryDTO Create_FromFile_CategoryDTO(string fileName)
         {
             List<ProblemFromJsonDTO> problems = new List<ProblemFromJsonDTO>();
             using (StreamReader r = new StreamReader($"C:\\Users\\Dinyo\\Desktop\\Pishtova-docs\\{fileName}.json"))
@@ -228,8 +227,8 @@
                 problems = JsonConvert.DeserializeObject<List<ProblemFromJsonDTO>>(json);
             }
             //var a = problems
-            //    .Where(x => x.CorrectAnswer != null && x.D != null)
-            //    .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim() 
+            //    .Where(x => x.CorrectAnswer != null)
+            //    .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim()
             //             && x.C.Trim() != x.CorrectAnswer.Trim() && x.D.Trim() != x.CorrectAnswer.Trim())
             //    .ToList();
 
@@ -260,6 +259,7 @@
 
             return category;
         }
+
 
         private static List<List<List<string>>> ExtractSubjectProblemsFromFirebase(string firebaseCollectionName)
         {

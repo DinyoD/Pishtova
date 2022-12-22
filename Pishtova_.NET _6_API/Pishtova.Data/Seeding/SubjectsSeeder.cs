@@ -21,20 +21,22 @@
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
 
-            if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_7_BgName) == false)
-            {
-                var subjectDTO = helpers.Create_FromFile_SubjectDTO(SandBoxConstants.Bulgarian7, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_7_Id);
-                await SeedSubjectProblemsAsync(dbContext, subjectDTO);
-            }
-
-            //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_12_BgName) == false)
+            //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_7_BgName) == false)
             //{
-            //    var subjectDTO = helpers.Create_Bg12FromFB_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_12_Id);
-            //    var categoryDTO = helpers.Create_Bg12FromFile_CategoryDTO(SandBoxConstants.Bulgarian12);
+            //    var categoryDTO = helpers.Create_FromFile_CategoryDTO(SandBoxConstants.Bulgarian7_Literature);
+            //    var subjectDTO = helpers.Create_FromFile_SubjectDTO(SandBoxConstants.Bulgarian7, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_7_Id);
             //    subjectDTO.Categories.Add(categoryDTO);
-
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
+
+            if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_12_BgName) == false)
+            {
+                var subjectDTO = helpers.Create_Bg12FromFB_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_12_Id);
+                var categoryDTO = helpers.Create_FromFile_CategoryDTO(SandBoxConstants.Bulgarian12_Literature);
+                subjectDTO.Categories.Add(categoryDTO);
+
+                await SeedSubjectProblemsAsync(dbContext, subjectDTO);
+            }
 
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.EnglishBgName) == false)
             //{
