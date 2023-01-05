@@ -52,7 +52,9 @@ namespace Pishtova.Data
 
         public DbSet<Author> Authors { get; set; }
 
-        public DbSet<Work> Works { get; set; }
+        public DbSet<Poem> Poems { get; set; }
+
+        public DbSet<Theme> Themes { get; set; }
 
         public DbSet<Test> Tests { get; set; }
 

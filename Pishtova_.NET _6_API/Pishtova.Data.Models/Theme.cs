@@ -6,9 +6,9 @@
 
     using Pishtova.Data.Common.Model;
 
-    public class Author: BaseDeletableModel<string>
+    public class Theme : BaseDeletableModel<string>
     {
-        public Author()
+        public Theme()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Poems = new HashSet<Poem>();
@@ -17,8 +17,10 @@
         [Required]
         public string Name { get; set; }
 
-        public string PictureUrl { get; set; }
+        public string SubjectId { get; set; }
 
-        public ICollection<Poem> Poems { get; set; }
+        public Subject Subject { get; set; }
+
+        public virtual ICollection<Poem> Poems { get; set; }
     }
 }

@@ -29,14 +29,14 @@
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
 
-            if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_12_BgName) == false)
-            {
-                var subjectDTO = helpers.Create_Bg12FromFB_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_12_Id);
-                var categoryDTO = helpers.Create_FromFile_CategoryDTO(SandBoxConstants.Bulgarian12_Literature);
-                subjectDTO.Categories.Add(categoryDTO);
+            //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_12_BgName) == false)
+            //{
+            //    var subjectDTO = helpers.Create_Bg12FromFB_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_12_Id);
+            //    var categoryDTO = helpers.Create_FromFile_CategoryDTO(SandBoxConstants.Bulgarian12_Literature);
+            //    subjectDTO.Categories.Add(categoryDTO);
 
-                await SeedSubjectProblemsAsync(dbContext, subjectDTO);
-            }
+            //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
+            //}
 
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.EnglishBgName) == false)
             //{

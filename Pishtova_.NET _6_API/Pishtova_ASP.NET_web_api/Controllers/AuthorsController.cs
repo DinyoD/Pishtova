@@ -19,36 +19,5 @@
         {
             this.authorService = authorService ?? throw new System.ArgumentNullException(nameof(authorService));
         }
-
-
-        [HttpGet]
-        [Route("subject/{subjectId}")]
-        public async Task<IActionResult> GetAll ([FromRoute]string subjectId)
-        {
-            var result = await this.authorService.GetAuthorsWithWorksBySubjectIdAsync(subjectId);
-            if (!result.IsSuccessful) return this.Error(result);
-
-            var authors = result.Data;
-            if (authors == null || authors.Count == 0) return this.NotFound();
-
-            var authorModels = authors.Select(this.ToAuthorModel).ToList();
-
-            return this.Ok(authorModels);
-        }
-
-        private AuthorModel ToAuthorModel(Author author)
-        {
-            return new AuthorModel
-            {
-                Name = author.Name,
-                Index = author.Index,
-                Works = author.Works.Select(w => new WorkModel
-                                    {
-                                        Name = w.Name,
-                                        Index = w.Index
-                                    })
-                                    .ToList()
-            };
-        }
     }
 }
