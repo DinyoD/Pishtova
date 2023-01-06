@@ -92,6 +92,7 @@ namespace Pishtova_ASP.NET_web_api
             services.AddTransient<ITestService, TestService>();
             services.AddTransient<IPishtovaSubscriptionService, PishtovaSubscriptionService>();
             services.AddTransient<IThemeService, ThemeService>();
+            services.AddTransient<IPoemService, PoemService>();
 
             services.AddControllers();
         }
