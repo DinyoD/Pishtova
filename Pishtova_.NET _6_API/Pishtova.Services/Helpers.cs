@@ -260,6 +260,41 @@
             return category;
         }
 
+        public ICollection<ThemeDTO> CreateThemeDTOs(string fileName)
+        {
+            List<ThemeFromJsonDTO> themesFromJsonFile = new List<ThemeFromJsonDTO>();
+            using (StreamReader r = new StreamReader($"C:\\Users\\Dinyo\\Desktop\\Pishtova-docs\\test-themes-{fileName}.json"))
+            {
+                string json = r.ReadToEnd();
+                themesFromJsonFile = JsonConvert.DeserializeObject<List<ThemeFromJsonDTO>>(json);
+            }
+            var themes = new List<ThemeDTO>();
+
+            foreach (var item in themesFromJsonFile)
+            {
+                var theme = themes.FirstOrDefault(x => x.Name == item.ThemeName);
+                if (theme == null)
+                {
+                    theme = new ThemeDTO
+                    {
+                        Name = item.ThemeName,
+                        SubjectId = item.SubjectId,
+                        PoemDTOs = new List<PoemDTO>()
+                    };
+                    themes.Add(theme);
+                }
+                theme.PoemDTOs.Add(new PoemDTO
+                {
+                    Name = item.PoemName,
+                    TextUrl = item.TextUrl,
+                    TextLink = item.TextLink,
+                    AnalysisUrl = item.AnalysisUrl,
+                    ExtrasUrl = item.ExtrasUrl,
+                    AuthorDTO = new AuthorDTO { Name = item.AuthorName, PictureUrl = item.AuthorPictureUrl }
+                });
+            }
+            return themes;
+        }
 
         private static List<List<List<string>>> ExtractSubjectProblemsFromFirebase(string firebaseCollectionName)
         {

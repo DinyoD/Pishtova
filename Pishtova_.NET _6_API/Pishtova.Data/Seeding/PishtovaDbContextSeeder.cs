@@ -24,7 +24,8 @@
                               //new SubjectsSeeder(),
                               //new AuthorsSeeder(),
                               //new BadgesSeeder(),
-                              //new UsersBadgesSeeder()
+                              //new UsersBadgesSeeder(),
+                              //new ThemeSeeder()
                           };
 
             foreach (var seeder in seeders)

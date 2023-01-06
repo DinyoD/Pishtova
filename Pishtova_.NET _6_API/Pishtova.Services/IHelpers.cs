@@ -15,5 +15,7 @@
 
         SubjectDTO Create_FromFile_SubjectDTO(string firebaseCollectionName, string subjectName, string subjectId);
 
+        ICollection<ThemeDTO> CreateThemeDTOs(string fileName);
+
     }
 }
