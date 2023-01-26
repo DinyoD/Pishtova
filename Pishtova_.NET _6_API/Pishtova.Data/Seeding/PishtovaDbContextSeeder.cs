@@ -22,7 +22,6 @@
                           {
                               //new SchoolsSeeder(),
                               //new SubjectsSeeder(),
-                              //new AuthorsSeeder(),
                               //new BadgesSeeder(),
                               //new UsersBadgesSeeder(),
                               //new ThemeSeeder()

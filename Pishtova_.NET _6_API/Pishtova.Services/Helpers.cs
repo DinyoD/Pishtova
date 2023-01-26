@@ -55,11 +55,9 @@
                 problems = JsonConvert.DeserializeObject<List<ProblemFromJsonDTO>>(json);
             }
 
-            //var a = problems
-            //    .Where(x => x.C != null)
-            //    .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim()
-            //             && x.C.Trim() != x.CorrectAnswer.Trim() && x.D.Trim() != x.CorrectAnswer.Trim())
-            //    .ToList();
+            var a = problems
+                    .Where(x => x.CorrectAnswer.Trim() != x.A.Trim() && x.CorrectAnswer.Trim() != x.B.Trim() && x.CorrectAnswer.Trim() != x.C.Trim() && x.CorrectAnswer.Trim() != x.D.Trim())
+                    .ToList();
 
             List<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();    
             foreach (var problem in problems.Where(x => x.C != null))
@@ -100,6 +98,8 @@
         {
             var subjectInfo = ExtractSubjectProblemsFromFirebase(firebaseCollectionName);
 
+            ICollection<ProblemDTO> wrong = new List<ProblemDTO>();
+
             ICollection<SubjectCategoryDTO> categories = new List<SubjectCategoryDTO>();
             for (int i = 0; i < subjectInfo.Count; i++)
             {
@@ -129,6 +129,11 @@
                         PictureUrl = problemInfo.Count > 7 && !string.IsNullOrWhiteSpace(problemInfo[7]) && problemInfo[7] != "empty" ? problemInfo[7] : null,
                     };
                     problems.Add(problem);
+
+                    if (problem.Answers.Any(x => x.IsCorrect == true) == false)
+                    {
+                        wrong.Add(problem);
+                    }
                 }
                 var categoryName = GlobalConstants.BiologyCategoriesName[i];
 
@@ -227,10 +232,8 @@
                 problems = JsonConvert.DeserializeObject<List<ProblemFromJsonDTO>>(json);
             }
             //var a = problems
-            //    .Where(x => x.CorrectAnswer != null)
-            //    .Where(x => x.A.Trim() != x.CorrectAnswer.Trim() && x.B.Trim() != x.CorrectAnswer.Trim()
-            //             && x.C.Trim() != x.CorrectAnswer.Trim() && x.D.Trim() != x.CorrectAnswer.Trim())
-            //    .ToList();
+            //        .Where(x => x.CorrectAnswer.Trim() != x.A.Trim() && x.CorrectAnswer.Trim() != x.B.Trim() && x.CorrectAnswer.Trim() != x.C.Trim() && x.CorrectAnswer.Trim() != x.D.Trim())
+            //        .ToList();
 
             SubjectCategoryDTO category = new SubjectCategoryDTO
             {

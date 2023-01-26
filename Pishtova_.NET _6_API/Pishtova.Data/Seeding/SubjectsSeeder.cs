@@ -1,5 +1,6 @@
 ﻿namespace Pishtova.Data.Seeding
 {
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Pishtova.Common;
     using Pishtova.Data.Model;
@@ -17,22 +18,22 @@
 
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.BiologyBgName) == false)
             //{
-            //    var subjectDTO = helpers.Create_Bio_SubjectDTO(SandBoxConstants.Biology, GlobalConstants.BiologyBgName, GlobalConstants.BiologyId);
+            //    var subjectDTO = helpers.Create_BioFromFB_SubjectDTO(SandBoxConstants.Biology, GlobalConstants.BiologyBgName, GlobalConstants.BiologyId);
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
 
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_7_BgName) == false)
             //{
             //    var categoryDTO = helpers.Create_FromFile_CategoryDTO(SandBoxConstants.Bulgarian7_Literature);
-            //    var subjectDTO = helpers.Create_FromFile_SubjectDTO(SandBoxConstants.Bulgarian7, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_7_Id);
+            //    var subjectDTO = helpers.Create_FromFile_SubjectDTO(SandBoxConstants.Bulgarian7, GlobalConstants.Bulgarian_7_BgName, GlobalConstants.Bulgarian_7_Id);
             //    subjectDTO.Categories.Add(categoryDTO);
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
 
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.Bulgarian_12_BgName) == false)
             //{
-            //    var subjectDTO = helpers.Create_Bg12FromFB_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_12_Id);
             //    var categoryDTO = helpers.Create_FromFile_CategoryDTO(SandBoxConstants.Bulgarian12_Literature);
+            //    var subjectDTO = helpers.Create_Bg12FromFB_SubjectDTO(SandBoxConstants.Bulgarian, GlobalConstants.Bulgarian_12_BgName, GlobalConstants.Bulgarian_12_Id);
             //    subjectDTO.Categories.Add(categoryDTO);
 
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
@@ -46,9 +47,10 @@
 
             //if (dbContext.Subjects.Any(x => x.Name == GlobalConstants.GeographyBgName) == false)
             //{
-            //    var subjectDTO = helpers.Create_Geo_SubjectDTO(SandBoxConstants.Geography, GlobalConstants.GeographyBgName, GlobalConstants.GeographyId);
+            //    var subjectDTO = helpers.Create_FromFile_SubjectDTO(SandBoxConstants.Geography, GlobalConstants.GeographyBgName, GlobalConstants.GeographyId);
             //    await SeedSubjectProblemsAsync(dbContext, subjectDTO);
             //}
+
         }
 
         private async Task SeedSubjectProblemsAsync(PishtovaDbContext dbContext, Services.Models.SubjectDTO subjectDTO)
