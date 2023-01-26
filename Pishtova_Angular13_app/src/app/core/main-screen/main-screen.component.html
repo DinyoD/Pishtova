@@ -25,7 +25,7 @@
       <a class="box box-small">
         <span class="box-text">номер</span>
         <span class="box-value">{{userBestRank?.rank}}</span>
-        <span class="box-text">{{userBestRank?.subjectName}}</span>
+        <span class="box-text" [ngClass]="{'box-text-long': isNameLong(userBestRank?.subjectName)}">{{userBestRank?.subjectName}}</span>
       </a>
     </div>
     <a class="box box-big">

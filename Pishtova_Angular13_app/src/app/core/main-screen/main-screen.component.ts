@@ -48,6 +48,10 @@ export class MainScreenComponent implements OnInit{
     this.subjectService.setSubject(sbj);
   }
 
+  public isNameLong(sbjName: string|undefined): boolean {
+    return sbjName != undefined && sbjName.length > 15;
+  }
+
   private generateTestsChart(data: TestScoreModel[] ): void {
     this.userLastTestsChart = new Chart('testsChart', {
       type: 'line',
