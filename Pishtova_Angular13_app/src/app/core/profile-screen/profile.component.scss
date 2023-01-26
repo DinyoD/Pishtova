@@ -156,7 +156,7 @@
           height: 36px;
         }
         .sbj-name {
-          font-size: 14px;
+          font-size: 10px;
           line-height: 24px;
           font-weight: 700;
           margin-top: 12px;
@@ -165,8 +165,11 @@
         .sbj-btn {
           display: none;
         }
-        .bel {
-          color: $sbj-bel;
+        .bel_7 {
+          color: $sbj-bel_7;
+        }
+        .bel_12 {
+          color: $sbj-bel_12;
         }
         .bio {
           color: $sbj-bio;
@@ -174,8 +177,8 @@
         .geo {
           color: $sbj-geo;
         }
-        .chm {
-          color: $sbj-chm;
+        .eng {
+          color: $sbj-eng;
         }
       }
     }
@@ -351,6 +354,7 @@
         //justify-content: flex-start;
         align-content: flex-start;
         margin-top: 0;
+        overflow-y: scroll;
         .sbj {
           box-sizing: border-box;
           height: 44%;
