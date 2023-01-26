@@ -25,14 +25,14 @@
 
         [HttpGet]
         [Route("subject/{id}")]
-        public async Task<IActionResult> generateTest(string id)
+        public async Task<IActionResult> GenerateTest(string id)
         {
             var operationResult = new OperationResult();
             if (!operationResult.ValidateNotNull(id)) return this.Error(operationResult);
 
             try
             {
-                var testPattern = new Pattern().ProblemsSubjectIDs[id];
+                var testPattern = new TestPattern().SubjectsID[id];
                 if (testPattern == null || testPattern.Count == 0) return this.NotFound();
 
                 var result = await this.problemService.GenerateTest(testPattern);
