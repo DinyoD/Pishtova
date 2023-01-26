@@ -4,20 +4,10 @@
   </div>
   <div class="box-container">
     <a (click)="chooseSubject(s)" *ngFor="let s of subjects|async" class="box">
-      <img *ngIf="s.id == 'geo'" src="../../../assets/icons/subjects/geo.svg" alt=""
-        class="box-icon">
-      <img *ngIf="s.id == 'bio'" src="../../../assets/icons/subjects/bio.svg" alt=""
+      <img src="../../../assets/icons/subjects/{{s.id}}.svg" alt=""
         class="box-icon">
       <span class="box-name" [ngClass]="s.id">{{s.name}}</span>
     </a>
-    <!-- <a class="box">
-      <img src="../../../assets/icons/subjects/geo.svg" alt="" class="box-icon">
-      <span class="box-name geo">География</span>
-    </a>
-    <a class="box">
-      <img src="../../../assets/icons/subjects/chm.svg" alt="" class="box-icon">
-      <span class="box-name chm">Химия</span>
-    </a> -->
   </div>
 
   <div class="title-container">
