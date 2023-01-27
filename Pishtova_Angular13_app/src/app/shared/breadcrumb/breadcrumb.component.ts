@@ -21,7 +21,7 @@ export class BreadcrumbComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.route.url.split('/'));
     const urlPart = this.route.url.split('/');
-    if (!urlPart.includes('subjects')) {
+    if (!urlPart.includes('subjects') && !urlPart.includes('poems')) {
       return;
     }
     this.breadcrumb = [
@@ -57,6 +57,22 @@ export class BreadcrumbComponent implements OnInit {
 
       if(themeName == null) return; 
       this.breadcrumb = [...this.breadcrumb, {name: themeName, url: '/subjects/' + this.storageService.getItem(Storage.SUBJECT_ID) + '/themes' +this.storageService.getItem(Storage.THEME_ID)}]
+    }
+    if(urlPart[1] == 'poems'){
+      this.breadcrumb = [
+        {
+          name: this.storageService.getItem(Storage.SUBJECT_NAME)||'', 
+          url: '/subjects/' + this.storageService.getItem(Storage.SUBJECT_ID)||''
+        },
+        {
+          name: 'Теми', 
+          url: '/subjects/' + this.storageService.getItem(Storage.SUBJECT_ID) + '/themes'
+        },
+        {
+          name: this.storageService.getItem(Storage.THEME_NAME)||'', 
+          url: '/subjects/' + this.storageService.getItem(Storage.SUBJECT_ID) + '/themes/' +this.storageService.getItem(Storage.THEME_ID)
+        }
+      ];
     }
   }
 
