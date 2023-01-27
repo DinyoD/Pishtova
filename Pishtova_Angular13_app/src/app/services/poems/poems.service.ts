@@ -5,6 +5,7 @@ import { PoemWithAuthorModel } from 'src/app/models/poem/poemWithAuthor';
 import { environment as env } from 'src/environments/environment';
 import { StorageService } from '../storage/storage.service';
 import { Storage} from '../../utilities/constants/storage';
+import { PoemDetailsModel } from 'src/app/models/poem/poemDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,12 @@ export class PoemsService {
     private httpClient : HttpClient,
     private storage: StorageService) { }
 
-  public getThemesBySubjectId = (themeId: string): Observable<PoemWithAuthorModel[]> => {
+  public getPoemsByThemeId = (themeId: string): Observable<PoemWithAuthorModel[]> => {
     return this.httpClient.get<PoemWithAuthorModel[]>(env.API_URL + `/poems/theme/${themeId}`);
+  }
+
+  public getPoem = (poemId: string): Observable<PoemDetailsModel> => {
+    return this.httpClient.get<PoemDetailsModel>(env.API_URL + `/poems/${poemId}`);
   }
 
   public setPoem = (poemName: string): void => {
