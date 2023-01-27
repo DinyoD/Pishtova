@@ -60,6 +60,7 @@ import { PoemDetailsScreenComponent } from './poem-details-screen/poem-details-s
       { path: 'subjects/:id/ranking', component: RankingScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subjects/:id/themes', component: ThemesScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subjects/:subjectId/themes/:themeId', component: PoemsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'poems/:id', component: PoemDetailsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
     ]),
   ],
   exports: [
