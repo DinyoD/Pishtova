@@ -1,0 +1,74 @@
+@import "../../utilities/devices/breakpoints.scss";
+@import "../../utilities/colors/colors.scss";
+
+.container {
+    .box-container{
+        .box{
+          width: 100%;
+          height: 80px;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          .picture-box{
+            width: 48px;
+            height: 48px;
+            overflow: hidden;
+            border-radius: 100%;
+            margin: 0 16px;
+            .picture{
+                width: 100%;
+                height: 100%;
+            }
+          }
+          .names-box{
+            display: flex;
+            flex-direction: column;
+              .poem-name {
+              font-weight: 600;
+              line-height: 24px;
+              }
+              .author-name {
+                line-height: 24px;
+                font-size: 14px;
+                color: $text;
+              }
+          }
+        }
+    }
+}
+
+@media (min-width: $tablet) {
+    .container {
+      .box-container {
+        margin-top: 16px;
+        .box {
+          margin: 0 8px 16px 8px;
+          width: calc(33% - 16px);
+          height: 10vw;
+          flex-direction: row;
+          justify-content: flex-start;
+          .picture-box{
+            width: 100px;
+            height: 100px;
+            margin: 0 32px;
+            .picture{
+                width: 100%;
+                height: 100%;
+            }
+          }
+          .names-box{
+            display: flex;
+            flex-direction: column;
+              .poem-name {
+                font-size: 24px;
+              line-height: 32px;
+              }
+              .author-name {
+                  font-size: 20px;
+                line-height: 32px;
+              }
+          }
+        }
+      }
+    }
+  }

@@ -1,0 +1,12 @@
+<app-breadcrumb></app-breadcrumb>
+<div *ngIf="themes != null && themes.length > 0" class="container">
+  <div class="box-container">
+    <a *ngFor="let t of themes" class="box" (click)="handelThemeRedirect(t)">
+      <span class="box-text">{{t.name}}</span>
+    </a>
+  </div>
+</div>
+
+<div *ngIf="themes == null || themes.length == 0" class="coming-soon">
+  <p>Очаквайте скоро!</p>
+</div>

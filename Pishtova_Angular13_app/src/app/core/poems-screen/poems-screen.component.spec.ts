@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MaterialsScreenComponent } from './materials-screen.component';
+import { PoemsScreenComponent } from './poems-screen.component';
 
-describe('MaterialsScreenComponent', () => {
-  let component: MaterialsScreenComponent;
-  let fixture: ComponentFixture<MaterialsScreenComponent>;
+describe('PoemsScreenComponent', () => {
+  let component: PoemsScreenComponent;
+  let fixture: ComponentFixture<PoemsScreenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MaterialsScreenComponent ]
+      declarations: [ PoemsScreenComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MaterialsScreenComponent);
+    fixture = TestBed.createComponent(PoemsScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

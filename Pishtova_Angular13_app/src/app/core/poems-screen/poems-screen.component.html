@@ -1,0 +1,14 @@
+<app-breadcrumb></app-breadcrumb>
+<div *ngIf="poems != null && poems.length > 0" class="container">
+  <div class="box-container">
+    <a *ngFor="let p of poems" class="box" (click)="handelPoemRedirect(p.id, p.name)">
+      <div class="picture-box">
+        <img src="{{p.authorPictureUrl}}" alt="" class="picture">
+      </div>
+      <div class="names-box">
+        <span class="poem-name">{{p.name}}</span>
+        <span class="author-name">{{p.authorName}}</span>
+      </div>
+    </a>
+  </div>
+</div>
