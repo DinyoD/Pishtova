@@ -1,6 +1,6 @@
-export interface PoemWithAuthorModel{
-    id: string;
-    name: string;
+import { PoemBaseModel } from "./poemBase";
+
+export interface PoemWithAuthorModel extends PoemBaseModel{
     authorName: string;
     authorPictureUrl: string;
 }
