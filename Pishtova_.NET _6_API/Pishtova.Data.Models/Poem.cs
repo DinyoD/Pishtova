@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-namespace Pishtova.Data.Model
+﻿namespace Pishtova.Data.Model
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -26,8 +24,6 @@ namespace Pishtova.Data.Model
         public Theme Theme { get; set; }
 
         public string TextUrl { get; set; }
-
-        public string TextLink { get; set; }
 
         public string AnalysisUrl { get; set; }
 

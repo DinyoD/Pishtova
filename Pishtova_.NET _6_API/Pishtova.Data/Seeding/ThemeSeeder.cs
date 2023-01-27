@@ -1,6 +1,7 @@
 ﻿namespace Pishtova.Data.Seeding
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
 
@@ -10,7 +11,6 @@
     using Pishtova.Services;
     using Pishtova.Data.Model;
     using Pishtova.Services.Models;
-    using System.Linq;
 
     public class ThemeSeeder : ISeeder
     {
@@ -40,7 +40,6 @@
                     var poem = new Poem
                     {
                         Name = p.Name,
-                        TextLink= p.TextLink,
                         TextUrl= p.TextUrl,
                         AnalysisUrl= p.AnalysisUrl,
                         ExtrasUrl= p.ExtrasUrl,

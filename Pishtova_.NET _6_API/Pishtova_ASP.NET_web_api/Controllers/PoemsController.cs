@@ -9,7 +9,6 @@
     using Pishtova.Services.Data;
     using Pishtova_ASP.NET_web_api.Extensions;
     using Pishtova_ASP.NET_web_api.Model.Poem;
-    using Pishtova_ASP.NET_web_api.Model.Theme;
 
     public class PoemsController: ApiController
     {
@@ -52,7 +51,6 @@
             {
                 Id = poem.Id,
                 Name = poem.Name,
-                TextLink = poem.TextLink,
                 TextUrl = poem.TextUrl,
                 AnalysisUrl = poem.AnalysisUrl,
                 ExtrasUrl = poem.ExtrasUrl

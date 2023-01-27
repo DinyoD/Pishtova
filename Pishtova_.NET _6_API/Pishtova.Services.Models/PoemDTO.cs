@@ -6,8 +6,6 @@
 
         public string TextUrl { get; set; }
 
-        public string TextLink { get; set; }
-
         public string AnalysisUrl { get; set; }
 
         public string ExtrasUrl { get; set; }

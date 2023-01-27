@@ -266,7 +266,7 @@
         public ICollection<ThemeDTO> CreateThemeDTOs(string fileName)
         {
             List<ThemeFromJsonDTO> themesFromJsonFile = new List<ThemeFromJsonDTO>();
-            using (StreamReader r = new StreamReader($"C:\\Users\\Dinyo\\Desktop\\Pishtova-docs\\test-themes-{fileName}.json"))
+            using (StreamReader r = new StreamReader($"C:\\Users\\Dinyo\\Desktop\\Pishtova-docs\\{fileName}_themes.json"))
             {
                 string json = r.ReadToEnd();
                 themesFromJsonFile = JsonConvert.DeserializeObject<List<ThemeFromJsonDTO>>(json);
@@ -290,7 +290,6 @@
                 {
                     Name = item.PoemName,
                     TextUrl = item.TextUrl,
-                    TextLink = item.TextLink,
                     AnalysisUrl = item.AnalysisUrl,
                     ExtrasUrl = item.ExtrasUrl,
                     AuthorDTO = new AuthorDTO { Name = item.AuthorName, PictureUrl = item.AuthorPictureUrl }
