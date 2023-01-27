@@ -40,16 +40,16 @@ export class SubjectScreenComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.testService.sendInTestStateChangeNotification(true)
-        this.router.navigate([`subject/${this.subject?.id}/test`]);
+        this.router.navigate([`subjects/${this.subject?.id}/test`]);
       }
   });
   }
 
   public handelRankingRedirect = ():void => {
-    this.router.navigate([`subject/${this.subject?.id}/ranking`]);
+    this.router.navigate([`subjects/${this.subject?.id}/ranking`]);
   }
 
   public handelMaterialsRedirect = ():void => {
-    this.router.navigate([`subject/${this.subject?.id}/materials`]);
+    this.router.navigate([`subjects/${this.subject?.id}/themes`]);
   }
 }

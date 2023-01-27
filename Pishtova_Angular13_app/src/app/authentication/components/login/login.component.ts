@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { UserForLoginModel } from '../../models/userForLogin';
-import { AuthService, StorageService, UserService } from 'src/app/services';
+import { AuthService, UserService } from 'src/app/services';
 import ILoginResult from '../../models/results/LoginResult';
 
 @Component({
@@ -26,8 +26,7 @@ export class LoginComponent implements OnInit {
     private route: Router,
     private actRouter: ActivatedRoute,
     private authService: AuthService,
-    private userService: UserService,
-    private storage: StorageService
+    private userService: UserService
   ) { }
     
   ngOnInit(): void {

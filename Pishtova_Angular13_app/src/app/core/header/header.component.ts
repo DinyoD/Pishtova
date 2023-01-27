@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 import { ModalAnimation } from 'src/app/core/header/header.animations';
 import { SubjectModel } from 'src/app/models/subject/subject';
-import { AuthService, StorageService, SubjectService, TestService, UserService  } from 'src/app/services';
+import { AuthService, SubjectService, TestService, UserService  } from 'src/app/services';
 import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Storage} from '../../utilities/constants/storage';
@@ -32,8 +32,7 @@ export class HeaderComponent implements OnInit{
     private authService : AuthService,
     private userService : UserService,
     private subjectService: SubjectService,
-    private testService: TestService,
-    private storage: StorageService) {
+    private testService: TestService) {
 
   }
     
@@ -86,7 +85,7 @@ export class HeaderComponent implements OnInit{
     const sbjIdString = localStorage.getItem(Storage.SUBJECT_ID);
     if (sbjIdString) {
       const sbjId = + sbjIdString;
-      this.router.navigate(["/subject/"+{sbjId}]);
+      this.router.navigate(["/subjects/"+{sbjId}]);
     }
     else {
       this.router.navigate(["/"]);

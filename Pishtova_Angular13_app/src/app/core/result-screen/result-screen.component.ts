@@ -33,7 +33,7 @@ export class ResultScreenComponent implements OnInit {
     if (this.subjectId != undefined) {
       this.testService.sendInTestStateChangeNotification(true);
       this.pointsService.clearPoints();
-      this.router.navigate([`/subject/${this.subjectId}/test`])
+      this.router.navigate([`/subjects/${this.subjectId}/test`])
       return;
     }
     this.router.navigate(['/main']);

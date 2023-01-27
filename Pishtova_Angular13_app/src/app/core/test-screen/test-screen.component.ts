@@ -44,7 +44,7 @@ export class TestScreenComponent implements OnInit {
     private router: Router) {
       if (this.actRoute.snapshot.paramMap.get('id') != null) {
         this.subjectId = this.actRoute.snapshot.paramMap.get('id');
-        this.navigationUrl = 'subject/' + Number(this.actRoute.snapshot.paramMap.get('id')) + '/test';
+        this.navigationUrl = 'subjects/' + Number(this.actRoute.snapshot.paramMap.get('id')) + '/test';
       }
     }
 
@@ -114,7 +114,7 @@ export class TestScreenComponent implements OnInit {
       if (!testToSave) return;
 
       this.testService.saveTest(testToSave).subscribe( (res: ISaveTestResult) => 
-        this.router.navigate(['/subject/' + this.subjectId +'/result'], {state: {testId: res.testId}})
+        this.router.navigate(['/subjects/' + this.subjectId +'/result'], {state: {testId: res.testId}})
       );
 
     }

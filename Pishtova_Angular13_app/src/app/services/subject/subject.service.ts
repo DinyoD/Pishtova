@@ -17,8 +17,7 @@ export class SubjectService {
 
   constructor(
     private httpClient : HttpClient,
-    private storage: StorageService
-    ) { }
+    private storage: StorageService) { }
 
   public getAllSubjects = () : Observable<SubjectModel[]> => {
     return this.httpClient.get<SubjectModel[]>(env.API_URL + `/subjects`)
@@ -50,6 +49,4 @@ export class SubjectService {
        id: id
     }
   }
-
-
 }

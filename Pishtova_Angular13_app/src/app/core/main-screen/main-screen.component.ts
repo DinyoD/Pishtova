@@ -34,7 +34,7 @@ export class MainScreenComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.subjectService.subjectChanged.subscribe(sbjModel => { if(sbjModel) this.router.navigate([`subject/${sbjModel?.id}`])});
+    this.subjectService.subjectChanged.subscribe(sbjModel => { if(sbjModel) this.router.navigate([`subjects/${sbjModel?.id}`])});
     const user = this.userService.getCurrentUser();
     if( user == null ) return;
     this.userId = user.id;
