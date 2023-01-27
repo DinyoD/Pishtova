@@ -4,5 +4,7 @@ export const Storage = {
     SUBJECT_ID: "subjectId",
     SUBJECT_NAME: "subjectName",
     POINTS: "points",
-    TEST: "test"
+    TEST: "test",
+    POEM: "poem",
+    THEME: "theme"
 }
