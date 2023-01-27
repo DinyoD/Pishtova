@@ -12,8 +12,8 @@ import { Storage} from '../../utilities/constants/storage';
 })
 export class ThemesService {
 
-  private _themeChangeSub: Subject<string|null> = new Subject<string|null>();
-  public themeChanged: Observable<string|null> = this._themeChangeSub.asObservable();
+  private _themeChangeSub: Subject<ThemeModel|null> = new Subject<ThemeModel|null>();
+  public themeChanged: Observable<ThemeModel|null> = this._themeChangeSub.asObservable();
 
   constructor(
     private httpClient : HttpClient,
@@ -23,13 +23,22 @@ export class ThemesService {
     return this.httpClient.get<ThemeModel[]>(env.API_URL + `/themes/subject/${subjectId}`);
   }
 
-  public setTheme = (themeName: string): void => {
-    this._themeChangeSub.next(themeName);
-    themeName != null ? this.storage.setItem(Storage.THEME, themeName)
-                      : this.storage.removeItem(Storage.THEME);
+  public setTheme = (theme: ThemeModel): void => {
+    this._themeChangeSub.next(theme);
+    if(theme != null){
+      this.storage.setItem(Storage.THEME_NAME, theme.name);
+      this.storage.setItem(Storage.THEME_ID, theme.id);
+    }else{
+      this.storage.removeItem(Storage.THEME_NAME);
+      this.storage.removeItem(Storage.THEME_ID);
+    }
   }
 
-  public getCurrentTheme = (): string|null => {
-    return this.storage.getItem<string>(Storage.THEME);
+  public getCurrentThemeName = (): string|null => {
+    return this.storage.getItem<string>(Storage.THEME_NAME);
+  }
+
+  public getCurrentThemeId = (): string|null => {
+    return this.storage.getItem<string>(Storage.THEME_ID);
   }
 }

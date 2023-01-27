@@ -6,5 +6,6 @@ export const Storage = {
     POINTS: "points",
     TEST: "test",
     POEM: "poem",
-    THEME: "theme"
+    THEME_NAME: "themeName",
+    THEME_ID: "themeId"
 }
