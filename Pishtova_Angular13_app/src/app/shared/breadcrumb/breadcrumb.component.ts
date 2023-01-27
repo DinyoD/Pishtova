@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BreadCrumbElement } from 'src/app/models/breadcrumb/breadcrumbElement';
 import { StorageService } from 'src/app/services';
+import { Storage } from 'src/app/utilities/constants/storage';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -20,13 +21,13 @@ export class BreadcrumbComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.route.url.split('/'));
     const urlPart = this.route.url.split('/');
-    if (!urlPart.includes('subject')) {
+    if (!urlPart.includes('subjects')) {
       return;
     }
     this.breadcrumb = [
       {
-        name: this.storageService.getItem('subjectName')||'', 
-        url: '/subject/' + this.storageService.getItem('subjectId')||''
+        name: this.storageService.getItem(Storage.SUBJECT_NAME)||'', 
+        url: '/subjects/' + this.storageService.getItem(Storage.SUBJECT_ID)||''
       }
     ];
     if (urlPart.length > 3) {
@@ -36,8 +37,8 @@ export class BreadcrumbComponent implements OnInit {
         case 'test':
           sbjAreaBg = 'Тест'
           break;
-        case 'materials':
-          sbjAreaBg = 'Материали'
+        case 'themes':
+          sbjAreaBg = 'Теми'
           break;
         case 'ranking':
           sbjAreaBg = 'Класиране'
@@ -47,7 +48,15 @@ export class BreadcrumbComponent implements OnInit {
           break;
       }
 
-      this.breadcrumb = [...this.breadcrumb, {name: sbjAreaBg, url: '/subject/' + this.storageService.getItem('subjectId') + '/' + sbjArea}]
+      this.breadcrumb = [...this.breadcrumb, {name: sbjAreaBg, url: '/subjects/' + this.storageService.getItem(Storage.SUBJECT_ID) + '/' + sbjArea}]
+    }
+
+    if(urlPart.length > 4 && urlPart[3] == 'themes'){
+
+      var themeName = this.storageService.getItem<string>(Storage.THEME_NAME);
+
+      if(themeName == null) return; 
+      this.breadcrumb = [...this.breadcrumb, {name: themeName, url: '/subjects/' + this.storageService.getItem(Storage.SUBJECT_ID) + '/themes' +this.storageService.getItem(Storage.THEME_ID)}]
     }
   }
 
