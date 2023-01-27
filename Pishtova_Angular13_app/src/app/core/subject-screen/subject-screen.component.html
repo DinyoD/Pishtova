@@ -9,7 +9,7 @@
       <img src="../../../assets/icons/subjects/sbj-leaderboard.svg" alt="" class="box-icon">
       <span class="box-name">Класиране</span>
     </a>
-    <a class="box sbj-assets-box" (click)="handelMaterialsRedirect()">
+    <a *ngIf="subject?.id == 'bel_12'" class="box sbj-assets-box" (click)="handelMaterialsRedirect()">
       <img src="../../../assets/icons/subjects/sbj-materials.svg" alt="" class="box-icon">
       <span class="box-name">Материали</span>
     </a>

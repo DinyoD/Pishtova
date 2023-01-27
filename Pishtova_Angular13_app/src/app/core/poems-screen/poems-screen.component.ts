@@ -25,7 +25,7 @@ export class PoemsScreenComponent implements OnInit {
       this.router.navigate(['/']);
       return;
     };
-    this.poemsService.getThemesBySubjectId(this.themeId).subscribe(poems => this.poems = poems);
+    this.poemsService.getPoemsByThemeId(this.themeId).subscribe(poems => this.poems = poems);
   }
 
   public handelPoemRedirect = (poemId: string, poemName: string): void => {
