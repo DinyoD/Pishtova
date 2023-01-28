@@ -1,16 +1,8 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThemeModel } from 'src/app/models/theme/theme';
 import { ThemesService } from 'src/app/services';
 
-@Pipe({ name: 'safe' })
-export class SafePipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) { }
-  transform(url: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-}
 @Component({
   selector: 'app-themes-screen',
   templateUrl: './themes-screen.component.html',
@@ -41,12 +33,4 @@ export class ThemesScreenComponent implements OnInit {
       this.router.navigate([`/subjects/${this.subjectId}/themes/${theme.id}`]);
     }
   }
-
-  // private checkUrl = (url: string): string => {
-  //   fetch(new Request(url))
-  //   .then((a) => {console.log(a)})
-  //   .catch((r)=>{ console.log(r)});
-  //   return url;
-  // }
-
 }
