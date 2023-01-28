@@ -68,7 +68,7 @@
         </div>
         <div class="sbj-info">
           <span class="text">{{s.problems}}</span>
-          <span class="text">&nbsp;въпроси</span>
+          <span class="text">&nbsp;въпроса</span>
         </div>
         <div class="sbj-btn">
           <span class="text">Детайли</span>
@@ -91,7 +91,7 @@
       </div>
       <div class="sbj-info">
         <span class="info-text-big">{{subjectWithCategories?.problems}}</span>
-        <span class="info-text">въпроси</span>
+        <span class="info-text">въпроса</span>
       </div>
       <img src="../../../assets/icons/subjects/{{subjectWithCategories?.id}}.svg" alt="" class="sbj-icon">
     </div>
@@ -100,7 +100,7 @@
       <div *ngFor="let cat of subjectWithCategories?.categories" class="category">
         <div class="score">
           <span class="score-text-big">{{cat.percentage}} %</span>
-          <span class="score-text">{{cat.name}}</span>
+          <span class="score-text" [ngClass]="{'score-text-long': cat.name.length > 32}">{{cat.name}}</span>
         </div>
       </div>
     </div>

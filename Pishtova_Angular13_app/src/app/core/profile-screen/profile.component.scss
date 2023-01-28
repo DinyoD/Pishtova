@@ -235,9 +235,10 @@
       }
       .sbj-icon {
         box-sizing: border-box;
+        width: 40%;
         height: auto;
-        width: 50%;
         margin-top: auto;
+        padding-bottom: 8px;
       }
     }
     .categories {
@@ -255,6 +256,7 @@
         margin-top: 10px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         .score {
           display: flex;
           flex-direction: column;
@@ -279,10 +281,13 @@
     }
     .sbj .sbj-info .info-text,
     .categories .category .score .score-text {
-      font-size: 16px;
-      line-height: 24px;
+      font-size: 14px;
+      line-height: 20px;
       font-weight: 600;
       color: rgba($text, 0.6);
+    }
+    .categories .category .score .score-text.score-text-long {
+      font-size: 12px;
     }
   }
 }
@@ -351,7 +356,6 @@
         height: 100%;
         flex-direction: row;
         flex-wrap: wrap;
-        //justify-content: flex-start;
         align-content: flex-start;
         margin-top: 0;
         overflow-y: scroll;
@@ -450,11 +454,14 @@
         margin-left: 15px;
         height: 80%;
         overflow-y: scroll;
+        justify-content: flex-start;
+        align-items: flex-start;
         .category {
           box-sizing: border-box;
           width: calc(100% / 4 - 10px);
-          height: 180px;
+          height: 200px;
           padding: 0 8px;
+          margin-right: 10px;
           .score{
             .score-text {
               overflow-wrap: break-word;
@@ -463,5 +470,15 @@
         }
       }
     }
+  }
+}
+@media (min-width: $desktop-b){
+  .container .subject-details-box .sbj .sbj-info .info-text,
+  .container .subject-details-box .categories .category .score .score-text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .container .subject-details-box .categories .category .score .score-text.score-text-long {
+    font-size: 14px;
   }
 }
