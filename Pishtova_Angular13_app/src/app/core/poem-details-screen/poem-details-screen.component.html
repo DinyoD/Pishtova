@@ -1,7 +1,19 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container">
-    <div>{{poem?.name}}</div>
-    <div class="">{{poem?.textUrl}}</div>
-    <div class="">{{poem?.analysisUrl}}</div>
-    <div class="">{{poem?.extrasUrl}}</div>
+    <div class="links-container">
+        <a class="link-box" (click)="showText()">
+            <span class="text" [ngClass]="{'active': activeLink == 1}">Текст</span>
+            <hr class="line" [ngClass]="{'active': activeLink == 1}">
+        </a>
+        <a class="link-box" (click)="showAnalisys()">
+            <span class="text" [ngClass]="{'active': activeLink == 2}">Анализ</span>
+            <hr class="line" [ngClass]="{'active': activeLink == 2}">
+        </a>
+        <a class="link-box" (click)="showExtras()">
+            <span class="text" [ngClass]="{'active': activeLink == 3}">Екстри</span>
+            <hr class="line" [ngClass]="{'active': activeLink == 3}">
+        </a>
+    </div>
+
+    <iframe allowtransparency="true" [src]="url | safe" frameborder="0" id="iframe"></iframe>
 </div>

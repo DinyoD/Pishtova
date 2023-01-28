@@ -22,7 +22,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ForAuthenticatedUserGuard } from 'src/app/authentication/guards/auth.guard';
 import { RankingScreenComponent } from './ranking-screen/ranking-screen.component';
 import { NotInTestGuard } from './guards/notInTest.guard';
-import { SafePipe, ThemesScreenComponent } from './themes-screen/themes-screen.component';
+import { ThemesScreenComponent } from './themes-screen/themes-screen.component';
+import { SafePipe } from './poem-details-screen/poem-details-screen.component';
 import { PoemsScreenComponent } from './poems-screen/poems-screen.component';
 import { PoemDetailsScreenComponent } from './poem-details-screen/poem-details-screen.component';
 
