@@ -1,17 +1,17 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="container">
     <div class="links-container">
-        <a class="link-box" (click)="showText()">
-            <span class="text" [ngClass]="{'active': activeLink == 1}">Текст</span>
-            <hr class="line" [ngClass]="{'active': activeLink == 1}">
+        <a class="link-box" [ngClass]="{'active': activeLink == 'text'}" (click)="showText()">
+            <span class="text" >Текст</span>
+            <hr class="line">
         </a>
-        <a class="link-box" (click)="showAnalisys()">
-            <span class="text" [ngClass]="{'active': activeLink == 2}">Анализ</span>
-            <hr class="line" [ngClass]="{'active': activeLink == 2}">
+        <a class="link-box" [ngClass]="{'active': activeLink == 'analisys'}" (click)="showAnalisys()">
+            <span class="text">Анализ</span>
+            <hr class="line">
         </a>
-        <a class="link-box" (click)="showExtras()">
-            <span class="text" [ngClass]="{'active': activeLink == 3}">Екстри</span>
-            <hr class="line" [ngClass]="{'active': activeLink == 3}">
+        <a class="link-box" [ngClass]="{'active': activeLink == 'extras'}" (click)="showExtras()">
+            <span class="text" >Екстри</span>
+            <hr class="line">
         </a>
     </div>
 

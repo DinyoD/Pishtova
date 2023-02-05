@@ -31,11 +31,13 @@
                 border: 0ch;
                 border-top: 2px solid rgba($text, 0.4) ;
             }
-            .text.active {
+        }
+        .active {
+            .text {
                 color: $text;
                 font-weight: 800;
             }
-            .line.active{
+            .line {
                 border-top: 2px solid rgba($text, 1);
             }
         }
