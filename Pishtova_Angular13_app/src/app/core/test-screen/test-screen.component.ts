@@ -30,8 +30,6 @@ export class TestScreenComponent implements OnInit {
   public selectedAnswerId: string|null = null
   public points: number = 0;
   public maxScore: number = 0;
-  public navigationName: string = 'Тест';
-  public navigationUrl: string = '';
 
   constructor(
     private problemService: ProblemService,
@@ -44,7 +42,6 @@ export class TestScreenComponent implements OnInit {
     private router: Router) {
       if (this.actRoute.snapshot.paramMap.get('id') != null) {
         this.subjectId = this.actRoute.snapshot.paramMap.get('id');
-        this.navigationUrl = 'subjects/' + Number(this.actRoute.snapshot.paramMap.get('id')) + '/test';
       }
     }
 
