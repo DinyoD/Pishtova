@@ -2,6 +2,7 @@
 {
 	using Microsoft.EntityFrameworkCore;
 	using Pishtova.Data;
+	using Pishtova.Data.Common.Utilities;
 	using Pishtova.Data.Model;
 	using System;
 	using System.Collections.Generic;
@@ -34,10 +35,22 @@
 			return await this.db.Subsriptions.ToListAsync();
 		}
 
-		public async Task<Subsription> GetByCustomerIdAsync(string id)
+		public async Task<OperationResult<Subsription>> GetByCustomerIdAsync(string id)
 		{
-			return await this.db.Subsriptions.FirstOrDefaultAsync(x => x.CustomerId == id);
-		}
+            var result = new OperationResult<Subsription>();
+            if (!result.ValidateNotNull(id)) return result;
+
+            try
+            {
+                var subcr = await this.db.Subsriptions.FirstOrDefaultAsync(x => x.CustomerId == id);
+                return result.WithData(subcr);
+            }
+            catch (Exception e)
+            {
+                result.AddException(e);
+                return result;
+            }
+        }
 
 		public async Task<Subsription> GetByIdAsync(string id)
 		{

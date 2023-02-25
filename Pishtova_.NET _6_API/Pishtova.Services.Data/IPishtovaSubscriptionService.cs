@@ -4,8 +4,9 @@
 	using System.Collections.Generic;
 
 	using Pishtova.Data.Model;
+	using Pishtova.Data.Common.Utilities;
 
-    public interface IPishtovaSubscriptionService
+	public interface IPishtovaSubscriptionService
     {
 		Task<Subsription> UpdateAsync(Subsription subscription);
 
@@ -13,7 +14,7 @@
 
 		Task<Subsription> GetByIdAsync(string id);
 
-		Task<Subsription> GetByCustomerIdAsync(string id);
+		Task<OperationResult<Subsription>> GetByCustomerIdAsync(string id);
 
 		Task<Subsription> CreateAsync(Subsription subscription);
 

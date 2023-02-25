@@ -17,13 +17,16 @@
     {
         private readonly IUserService userService;
         private readonly UserManager<User> userManager;
+        private readonly IPishtovaSubscriptionService subscriptionService;
 
         public UsersController(
+            UserManager<User> userManager,
             IUserService userservice,
-            UserManager<User> userManager)
+            IPishtovaSubscriptionService subscriptionService)
         {
             this.userService = userservice ?? throw new System.ArgumentNullException(nameof(userservice));
             this.userManager = userManager ?? throw new System.ArgumentNullException(nameof(userManager));
+            this.subscriptionService = subscriptionService ?? throw new System.ArgumentNullException();
         }
 
         [HttpGet]
@@ -99,6 +102,25 @@
             }
 
             return this.Ok();
+        }
+
+        [HttpGet]
+        [Route("{id}/[action]")]
+        public async Task<IActionResult> IsSubscriber([FromRoute]string id)
+        {
+            var userResult = await this.userService.GetByIdAsync(id);
+            if (!userResult.IsSuccessful) return this.Error(userResult);
+            
+            var user = userResult.Data;
+            if (user == null) return this.NotFound();
+
+            var result = await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
+            if (!result.IsSuccessful) return this.Error(result);
+
+            var subsc = result.Data;
+            if (subsc == null) return this.NotFound();
+
+            return this.Ok(subsc.Status == "active");
         }
 
         private UserProfileModel ToUserProfileModel(User user)
