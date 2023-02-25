@@ -32,17 +32,7 @@ export class SubjectScreenComponent implements OnInit {
     }
 
   handelStartTest(){
-    const dialogData = new ConfirmationDialogModel(`Стартирате тест по ${this.subject?.name}.`);
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { 
-        closeOnNavigation: true,
-        data: dialogData
-    })
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult) {
-        this.testService.sendInTestStateChangeNotification(true)
-        this.router.navigate([`subjects/${this.subject?.id}/test`]);
-      }
-  });
+    this.router.navigate([`subjects/${this.subject?.id}/test`]);
   }
 
   public handelRankingRedirect = ():void => {

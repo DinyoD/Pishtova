@@ -40,9 +40,13 @@ export class TestScreenComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private actRoute: ActivatedRoute,
     private router: Router) {
+      if(this.testService.isInTest()) router.navigate(['/']);
+
       if (this.actRoute.snapshot.paramMap.get('id') != null) {
         this.subjectId = this.actRoute.snapshot.paramMap.get('id');
+        this.testService.sendInTestStateChangeNotification(true);
       }
+
     }
 
     ngOnInit(): void {
