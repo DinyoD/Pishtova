@@ -35,15 +35,19 @@ export class UserService {;
   }
 
   public updatePictureUrl = (dataModel: UpdatePictureModel): Observable<object> => {
-    return this.httpClient.put(env.API_URL + '/users/updatepictureurl', dataModel)
+    return this.httpClient.put(env.API_URL + '/users/updatepictureurl', dataModel);
   }
 
   public updateInfo = (dataModel: ChangeProfileInfoModel): Observable<object> => {
-    return this.httpClient.put(env.API_URL + '/users/updateinfo', dataModel)
+    return this.httpClient.put(env.API_URL + '/users/updateinfo', dataModel);
   }
 
   public updateEmail = (dataModel: UpdateEmailModel): Observable<object> => {
-    return this.httpClient.put(env.API_URL + '/users/updateemail', dataModel)
+    return this.httpClient.put(env.API_URL + '/users/updateemail', dataModel);
+  }
+
+  public isSubscriber = (): Observable<boolean> => {
+    return this.httpClient.get<boolean>(env.API_URL + `/users/${this.getCurrentUser()?.id}/issubscriber`);
   }
 
   public getCurrentUser = (): CurrentUserModel|null => {
@@ -54,7 +58,6 @@ export class UserService {;
       user = {
          id: decodedToken.userId,
          email: decodedToken.email,
-         isSubscriber: decodedToken.isSubscriber == 'True',
       }
     }
     return user;
@@ -74,6 +77,7 @@ export class UserService {;
     this.storage.setItem(Storage.AVATAR_URL, avatarUrl);
     this.sendAvatarChangeNotification(avatarUrl); 
   }
+
 
   private getAvatarUrlByToken = (token: string): string|null => {
     if(token == null) return null;

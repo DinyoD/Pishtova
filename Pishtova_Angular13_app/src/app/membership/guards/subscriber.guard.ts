@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import { map } from "rxjs/operators";
 import { UserService } from "src/app/services";
 
 @Injectable({
@@ -13,15 +14,21 @@ export class ForSubscribersGuard implements CanActivate{
     ){}
     
     canActivate(
-    next: ActivatedRouteSnapshot, 
-    stte: RouterStateSnapshot
-    ): boolean {
-        let suscriber = this.userService.getCurrentUser()?.isSubscriber;
-    if (suscriber) {    
-        return true;
+        next: ActivatedRouteSnapshot, 
+        stte: RouterStateSnapshot
+        ){ 
+        return this.chekUserIsSubsriber();
     }
-    this.router.navigate(['/memberships']);
-        return false;
-    };
+
+    public chekUserIsSubsriber(){
+        return  this.userService.isSubscriber().pipe(map(x => {
+            if(x) {
+                return true;
+            }else{
+                this.router.navigate(['/memberships']);
+                return false;
+            };
+        }));
+    }
 
 }

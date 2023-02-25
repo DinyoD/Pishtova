@@ -26,6 +26,7 @@ import { ThemesScreenComponent } from './themes-screen/themes-screen.component';
 import { SafePipe } from './poem-details-screen/poem-details-screen.component';
 import { PoemsScreenComponent } from './poems-screen/poems-screen.component';
 import { PoemDetailsScreenComponent } from './poem-details-screen/poem-details-screen.component';
+import { ForSubscribersGuard } from '../membership/guards/subscriber.guard';
 
 @NgModule({
   declarations: [
@@ -55,13 +56,13 @@ import { PoemDetailsScreenComponent } from './poem-details-screen/poem-details-s
     RouterModule.forChild([
       { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
       { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
+      { path: 'subjects/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard, ForSubscribersGuard] },
       { path: 'subjects/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'subjects/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard, NotInTestGuard] },
       { path: 'subjects/:id/result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subjects/:id/ranking', component: RankingScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subjects/:id/themes', component: ThemesScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
       { path: 'subjects/:subjectId/themes/:themeId', component: PoemsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'poems/:id', component: PoemDetailsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
+      { path: 'poems/:id', component: PoemDetailsScreenComponent, canActivate: [ForAuthenticatedUserGuard, ForSubscribersGuard] },
     ]),
   ],
   exports: [
