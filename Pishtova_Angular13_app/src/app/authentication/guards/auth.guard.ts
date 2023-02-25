@@ -8,7 +8,7 @@ import { AuthService, StorageService } from '../../services';
 export class ForAuthenticatedUserGuard implements CanActivate {
 
   constructor(
-    private userService: AuthService,
+    private authService: AuthService,
     private storageService: StorageService,
     private router: Router
     ){};
@@ -18,7 +18,7 @@ export class ForAuthenticatedUserGuard implements CanActivate {
     state: RouterStateSnapshot
     ): boolean {
       
-    if (this.userService.isUserAuthenticated()) {
+    if (this.authService.isUserAuthenticated()) {
       return true;
     }
     this.storageService.clear();
