@@ -1,5 +1,5 @@
 <div class="container">
-  <p *ngIf="!isSubscriber" class="product-desc">{{product?.description}}</p>
+  <p class="product-desc">{{product?.description}}</p>
   <p class="product-name">{{product?.name}}</p>
   <div class="prices-container">
     <div *ngFor="let pr of prices" (click)="setClickedPrice(pr.id)" class="price"
@@ -25,3 +25,13 @@
     </div>
   </div>
 </div>
+
+
+  <!-- <stripe-pricing-table 
+    pricing-table-id="prctbl_1MdcsEKhToe92XvgpKH5mXo4"
+    publishable-key="pk_live_51MSKWBKhToe92XvgM65DZJaptqL7LRfbRv5zQYWlqNyaCouGNy4njJH8R3mJHobeAVywLXyhedcWhuF9AgRWVtM8006vwATuBn">
+  </stripe-pricing-table> -->
+
+
+
+

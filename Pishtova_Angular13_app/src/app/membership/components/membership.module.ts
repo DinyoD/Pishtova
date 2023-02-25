@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,9 +27,12 @@ import { ForSubscribersGuard } from '../guards/subscriber.guard';
     RouterModule.forChild([
       { path: 'memberships', component: MembershipOptionsComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard ] },
       { path: 'memberships/plan', component: MembershipPlanComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard, ForSubscribersGuard] },
-      { path: 'memberships/failure', component: MembershipFailureComponent, canActivate: [InTestGuard] },
-      { path: 'memberships/success', component: MembershipSuccessComponent, canActivate: [InTestGuard] },
+      { path: 'memberships/failure', component: MembershipFailureComponent, canActivate: [ForAuthenticatedUserGuard,InTestGuard] },
+      { path: 'memberships/success', component: MembershipSuccessComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
     ]),
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [
     MembershipOptionsComponent,
