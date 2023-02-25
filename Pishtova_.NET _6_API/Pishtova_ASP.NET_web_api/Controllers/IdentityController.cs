@@ -22,20 +22,17 @@
     {
         private readonly UserManager<User> userManager;
         private readonly IUserService userService;
-        private readonly IPishtovaSubscriptionService subscriptionService;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettings,
-            IUserService userService,
-            IPishtovaSubscriptionService subscriptionService)          
+            IUserService userService)          
         {
             if (applicationSettings is null) throw new ArgumentNullException(nameof(applicationSettings));
 
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            this.subscriptionService = subscriptionService ?? throw new ArgumentNullException(nameof(subscriptionService));
             this.applicationSettings = applicationSettings.Value;
         }
 
@@ -111,10 +108,8 @@
             try
             {
                 var expDate = DateTime.Now.AddDays(7);
-                var subscription =  await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
-                var isSubscriber = subscription != null && subscription.Status == "active";
 
-                string generatedToken = this.GenerateToken(user, expDate, isSubscriber);
+                string generatedToken = this.GenerateToken(user, expDate);
                 return this.Ok(new { token = generatedToken });
             }
             catch (Exception e)
@@ -191,7 +186,7 @@
             return Ok();
         }
 
-        private string GenerateToken(User user, DateTime expDate, bool isSubscriber)
+        private string GenerateToken(User user, DateTime expDate)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.applicationSettings.Secret);
@@ -203,7 +198,6 @@
                 {
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim("userId", user.Id),
-                    new Claim("isSubscriber", isSubscriber.ToString()),
                     new Claim("avatarUrl", avatarUrl)
                 }),
                 Expires = expDate,
