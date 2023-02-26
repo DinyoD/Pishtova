@@ -17,10 +17,10 @@ export class ForSubscribersGuard implements CanActivate{
         next: ActivatedRouteSnapshot, 
         stte: RouterStateSnapshot
         ){ 
-        return this.chekUserIsSubsriber();
+        return this.chekUserIsSubscriber();
     }
 
-    public chekUserIsSubsriber(){
+    public chekUserIsSubscriber(){
         return  this.userService.isSubscriber().pipe(map(x => {
             if(x) {
                 return true;
