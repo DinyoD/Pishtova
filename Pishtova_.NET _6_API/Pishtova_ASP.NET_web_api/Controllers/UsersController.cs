@@ -120,7 +120,7 @@
             var subsc = result.Data;
             if (subsc == null) return this.NotFound();
 
-            return this.Ok(subsc.Status == "active");
+            return this.Ok(subsc.Status == "active" && subsc.CurrentPeriodEnd >= DateTime.Now);
         }
 
         private UserProfileModel ToUserProfileModel(User user)

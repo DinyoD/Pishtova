@@ -1,5 +1,4 @@
-﻿
-namespace Pishtova_ASP.NET_web_api.Controllers
+﻿namespace Pishtova_ASP.NET_web_api.Controllers
 {
 	using System;
     using System.IO;
@@ -232,7 +231,7 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				{
 					Id = subscription.Id,
 					CustomerId = subscription.CustomerId,
-					Status = "active",
+					Status = subscription.Status,
 					CurrentPeriodEnd = subscription.CurrentPeriodEnd
 				};
 				await this.subscriptionService.CreateAsync(subscriptoin);
