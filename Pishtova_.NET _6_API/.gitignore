@@ -355,10 +355,8 @@ MigrationBackup/
 # Custom ignores
 **/wwwroot/lib/
 appsettings.Production.json
+Pishtova_ASP.NET_web_api/appsettings.json
+Pishtova_ASP.NET_web_api/appsettings.Development.json
+ProjectHelper/SandBoxConstants.cs
 *.min.css
 *.min.js
-Pishtova.Client/pishtova/package-lock.json
-Pishtova.Client/src/styles.css
-ProjectHelper/SandBoxConstants.cs
-Pishtova.Client/package-lock.json
-Pishtova_ASP.NET_web_api/appsettings.json
