@@ -157,8 +157,23 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 				 this.stripeSettings.WHSecret
 			   );
 
-				// Handle the event
-				if (stripeEvent.Type == Events.CustomerSubscriptionCreated)
+                // Handle the event
+                if (stripeEvent.Type == Events.CustomerCreated)
+                {
+                    var customer = stripeEvent.Data.Object as Customer;
+                    await AddCustomerIdToUserAsync(customer);
+                }
+				else if (stripeEvent.Type == Events.CustomerUpdated)
+                {
+                    var customer = stripeEvent.Data.Object as Customer;
+                    //await AddCustomerIdToUserAsync(customer);
+                }
+                else if (stripeEvent.Type == Events.CustomerDeleted)
+                {
+                    var customer = stripeEvent.Data.Object as Customer;
+                    //await AddCustomerIdToUserAsync(customer);
+                }
+                else if (stripeEvent.Type == Events.CustomerSubscriptionCreated)
 				{
 					var subscription = stripeEvent.Data.Object as Subscription;
 					await AddSubscriptionToDbAsync(subscription);
@@ -168,13 +183,14 @@ namespace Pishtova_ASP.NET_web_api.Controllers
 					var session = stripeEvent.Data.Object as Subscription;
 					await UpdateSubscriptionAsync(session);
 				}
-				else if (stripeEvent.Type == Events.CustomerCreated)
-				{
-					var customer = stripeEvent.Data.Object as Customer;
-					await AddCustomerIdToUserAsync(customer);
-				}
-				// ... handle other event types
-				else
+                else if (stripeEvent.Type == Events.CustomerSubscriptionDeleted)
+                {
+                    var session = stripeEvent.Data.Object as Subscription;
+                    //await UpdateSubscriptionAsync(session);
+                }
+
+                // ... handle other event types
+                else
 				{
 					// Unexpected event type
 					Console.WriteLine("Unhandled event type: {0}", stripeEvent.Type);
