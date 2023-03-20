@@ -114,6 +114,8 @@
             var user = userResult.Data;
             if (user == null) return this.NotFound();
 
+            if (user.CustomerId == null) return this.Ok(false);
+
             var result = await this.subscriptionService.GetByCustomerIdAsync(user.CustomerId);
             if (!result.IsSuccessful) return this.Error(result);
 
