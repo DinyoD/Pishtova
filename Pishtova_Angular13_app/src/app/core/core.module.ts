@@ -41,7 +41,7 @@ import { ForSubscribersGuard } from '../membership/guards/subscriber.guard';
     ThemesScreenComponent,
     SafePipe,
     PoemsScreenComponent,
-    PoemDetailsScreenComponent
+    PoemDetailsScreenComponent,
   ],
   imports: [
     CommonModule,
@@ -54,20 +54,57 @@ import { ForSubscribersGuard } from '../membership/guards/subscriber.guard';
     BrowserAnimationsModule,
     AppRoutingModule,
     RouterModule.forChild([
-      { path: 'main', component: MainScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'profile', component: ProfileComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'subjects/:id/test', component: TestScreenComponent, canActivate: [ForAuthenticatedUserGuard, ForSubscribersGuard] },
-      { path: 'subjects/:id', component: SubjectScreenComponent, canActivate: [ForAuthenticatedUserGuard, InTestGuard] },
-      { path: 'subjects/:id/result', component: ResultScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'subjects/:id/ranking', component: RankingScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'subjects/:id/themes', component: ThemesScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'subjects/:subjectId/themes/:themeId', component: PoemsScreenComponent, canActivate: [ForAuthenticatedUserGuard] },
-      { path: 'poems/:id', component: PoemDetailsScreenComponent, canActivate: [ForAuthenticatedUserGuard, ForSubscribersGuard] },
+      {
+        path: 'main',
+        component: MainScreenComponent,
+        canActivate: [ForAuthenticatedUserGuard, InTestGuard],
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [ForAuthenticatedUserGuard, InTestGuard],
+      },
+      {
+        path: 'subjects/:id/test',
+        component: TestScreenComponent,
+        canActivate: [
+          ForAuthenticatedUserGuard,
+          ForSubscribersGuard,
+          NotInTestGuard,
+        ],
+      },
+      {
+        path: 'subjects/:id',
+        component: SubjectScreenComponent,
+        canActivate: [ForAuthenticatedUserGuard, InTestGuard],
+      },
+      {
+        path: 'subjects/:id/result',
+        component: ResultScreenComponent,
+        canActivate: [ForAuthenticatedUserGuard],
+      },
+      {
+        path: 'subjects/:id/ranking',
+        component: RankingScreenComponent,
+        canActivate: [ForAuthenticatedUserGuard],
+      },
+      {
+        path: 'subjects/:id/themes',
+        component: ThemesScreenComponent,
+        canActivate: [ForAuthenticatedUserGuard],
+      },
+      {
+        path: 'subjects/:subjectId/themes/:themeId',
+        component: PoemsScreenComponent,
+        canActivate: [ForAuthenticatedUserGuard],
+      },
+      {
+        path: 'poems/:id',
+        component: PoemDetailsScreenComponent,
+        canActivate: [ForAuthenticatedUserGuard, ForSubscribersGuard],
+      },
     ]),
   ],
-  exports: [
-    HeaderComponent,
-    FooterComponent
-  ]
+  exports: [HeaderComponent, FooterComponent],
 })
-export class CoreModule { }
+export class CoreModule {}
