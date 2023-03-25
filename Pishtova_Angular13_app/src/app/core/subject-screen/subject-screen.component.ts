@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { ConfirmationDialogModel } from 'src/app/shared/confirmation-dialog/confirmation-dialog';
-import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SubjectService, TestService } from 'src/app/services';
 import { SubjectModel } from 'src/app/models/subject/subject';
 
@@ -21,7 +18,6 @@ export class SubjectScreenComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dialog: MatDialog,
     private subjectService: SubjectService,
     private testService: TestService
   ) {}

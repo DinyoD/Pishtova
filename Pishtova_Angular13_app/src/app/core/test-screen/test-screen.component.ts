@@ -116,13 +116,11 @@ export class TestScreenComponent implements OnInit {
     const testToSave = this.getTestToSave();
     if (!testToSave) return;
 
-    this.testService
-      .saveTest(testToSave)
-      .subscribe((res: ISaveTestResult) =>
-        this.router.navigate(['/subjects/' + this.subjectId + '/result'], {
-          state: { testId: res.testId },
-        })
-      );
+    this.testService.saveTest(testToSave).subscribe((res: ISaveTestResult) =>
+      this.router.navigate(['/subjects/' + this.subjectId + '/result'], {
+        state: { testId: res.testId },
+      })
+    );
   }
 
   public openImage(imageUrl: string): void {
