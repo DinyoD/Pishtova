@@ -124,6 +124,28 @@
             return operationresult;
         }
 
+        public async Task<OperationResult<int>> DeleteByUserIdAsync(string userId)
+        {
+
+            var operationResult = new OperationResult<int>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+
+            try
+            {
+                var scoresToRemove =await this.db.Scores.Where(x=> x.UserId == userId).ToListAsync();
+                if (scoresToRemove.Count == 0) return operationResult.WithData(0);
+
+                this.db.Scores.RemoveRange(scoresToRemove);
+                await this.db.SaveChangesAsync();
+                operationResult.Data = scoresToRemove.Count;
+
+            }
+            catch (Exception e)
+            {
+               operationResult.AddException(e);
+            }
+            return operationResult;
+        }
     }
 
 }

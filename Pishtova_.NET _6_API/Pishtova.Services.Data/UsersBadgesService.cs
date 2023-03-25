@@ -95,5 +95,28 @@
             return operationResult;
         }
 
+        public async Task<OperationResult<int>> DeleteByUserIdAsync(string userId)
+        {
+
+            var operationResult = new OperationResult<int>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+
+            try
+            {
+                var userBadgesToRemove = await this.db.UsersBadges.Where(x => x.UserId == userId).ToListAsync();
+                if (userBadgesToRemove.Count == 0) return operationResult.WithData(0);
+
+                this.db.UsersBadges.RemoveRange(userBadgesToRemove);
+                await this.db.SaveChangesAsync();
+                operationResult.Data = userBadgesToRemove.Count;
+
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
+        }
+
     }
 }

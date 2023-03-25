@@ -35,6 +35,8 @@
         /// <returns>A task whose result contains OperationResult object with Data property - collection of entities(UserBadges) with the given testId. If no entity is found, then
         ///     Data is empty collection.</returns>
         Task<OperationResult<ICollection<UserBadge>>> GetAllByTestAsync(int testId);
+
+        Task<OperationResult<int>> DeleteByUserIdAsync(string userId);
     }
 
 }

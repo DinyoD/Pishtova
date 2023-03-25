@@ -109,5 +109,28 @@
             }
             return operationResult;
         }
+
+        public async Task<OperationResult<int>> DeleteByUserIdAsync(string userId)
+        {
+
+            var operationResult = new OperationResult<int>();
+            if (!operationResult.ValidateNotNull(userId)) return operationResult;
+
+            try
+            {
+                var testsToRemove = await this.db.Tests.Where(x => x.UserId == userId).ToListAsync();
+                if (testsToRemove.Count == 0) return operationResult.WithData(0);
+
+                this.db.Tests.RemoveRange(testsToRemove);
+                await this.db.SaveChangesAsync();
+                operationResult.Data = testsToRemove.Count;
+
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
+        }
     }
 }

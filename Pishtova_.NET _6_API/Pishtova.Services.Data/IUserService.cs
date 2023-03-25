@@ -22,5 +22,7 @@
         Task<OperationResult> SendEmailConfirmationTokenAsync(string clientURI, string email, string token);
 
         Task<OperationResult> SendResetPaswordTokenAsync(string clientURI, string email, string token);
+
+        Task<OperationResult<User>> DeleteByIdAsync(string id);
     }
 }

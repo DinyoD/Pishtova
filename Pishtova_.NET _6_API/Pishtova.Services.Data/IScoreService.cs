@@ -17,6 +17,8 @@
         Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectsAsync(string userId);
 
         Task<OperationResult<ICollection<Score>>> GetUserScoresBySubjectCategoriesAsync(string userId, string subjectId);
+
+        Task<OperationResult<int>> DeleteByUserIdAsync(string userId);
     }
 
 }

@@ -31,5 +31,7 @@
         public Task<OperationResult<ICollection<Test>>> GetUserLastByCountAsync(string id, int testCount);
 
         public Task<OperationResult<ICollection<Test>>> GetUserLastByDaysAsync(string id, int daysCount);
+
+        Task<OperationResult<int>> DeleteByUserIdAsync(string userId);
     }
 }

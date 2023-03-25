@@ -22,17 +22,26 @@
     {
         private readonly UserManager<User> userManager;
         private readonly IUserService userService;
+        private readonly IScoreService scoreService;
+        private readonly IUsersBadgesService usersBadgesService;
+        private readonly ITestService testService;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IOptions<ApplicationSettings> applicationSettings,
-            IUserService userService)          
+            IUserService userService,
+            IScoreService scoreService,
+            IUsersBadgesService usersBadgesService,
+            ITestService testService)
         {
             if (applicationSettings is null) throw new ArgumentNullException(nameof(applicationSettings));
 
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this.scoreService = scoreService ?? throw new ArgumentNullException(nameof(scoreService));
+            this.usersBadgesService = usersBadgesService ?? throw new ArgumentNullException(nameof(usersBadgesService));
+            this.testService = testService ?? throw new ArgumentNullException(nameof(testService));
             this.applicationSettings = applicationSettings.Value;
         }
 
@@ -186,6 +195,31 @@
             return Ok();
         }
 
+        [HttpDelete]
+        [Route("delete/{userId}")]
+        public async Task<IActionResult> DeleteUserParmanently([FromRoute] string userId)
+        {
+            var operationResult = new OperationResult();
+            if (!operationResult.ValidateNotNull(userId)) return this.Error(operationResult);
+
+            var removeUserScoresResult = await this.scoreService.DeleteByUserIdAsync(userId);
+            if (!removeUserScoresResult.IsSuccessful) return this.Error(removeUserScoresResult);
+
+            var removeUserBadgesResult = await this.usersBadgesService.DeleteByUserIdAsync(userId);
+            if (!removeUserBadgesResult.IsSuccessful) return this.Error(removeUserBadgesResult);
+
+            var removeUserTestsResult = await this.testService.DeleteByUserIdAsync(userId);
+            if (!removeUserTestsResult.IsSuccessful) return this.Error(removeUserTestsResult);
+
+            var removeUserResult = await this.userService.DeleteByIdAsync(userId);
+            if (!removeUserResult.IsSuccessful) return this.Error(removeUserResult);
+
+            var user = removeUserResult.Data;
+
+            return Ok(user);
+
+        }
+
         private string GenerateToken(User user, DateTime expDate)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -209,11 +243,11 @@
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-
+        
         private async void DeleteUserByEmail(string email)
         {
-            var createdUser = await this.userManager.FindByEmailAsync(email);
-            await this.userManager.DeleteAsync(createdUser);
+            var user = await this.userManager.FindByEmailAsync(email);
+            await this.userManager.DeleteAsync(user);
         }
     }
 }

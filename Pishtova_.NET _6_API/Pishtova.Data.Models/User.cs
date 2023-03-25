@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Xml.Serialization;
     using Microsoft.AspNetCore.Identity;
 
     using Pishtova.Data.Common.Model;
@@ -14,7 +13,6 @@
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
-            //this.Roles = new HashSet<IdentityUserRole<string>>();
 
             this.UserScores = new HashSet<Score>();
             this.UserBadges = new HashSet<UserBadge>();
@@ -54,8 +52,6 @@
         public DateTime CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
-
-        //public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
     }
 }

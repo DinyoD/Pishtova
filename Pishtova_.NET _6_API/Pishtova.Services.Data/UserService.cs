@@ -185,5 +185,27 @@
             var user = await this.userManager.FindByNameAsync(userEmail);
             return user.Id;
         }
+
+        public async Task<OperationResult<User>> DeleteByIdAsync(string id)
+        {
+            var operationResult = new OperationResult<User>();
+            if (!operationResult.ValidateNotNull(id)) return operationResult;
+
+            try
+            {
+                var userToRemove = await this.db.Users.FirstOrDefaultAsync(x => x.Id == id);
+                if (userToRemove == null) return operationResult.WithData(null);
+
+                this.db.Users.Remove(userToRemove);
+                await this.db.SaveChangesAsync();
+                operationResult.Data = userToRemove;
+
+            }
+            catch (Exception e)
+            {
+                operationResult.AddException(e);
+            }
+            return operationResult;
+        }
     }
 }
