@@ -112,7 +112,7 @@
             if (!userResult.IsSuccessful) return this.Error(userResult);
             
             var user = userResult.Data;
-            if (user == null) return this.NotFound();
+            if (user == null) return this.Ok(false);
 
             if (user.CustomerId == null) return this.Ok(false);
 
@@ -120,7 +120,7 @@
             if (!result.IsSuccessful) return this.Error(result);
 
             var subsc = result.Data;
-            if (subsc == null) return this.NotFound();
+            if (subsc == null) return this.Ok(false);
 
             return this.Ok(subsc.Status == "active" && subsc.CurrentPeriodEnd >= DateTime.Now);
         }
